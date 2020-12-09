@@ -1,0 +1,230 @@
+﻿@model Courier.Models.MapOtModels 
+
+<script type="text/javascript">
+    var fInicio;
+    var fTermino;
+    var estado;
+    var dateInicio;
+    var dateTermino;
+
+    function CargaInicioCarga() {
+        var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+        var firstDay = new Date(y, m, 1);
+        var lastDay = new Date(y, m + 1, 0);
+
+        var fInicio = $("#fInicio");
+        var fTermino = $("#fTermino");
+        
+        dateInicio = firstDay.toLocaleString().substring(0, firstDay.toLocaleString().indexOf(' '));
+        dateTermino = lastDay.toLocaleString().substring(0, lastDay.toLocaleString().indexOf(' '));
+        fInicio.val(dateInicio);
+        fTermino.val(dateTermino);
+
+        $("#dvEstados").load('@Url.Action("_DropDownEstados", "MapOt")', function (response, status, xhr) {
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        })
+        estado = $("#EstadoNombre").val();
+        CargaLista(dateInicio, dateTermino, estado);
+
+        $("#dialog-direccion").dialog({ autoOpen: false, title: "Editar Dirección", position: 'left+5% top+5%', width: 'auto', minWidth: 400, minHeight: 250, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    var auxDirec = $("#Direccion").val();
+                    var auxNumero = $("#Numero").val();
+                    var auxLat = $("#Lat").val();
+                    var auxLng = $("#Lng").val();
+                    var auxOT = $("#OT").val();
+                    ActualizaDireccion(auxOT, auxDirec, auxNumero, auxLat, auxLng);
+                    $(this).dialog("close");
+                },
+
+                 Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog-mapa").dialog({ autoOpen: false, title: "Ver en Mapa", position: 'left+20% top+5%', width: 'auto', minWidth: 600, minHeight: 400, modal: true,
+            buttons: {
+                Cerrar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+
+    function btnFiltroClick() {
+
+        dateInicio = $("#fInicio").val();
+        dateTermino = $("#fTermino").val();
+        estado = $("#EstadoNombre").val();
+        CargaLista(dateInicio, dateTermino, estado);
+
+    }
+
+    function CargaLista(dateInicio, dateTermino, estado) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("ListaOt", "MapOt")',
+            data: { r: randomnumber,
+                FechaPeriodo: dateInicio,
+                FechaPeriodoTermino: dateTermino,
+                Estado: estado
+            },
+            success: function (data) {
+                $("#grillaDetalles").html(data);
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function BuscarLocalizacion(ot, direccion, numero, comuna) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("BuscaLocalizacion", "MapOt")',
+            data: { r: randomnumber,
+                OT: ot,
+                Direccion: direccion,
+                Numero: numero,
+                Comuna: comuna
+            },
+            success: function (data) {
+                var aux = data;
+                if (data.Ok == true) {
+                    estado = $("#EstadoNombre").val();
+                    CargaLista(dateInicio, dateTermino, estado);
+                } else {
+                    alert(data.Mensaje);
+                }
+            },
+            error: function () {
+            }
+        });
+
+    }
+
+    function BuscarDireccion() {
+
+        var miDirec = $("#Direccion").val();
+        var miNumero = $("#Numero").val();
+        var miComuna = $("#Comuna").val();
+        var miLat = $("#Lat").val();
+        var miLng = $("#Lng").val();
+
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("BuscaDireccion", "MapOt")',
+            data: { r: randomnumber,
+                Direccion: miDirec,
+                Numero: miNumero,
+                Comuna: miComuna
+            },
+            success: function (data) {
+                if (data.Ok == true) {
+                    $("#Lat").val(data.Lat);
+                    $("#Lng").val(data.Lng);
+                } else {
+                    alert("No se encontraron las coordenadas de la dirección ingresada.");
+                }
+            },
+            error: function () {
+            }
+        });
+
+    }
+
+    function BuscarEnMapa(ot) {
+
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $("#dialog-mapa").dialog("open");
+        $("#dialog-mapa").html('<div style="text-align:center; vertical-align:middle;"><img src="@Url.Content("~/Images/loader.gif")" /></div>');
+        $("#dialog-mapa").load('@Url.Content("~/MapOt/VerMapa")?ot=' + ot + '&r=' + randomnumber, function (response, status, xhr) {
+            if (status == 'success') {
+
+            }
+        });
+
+    } 
+
+    function ActualizaDireccion(auxOT, auxDirec, auxNumero, auxLat, auxLng) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("ActualizaDireccion", "MapOt")',
+            data: { r: randomnumber,
+                OT: auxOT,
+                Direccion: auxDirec,
+                Numero: auxNumero,
+                Lat: auxLat,
+                Lng: auxLng
+            },
+            success: function (data) {
+                var aux = data;
+                if (data.Ok == true) {
+                    estado = $("#EstadoNombre").val();
+                    CargaLista(dateInicio, dateTermino, estado);
+                } else {
+                    alert(data.Mensaje);
+                }
+            },
+            error: function () {
+            }
+        });
+
+    }
+    
+    function EditarDireccion(OT) {
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $("#dialog-direccion").dialog("open");
+        $("#dialog-direccion").html('<div style="text-align:center; vertical-align:middle;"><img src="@Url.Content("~/Images/loader.gif")" /></div>');
+        $("#dialog-direccion").load('@Url.Content("~/MapOt/EditaDireccionPopup")?ot=' + OT + '&r=' + randomnumber, function (response, status, xhr) {
+            if (status == 'success') {
+
+            }
+        });
+    }
+
+</script> 
+
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<div class="row" style="font-size:small; font-weight:bold; padding-bottom:5px; margin-bottom:20px; border-style:groove;background-color:#BDDEFF"">
+    <table border="0" style="width:100%;">
+        <tr>
+            <td style="margin-left:10px;width:100px">
+                Filtros:
+            </td>
+            <td style="margin-left:10px;width:180px">Inicio:
+                <input type="text" style="width:80px" maxlength="10" id="fInicio"/>
+            </td>
+            <td style="margin-left:20px;width:180px">Término:
+                <input type="text" style="width:80px" maxlength="10" id="fTermino" />
+            </td>
+            <td style="margin-left:20px;width:100px">
+                Estado:          
+            </td>
+            <td>
+                <div id="dvEstados"></div>
+            </td>
+            <td>
+                <button id="btnFiltrar" class="button button2" onclick="btnFiltroClick();">
+                    <img border="0" title="Filtrar" alt="Filtrar" src="@Url.Content("~/Images/findClient.png")" />
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="grillaDetalles">
+
+</div>
+
+<div id="dialog-direccion" style="min-height:250px;min-width:400px;"></div>
+<div id="dialog-mapa" style="min-height:250px;min-width:400px;"></div>
+
+<script type="text/javascript">
+    $(function () {
+        CargaInicioCarga();
+    });
+</script>

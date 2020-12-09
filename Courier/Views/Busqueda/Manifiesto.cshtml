@@ -1,0 +1,128 @@
+﻿@model Courier.Models.BuscarManifiestoModels
+@{
+    ViewBag.Title = "Buscar Manifiesto";
+}
+<link href='@Url.Content("~/Content/GridView.css")' rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $("#Fecha").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+        $("#tabs").tabs();
+        $("#DescargarExcel").button();
+        hideOpciones();
+    })
+    function hideOpciones() {
+        $("#LineaNumero").hide();
+        $("#LineaUsuario").hide();
+        $("#LineaFecha").hide();
+
+        $("#NumeroManifiesto").val("");
+        $("#CreadoPor").val("");
+        $("#Fecha").val("");
+        $("#DescargarExcel").hide();
+    }
+    function CargaOpciones(opt) {
+        hideOpciones();
+        if (opt == "fecha") {
+            $("#LineaFecha").show();
+        }
+        else if (opt == "manifiesto") {
+            $("#LineaNumero").show();
+            $("#NumeroManifiesto").focus();
+        }
+        else if (opt == "creado") {
+            $("#LineaUsuario").show();
+        }
+    }
+    function CargaConFiltroUsuario(CreadoPor) {        
+        waitingDialog({ title: "Buscando", message: "Buscando...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#ListaResultado").load('@Url.Action("ListaCreadoPor","Busqueda")?CreadoPor=' + CreadoPor + '&r=' + randomnumber + ' #ListaManifiesto', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }            
+        });
+    }
+    function CargaConFiltroFecha(Fecha) {        
+        waitingDialog({ title: "Buscando", message: "Buscando...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#ListaResultado").load('@Url.Action("ListaFecha","Busqueda")?Fecha=' + Fecha + '&r=' + randomnumber + ' #ListaManifiesto', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+            else {
+                $("#DescargarExcel").show();
+            }
+        });
+    }
+    function CargaConFiltroNumero(Numero) {
+        waitingDialog({ title: "Buscando", message: "Buscando...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#ListaResultado").load('@Url.Action("ListaNumero","Busqueda")?Numero=' + Numero + '&r=' + randomnumber + ' #ListaManifiesto', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    function ImprimirManifiesto(NumeroManifiesto) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        window.open('@Url.Action("Index","Reporte")?MAN_ID=' + NumeroManifiesto + '&r=' + randomnumber, '_blank');
+    }
+    function DescargarExcelMan() {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        window.open('@Url.Action("DescargarExcelMan", "Busqueda")?FECINI=' + $("#Fecha").val() + '&r=' + randomnumber);
+    }
+    $(document).ready(function () {
+        $("#BuscarPor").val("");
+    })
+</script>
+@*
+
+fecha
+manifiesto
+creado
+
+*@
+
+<table>
+    <tr>
+        <td>@Html.LabelFor(m=>m.BuscarPor)</td><td>@Html.DropDownListFor(m => m.BuscarPor, Model.ListaBuscarPor, "-- Seleccione --", new { @onchange="javascript:CargaOpciones(this.value)"})</td>
+    </tr>
+    <tr id="LineaFecha">                
+        <td>@Html.LabelFor(m=>m.Fecha)</td><td>@Html.TextBoxFor(m => m.Fecha, new { @readonly="readonly", @onchange="javascript:CargaConFiltroFecha(this.value)" })</td>        
+    </tr>
+    <tr id="LineaNumero">                
+        <td>@Html.LabelFor(m=>m.NumeroManifiesto)</td><td>@Html.TextBoxFor(m => m.NumeroManifiesto)</td>        
+    </tr>
+    <tr id="LineaUsuario">                
+        <td>@Html.LabelFor(m=>m.CreadoPor)</td><td>@Html.DropDownListFor(m => m.CreadoPor, Model.ListaCreadoPor, "-- Seleccione --", new { @onchange="javascript:CargaConFiltroUsuario(this.value)"})</td>        
+    </tr>
+</table>
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Resultado Búsqueda</a></li>		    
+    </ul>        
+    <div id="tabs-1">   
+        <div style="text-align:right;"> 
+        <button id="DescargarExcel" onclick="javascript:DescargarExcelMan();">
+            <div style="float:left;width:100px;">       
+                <div style="float:left;"><img alt="Siguiente" src="@Url.Content("~/Images/doc_excel_table.png")" /></div>                 
+                <div style="float:left;">&nbsp;Descargar</div>                        
+            </div>                       
+        </button>
+        </div>
+        <div id="ListaResultado">
+            Seleccione un criterio de búsqueda
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('input#NumeroManifiesto').keypress(function (e) {
+        if (e.keyCode == '13') {
+            e.preventDefault();
+            CargaConFiltroNumero($(this).val());
+        }
+    });
+</script>

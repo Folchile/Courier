@@ -1,0 +1,174 @@
+﻿@model Courier.Models.PalletModels
+@{
+    ViewBag.Title = "INGRESO PALLET";
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $("#Documento").focus();
+    })
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == false) {
+           alert(data.Mensaje)
+         }
+
+   }
+
+
+
+   function ValidaBultos() {
+       //        $.validator.unobtrusive.parse("#frmvalidabultos");
+       //        if ($("#frmvalidabultos").valid() == true) {
+       var randomnumber = Math.floor(Math.random() * 1111111)
+       $.ajax({
+           url: '@Url.Action("CargaCabeceraDocto", "Pallet")',
+           data: {
+               Documento: $("#Documento").val(),
+               _r: randomnumber
+           }
+       })
+            .done(function (data) {
+                var randomnumber = Math.floor(Math.random() * 11111111);
+                if (data.CantBultos == $("#Bultos").val()) {
+                    Msjebultos();
+                    //                    alert('No puede ingresar mas Bultos de los Cargados');
+                }
+                else {
+                    CargaAgregaPallet();
+                    AgPallet();
+                }
+            });
+   }
+
+
+
+   $(function () {
+       $("#buscardocto").button()
+        .click(function (event) {
+            event.preventDefault();
+            var randomnumber = Math.floor(Math.random() * 1111111);
+            $.ajax({
+                url: '@Url.Action("CargaCabeceraDocto", "Pallet")',
+                type: "POST",
+                data: {
+                    Documento: $("#Documento").val(),
+                    _r: randomnumber
+                }
+            }).done(function (data) {
+                if (data.Ok == false) {
+                    $("#tabs").hide();
+                    $("#cabDocto").hide();
+                     msjevalid(data.Mensaje)
+                }
+                 else {
+                     $("#cabDocto").show();
+                    $("#tabs").show();
+                    cargaCabDocto();
+                }
+            });
+        });
+   });
+
+
+    $(function () {
+        $("#dialog-msjevalid").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+
+//    $(function () {
+//        $("#buscardocto").button()
+//        .click(function () {
+//             cargaCabDocto();
+//        });
+//    });
+
+    function cargaCabDocto() {
+         var randomnumber = Math.floor(Math.random() * 11111111);
+//        $("#cabDocto").html('<img src="@Url.Content("~/images/8.gif")">');
+        $("#cabDocto").load('@Url.Action("CargaCabeceraDocto", "Pallet")?r=' + randomnumber + '&Documento=' + $("#Documento").val());
+    }
+
+
+    function msjevalid(mensaje) {
+        $("#dialog-msjevalid").dialog("open");
+        $("#dialog-msjevalid").html(mensaje);
+    }
+
+    
+
+</script>
+
+<table><tr><td>
+
+<div id="CuadroImpresion" style="background-color:Gray;width:0px;height:00px"></div>
+</td><td><div id="ImpresionEtiquetaPallet" style="background-color:Green;visibility:hidden"></div>
+</td></tr></table>
+
+
+<div id="dialog-msjevalid" title="Mensaje"></div>
+
+
+@using (Ajax.BeginForm("Verc", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinVer(data)", OnFailure = "Javascript:Fin()" }, new { id = "frmBuscaMat" }))
+{
+    <table>
+    <div id="Fol">
+         <tr>
+           <td><strong> @Html.LabelFor(m => m.Documento)</strong></td>
+           <td>@Html.TextBoxFor(m => m.Documento, new { @style = "width:80px;font-size: 14px;text-align:right" })</td>
+           
+           <td>        
+           
+            <button id="buscardocto">
+                <div style="float:left;width:80px;">       
+                    <div style="float:left;"><img alt="Siguiente" src="@Url.Content("~/Images/gnome_go_next.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Buscar</div>                        
+                </div>                       
+            </button>
+        </td>
+
+        </tr>
+        <tr>
+        <td></td>
+           <td colspan="2">@Html.ValidationMessageFor(m => m.Documento)</td>
+       </tr>
+
+        </div> 
+    </table>
+    
+}
+
+
+<div id="cabDocto">
+</div>
+
+

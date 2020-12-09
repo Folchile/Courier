@@ -1,0 +1,26 @@
+﻿@model Courier.Models.AdministracionUsuario
+@{
+    var grid = new WebGrid(Model.oListaFunciones,rowsPerPage:15,ajaxUpdateContainerId:"myGrid3");    
+} 
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+tableStyle:"mGrid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("RoleName","Rol"),     
+    grid.Column("FL_PAR_LST_CONTROLLER","Controlador"),     
+    grid.Column("FL_PAR_LST_ACTION","Acción"),  
+
+    
+grid.Column("",header:"Acciones",format:@<text>
+                                        @Html.ActionLink("Editar", "edit", new { id = item.RoleName })
+                                    </text>)
+})

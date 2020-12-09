@@ -1,0 +1,134 @@
+﻿@model Courier.Models.RecepcionModels
+@{
+    var grid = new WebGrid(Model.oListaRecepcion, rowsPerPage: 9, ajaxUpdateContainerId: "myGridDespacho");    
+} 
+@{
+    var oSumPeso=(from x in Model.oListaRecepcion
+             where x.OK==true
+              select x.Peso    
+                  ).Sum();
+    var oSumPesoVol = (from x in Model.oListaRecepcion
+                    where x.OK == true
+                    select x.PesoVolumetrico
+                   ).Sum();
+    var oCount = (from x in Model.oListaRecepcion
+                    where x.OK == true
+                    select x.idBulto
+                   ).Count();
+}
+
+@if (Model.oListaRecepcion != null)
+{
+  
+    
+    <div  id="myGridDespacho" style="min-width:600px;">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {                
+                grid.Column("OK","OK",format:@<text>
+                @if (item.OK==true)
+                {
+                    <img src='@Url.Content("~/Images/tick.png")' alt="Ok" border="0" />
+                }                                                    
+                </text>), 
+                grid.Column("xn","X/n"),        
+                grid.Column("idBulto","Cód.Bulto",@<text>
+                    <label>B</label>@item.idBulto
+                </text>),
+                grid.Column("OTD","OT",format:@<text>
+                @item.OTP-@item.OTD
+                </text>),
+                grid.Column("Estado","Estado"),                
+                grid.Column("EstadoDetalle","EstDetalle"),     
+                grid.Column("Largo","Largo(CM)",format:@<text>
+                <div style="float:right">
+                    @if (item.Largo!=null)
+                    {
+                    @String.Format("{0:0.000}", item.Largo)
+                    }
+                </div>
+                </text>),
+                grid.Column("Alto","Alto(CM)",format:@<text>
+                <div style="float:right">    
+                @if (item.Alto!=null)
+                    {            
+                @String.Format("{0:0.000}", item.Alto)
+                    }
+                </div>
+                </text>),
+                grid.Column("Ancho","Ancho(CM)",format:@<text>
+                <div style="float:right">
+                @if (item.Ancho!=null)
+                    {
+                    @String.Format("{0:0.000}", item.Ancho)
+                    }
+                </div>
+                </text>),
+                grid.Column("Peso","Peso(KG)",format:@<text>
+                <div style="float:right">
+                @if (item.Peso!=null)
+                    {
+                    @String.Format("{0:0.000}", item.Peso)
+                    }
+                </div>
+                </text>),
+                grid.Column("PesoVOlumetrico","PesoVol.",format:@<text>
+                <div style="float:right">
+                @if (item.PesoVOlumetrico!=null)
+                    {
+                    @String.Format("{0:0.000}", item.PesoVOlumetrico)
+                    }
+                </div>
+                </text>),
+                grid.Column("OK","Opciones", format:@<text>
+                <div style="width:100%;text-align:center;">
+                    <a href="#" onclick="javascript:CargaHistorialBulto(@item.OTP, @item.OTD, @item.idBulto);"><img src='@Url.Content("~/Images/file_temporary.png")' alt="Ver Historial" title="Ver Historial" border="0" /></a>&nbsp;                    
+                </div>
+                </text>)                            
+            })
+        </div>
+    </div>
+    <table>
+        <tr>
+            <td><strong>Total Bultos OK</strong></td>
+            <td>
+                <div class="textfield_effect" style="width:100px;">
+                    <div style="float:right;">
+                        &nbsp;@oCount&nbsp;                       
+                    </div>               
+                </div>
+            </td>
+            <td><strong>&nbsp; &nbsp; &nbsp; Total Peso(KG)</strong></td>
+            <td>
+                <div class="textfield_effect" style="width:100px;">
+                    <div style="float:right;">        
+                        @String.Format("{0:0.000}", oSumPeso)        
+                    </div>               
+                </div>
+            </td>
+            <td><strong>&nbsp; &nbsp; &nbsp; Total Peso Vol.</strong></td>
+            <td>
+                <div class="textfield_effect" style="width:100px;">
+                    <div style="float:right;">        
+                        @String.Format("{0:0.000}", oSumPesoVol)        
+                    </div>               
+                </div>            
+            </td>
+        </tr>
+    </table> 
+}
+else
+{
+    <div>No Se han ingresado Bultos</div>
+}

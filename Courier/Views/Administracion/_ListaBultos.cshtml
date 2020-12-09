@@ -1,0 +1,210 @@
+﻿@model Courier.Models.AdministracionBultoModels
+@{
+    var grid = new WebGrid(Model.ListaBultos, rowsPerPage: 9, ajaxUpdateContainerId: "myGrid");    
+} 
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#dialog-impresionBulto").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Imprimir: function () {
+                    $("#CuadroImpresion").html("");
+                    $("#vConf").val("5");
+                    $.ajax({
+                        url: '@Url.Action("ImpresionBultosOTD","Preparacion")',
+                        data: {
+                            vOTP: $("#vOTP").val(),
+                            vOTD: $("#vOTD").val(),
+                            vConf: $("#vConf").val(),
+                            vIdBulto: $("#vIdBulto").val()
+                        },
+                        type: "POST",
+                        success: function (data) {
+                            $("#CuadroImpresion").html(data);
+                            setTimeout(function () { $('#CuadroImpresion').html(""); }, 6000);
+                            $("#dialog-impresionBulto").dialog("close");
+                        },
+                        error: function () {
+                            alert("No fue posible Imprimir");
+                            closeWaitingDialog();
+                        }
+                    });
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-cambiarPeso").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                "Guardar Cambios": function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmModificaBulto");
+                    if ($("#frmModificaBulto").valid() == true) {                        
+                        $("dialog-cambiarPeso").dialog("close");
+                        waitingDialog({ title: "Guardando", message: "Guardando Datos...<br/>" });
+                        $.ajax({
+                            url: '@Url.Action("GuardarCambioPeso","Administracion")',
+                            data: {
+                                MP_Bulto: $("#MP_Bulto").val(),
+                                MP_KG: $("#MP_KG").val()
+                            },
+                            type: "POST",
+                            success: function (data) {
+                                $("#dialog-cambiarPeso").dialog("close");
+                                closeWaitingDialog();
+                                if (data.Ok == true) {
+                                    $("#dialog-fincambios").html("<p>Camios guardados exitosamente!</p>");
+                                    $("#dialog-fincambios").dialog("open");
+                                    BuscarDatos();
+                                }
+                                else {
+                                    $("#dialog-fincambios").html("<p>No fue posible guardar los cambios</p><p>" & data.Mensaje & "</p>");
+                                    $("#dialog-fincambios").dialog("open");
+                                }
+                            },
+                            error: function () {
+                                alert("No fue posible guardar la información");
+                                closeWaitingDialog();
+                            }
+                        });
+                    }
+
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-fincambios").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                "Aceptar": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+    function ImprimirEtiquetaBulto(idBulto) {        
+        $("#CuadroImpresion").html("");
+        $("#vIdBulto").val(idBulto);        
+        $("#dialog-impresionBulto").html("<p>¿Esta seguro(a) que desea imprimir la Etiqueta?</p>");
+        $("#dialog-impresionBulto").dialog("open");
+    }
+    function CambiarPeso(idBulto) {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $.ajax({
+            url: '@Url.Action("FormularioPesoBulto","Administracion")',
+            data: {
+                MP_Bulto: idBulto                
+            },
+            type: "POST",
+            success: function (data) {
+                closeWaitingDialog();
+                $("#dialog-cambiarPeso").html(data);                
+                $("#dialog-cambiarPeso").dialog("open");
+                borrar_contenido();
+            },
+            error: function () {
+                alert("No fue posible cargar el formulario");
+                closeWaitingDialog();
+            }
+        });
+    }
+</script>
+<div id="dialog-impresionBulto" title="Impresión de Bulto"></div>
+<div id="dialog-cambiarPeso" title="Cambiar Peso Bulto">
+<div id="dialog-fincambios" title="Resultado"></div>
+    
+</div>
+
+<input type="hidden" id="vOTD" name="vOTD" value="@Model.bOTD" />
+<input type="hidden" id="vOTP" name="vOTP" value="@Model.bOTP" />
+<input type="hidden" id="vConf" name="vConf" value="" />    
+<input type="hidden" id="vIdBulto" name="vIdBulto" value="" />
+
+<div  id="myGrid" style="min-width:600px;">
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    htmlAttributes:new {id="tablaBultos"},
+    nextText: "Siguiente >",
+    lastText: "Última >>",            
+    columns: new[]
+    {                
+                    
+        grid.Column("PK_FOL_BLT_ID","Cod.Bulto",@<text>
+        <label>B</label>@item.PK_FOL_BLT_ID
+        </text>),     
+        grid.Column("FL_FOL_EST_NOMBRE","Estado"), 
+        grid.Column("FL_FOL_EST_DESCRIPCION","Descripción"), 
+        grid.Column("SUC_ACTUAL","Suc.Actual"),    
+        grid.Column("FL_FOL_BLT_LARGO","Largo(CM)",format:@<text>
+        <div style="float:right">
+            @if (item.FL_FOL_BLT_LARGO != null)
+            {
+            @String.Format("{0:0.000}", item.FL_FOL_BLT_LARGO)
+            }
+        </div>
+        </text>),
+        grid.Column("FL_FOL_BLT_ALTO","Alto(CM)",format:@<text>
+        <div style="float:right">    
+        @if (item.FL_FOL_BLT_ALTO != null)
+            {            
+        @String.Format("{0:0.000}", item.FL_FOL_BLT_ALTO)
+            }
+        </div>
+        </text>),
+        grid.Column("FL_FOL_BLT_ANCHO","Ancho(CM)",format:@<text>
+        <div style="float:right">
+        @if (item.FL_FOL_BLT_ANCHO != null)
+            {
+            @String.Format("{0:0.000}", item.FL_FOL_BLT_ANCHO)
+            }
+        </div>
+        </text>),
+        grid.Column("FL_FOL_BLT_PESO","Peso(KG)",format:@<text>
+        <div style="float:right">
+        @if (item.FL_FOL_BLT_PESO != null)
+            {
+            @String.Format("{0:0.000}", item.FL_FOL_BLT_PESO)
+            }
+        </div>
+        </text>),
+        grid.Column("FL_FOL_BLT_PESO_VOLUMETRICO","PesoVol.",format:@<text>
+        <div style="float:right">
+        @if (item.FL_FOL_BLT_PESO_VOLUMETRICO != null)
+            {
+            @String.Format("{0:0.000}", item.FL_FOL_BLT_PESO_VOLUMETRICO)
+            }
+        </div>
+        </text>),
+        grid.Column("PK_FOL_BLT_ID","Opciones",format:@<text>
+        <div style="width:100%;text-align:center;">        
+            @if (Model.PuedeReImprimirEtiqueta==true)
+            {
+                <a href="#" onclick="Javascript:ImprimirEtiquetaBulto(@item.PK_FOL_BLT_ID)">[Imprimir Etiqueta]</a>
+            }
+            @if (Model.PuedeModificarPesoBulto==true)
+            {
+                <a href="#" onclick="Javascript:CambiarPeso(@item.PK_FOL_BLT_ID)">[Cambiar Peso]</a>
+            }
+            
+        </div>
+        </text>)                          
+    })        
+</div>

@@ -1,0 +1,172 @@
+﻿@model MvcReporteViajes.Models.VehiculosModels
+@{
+    var grid = new WebGrid(Model.VerVehiculosdet, rowsPerPage: 12, ajaxUpdateContainerId: "gridVehiculos");
+}
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+    $(function () {
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        });
+
+        $("#asigsucursales").dialog({ title: '|  Asignación Sucursales  |',
+            autoOpen: false, position: { my: 'center top', at: 'center top' }, minWidth: 1200, modal: true,
+            buttons: {
+                Cerrar: function () {
+                    $(this).dialog("close");
+
+                }
+            }
+        });
+    })
+
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editarvehiculo").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+//                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmeditaVehiculo");
+                    if ($("#frmeditaVehiculo").valid() == true) {
+                        $("#frmeditaVehiculo").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+    });
+
+
+
+
+    function EditarVehiculo(id_vehic) {
+        $("#id_vehic").val(id_vehic);
+        $("#dialog-resultado").html("");
+        $("#frmeditvehic").submit();
+        $("#dialog-editarvehiculo").dialog("open");
+        $("#dialog-editarvehiculo").html('<img src="@Url.Content("~/images/38.gif")">');
+    }
+
+
+    function AsignaVehiculos(vid, vpat) {
+        $("#IdVehic").val(vid);
+        $("#PatenteAux").val(vpat);
+//        alert($("#PatenteAux").val(vpat));
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Cargando Datos", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("IndexSucursales", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                 IdVehic: $("#IdVehic").val(),
+                 PatenteAux: $("#PatenteAux").val()
+            }
+        })
+        .done(function (data) {
+            $("#asigsucursales").html(data);
+            $("#asigsucursales").dialog("open");
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la lista de Vehiculos</p>");
+            $("#dialog-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+
+
+
+
+</script>
+
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-editarvehiculo" title="Mantención"></div>
+
+@using (Ajax.BeginForm("EditarDetalleVehiculo", "ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editarvehiculo" }, new { id = "frmeditvehic" }))
+{
+    <input type="hidden" name="id_vehic" id="id_vehic" />
+}
+
+
+@Html.HiddenFor(m => m.IdVehic)
+@Html.HiddenFor(m => m.PatenteAux)
+<div id="gridVehiculos">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Vid","ID"),
+       grid.Column("Vpatente","PATENTE"),
+       grid.Column("Vmarca","MARCA"),
+       grid.Column("Vmodelo","MODELO"),
+       grid.Column("Vcapkgs","CAPACIDAD KGS"),
+       grid.Column("Vcapm3","CAPACIDAD M3"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                        @*<a href="#" title="Editar Patente @item.Vpatente" onclick="EditarVehiculo('@item.Vid')">Editar</a>*@
+                                        <a href="#" onclick="javascript:EditarVehiculo('@item.Vid')"><img border="0" src='@Url.Content("~/Images/truck-pencil-icon-icon.png")' alt="Editar @item.Vpatente" title="Editar @item.Vpatente"/></a>
+                                        <a href="#" onclick="javascript:AsignaVehiculos('@item.Vid','@item.Vpatente')"><img border="0" src='@Url.Content("~/Images/store_plus.png")' alt="Asignar Sucursal @item.Vpatente" title="Asignar Sucursal a @item.Vpatente"/></a>
+                                    </text>)
+ })
+</div>
+<div id="asigsucursales">
+
+</div>

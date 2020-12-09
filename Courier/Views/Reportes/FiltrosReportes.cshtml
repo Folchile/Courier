@@ -1,0 +1,179 @@
+﻿@model Courier.Models.ReportesModels
+@{
+    ViewBag.Title = "Filtros Reportes";
+}
+
+<script type = "text/javascript">
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');
+        }
+
+    $(function () {
+        $(".tipofecha").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+    })
+
+    $("#btnGenera").button()
+        .click(function () {
+            var inicio = $("#FechaIni").val();
+            var final = $("#FechaTer").val();
+            var sucur = $("#Sucursal").val();
+
+            if ($("#Reportes").val() == "3") {
+                if (sucur == "") {
+                    alert("Falta Seleccionar Filtros.");
+                    return;
+                }
+                window.open('@Url.Action("IndexStock","Reportes")?pSuc=' + $("#Sucursal").val());
+            }
+            else if ($("#Reportes").val() == "2") {
+                if (sucur == "") {
+                    alert("Falta Seleccionar Filtros.");
+                    return;
+                }
+                window.open('@Url.Action("IndexHojaRuta","Reportes")?pFecIni=' + $("#FechaIni").val() + '&pFecTer=' + $("#FechaTer").val() + '&pSuc=' + $("#Sucursal").val());
+            }
+            else {
+
+                if (inicio == "" || final == "" || sucur == "") {
+                    alert("Falta ingresar Filtros.");
+                    return;
+                }
+
+                var DateIni = inicio;
+                var elem = DateIni.split('-');
+                diai = String(elem[0]); mesi = String(elem[1]); añoi = String(elem[2]);
+
+                var DateTer = final;
+                var elem = DateTer.split('-');
+                diat = String(elem[0]); mest = String(elem[1]); añot = String(elem[2]);
+
+                inicio = añoi + mesi + diai
+                final = añot + mest + diat
+
+                if (inicio > final) {
+                    alert("Fecha Inicio debe ser menor a fecha de Termino");
+                    return;
+                }
+
+                if ($("#Reportes").val() == "1") {
+                    var randomnumber = Math.floor(Math.random() * 1111111);
+                    if ($("#RutCli").val() == "96709730") {
+                        window.open('@Url.Action("GeneraExcelTransporte_TechData","Reportes")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val() + '&SUC_ID=' + $("#Sucursal").val() + '&RUTCLI=' + $("#RutCli").val() + '&r=' + randomnumber);
+                    }
+                    else if ($("#RutCli").val() == "87845500") {
+                        window.open('@Url.Action("GeneraExcelTransporte_Konexia","Reportes")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val() + '&SUC_ID=' + $("#Sucursal").val() + '&RUTCLI=' + $("#RutCli").val() + '&r=' + randomnumber);
+                    }
+                    else {
+                        window.open('@Url.Action("GeneraExcelTransporte","Reportes")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val() + '&SUC_ID=' + $("#Sucursal").val() + '&r=' + randomnumber);
+                    }
+
+                    //  if ($("#RutCli").val() != "96709730") {
+                    //     window.open('@Url.Action("GeneraExcelTransporte","Reportes")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val() + '&SUC_ID=' + $("#Sucursal").val() + '&r=' + randomnumber);
+                    //     }
+                    //  else {
+                    //    window.open('@Url.Action("GeneraExcelTransporte_TechData","Reportes")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val() + '&SUC_ID=' + $("#Sucursal").val() + '&RUTCLI=' + $("#RutCli").val() + '&r=' + randomnumber);
+                    //  }
+                    //window.open('@Url.Action("GeneraExcelTransporte","Reportes")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val() + '&SUC_ID=' + $("#Sucursal").val() + '&r=' + randomnumber);
+                    //window.open('@Url.Action("IndexTransporte","Reportes")?pFecIni=' + $("#FechaIni").val() + '&pFecTer=' + $("#FechaTer").val() + '&pSuc=' + $("#Sucursal").val());
+                }
+                else if ($("#Reportes").val() == "2") {
+                    window.open('@Url.Action("IndexHojaRuta","Reportes")?pFecIni=' + $("#FechaIni").val() + '&pFecTer=' + $("#FechaTer").val() + '&pSuc=' + $("#Sucursal").val());
+                }
+                else if ($("#Reportes").val() == "4") {
+                    window.open('@Url.Action("IndexDevolucion","Reportes")?pFecIni=' + $("#FechaIni").val() + '&pFecTer=' + $("#FechaTer").val() + '&pSuc=' + $("#Sucursal").val());
+                }
+            }
+
+        });
+
+    function Inicio() {
+        waitingDialog({ title: "Cargando", message: "Cargando...<br/>" });
+    }
+    function FinVer(data) {
+        $("#formContent").hide();
+        $("#formContent").html(data);
+        $("#formContent").show("fade", {}, 500);
+        closeWaitingDialog();     
+    }
+    function Fin() {
+        alert("Ocurrio un error");
+        closeWaitingDialog();
+    }
+</script>
+
+<h2>Filtros Informes</h2>  
+    <div id="formContent">
+@*        @using (Ajax.BeginForm(Model.NomIndexReporte, "Reportes", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinVer(data)", OnFailure = "Javascript:Fin()" }, new { id = "frmFiltro" }))
+        {*@
+            @Html.HiddenFor(m => m.Reportes)
+            @Html.HiddenFor(m => m.RutCli)
+            <div>
+                <fieldset>
+                    <legend>Filtro</legend>
+
+                        <table>
+                            <tr>
+                                @if (Model.Reportes == "3" || Model.Reportes == "2")
+                                {
+                                    <td colspan="3">@Html.LabelFor(m => m.Sucursal)</td>
+                                }
+                                else
+                                {
+                                    <td>@Html.LabelFor(m => m.Sucursal)</td>
+                                    <td>@Html.LabelFor(m => m.FechaIni)</td>@Html.ValidationMessageFor(m => m.FechaIni)
+                                    <td>@Html.LabelFor(m => m.FechaTer)</td>@Html.ValidationMessageFor(m => m.FechaTer)                                        
+                                }
+                            </tr>
+                            <tr>
+                                @if (Model.Reportes == "3" || Model.Reportes == "2")
+                                {
+                                    <td>@Html.DropDownListFor(m => m.Sucursal, Model.ListaSucursal)</td>
+                                }
+                                else
+                                {
+                                    <td>@Html.DropDownListFor(m => m.Sucursal, Model.ListaSucursal)</td>
+                                    <td>@Html.TextBoxFor(m => m.FechaIni, new { @class = "tipofecha" })</td> 
+                                    <td>@Html.TextBoxFor(m => m.FechaTer, new { @class = "tipofecha" })</td>
+                                }
+
+  
+                            </tr>
+                            <tr>
+                                @if (Model.Reportes == "3" || Model.Reportes == "2")
+                                {
+                                    <td>@Html.ValidationMessageFor(m => m.Sucursal)</td>
+                                }
+                                else
+                                {
+                                    <td>@Html.ValidationMessageFor(m => m.Sucursal)</td>
+                                    <td>@Html.ValidationMessageFor(m => m.FechaIni)</td>
+                                    <td>@Html.ValidationMessageFor(m => m.FechaTer)</td>
+                                }
+                            </tr>
+                        </table> 
+                </fieldset>
+            </div>
+        @*}*@
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <input type="hidden" name="sucursal_id" id="sucursal_id" />
+                    <button id="btnGenera">
+                        <div style="float:left;width:150px;">       
+                        <div style="float:left;"><img alt="Generar Datos Excel" src="@Url.Content("~/Images/doc_excel_table.png")" /></div>                 
+                        <div style="float:left;">&nbsp;Descarga Informe</div>                        
+                        </div>                          
+                    </button> 
+                </td>
+            </tr>
+        </table>
+    </div>

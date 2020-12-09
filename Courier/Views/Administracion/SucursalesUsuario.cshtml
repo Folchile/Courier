@@ -1,0 +1,61 @@
+﻿@model Courier.Models.SucursalesUsuarioModels
+@{
+    ViewBag.Title = "Sucursales Usuario";
+}
+@{
+    var grid = new WebGrid(Model.oListaSucursales,rowsPerPage:6,ajaxUpdateContainerId:"myGrid31122");    
+} 
+<script type="text/javascript">
+    $(function () {
+        $("#agregarsucursal").button();
+    })
+</script>
+
+<table>
+    @Html.HiddenFor(m=>m.RutVE)
+    <tr>
+        <td>@Html.LabelFor(m=>m.EditTipoSucursal)</td>
+        <td>@Html.LabelFor(m => m.EditCliente)</td>
+        <td>@Html.LabelFor(m => m.EditSucursal)</td>
+    </tr>
+    <tr>
+        <td>@Html.DropDownListFor(m => m.EditTipoSucursal, Model.ListaTUS, "-- Seleccione Tipo --", new { @onchange = "javascript:EditUplCliente(this.value);EditUpdListaSucursal(this.value,$('#EditCliente').val());" })</td>
+        <td style="width:180px"><div id="EditimgCliente"><img alt="Cargando..." src='@Url.Content("~/Images/38.gif")' border='0' /></div>@Html.DropDownListFor(m => m.EditCliente, Model.ListaCLIENTE, "-- Seleccione Cliente --", new { @onchange = "javascript:EditUpdListaSucursal($('#EditTipoSucursal').val(),this.value);" })</td>
+        <td style="width:180px"><div id="EditimgSucursal"><img alt="Cargando..." src='@Url.Content("~/Images/38.gif")' border='0' /></div>@Html.DropDownListFor(m => m.EditSucursal, Model.ListaSUCURSAL, "-- Seleccione Sucursal --")</td>
+        <td>
+            <button id="agregarsucursal" onclick="javascript:EditGuardaUsuarioInsert()" style="margin-bottom:9px;">
+                <div style="float:left;">       
+                <div style="float:left;"><img alt="" src="@Url.Content("~/Images/forward.png")" /></div>                 
+                <div style="float:left;">&nbsp;Agregar</div>                        
+                </div>                       
+            </button>
+        </td>
+    </tr>
+</table>
+<div id="myGrid31122">
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle:"mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+        grid.Column("FL_PAR_TUS_NOMBRE","Tipo"),     
+        grid.Column("FL_CLI_EMP_FANTASIA","Empresa"),     
+        grid.Column("FL_PAR_SUC_NOMBRE","Sucursal"),
+        grid.Column("FL_PAR_SUC_NOMBRE","Opciones",@<text>
+        <a href="#" onclick="javascript:EliminarSucUsuario(@Model.RutVE,@item.PK_PAR_SUC_ID)">[Eliminar]</a>
+        </text>)
+    })
+</div>
+
+<script type="text/javascript">
+    $("#EditimgSucursal").hide();
+    $("#EditimgCliente").hide();
+</script>

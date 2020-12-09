@@ -1,0 +1,128 @@
+﻿@model Courier.Models.CorreoModels
+<script type="text/javascript">
+    function CargaListaServicio(Empresa) {
+        waitingDialog({ title: "Buscando", message: "Buscando Lista Servicios...<br/>" });
+        $("#SUE_SER_ID").load('@Url.Action("DropDownServicio","Administracion")?CLI_RUT=' + Empresa + ' #Servicio option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    function ActualizaListaCompleta(Rut) {
+        waitingDialog({ title: "Buscando", message: "Buscando Lista...<br/>" });
+        $("#myGridCorreo").load('@Url.Action("FormularioCorreo","Administracion")?Rut=' + Rut + ' #myGridCorreo', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    
+    $(function () {
+        $(".botonGuardar").button();
+    })
+    function GuardarEnviarCorreo() {
+        borrar_contenido();
+        event.preventDefault();
+        $.validator.unobtrusive.parse("#frmGuardarDatosCorreo");
+        if ($("#frmGuardarDatosCorreo").valid() == true) {
+            $("#frmGuardarDatosCorreo").submit();
+        }
+    }
+    function InicioCorreo() {
+        waitingDialog({ title: "Guardando", message: "Guardando datos...<br/>" });
+    }
+    function FinCorreo(data)
+    {        
+        closeWaitingDialog();
+        if (data.Ok == true) {            
+            CorreoUsuario(data.OTD + '-1');
+            $("#dialog-correo-usuario").dialog("close");
+        }
+        else {            
+            alert(data.Mensaje);              
+        }
+    }
+    function FinErrorCorreo() {
+        closeWaitingDialog();
+        alert("Se ha producido un error");
+    }
+    function EliminarCorreoUsuario(RutCorreo, Servicio, Estado) {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $.ajax({
+            url: '@Url.Action("EliminarCorreoUsuario", "Administracion")',
+            data: {
+                RutCorreo: RutCorreo,
+                SUE_SER_ID: Servicio,
+                SUE_EST_ID: Estado,
+                r: randomnumber
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                $("#dialog-correo-usuario").dialog("close");
+                CorreoUsuario(data.OTD + '-1');                               
+            },
+            error: function () {
+                closeWaitingDialog();
+                alert("no fue eliminar el elemento");
+            }
+        });
+    }
+</script>
+@using (Ajax.BeginForm("GuardaFormularioCorreo", "Administracion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:InicioCorreo()", OnSuccess = "Javascript:FinCorreo(data)", OnFailure = "Javascript:FinErrorCorreo()" }, new { id = "frmGuardarDatosCorreo" }))
+{
+    @Html.HiddenFor(m => m.RutCorreo)
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.Empresa)</td>
+            <td>@Html.LabelFor(m => m.SUE_SER_ID)</td>
+            <td>@Html.LabelFor(m => m.SUE_EST_ID)</td>
+            <td rowspan="2">
+                 <button class="botonGuardar" style="margin-top:14px;" onclick="javascript:GuardarEnviarCorreo()">
+                    <div style="float:left;width:80px;">       
+                    <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/45.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Agregar</div>                        
+                    </div>                       
+                 </button>
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.DropDownListFor(m => m.Empresa, Model.ListaEmpresas, "-- Seleccione Empresa --", new { @onchange = "javascript:CargaListaServicio(this.value);" })</td>
+            <td>@Html.DropDownListFor(m => m.SUE_SER_ID, Model.ListaServicios, "-- Seleccione Servicio --")</td>
+            <td>@Html.DropDownListFor(m => m.SUE_EST_ID, Model.ListaEstados, "-- Seleccione un Estado --")</td>                
+        </tr>
+        <tr>
+            <td>@Html.ValidationMessageFor(m => m.Empresa)</td>
+            <td>@Html.ValidationMessageFor(m=>m.SUE_SER_ID)</td>
+            <td>@Html.ValidationMessageFor(m => m.SUE_EST_ID)</td>
+        </tr>
+    </table>
+}
+<div id="myGridCorreo">
+@{
+    var grid = new WebGrid(Model.ListaCorreo,rowsPerPage:10,ajaxUpdateContainerId:"myGridCorreo");    
+} 
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+tableStyle:"mGrid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("FL_CLI_EMP_FANTASIA","Empresa"),    
+    grid.Column("FL_PAR_SER_NOMBRE","Servicio"),     
+    grid.Column("FL_FOL_EST_NOMBRE","Estado"),        
+    grid.Column("",header:"Acciones",format:@<text>
+        <a href="#" onclick="javascript:EliminarCorreoUsuario(@Model.RutCorreo,@item.PK_PAR_SER_ID,@item.PK_FOL_EST_ID)">Eliminar</a>
+        
+    </text>)
+})
+</div>

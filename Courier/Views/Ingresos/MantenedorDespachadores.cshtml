@@ -1,0 +1,116 @@
+﻿@model MvcReporteViajes.Models.DespachadorModels
+@{
+    ViewBag.Title = "DESPACHADORES";
+}
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#tabs").tabs();
+        cargaDespachadores();
+    });
+
+    $(function () {
+        $("#ingdesp").button()
+          .click(function () {
+              CargaAgregaDespachador();
+          });
+          $("#agredesp").dialog({ autoOpen: false, title: "Ingreso Datos", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+              buttons: {
+              Grabar: function () {
+                      borrar_contenido();
+                      $.validator.unobtrusive.parse("#frmAgregaDespachador");
+                      if ($("#frmAgregaDespachador").valid() == true) {
+                          $("#frmAgregaDespachador").submit();
+                          $(this).dialog("close");
+                      }
+                  },
+                  Cancelar: function () {
+                      $(this).dialog("close");
+                  }
+                 
+              }
+          });
+    });
+
+
+
+    $(function () {
+          $("#dialog-resulta").dialog({
+              autoOpen: false,
+              height: 'auto',
+              width: 'auto',
+              modal: true,
+
+              buttons: {
+                  Aceptar: function () {
+                      $(this).dialog("close");
+
+                  }
+
+              }
+          })
+      })
+
+
+
+    function CargaAgregaDespachador() {
+        $("#agredesp").dialog("open");
+        $("#agredesp").load('@Url.Action("CreaDespachador","Ingresos")', function (response, status, xhr) {
+            borrar_contenido();
+          });
+      }
+
+   function cargaDespachadores() {
+          $("#verDetalledesp").load('@Url.Action("VerDetalleDespachadores","Ingresos")', function (response, status, xhr) {
+
+              if (status == 'error')
+                  alert("No fue posible cargar la información");
+          });
+   }
+
+   function borrar_contenido() {
+
+       $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+       $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+   }
+
+</script>
+
+
+<div id="dialog-resulta" title="Resultado"></div>
+
+
+
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Detalle</a></li>		        
+	</ul>	
+	<div id="tabs-1">		
+        <div style="float:right;"> 
+         <button id="ingdesp">                
+                <table border="0" cellpadding="0" cellspacing="2">
+                    <tr valign="middle"><td><img alt="Agregar Despachador" src="@Url.Content("~/Images/user_blue_add2.png")" /></td><td>&nbsp;Agregar Despachador</td></tr>
+                </table>                                
+         </button>
+         </div>
+         <div id="verDetalledesp">
+
+        </div>
+    </div>
+</div>
+
+<div id="agredesp">
+
+</div>

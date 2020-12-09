@@ -1,0 +1,27 @@
+﻿@model Courier.Models.CalculoDestinoModels
+@{
+    ViewBag.Title = "ListaDestino";
+}
+
+<font>Sucursal Destino @Model.SucursalDestinoManifiesto</font>
+
+@{
+    var grid = new WebGrid(Model.oListaDestino,rowsPerPage:15,ajaxUpdateContainerId:"myGrid");    
+} 
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+tableStyle: "mGrid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("Orden","Orden"), 
+    grid.Column("SUC_DESTINO","Destino"),
+    grid.Column("Descripcion","Descripción")
+})

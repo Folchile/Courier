@@ -1,0 +1,736 @@
+﻿@model Courier.Models.IngresoPedidoModel
+
+@{
+    string oTCom = "";
+    string oTComV = "";
+    if (Model.oObligatoria.Localidad == false)
+    {
+        oTCom = "CargarLocalidad(0);";
+        oTComV = "CargarLocalidad(this.value);";
+    }
+    else
+    {
+        oTCom = "vCargarLocalidad(0);";
+        oTComV = "vCargarLocalidad(this.value);";
+    }
+}
+<script type="text/javascript">
+    function CargarLocalidad(Comuna) {
+        //alert("loalidad");
+        $("#divLocalidadDestino").html('<img src="@Url.Content("~/Images/38.gif")" />');
+        $("#Localidad").load('@Url.Action("DropDownLocalidad", "Pedido")?idComuna=' + Comuna + '&Servicio=' + $("#Servicio").val() + '#Localidad option',
+        function (response, status, xhr) {
+            $("#divLocalidadDestino").html("");
+            $("#Localidad").val("");
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    function vCargarLocalidad(Comuna) {
+        //alert("vlocalidad");
+        $("#divLocalidadDestino").html('<img src="@Url.Content("~/Images/38.gif")" />');
+        $("#vLocalidad").load('@Url.Action("DropDownLocalidad", "Pedido")?idComuna=' + Comuna + '&Servicio=' + $("#Servicio").val() + '#Localidad option',
+        function (response, status, xhr) {
+            $("#divLocalidadDestino").html("");
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+
+
+
+        function Inicio2() {
+       
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+                
+        }
+        function Fin2() {
+            closeWaitingDialog();   
+        }
+        function FinIngreso232(data) {
+            closeWaitingDialog();            
+            if (data.Ok == true) {
+                $("#Servicio").val("");
+                $("#idFormulario").html("");
+            }
+            
+            $("#dialog-resultado").html(data.Mensaje)
+            $("#dialog-resultado").dialog("open");                        
+        }
+        function borrar_errores() {
+
+            $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+            $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');
+        }
+        $(function () {            
+            $("#idAceptar").button()
+                        .click(function () {
+                            var form = $("#frmEnviarFormulario");
+                            form.removeData("validator").removeData("unobtrusiveValidation");
+                            $.validator.unobtrusive.parse(form);
+
+                            if (form.valid() == true) {
+                                $("#dialog-aceptar2").html("<p>¿Esta seguro(a) que desea guardar la información?</p>")
+                                $("#dialog-aceptar2").dialog("open");
+                            }
+                            else {
+                                $("#dialog-aceptar2").html($("#idValidation").html());
+                                $("#dialog-aceptar2").dialog("open");
+                            }
+
+                        });
+            $("#idCancelar").button()
+                        .click(function () {
+                            $("#dialog-cancelar").html("<p>¿Esta seguro(a) que desea cancelar el ingreso?</p>")
+                            $("#dialog-cancelar").dialog("open");
+                        });
+
+            $("#dialog:ui-dialog").dialog("destroy");
+            $("#dialog-cancelar").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        $("#idFormulario").html("");
+                        $(this).dialog("close");
+                    },
+                    Cancelar: function () { $(this).dialog("close"); }
+                }
+            });
+            $("#dialog-resultado").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+            $("#dialog-aceptar2").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        //                        alert($("#frmEnviarFormulario").valid());
+                        if ($("#frmEnviarFormulario").valid()) {
+                            $("#frmEnviarFormulario").submit();
+                            $(this).dialog("close");
+                        }
+                        else {
+                            $(this).dialog("close");
+                        }
+                    },
+                    Cancelar: function () { $(this).dialog("close"); }
+                }
+            });
+
+            $("#dialog-idMensajes").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        });
+
+        function CambioComunaRetiro(comuna) {            
+            $("#divLocalidadRetiro").html('<img src="@Url.Content("~/Images/38.gif")" />');
+            $("#divLocalidadRetiro").load('@Url.Action("DropDownLocalidadRetiro", "Pedido")?idRegion=' + $("#RetiroRegion").val() + '&idComuna=' + comuna + ' #contentLocalidadResult');
+        }
+</script>
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-cancelar" title="Cancelar"></div>
+<div id="dialog-aceptar2" title="Guardar Formulario"></div>
+@using (Ajax.BeginForm("GuardarIngresoManual", "Pedido", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio2();", OnComplete = "javascript:Fin2();", OnFailure = "javascript:Fin2();", OnSuccess = "javascript:FinIngreso232(data);" }, new { id = "frmEnviarFormulario" }))
+{
+    @Html.HiddenFor(m => m.RutCliente)
+    @Html.HiddenFor(m => m.Servicio)
+    @Html.HiddenFor(m => m.opt)
+    @Html.HiddenFor(m => m.OT_Papel_Paso);
+    <div style="visibility:hidden;height:1px;">           
+        @Html.ValidationSummary(null, new { id = "idValidation" })
+    </div>
+
+                                         //Validaciones
+
+                                         if (Model.OT_Papel_Paso != null && Model.OT_Papel_Paso != "")
+                                         {
+         <h2>Datos OT Papel</h2>
+         <table>
+            <tr>
+                <td>Tipo</td>
+            </tr>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.TMM_ID, Model.oLista_TMM, "-- Seleccione Tipo OT --")
+                @Html.ValidationMessageFor(m => m.TMM_ID)
+                </td>
+            </tr>
+         </table>
+                                                                 
+                                         }
+
+                                         if (Model.oColumnas.TipoDocumento == true || Model.oColumnas.NumeroDocumento == true)
+                                         {
+        <h2>Referencias Personalizadas Cliente</h2>
+        <table>
+            <tr>
+                @if (Model.oColumnas.TipoDocumento == true)
+                {<td>@Html.LabelFor(m=>m.TipoDocumento)</td>}
+                @if (Model.oColumnas.NumeroDocumento == true)
+                {<td>@Html.LabelFor(m => m.NumeroDocumento)</td>}
+            </tr>
+            <tr>
+             @if (Model.oColumnas.TipoDocumento == true)
+                {<td>
+                    @if (Model.oObligatoria.TipoDocumento == false)
+                    {@Html.DropDownListFor(m => m.TipoDocumento, Model.ListaTipoDocumento, "-- Seleccione --")}
+                    else
+                    {@Html.DropDownListFor(m => m.vTipoDocumento, Model.ListaTipoDocumento, "-- Seleccione --")}
+                </td>}
+                @if (Model.oColumnas.NumeroDocumento == true)
+                {<td>@if (Model.oObligatoria.NumeroDocumento == false)
+                     {@Html.TextBoxFor(m => m.NumeroDocumento)}
+                     else
+                     {@Html.TextBoxFor(m => m.vNumeroDocumento)}</td>}
+             </tr>                                                                                     
+        </table>
+                                           } 
+                                         
+                                         if (Model.oColumnas.Id == true || Model.oColumnas.Referencia == true)
+                                         {
+        <h2>Referencias Cliente</h2>
+        <table>
+            <tr>
+                @if (Model.oColumnas.Id == true)
+                {<td>Referencia 1 (N° @Model.NombreRef1)</td>}
+                @if (Model.oColumnas.Referencia == true)
+                {<td>Referencia 2 (N° @Model.NombreRef2)</td>}
+            </tr>
+            <tr>
+                @if (Model.oColumnas.Id == true)
+                {<td>
+                    @if (Model.oObligatoria.Id == false)
+                    {@Html.TextBoxFor(m => m.Id, new { size = 18, maxlength = 18 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vId, new { size = 18, maxlength = 18 })}
+                </td>}
+                @if (Model.oColumnas.Referencia == true)
+                {<td>@if (Model.oObligatoria.Referencia == false)
+                     {@Html.TextBoxFor(m => m.Referencia, new { size = 18, maxlength = 18 })}
+                     else
+                     {@Html.TextBoxFor(m => m.vReferencia, new { size = 18, maxlength = 18 })}</td>}
+            </tr>
+            <tr>
+                @if (Model.oColumnas.Id == true)
+                {<td>
+                    @if (Model.oObligatoria.Id == false)
+                    {@Html.ValidationMessageFor(m => m.Id)}
+                    else
+                    {@Html.ValidationMessageFor(m => m.vId)}
+                </td>}
+                @if (Model.oColumnas.Referencia == true)
+                {<td>@if (Model.oObligatoria.Referencia == false)
+                     {@Html.ValidationMessageFor(m => m.Referencia)}
+                     else
+                     {@Html.ValidationMessageFor(m => m.vReferencia)}</td>}
+            </tr>
+        </table>
+                                         }
+                                         if (Model.oColumnas.Destinatario == true || Model.oColumnas.Rut == true)
+                                         {
+        <h2>Destinatario</h2>
+        <table>
+            <tr>
+                @if (Model.oColumnas.Rut == true)
+                {<td>@Html.LabelFor(m => m.Rut)</td>}
+                @if (Model.oColumnas.Destinatario == true)
+                {<td>@Html.LabelFor(m => m.Destinatario)</td>}
+            </tr>    
+            <tr>
+                @if (Model.oColumnas.Rut == true)
+                {<td>
+                @if (Model.oObligatoria.Rut == false)
+                {@Html.TextBoxFor(m => m.Rut, new { size = 10, maxlength = 10 })}
+                else
+                {@Html.TextBoxFor(m => m.vRut, new { size = 10, maxlength = 10 })}
+                </td>}
+                @if (Model.oColumnas.Destinatario == true)
+                {<td>
+                @if (Model.oObligatoria.Destinatario == false)
+                {@Html.TextBoxFor(m => m.Destinatario, new { size = 50, maxlength = 200 })}
+                else
+                {@Html.TextBoxFor(m => m.vDestinatario, new { size = 50, maxlength = 200 })}                    
+                </td>}
+            </tr>
+            <tr>
+                @if (Model.oColumnas.Rut == true)
+                {<td colspan="2">
+                @if (Model.oObligatoria.Rut == false)
+                {@Html.ValidationMessageFor(m => m.Rut)}
+                else
+                {@Html.ValidationMessageFor(m => m.vRut)}
+                </td>}                
+            </tr>
+        </table>        
+                                         }
+                                         if (Model.oColumnas.Comuna == true)
+                                         {    
+        <h2>Dirección Entrega</h2>
+        <table>
+            <tr>
+                @if (Model.oColumnas.Comuna == true)
+                {
+                 <td>@Html.LabelFor(m => m.Region)</td>            
+                 <td>@Html.LabelFor(m => m.Comuna)</td>
+                }
+                @if (Model.oColumnas.Localidad == true)
+                {<td>@Html.LabelFor(m => m.idLocalidad)</td>}
+            </tr>    
+            <tr>
+                @if (Model.oColumnas.Comuna == true)
+                {
+                    <td>
+                    @if (Model.oObligatoria.Comuna == false)
+                    {
+                        @Html.DropDownListFor(m => m.Region, Model.oListaRegion)
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.vRegion, Model.oListaRegion)
+                    }
+                     </td>                                                 
+                    <td>                        
+                        @if (Model.oObligatoria.Comuna == false)
+                        {@Html.DropDownListFor(m => m.Comuna, Model.oListaComuna, new { onchange = "javascript:" + oTComV })}
+                        else
+                        {@Html.DropDownListFor(m => m.vComuna, Model.oListaComuna, new { onchange = "javascript:" + oTComV })} 
+                        <div id="divComunaDestino" style="visibility:hidden;height:0px;">                                                                                     
+                            @Html.Partial("_DropDownComuna", Model)
+                        </div>
+                    </td>
+                }            
+                @if (Model.oColumnas.Localidad == true)
+                {
+                 <td>
+                    @if (Model.oObligatoria.Localidad == false)
+                    {@Html.DropDownListFor(m => m.Localidad, Model.oListaLocalidad)}
+                    else
+                    {@Html.DropDownListFor(m => m.vLocalidad, Model.oListaLocalidad)}
+                    <div id="divLocalidadDestino">                        
+                    </div>
+                 </td>
+                }            
+            </tr>
+            <tr>
+                @if (Model.oColumnas.Comuna == true)
+                {
+                    <td>&nbsp;</td>
+                    <td>
+                    @if (Model.oObligatoria.Comuna == false)
+                    {
+                        @Html.ValidationMessageFor(m => m.Comuna)
+                    }
+                    else
+                    {
+                        @Html.ValidationMessageFor(m => m.vComuna)
+                    }
+                    </td>                                                                     
+                }            
+                @if (Model.oColumnas.Localidad == true)
+                {
+                 <td>
+                    @if (Model.oObligatoria.Localidad == false)
+                    {
+                        @Html.ValidationMessageFor(m => m.Localidad)
+                    }
+                    else
+                    {
+                        @Html.ValidationMessageFor(m => m.vLocalidad)
+                    }
+                 </td>
+                }            
+            </tr>
+        </table>       
+                                         }
+                                         if (Model.oColumnas.Direccion == true || Model.oColumnas.NDireccion == true || Model.oColumnas.Fono == true)
+                                         {
+        <table>
+            <tr>
+                @if (Model.oColumnas.Direccion == true)
+                {
+                 <td>@Html.LabelFor(m => m.Direccion)</td>                         
+                }
+                @if (Model.oColumnas.NDireccion == true)
+                {<td>@Html.LabelFor(m => m.DireccionNumero)</td>}
+                 @if (Model.oColumnas.Fono == true)
+                 {<td>@Html.LabelFor(m => m.Telefono)</td>}
+            </tr>    
+            <tr>
+                @if (Model.oColumnas.Direccion == true)
+                {
+                 <td>
+                 @if (Model.oObligatoria.Direccion == false)
+                 {@Html.TextBoxFor(m => m.Direccion, new { size = 50, maxlength = 200 })}
+                 else
+                 {@Html.TextBoxFor(m => m.vDireccion, new { size = 50, maxlength = 200 })}                            
+                 </td>                         
+                }
+                @if (Model.oColumnas.NDireccion == true)
+                {<td>
+                 @if (Model.oObligatoria.NDireccion == false)
+                 {@Html.TextBoxFor(m => m.DireccionNumero, new { size = 8, maxlength = 30 })}
+                 else
+                 {@Html.TextBoxFor(m => m.vDireccionNumero, new { size = 8, maxlength = 30 })}                  
+                </td>}
+                @if (Model.oColumnas.Fono == true)
+                {<td>@if (Model.oObligatoria.Fono == false)
+                     {@Html.TextBoxFor(m => m.Telefono, new { size = 30, maxlength = 100 })}
+                     else
+                     {@Html.TextBoxFor(m => m.vTelefono, new { size = 30, maxlength = 100 })} </td>}
+            </tr>              
+        </table>
+                                         }
+                                         if (Model.oColumnas.ContactoEntrega == true || Model.oColumnas.CodigoPostal == true)
+                                         {
+        <table>
+            <tr>            
+                @if (Model.oColumnas.ContactoEntrega == true)
+                {
+                    <td>@Html.LabelFor(m => m.ContactoEntrega)</td>                                     
+                }
+                @if (Model.oColumnas.CodigoPostal == true)
+                {
+                    <td>@Html.LabelFor(m => m.CodigoPostal)</td>                                     
+                }
+            </tr>    
+            <tr>                                
+               @if (Model.oColumnas.ContactoEntrega == true)
+               {<td>@if (Model.oObligatoria.ContactoEntrega == false)
+                    {@Html.TextBoxFor(m => m.ContactoEntrega, new { size = 50, maxlength = 200 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vContactoEntrega, new { size = 30, maxlength = 100 })} </td>}
+               @if (Model.oColumnas.CodigoPostal == true)
+               {<td>@if (Model.oObligatoria.CodigoPostal == false)
+                    {@Html.TextBoxFor(m => m.CodigoPostal, new { size = 30, maxlength = 100 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vCodigoPostal, new { size = 30, maxlength = 100 })} </td>}                           
+            </tr>    
+        </table>
+                                         }
+                                         if (Model.oColumnas.Observacion1 == true || Model.oColumnas.Observacion2 == true)
+                                         {
+        <h2>Observaciones</h2>
+        <table>
+            <tr>            
+                @if (Model.oColumnas.Observacion1 == true)
+                {
+                    <td>@Html.LabelFor(m => m.Observacion1)</td>                                     
+                }
+                @if (Model.oColumnas.Observacion2 == true)
+                {
+                    <td>@Html.LabelFor(m => m.Observacion2)</td>                                     
+                }
+            </tr>    
+            <tr>                                
+               @if (Model.oColumnas.Observacion1 == true)
+               {<td>@if (Model.oObligatoria.Observacion1 == false)
+                    {@Html.TextAreaFor(m => m.Observacion1, new { style = "width:300px;height:50px;" })}
+                    else
+                    {@Html.TextAreaFor(m => m.vObservacion1, new { style = "width:300px;height:50px;" })} </td>}                                                                                                                                                                  
+               @if (Model.oColumnas.Observacion2 == true)
+               {<td>@if (Model.oObligatoria.Observacion2 == false)
+                    {@Html.TextAreaFor(m => m.Observacion2, new { style = "width:300px;height:50px;" })}
+                    else
+                    {@Html.TextAreaFor(m => m.vObservacion2, new { style = "width:300px;height:50px;" })} </td>}                                                                                                                                    
+            </tr>    
+        </table>
+                                         }
+
+                                         if (Model.oColumnas.Contacto1Rut == true || Model.oColumnas.Contacto1Nombre == true || Model.oColumnas.Contacto1Telefono == true)
+                                         {
+        <h2>Contactos Entrega Cliente</h2>                                             
+        <table>
+            <tr>            
+                @if (Model.oColumnas.Contacto1Rut == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto1Rut)</td>                                     
+                }
+                @if (Model.oColumnas.Contacto1Nombre == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto1Nombre)</td>                                     
+                }
+                @if (Model.oColumnas.Contacto1Telefono == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto1Telefono)</td>                                     
+                }
+            </tr>    
+            <tr>                                
+               @if (Model.oColumnas.Contacto1Rut == true)
+               {<td>@if (Model.oObligatoria.Contacto1Rut == false)
+                    {@Html.TextBoxFor(m => m.Contacto1Rut, new { size = 20, maxlength = 12 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto1Rut, new { size = 20, maxlength = 12 })} </td>}
+               @if (Model.oColumnas.Contacto1Nombre == true)
+               {<td>@if (Model.oObligatoria.Contacto1Nombre == false)
+                    {@Html.TextBoxFor(m => m.Contacto1Nombre, new { size = 100, maxlength = 200 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto1Nombre, new { size = 100, maxlength = 200 })} </td>}
+               @if (Model.oColumnas.Contacto1Telefono == true)
+               {<td>@if (Model.oObligatoria.Contacto1Telefono == false)
+                    {@Html.TextBoxFor(m => m.Contacto1Telefono)}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto1Telefono)} </td>}                                                                                                                             
+            </tr>    
+        </table>
+                                         }
+                                         if (Model.oColumnas.Contacto2Rut == true || Model.oColumnas.Contacto2Nombre == true || Model.oColumnas.Contacto2Telefono == true)
+                                         {
+        <table>
+            <tr>            
+                @if (Model.oColumnas.Contacto2Rut == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto2Rut)</td>                                     
+                }
+                @if (Model.oColumnas.Contacto2Nombre == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto2Nombre)</td>                                     
+                }
+                @if (Model.oColumnas.Contacto2Telefono == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto2Telefono)</td>                                     
+                }
+            </tr>    
+            <tr>                                
+               @if (Model.oColumnas.Contacto2Rut == true)
+               {<td>@if (Model.oObligatoria.Contacto2Rut == false)
+                    {@Html.TextBoxFor(m => m.Contacto2Rut, new { size = 20, maxlength = 12 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto2Rut, new { size = 20, maxlength = 12 })} </td>}
+               @if (Model.oColumnas.Contacto2Nombre == true)
+               {<td>@if (Model.oObligatoria.Contacto2Nombre == false)
+                    {@Html.TextBoxFor(m => m.Contacto2Nombre, new { size = 100, maxlength = 200 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto2Nombre, new { size = 100, maxlength = 200 })} </td>}
+               @if (Model.oColumnas.Contacto2Telefono == true)
+               {<td>@if (Model.oObligatoria.Contacto2Telefono == false)
+                    {@Html.TextBoxFor(m => m.Contacto2Telefono)}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto2Telefono)} </td>}                                                                                                                             
+            </tr>    
+        </table>
+                                         }
+                                         if (Model.oColumnas.Contacto3Rut == true || Model.oColumnas.Contacto3Nombre == true || Model.oColumnas.Contacto3Telefono == true)
+                                         {
+        <table>
+            <tr>            
+                @if (Model.oColumnas.Contacto3Rut == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto3Rut)</td>                                     
+                }
+                @if (Model.oColumnas.Contacto3Nombre == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto3Nombre)</td>                                     
+                }
+                @if (Model.oColumnas.Contacto3Telefono == true)
+                {
+                    <td>@Html.LabelFor(m => m.Contacto3Telefono)</td>                                     
+                }
+            </tr>    
+            <tr>                                
+               @if (Model.oColumnas.Contacto3Rut == true)
+               {<td>@if (Model.oObligatoria.Contacto3Rut == false)
+                    {@Html.TextBoxFor(m => m.Contacto3Rut, new { size = 20, maxlength = 12 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto3Rut, new { size = 20, maxlength = 12 })} </td>}
+               @if (Model.oColumnas.Contacto3Nombre == true)
+               {<td>@if (Model.oObligatoria.Contacto3Nombre == false)
+                    {@Html.TextBoxFor(m => m.Contacto3Nombre, new { size = 100, maxlength = 200 })}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto3Nombre, new { size = 100, maxlength = 200 })} </td>}
+               @if (Model.oColumnas.Contacto3Telefono == true)
+               {<td>@if (Model.oObligatoria.Contacto3Telefono == false)
+                    {@Html.TextBoxFor(m => m.Contacto3Telefono)}
+                    else
+                    {@Html.TextBoxFor(m => m.vContacto3Telefono)} </td>}                                                                                                                             
+            </tr>    
+        </table>
+}
+if (Model.oColumnas.Peso == true || Model.oColumnas.Bulto == true || Model.oColumnas.Via == true || Model.oColumnas.Alto == true || Model.oColumnas.Ancho == true || Model.oColumnas.Largo == true || Model.oColumnas.PesoVolumetrico == true || Model.oColumnas.ContraPago==true)
+{
+        <h2>Datos Adicionales</h2>
+        <table>
+            <tr>      
+                @if (Model.oColumnas.Via == true)
+                {<td>@Html.LabelFor(m => m.Via)</td>}
+                @if (Model.oColumnas.Bulto == true)
+                {<td>@Html.LabelFor(m => m.Bulto)</td>}
+                @if (Model.oColumnas.Peso == true)
+                {<td>@Html.LabelFor(m => m.Peso)</td>}    
+                @if (Model.oColumnas.PesoVolumetrico == true)
+                {<td>@Html.LabelFor(m => m.PesoVolumetrico)</td>} 
+                @if (Model.oColumnas.Alto == true)
+                {<td>@Html.LabelFor(m => m.Alto)</td>}
+                @if (Model.oColumnas.Ancho == true)
+                {<td>@Html.LabelFor(m => m.Ancho)</td>}
+                @if (Model.oColumnas.Largo == true)
+                {<td>@Html.LabelFor(m => m.Largo)</td>} 
+                @if (Model.oColumnas.ContraPago == true)
+                {<td>@Html.LabelFor(m => m.ContraPago)</td>}                      
+            </tr>    
+            <tr>            
+                @if (Model.oColumnas.Via == true)
+                {<td>
+                @if (Model.oObligatoria.Via == false)
+                {@Html.DropDownListFor(m => m.Via, Model.oListaVia)}
+                else
+                {@Html.DropDownListFor(m => m.vVia, Model.oListaVia)}
+                
+                
+                </td>}
+                @if (Model.oColumnas.Bulto == true)
+                {<td>
+                
+                @if (Model.oObligatoria.Bulto == false)
+                {@Html.TextBoxFor(m => m.Bulto, new { size = 8, maxlength = 18 })}
+                else
+                {@Html.TextBoxFor(m => m.vBulto, new { size = 8, maxlength = 18 })}</td>}  
+                    
+                @if (Model.oColumnas.Peso == true)
+                {<td>
+                @if (Model.oObligatoria.Peso == false)
+                {@Html.TextBoxFor(m => m.Peso, new { size = 8, maxlength = 18 })}
+                else
+                {@Html.TextBoxFor(m => m.vPeso, new { size = 8, maxlength = 18 })}                
+                </td>}
+                     
+                @if (Model.oColumnas.PesoVolumetrico == true)
+                {<td>
+                @if (Model.oObligatoria.PesoVolumetrico == false)
+                {@Html.TextBoxFor(m => m.PesoVolumetrico, new { size = 8, maxlength = 18 })}
+                else
+                {@Html.TextBoxFor(m => m.vPesoVolumetrico, new { size = 8, maxlength = 18 })}                
+                </td>}
+
+                @if (Model.oColumnas.Alto == true)
+                {<td>
+                @if (Model.oObligatoria.Alto == false)
+                {@Html.TextBoxFor(m => m.Alto, new { size = 8, maxlength = 18 })}
+                else
+                {@Html.TextBoxFor(m => m.vAlto, new { size = 8, maxlength = 18 })}
+                
+                
+                </td>}
+                @if (Model.oColumnas.Ancho == true)
+                {<td>
+                
+                @if (Model.oObligatoria.Ancho == false)
+                {@Html.TextBoxFor(m => m.Ancho, new { size = 8, maxlength = 18 })}
+                else
+                {@Html.TextBoxFor(m => m.vAncho, new { size = 8, maxlength = 18 })}
+                
+                </td>}
+                @if (Model.oColumnas.Largo == true)
+                {<td>
+                @if (Model.oObligatoria.Largo == false)
+                {@Html.TextBoxFor(m => m.Largo, new { size = 8, maxlength = 18 })}
+                else
+                {@Html.TextBoxFor(m => m.vLargo, new { size = 8, maxlength = 18 })}                
+                </td>}
+                     
+                @if (Model.oColumnas.ContraPago == true)
+                {<td>
+                @if (Model.oObligatoria.ContraPago == false)
+                {@Html.TextBoxFor(m => m.ContraPago, new { size = 8, maxlength = 18 })}
+                else
+                {@Html.TextBoxFor(m => m.vContraPago, new { size = 8, maxlength = 18 })}                
+                </td>}
+            </tr>    
+        </table>
+                                         }
+
+
+                                         if (Model.opt == "2")
+                                         {
+    <script type="text/javascript">
+        $(function () {
+            $("#RetiroFecha").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });           
+        });
+    </script>
+   
+    <h2>Datos Retiro</h2>
+        <table><tr><td>@Html.LabelFor(m => m.RetiroFecha)</td></tr>
+        <tr><td>@Html.TextBoxFor(m => m.RetiroFecha)</td></tr></table>   
+        <table>
+            <tr>
+                <td>@Html.LabelFor(m => m.RetiroRegion)</td>
+                <td>@Html.LabelFor(m => m.RetiroComuna)</td>
+                <td>@Html.LabelFor(m => m.RetiroLocalidad)</td>
+            </tr>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.RetiroRegion, Model.oListaRegion)</td>
+                <td>
+                    <div id="divComunaRetiro">
+                        @Html.DropDownListFor(m => m.RetiroComuna, Model.oListaComuna)
+                    </div>
+                 </td>
+                <td>
+                    <div id="divLocalidadRetiro">
+                        @Html.DropDownListFor(m => m.RetiroLocalidad, Model.oListaLocalidad)
+                    </div>
+                </td>
+            </tr>
+        </table>   
+        <table>
+            <tr>
+                <td>@Html.LabelFor(m => m.RetiroDireccion)</td>
+                <td>@Html.LabelFor(m => m.RetiroNumero)</td>
+            </tr>
+            <tr>
+                <td>@Html.TextBoxFor(m => m.RetiroDireccion)</td>
+                <td>@Html.TextBoxFor(m => m.RetiroNumero)</td>
+            </tr>
+        </table>
+                                         }
+}
+<table style="width:100%;"><tr><td style="width:100%; text-align:right;">    
+    <button id="idAceptar">
+        <div style="float:left"><img alt="Aceptar" src="@Url.Content("~/Images/45.png")" /></div><div style="float:left">&nbsp;Aceptar</div>        
+    </button> 
+    <button id="idCancelar">
+        <div style="float:left"><img alt="Cancelar" src="@Url.Content("~/Images/cross.png")" /></div><div style="float:left">&nbsp;Cancelar</div>        
+    </button> 
+</td></tr>
+</table>
+<script type="text/javascript">
+    $(function () {
+
+        $("#Region").change(function () {
+            $("#divComunaDestino").html('<img src="@Url.Content("~/Images/38.gif")" />');
+            $("#divComunaDestino").load('@Url.Action("DropDownComuna", "Pedido")?idRegion=' + $(this).val() + '&Servicio=' + $("#Servicio").val());
+            @oTCom            
+        });
+
+        $("#vRegion").change(function () {            
+            $("#divComunaDestino").html('<img src="@Url.Content("~/Images/38.gif")" />');
+            $("#divComunaDestino").load('@Url.Action("DropDownComuna", "Pedido")?idRegion=' + $(this).val() + '&Servicio=' + $("#Servicio").val());
+            @oTCom              
+        });
+
+        $("#RetiroRegion").change(function () {
+            $("#divComunaRetiro").html('<img src="@Url.Content("~/Images/38.gif")" />');
+            $("#divComunaRetiro").load('@Url.Action("DropDownComunaRetiro", "Pedido")?idRegion=' + $(this).val() + ' #contentComunaResult');
+            $("#divLocalidadRetiro").html('<img src="@Url.Content("~/Images/38.gif")" />');
+            $("#divLocalidadRetiro").load('@Url.Action("DropDownLocalidadRetiro", "Pedido")?idRegion=' + $(this).val() + '&idComuna=0 #contentLocalidadResult');
+        });
+
+    });
+</script>

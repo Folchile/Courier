@@ -1,0 +1,111 @@
+﻿@model Courier.Models.IngresoMasivoModel
+
+@{    
+    ViewBag.title = "Ingreso Masivo";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/TableBlue.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.9.1.custom.css")" rel="stylesheet"type="text/css" />
+
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+
+        $("#dialog-cancelar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Si: function () {
+                    $(this).dialog("close");
+                    location.href = "IngresoMasivo";
+                },
+                Volver: function () { $(this).dialog("close"); }
+            }
+        });
+
+        $("#dialog-aceptar").dialog({
+            autoOpen: false,
+            position:'auto',
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    var frm = $('#formData');
+                    $.ajax({
+                        url: '@Url.Action("GuardarIngresoMasivo", "Pedido")',
+                        type: 'POST',
+                        data: frm.serialize(),
+                        beforeSend: function () { waitingDialog({ title: "Cargando", message: "Guardando Datos..." }); },
+                        onsuccess: function () { },
+                        success: function (result) {
+                            closeWaitingDialog();
+                            if (result == "1") {
+                                //reemplaza la dirección actual, para evitar la generación de un history(-1)
+                                window.location.replace('@Url.Action("VerIngresoMasivo", "Pedido")');                                
+                            }
+                            else {
+                                $("#dialog-guardar").html(result);
+                                $("#dialog-guardar").dialog("open");
+                            }
+                        },
+                        error: function () { }
+                    });
+                    $("#frmguardar").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+
+        $("#dialog-guardar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#cancelar")
+            .button()
+            .click(function () {
+                $("#dialog-cancelar").html("<p>¿Esta Seguro(a) que desea cancelar la carga de información?</p>");
+                $("#dialog-cancelar").dialog("open");});
+
+        $("#aceptar")
+            .button()
+            .click(function () {
+                $("#dialog-aceptar").html("<p>¿Esta Seguro(a) que desea Guardar la información?</p>");
+                $("#dialog-aceptar").dialog("open");});
+
+    });
+</script>
+
+
+
+<div id="dialog-aceptar" title="Aceptar"></div>
+<div id="dialog-cancelar" title="Cancelar"></div>
+<div id="dialog-guardar" title="Resultado"></div>
+
+    @Html.Partial("_CargaIngresoMasivo", Model)
+
+    <br />
+<table style="width:100%;">
+    <tr>
+        <td style="width:100%; text-align:right;">
+@using (Html.BeginForm("GuardarIngresoMasivo", "Pedido", FormMethod.Post, new { id = "formData" }))
+{ 
+            <input type="button" id="aceptar" value="Aceptar" />
+            <input type="button" id="cancelar" value="Cancelar" />
+}    
+        </td>        
+    </tr>
+</table>
+
+

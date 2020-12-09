@@ -1,0 +1,35 @@
+﻿@model Courier.Models.ManifiestoModels
+
+<script type="text/javascript">
+    $(function () {
+        $(".botoncls").button();
+    })
+</script>
+<hr />
+<br />
+@if (Model.ListaManifiestoMap.Count()>0)
+{        
+    <p>Descargar Manifiestos:</p>
+
+    <button id="" class="botoncls" onclick="javascript:ImprimirManifiestoPadre(@Model.ManifiestoPadre)"> 
+            <div style="float:left;min-width:250px">       
+            <div style="float:left;"><img alt="Cambiar Manifiesto" src='@Url.Content("~/Images/doc_pdf.png")' /></div>                 
+            <div style="float:left;">&nbsp;Descargar Manifiesto Padre N° @Model.ManifiestoPadre</div>                        
+            </div>                       
+        </button><br />
+    foreach (var oFila in Model.ListaManifiestoMap)
+    {
+    
+        <button id="" class="botoncls" onclick="javascript:ImprimirManifiesto(@oFila.PK_FOL_MAN_ID)"> 
+            <div style="float:left;min-width:250px">       
+            <div style="float:left;"><img alt="Cambiar Manifiesto" src='@Url.Content("~/Images/doc_pdf.png")' /></div>                 
+            <div style="float:left;">&nbsp;Descargar Manifiesto @oFila.FL_PAR_SUC_NOMBRE</div>                        
+            </div>                       
+        </button><br />
+    
+    }
+}
+else
+{
+    <label style="color:Red">No existen datos</label>
+}

@@ -1,0 +1,1043 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BD_REP_REPORTE_VIAJES" Class="LinqBD_REP_REPORTE_VIAJESDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=192.168.33.4;Initial Catalog=BD_REP_REPORTE_VIAJES;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BD_REP_REPORTE_VIAJESConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TB_REP_ARE_AREA" Member="TB_REP_ARE_AREA">
+    <Type Name="TB_REP_ARE_AREA">
+      <Column Name="PK_REP_ARE_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_REP_ARE_DESCRIPCION" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_REP_ARE_AREA_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_ARE_ID" OtherKey="PK_REP_ARE_ID" Type="TB_REP_CAB_CABECERA_FOLIOS" />
+      <Association Name="TB_REP_ARE_AREA_TB_REP_RAZ_RELACION_AREA_ZONA" Member="TB_REP_RAZ_RELACION_AREA_ZONA" ThisKey="PK_REP_ARE_ID" OtherKey="PK_REP_ARE_ID" Type="TB_REP_RAZ_RELACION_AREA_ZONA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TP_REP_ECF_ESTADO_CABECERA_FOLIO" Member="TP_REP_ECF_ESTADO_CABECERA_FOLIO">
+    <Type Name="TP_REP_ECF_ESTADO_CABECERA_FOLIO">
+      <Column Name="PK_REP_ECF_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_REP_ECF_DESCRIPCION" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="TP_REP_ECF_ESTADO_CABECERA_FOLIO_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_ECF_ID" OtherKey="PK_REP_ECF_ID" Type="TB_REP_CAB_CABECERA_FOLIOS" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_ASI_ASISTENTES" Member="TB_REP_ASI_ASISTENTES">
+    <Type Name="TB_REP_ASI_ASISTENTES">
+      <Column Name="PK_REP_ASI_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_NOMBRES" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_APELLIDOS" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_CODIGO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_EAS_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_REP_ASI_ASISTENTES_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_ASI_RUT" OtherKey="PK_REP_ASI_RUT" Type="TB_REP_CAB_CABECERA_FOLIOS" />
+      <Association Name="TB_REP_ASI_ASISTENTES_TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL" Member="TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL" ThisKey="PK_REP_ASI_RUT" OtherKey="PK_REP_ASI_RUT" Type="TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL" />
+      <Association Name="TB_REP_ASI_ASISTENTES_TB_REP_RFA_RELACION_FOLIO_ASISTENTES" Member="TB_REP_RFA_RELACION_FOLIO_ASISTENTES" ThisKey="PK_REP_ASI_RUT" OtherKey="PK_REP_ASI_RUT" Type="TB_REP_RFA_RELACION_FOLIO_ASISTENTES" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_CAB_CABECERA_FOLIOS">
+    <Type Name="TB_REP_CAB_CABECERA_FOLIOS">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_FOL_ID_CARGA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_USU_RUT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_PAR_CON_RUT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_ASI_RUT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_DES_RUT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_ARE_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_ZON_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_SER_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_FONDOS_A_RENDIR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_TOTAL_RENDIDO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_MONTO_DEVOL_REC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_ECF_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_CAB_FECHA" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_REFERENCIA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE" Member="TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCG_DETALLE_CONTROL_GASTOS" Member="TB_REP_DCG_DETALLE_CONTROL_GASTOS" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_DCG_DETALLE_CONTROL_GASTOS" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCR_DETALLE_CONTROL_RUTA" Member="TB_REP_DCR_DETALLE_CONTROL_RUTA" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_DCR_DETALLE_CONTROL_RUTA" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_RAM_RAMPLAS" Member="TB_REP_RAM_RAMPLAS" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_PAR_CAB_FOLIO" Type="TB_REP_RAM_RAMPLAS" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_RFA_RELACION_FOLIO_ASISTENTES" Member="TB_REP_RFA_RELACION_FOLIO_ASISTENTES" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_RFA_RELACION_FOLIO_ASISTENTES" />
+      <Association Name="TB_REP_ARE_AREA_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_ARE_AREA" ThisKey="PK_REP_ARE_ID" OtherKey="PK_REP_ARE_ID" Type="TB_REP_ARE_AREA" IsForeignKey="true" />
+      <Association Name="TB_REP_ASI_ASISTENTES_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_ASI_ASISTENTES" ThisKey="PK_REP_ASI_RUT" OtherKey="PK_REP_ASI_RUT" Type="TB_REP_ASI_ASISTENTES" IsForeignKey="true" />
+      <Association Name="TP_REP_ECF_ESTADO_CABECERA_FOLIO_TB_REP_CAB_CABECERA_FOLIOS" Member="TP_REP_ECF_ESTADO_CABECERA_FOLIO" ThisKey="PK_REP_ECF_ID" OtherKey="PK_REP_ECF_ID" Type="TP_REP_ECF_ESTADO_CABECERA_FOLIO" IsForeignKey="true" />
+      <Association Name="TB_REP_DES_DESPACHADORES_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_DES_DESPACHADORES" ThisKey="PK_REP_DES_RUT" OtherKey="PK_REP_DES_RUT" Type="TB_REP_DES_DESPACHADORES" IsForeignKey="true" />
+      <Association Name="TB_REP_FOL_FOLIOS_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_FOL_FOLIOS" ThisKey="PK_REP_FOL_ID_CARGA" OtherKey="PK_REP_FOL_ID_CARGA" Type="TB_REP_FOL_FOLIOS" IsForeignKey="true" />
+      <Association Name="TB_REP_SER_SERVICIO_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_SER_SERVICIO" ThisKey="PK_REP_SER_ID" OtherKey="PK_REP_SER_ID" Type="TB_REP_SER_SERVICIO" IsForeignKey="true" />
+      <Association Name="TB_REP_ZON_ZONA_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_ZON_ZONA" ThisKey="PK_REP_ZON_ID" OtherKey="PK_REP_ZON_ID" Type="TB_REP_ZON_ZONA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE" Member="TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE">
+    <Type Name="TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE">
+      <Column Name="PK_REP_DCC_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCC_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCC_NUMERO_DOCUMENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCC_CANTIDAD_LITROS" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCC_VALOR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCC_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_CAB_CABECERA_FOLIOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_DCG_DETALLE_CONTROL_GASTOS" Member="TB_REP_DCG_DETALLE_CONTROL_GASTOS">
+    <Type Name="TB_REP_DCG_DETALLE_CONTROL_GASTOS">
+      <Column Name="PK_REP_DCG_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCG_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCG_PEAJE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_ESTACIONAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_VIATICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_ALOJAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_MANTENCION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_CARGA_DESCARGA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_OTROS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_IVA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_TOTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCG_DETALLE_CONTROL_GASTOS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_CAB_CABECERA_FOLIOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_DCR_DETALLE_CONTROL_RUTA" Member="TB_REP_DCR_DETALLE_CONTROL_RUTA">
+    <Type Name="TB_REP_DCR_DETALLE_CONTROL_RUTA">
+      <Column Name="PK_REP_DCR_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_INICIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_FINAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_RECORRIDOS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Association Name="TB_REP_DCR_DETALLE_CONTROL_RUTA_TB_REP_ROD_RELACION_ORIGEN_DESTINO" Member="TB_REP_ROD_RELACION_ORIGEN_DESTINO" ThisKey="PK_REP_DCR_ID" OtherKey="PK_REP_DCR_ID" Type="TB_REP_ROD_RELACION_ORIGEN_DESTINO" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCR_DETALLE_CONTROL_RUTA" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_CAB_CABECERA_FOLIOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_DES_DESPACHADORES" Member="TB_REP_DES_DESPACHADORES">
+    <Type Name="TB_REP_DES_DESPACHADORES">
+      <Column Name="PK_REP_DES_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_REP_DES_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_NOMBRES" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_APELLIDOS" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_CODIGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_ESE_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_REP_DES_DESPACHADORES_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_DES_RUT" OtherKey="PK_REP_DES_RUT" Type="TB_REP_CAB_CABECERA_FOLIOS" />
+      <Association Name="TB_REP_DES_DESPACHADORES_TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL" Member="TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL" ThisKey="PK_REP_DES_RUT" OtherKey="PK_REP_DES_RUT" Type="TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_ESE_ESTADO_EMPLEADOS" Member="TB_REP_ESE_ESTADO_EMPLEADOS">
+    <Type Name="TB_REP_ESE_ESTADO_EMPLEADOS">
+      <Column Name="PK_REP_ESE_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_REP_ESE_DESCRIPCION" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_FOL_FOLIOS" Member="TB_REP_FOL_FOLIOS">
+    <Type Name="TB_REP_FOL_FOLIOS">
+      <Column Name="PK_REP_FOL_ID_CARGA" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PK_REP_FOL_DESDE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_FOL_HASTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_FOL_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_USU_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_REP_FOL_FOLIOS_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_FOL_ID_CARGA" OtherKey="PK_REP_FOL_ID_CARGA" Type="TB_REP_CAB_CABECERA_FOLIOS" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_RAM_RAMPLAS" Member="TB_REP_RAM_RAMPLAS">
+    <Type Name="TB_REP_RAM_RAMPLAS">
+      <Column Name="PK_PAR_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_RAM_RAMPLAS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_PAR_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_CAB_CABECERA_FOLIOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL" Member="TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL">
+    <Type Name="TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL">
+      <Column Name="PK_REP_ASI_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_REP_RAS_FECHA_DESDE" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="FL_REP_RAS_FECHA_HASTA" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="PK_REP_ERA_ESTADO_RELACION_ASISTENTE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_REP_ASI_ASISTENTES_TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL" Member="TB_REP_ASI_ASISTENTES" ThisKey="PK_REP_ASI_RUT" OtherKey="PK_REP_ASI_RUT" Type="TB_REP_ASI_ASISTENTES" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_RAZ_RELACION_AREA_ZONA" Member="TB_REP_RAZ_RELACION_AREA_ZONA">
+    <Type Name="TB_REP_RAZ_RELACION_AREA_ZONA">
+      <Column Name="PK_REP_ARE_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_REP_ZON_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_REP_ARE_AREA_TB_REP_RAZ_RELACION_AREA_ZONA" Member="TB_REP_ARE_AREA" ThisKey="PK_REP_ARE_ID" OtherKey="PK_REP_ARE_ID" Type="TB_REP_ARE_AREA" IsForeignKey="true" />
+      <Association Name="TB_REP_ZON_ZONA_TB_REP_RAZ_RELACION_AREA_ZONA" Member="TB_REP_ZON_ZONA" ThisKey="PK_REP_ZON_ID" OtherKey="PK_REP_ZON_ID" Type="TB_REP_ZON_ZONA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL" Member="TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL">
+    <Type Name="TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL">
+      <Column Name="PK_REP_DES_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_REP_ERD_ESTADO_RELACION_DESPACHADOR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_REP_DES_DESPACHADORES_TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL" Member="TB_REP_DES_DESPACHADORES" ThisKey="PK_REP_DES_RUT" OtherKey="PK_REP_DES_RUT" Type="TB_REP_DES_DESPACHADORES" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_RFA_RELACION_FOLIO_ASISTENTES" Member="TB_REP_RFA_RELACION_FOLIO_ASISTENTES">
+    <Type Name="TB_REP_RFA_RELACION_FOLIO_ASISTENTES">
+      <Column Name="PK_REP_RFA_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_ASI_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_REP_ASI_ASISTENTES_TB_REP_RFA_RELACION_FOLIO_ASISTENTES" Member="TB_REP_ASI_ASISTENTES" ThisKey="PK_REP_ASI_RUT" OtherKey="PK_REP_ASI_RUT" Type="TB_REP_ASI_ASISTENTES" IsForeignKey="true" />
+      <Association Name="TB_REP_CAB_CABECERA_FOLIOS_TB_REP_RFA_RELACION_FOLIO_ASISTENTES" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_CAB_FOLIO" OtherKey="PK_REP_CAB_FOLIO" Type="TB_REP_CAB_CABECERA_FOLIOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_ROD_RELACION_ORIGEN_DESTINO" Member="TB_REP_ROD_RELACION_ORIGEN_DESTINO">
+    <Type Name="TB_REP_ROD_RELACION_ORIGEN_DESTINO">
+      <Column Name="PK_REP_ROD_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PK_REP_DCR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_REG_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_LOC_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_REP_ROD_DIRECCION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_TOD_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_REP_DCR_DETALLE_CONTROL_RUTA_TB_REP_ROD_RELACION_ORIGEN_DESTINO" Member="TB_REP_DCR_DETALLE_CONTROL_RUTA" ThisKey="PK_REP_DCR_ID" OtherKey="PK_REP_DCR_ID" Type="TB_REP_DCR_DETALLE_CONTROL_RUTA" IsForeignKey="true" />
+      <Association Name="TB_REP_TOD_TIPO_ORIGEN_DESTINO_TB_REP_ROD_RELACION_ORIGEN_DESTINO" Member="TB_REP_TOD_TIPO_ORIGEN_DESTINO" ThisKey="PK_REP_TOD_ID" OtherKey="PK_REP_TOD_ID" Type="TB_REP_TOD_TIPO_ORIGEN_DESTINO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_SER_SERVICIO" Member="TB_REP_SER_SERVICIO">
+    <Type Name="TB_REP_SER_SERVICIO">
+      <Column Name="PK_REP_SER_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_REP_SER_DESCRIPCION" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_REP_SER_SERVICIO_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_SER_ID" OtherKey="PK_REP_SER_ID" Type="TB_REP_CAB_CABECERA_FOLIOS" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_TOD_TIPO_ORIGEN_DESTINO" Member="TB_REP_TOD_TIPO_ORIGEN_DESTINO">
+    <Type Name="TB_REP_TOD_TIPO_ORIGEN_DESTINO">
+      <Column Name="PK_REP_TOD_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_REP_TOD_DESCRIPCION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_REP_TOD_TIPO_ORIGEN_DESTINO_TB_REP_ROD_RELACION_ORIGEN_DESTINO" Member="TB_REP_ROD_RELACION_ORIGEN_DESTINO" ThisKey="PK_REP_TOD_ID" OtherKey="PK_REP_TOD_ID" Type="TB_REP_ROD_RELACION_ORIGEN_DESTINO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_REP_ZON_ZONA" Member="TB_REP_ZON_ZONA">
+    <Type Name="TB_REP_ZON_ZONA">
+      <Column Name="PK_REP_ZON_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_REP_ZON_DESCRIPCION" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_ARE_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_REP_ZON_ZONA_TB_REP_CAB_CABECERA_FOLIOS" Member="TB_REP_CAB_CABECERA_FOLIOS" ThisKey="PK_REP_ZON_ID" OtherKey="PK_REP_ZON_ID" Type="TB_REP_CAB_CABECERA_FOLIOS" />
+      <Association Name="TB_REP_ZON_ZONA_TB_REP_RAZ_RELACION_AREA_ZONA" Member="TB_REP_RAZ_RELACION_AREA_ZONA" ThisKey="PK_REP_ZON_ID" OtherKey="PK_REP_ZON_ID" Type="TB_REP_RAZ_RELACION_AREA_ZONA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_REP_AREA_ZONA" Member="VI_REP_AREA_ZONA">
+    <Type Name="VI_REP_AREA_ZONA">
+      <Column Name="FL_REP_ARE_DESCRIPCION" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_ARE_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_ZON_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ZON_DESCRIPCION" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_REP_TOTAL_GRILLA_GASTOS" Member="VI_REP_TOTAL_GRILLA_GASTOS">
+    <Type Name="VI_REP_TOTAL_GRILLA_GASTOS">
+      <Column Name="TOTPEAJE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTESTACIONAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTVIATICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTALOJAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTMANTENCION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTCARGADESC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTOTROS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTIVA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTTOTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_REP_ORIGEN_DESTINO" Member="VI_REP_ORIGEN_DESTINO">
+    <Type Name="VI_REP_ORIGEN_DESTINO">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_DCR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_REG_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_COM_NOMBRE" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_LOC_NOMBRE" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="FL_REP_DCR_KM_INICIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_FINAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_RECORRIDOS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ORIGEN_REG_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="ORIGEN_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ORIGEN_LOC_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ORIGEN_DIRECCION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="DESTINO_REG_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="DESTINO_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESTINO_LOC_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="DESTINO_DIRECCION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_TOD_DESCRIPCION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_REP_PROVINCIA_COMUNA" Member="VI_REP_PROVINCIA_COMUNA">
+    <Type Name="VI_REP_PROVINCIA_COMUNA">
+      <Column Name="PK_PAR_PRV_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_REG_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_NOMBRE" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_REP_ORIGEN_DESTINO2" Member="VI_REP_ORIGEN_DESTINO2">
+    <Type Name="VI_REP_ORIGEN_DESTINO2">
+      <Column Name="PK_REP_DCR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_INICIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_FINAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_RECORRIDOS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ID_ORIGEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_DESTINO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="COMUNA_ORIGEN" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="COM_DESTINO" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ORIG_REG" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_DEST_REG" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="REGION_ORIGEN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="REGION_DESTINO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DIR_DESTINO" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="DIR_ORIGEN" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_NUM_PEDIDO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_REP_DCR_NUM_TRANSPORTE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_REP_DCR_ZONA" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.PR_REP_ACA_ACTULIZA_ASISTENTE" Method="PR_REP_ACA_ACTULIZA_ASISTENTE">
+    <Parameter Name="ARUT" Parameter="aRUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ADVE" Parameter="aDVE" Type="System.String" DbType="VarChar(1)" />
+    <Parameter Name="ANOM" Parameter="aNOM" Type="System.String" DbType="VarChar(120)" />
+    <Parameter Name="AAPE" Parameter="aAPE" Type="System.String" DbType="VarChar(120)" />
+    <Parameter Name="ACOD" Parameter="aCOD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ASUC" Parameter="aSUC" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_VER_ORIGEN_DESTINO" Method="PR_REP_VER_ORIGEN_DESTINO">
+    <ElementType Name="PR_REP_VER_ORIGEN_DESTINOResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_DCR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_REG_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_REP_DCR_KM_INICIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_FINAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_RECORRIDOS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ORIGEN_REG_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="ORIGEN_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ORIGEN_LOC_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ORIGEN_DIRECCION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="DESTINO_REG_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="DESTINO_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DESTINO_LOC_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="DESTINO_DIRECCION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_TOD_DESCRIPCION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_NOMBRE" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_ACT_ACTUALIZA_CABECERA" Method="PR_REP_ACT_ACTUALIZA_CABECERA">
+    <Parameter Name="AFOLI" Parameter="aFOLI" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ABLTR" Parameter="aBLTR" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AKGTR" Parameter="aKGTR" Type="System.Double" DbType="Float" />
+    <Parameter Name="AAREA" Parameter="aAREA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AZONA" Parameter="aZONA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ASERV" Parameter="aSERV" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ARUTC" Parameter="aRUTC" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ARUTA" Parameter="aRUTA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ARUTD" Parameter="aRUTD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ARMPLA" Parameter="aRMPLA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ARUTU" Parameter="aRUTU" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IDSUC" Parameter="iDSUC" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AREF" Parameter="aREF" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="AOBS" Parameter="aOBS" Type="System.String" DbType="VarChar(250)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ACT_ACTUALIZA_FONDOS" Method="PR_REP_ACT_ACTUALIZA_FONDOS">
+    <Parameter Name="FFOLIO" Parameter="fFOLIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FARENDIR" Parameter="fARENDIR" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FTOTREND" Parameter="fTOTREND" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FDEVREC" Parameter="fDEVREC" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ACTIVAR_FOLIO" Method="PR_REP_ACTIVAR_FOLIO">
+    <Parameter Name="AFOLIO" Parameter="aFOLIO" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ACTUALIZA_DESPACHADOR" Method="PR_REP_ACTUALIZA_DESPACHADOR">
+    <Parameter Name="ARUT" Parameter="aRUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ANOM" Parameter="aNOM" Type="System.String" DbType="VarChar(120)" />
+    <Parameter Name="AAPE" Parameter="aAPE" Type="System.String" DbType="VarChar(120)" />
+    <Parameter Name="ASUC" Parameter="aSUC" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ACTUALIZA_ESTADO_ASISTENTE" Method="PR_REP_ACTUALIZA_ESTADO_ASISTENTE">
+    <Parameter Name="ARUT" Parameter="aRUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AESTADO" Parameter="aESTADO" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ACTUALIZA_ESTADO_DESPACHADOR" Method="PR_REP_ACTUALIZA_ESTADO_DESPACHADOR">
+    <Parameter Name="ARUT" Parameter="aRUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AESTADO" Parameter="aESTADO" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_AGREGA_ASISTENTE" Method="PR_REP_AGREGA_ASISTENTE">
+    <Parameter Name="FFOLIO" Parameter="fFOLIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FRUT" Parameter="fRUT" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_AGREGA_ASISTENTEResult">
+      <Column Name="PK_REP_ASI_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_AGREGA_DETALLE_COMBUSTIBLE" Method="PR_REP_AGREGA_DETALLE_COMBUSTIBLE">
+    <Parameter Name="NFOLIO" Parameter="nFOLIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NFECHA" Parameter="nFECHA" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="NNUMDOCTO" Parameter="nNUMDOCTO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NLITROS" Parameter="nLITROS" Type="System.Double" DbType="Float" />
+    <Parameter Name="NVALOR" Parameter="nVALOR" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NOBSERVACION" Parameter="nOBSERVACION" Type="System.String" DbType="VarChar(250)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_AGREGA_DETALLE_GASTOS" Method="PR_REP_AGREGA_DETALLE_GASTOS">
+    <Parameter Name="NFOLIO" Parameter="nFOLIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NFECHA" Parameter="nFECHA" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="NPEAJE" Parameter="nPEAJE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NESTAC" Parameter="nESTAC" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NVIATI" Parameter="nVIATI" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NALOJA" Parameter="nALOJA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NMANTE" Parameter="nMANTE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NCDESC" Parameter="nCDESC" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NOTROS" Parameter="nOTROS" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NIVA" Parameter="nIVA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NOBS" Parameter="nOBS" Type="System.String" DbType="VarChar(250)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ANULAR_FOLIO" Method="PR_REP_ANULAR_FOLIO">
+    <Parameter Name="AFOLIO" Parameter="aFOLIO" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ASI_ASIGNA_FOLIOS" Method="PR_REP_ASI_ASIGNA_FOLIOS">
+    <Parameter Name="ADESDE" Parameter="aDESDE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AHASTA" Parameter="aHASTA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AIDPAT" Parameter="aIDPAT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="RUSU" Parameter="rUSU" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_ASI_ASIGNA_FOLIOSResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_CERRAR_FOLIO" Method="PR_REP_CERRAR_FOLIO">
+    <Parameter Name="AFOLIO" Parameter="aFOLIO" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_EDITA_CONDUCTOR" Method="PR_REP_EDITA_CONDUCTOR">
+    <ElementType Name="PR_REP_EDITA_CONDUCTORResult">
+      <Column Name="PK_PAR_CON_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_NOMBRE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_CODIGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_EDITA_DESPACHADOR" Method="PR_REP_EDITA_DESPACHADOR">
+    <ElementType Name="PR_REP_EDITA_DESPACHADORResult">
+      <Column Name="PK_REP_DES_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_NOMBRES" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_APELLIDOS" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_ELIMINA_FOLIOS" Method="PR_REP_ELIMINA_FOLIOS">
+    <Parameter Name="nID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_INA_INSERT_ASISTENTE" Method="PR_REP_INA_INSERT_ASISTENTE">
+    <Parameter Name="ARUT" Parameter="aRUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ADVE" Parameter="aDVE" Type="System.String" DbType="VarChar(1)" />
+    <Parameter Name="ANOM" Parameter="aNOM" Type="System.String" DbType="VarChar(120)" />
+    <Parameter Name="AAPE" Parameter="aAPE" Type="System.String" DbType="VarChar(120)" />
+    <Parameter Name="ACOD" Parameter="aCOD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ASUC" Parameter="aSUC" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_INA_INSERT_DESPACHADOR" Method="PR_REP_INA_INSERT_DESPACHADOR">
+    <Parameter Name="ARUT" Parameter="aRUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ADVE" Parameter="aDVE" Type="System.String" DbType="VarChar(1)" />
+    <Parameter Name="ANOM" Parameter="aNOM" Type="System.String" DbType="VarChar(120)" />
+    <Parameter Name="AAPE" Parameter="aAPE" Type="System.String" DbType="VarChar(120)" />
+    <Parameter Name="ASUC" Parameter="aSUC" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_INF_COMB" Method="PR_REP_INF_COMB">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="PR_REP_INF_COMBResult">
+      <Column Name="FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AREA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="ZONA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="NUM_DOCUMENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CANT_LITROS" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="VALOR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="USUARIO_CREACION" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="CONDUCTOR" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="KG_TRANSP" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="BULTOS_TRANSP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FONDO_RENDIR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOT_RENDIDO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MONTO_DEV_REC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_INF_COMBXSUC" Method="PR_REP_INF_COMBXSUC">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FSUC" Parameter="fSUC" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_INF_COMBXSUCResult">
+      <Column Name="FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AREA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="ZONA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="NUM_DOCUMENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CANT_LITROS" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="VALOR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="USUARIO_CREACION" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="CONDUCTOR" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="KG_TRANSP" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="BULTOS_TRANSP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FONDO_RENDIR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOT_RENDIDO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MONTO_DEV_REC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_INF_GASTOS" Method="PR_REP_INF_GASTOS">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="PR_REP_INF_GASTOSResult">
+      <Column Name="FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AREA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="ZONA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="PEAJE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTACIONAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VIATICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ALOJAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MANTENCION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CARGA_DESCARGA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OTROS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IVA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="KG_TRANSP" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="BULTOS_TRANSP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CONDUCTOR" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FONDO_RENDIR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOT_RENDIDO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MONTO_DEV_REC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_INF_GASTOSXSUC" Method="PR_REP_INF_GASTOSXSUC">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FSUC" Parameter="fSUC" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_INF_GASTOSXSUCResult">
+      <Column Name="FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AREA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="ZONA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="PEAJE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTACIONAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VIATICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ALOJAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MANTENCION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CARGA_DESCARGA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OTROS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IVA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="KG_TRANSP" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="BULTOS_TRANSP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CONDUCTOR" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FONDO_RENDIR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOT_RENDIDO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MONTO_DEV_REC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_INFORME_CONTROL_COMBUSTIBLE" Method="PR_REP_INFORME_CONTROL_COMBUSTIBLE">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="PR_REP_INFORME_CONTROL_COMBUSTIBLEResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_REP_DCC_NUMERO_DOCUMENTO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCC_CANTIDAD_LITROS" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCC_VALOR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="USUARIO_CREACION" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="FL_PAR_CON_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_REP_DCC_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_INFORME_CONTROL_GASTOS" Method="PR_REP_INFORME_CONTROL_GASTOS">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="PR_REP_INFORME_CONTROL_GASTOSResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCG_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCG_PEAJE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_ESTACIONAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_VIATICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_ALOJAMIENTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_MANTENCION" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_CARGA_DESCARGA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_OTROS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_IVA" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_TOTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_REP_DCG_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CONDUCTOR" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_INFORME_CONTROL_RUTAS" Method="PR_REP_INFORME_CONTROL_RUTAS">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="PR_REP_INFORME_CONTROL_RUTASResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_INICIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_FINAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_KM_RECORRIDOS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DCR_OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="ID_ORIGEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_DESTINO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="COMUNA_ORIGEN" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="COM_DESTINO" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_ORIG_REG" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_DEST_REG" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="REGION_ORIGEN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="REGION_DESTINO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DIR_DESTINO" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="DIR_ORIGEN" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="CONDUCTOR" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_LISTA_ASISTENTES_XSUCURSAL" Method="PR_REP_LISTA_ASISTENTES_XSUCURSAL">
+    <Parameter Name="CSUC" Parameter="cSUC" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_LISTA_ASISTENTES_XSUCURSALResult">
+      <Column Name="PK_REP_ASI_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_NOMBRES" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="FL_REP_ASI_APELLIDOS" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="FL_REP_ASI_CODIGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_LISTA_CONDUCTORES_XSUCURSAL" Method="PR_REP_LISTA_CONDUCTORES_XSUCURSAL">
+    <Parameter Name="CSUC" Parameter="cSUC" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_LISTA_CONDUCTORES_XSUCURSALResult">
+      <Column Name="PK_PAR_CON_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_PAR_CON_CODIGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_LISTA_DESPACHADORES_XSUCURSAL" Method="PR_REP_LISTA_DESPACHADORES_XSUCURSAL">
+    <Parameter Name="CSUC" Parameter="cSUC" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_LISTA_DESPACHADORES_XSUCURSALResult">
+      <Column Name="PK_REP_DES_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_NOMBRES" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="FL_REP_DES_APELLIDOS" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_MODIFICA_DETALLE_COMBUSTIBLE" Method="PR_REP_MODIFICA_DETALLE_COMBUSTIBLE">
+    <Parameter Name="NID" Parameter="nID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NFECHA" Parameter="nFECHA" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="NNUMDOCTO" Parameter="nNUMDOCTO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NLITROS" Parameter="nLITROS" Type="System.Double" DbType="Float" />
+    <Parameter Name="NVALOR" Parameter="nVALOR" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NOBSERVACION" Parameter="nOBSERVACION" Type="System.String" DbType="VarChar(250)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_MODIFICA_DETALLE_GASTOS" Method="PR_REP_MODIFICA_DETALLE_GASTOS">
+    <Parameter Name="NID" Parameter="nID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NFECHA" Parameter="nFECHA" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="NPEAJE" Parameter="nPEAJE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NESTAC" Parameter="nESTAC" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NVIATI" Parameter="nVIATI" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NALOJA" Parameter="nALOJA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NMANTE" Parameter="nMANTE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NCDESC" Parameter="nCDESC" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NOTROS" Parameter="nOTROS" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NIVA" Parameter="nIVA" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NOBS" Parameter="nOBS" Type="System.String" DbType="VarChar(250)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_MUESTRA_ASISTENTES" Method="PR_REP_MUESTRA_ASISTENTES">
+    <ElementType Name="PR_REP_MUESTRA_ASISTENTESResult">
+      <Column Name="PK_REP_ASI_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_NOMBRES" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_APELLIDOS" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_CODIGO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ESE_DESCRIPCION" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_MUESTRA_DESPACHADORES" Method="PR_REP_MUESTRA_DESPACHADORES">
+    <ElementType Name="PR_REP_MUESTRA_DESPACHADORESResult">
+      <Column Name="PK_REP_DES_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_NOMBRES" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_DES_APELLIDOS" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ESE_DESCRIPCION" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_MUESTRA_DETALLE_RANGOS" Method="PR_REP_MUESTRA_DETALLE_RANGOS">
+    <Parameter Name="IDCARGA" Parameter="iDCARGA" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_MUESTRA_DETALLE_RANGOSResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="USUARIO_INGRESO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="FL_PAR_CON_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_MUESTRA_FOLIO" Method="PR_REP_MUESTRA_FOLIO">
+    <Parameter Name="FFOLIO" Parameter="fFOLIO" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_MUESTRA_FOLIOResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="USUARIO_INGRESO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="FL_PAR_CON_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_REP_ECF_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ECF_DESCRIPCION" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_MUESTRA_FOLIOS_ACTIVOS" Method="PR_REP_MUESTRA_FOLIOS_ACTIVOS">
+    <Parameter Name="SUCU" Parameter="sUCU" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_MUESTRA_FOLIOS_ACTIVOSResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="USUARIO_INGRESO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="FL_PAR_CON_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_MUESTRA_RANGO_PATENTES" Method="PR_REP_MUESTRA_RANGO_PATENTES">
+    <Parameter Name="IDPAT" Parameter="iDPAT" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_MUESTRA_RANGO_PATENTESResult">
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PK_REP_FOL_ID_CARGA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_FOL_DESDE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_FOL_HASTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="USUARIO_INGRESO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_REASIGNA_PATENTES_XFOLIO" Method="PR_REP_REASIGNA_PATENTES_XFOLIO">
+    <Parameter Name="FFOL" Parameter="fFOL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NVOVEHI" Parameter="nVOVEHI" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NUSU" Parameter="nUSU" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_REASIGNA_PATENTES_XFOLIOResult">
+      <Column Name="PK_REP_CAB_FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_VER_FOLIOS" Method="PR_REP_VER_FOLIOS">
+    <ElementType Name="PR_REP_VER_FOLIOSResult">
+      <Column Name="PK_REP_FOL_ID_CARGA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_FOL_DESDE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_REP_FOL_HASTA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_FOL_FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="USUARIO_CARGA" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_RESCATA_ULT_KILOMETRAJE" Method="PR_REP_RESCATA_ULT_KILOMETRAJE">
+    <Parameter Name="FFOLIO" Parameter="fFOLIO" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_RESCATA_ULT_KILOMETRAJEResult">
+      <Column Name="KMFINAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_EDITA_ASISTENTE" Method="PR_REP_EDITA_ASISTENTE">
+    <ElementType Name="PR_REP_EDITA_ASISTENTEResult">
+      <Column Name="PK_REP_ASI_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_NOMBRES" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_APELLIDOS" Type="System.String" DbType="VarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_REP_ASI_CODIGO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_EDITA_VEHICULO" Method="PR_REP_EDITA_VEHICULO">
+    <ElementType Name="PR_REP_EDITA_VEHICULOResult">
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_MODELO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_MARCA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_CAPACIDAD_KGS" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_CAPACIDAD_M3" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_LISTA_COMUNAS" Method="PR_REP_LISTA_COMUNAS">
+    <Parameter Name="REGION" Parameter="rEGION" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_LISTA_COMUNASResult">
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_NOMBRE" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_MODIFICA_DETALLE_RUTAS" Method="PR_REP_MODIFICA_DETALLE_RUTAS">
+    <Parameter Name="AID" Parameter="aID" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="AFECHA" Parameter="aFECHA" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="AKINCIAL" Parameter="aKINCIAL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AKFINAL" Parameter="aKFINAL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AOBS" Parameter="aOBS" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="AREORIG" Parameter="aREORIG" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ACOORIG" Parameter="aCOORIG" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ADIRORIG" Parameter="aDIRORIG" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="AREDEST" Parameter="aREDEST" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ACODEST" Parameter="aCODEST" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ADIRDEST" Parameter="aDIRDEST" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="PEDIDO" Parameter="pEDIDO" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="TRANSPORTE" Parameter="tRANSPORTE" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="ZONA" Parameter="zONA" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_AGREGA_DETALLE_RUTA" Method="PR_REP_AGREGA_DETALLE_RUTA">
+    <Parameter Name="AFOLIO" Parameter="aFOLIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AFECHA" Parameter="aFECHA" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="AKINCIAL" Parameter="aKINCIAL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AKFINAL" Parameter="aKFINAL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AOBS" Parameter="aOBS" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="AREORIG" Parameter="aREORIG" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ACOORIG" Parameter="aCOORIG" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ADIRORIG" Parameter="aDIRORIG" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="AREDEST" Parameter="aREDEST" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ACODEST" Parameter="aCODEST" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ADIRDEST" Parameter="aDIRDEST" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="PEDIDO" Parameter="pEDIDO" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="TRANSPORTE" Parameter="tRANSPORTE" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="ZONA" Parameter="zONA" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_INF_RUTAS" Method="PR_REP_INF_RUTAS">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="PR_REP_INF_RUTASResult">
+      <Column Name="FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AREA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="ZONA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="REGION_ORIGEN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="COMUNA_ORIGEN" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="DIR_ORIGEN" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="KM_INICIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REGION_DESTINO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="COM_DESTINO" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="DIR_DESTINO" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="KM_FINAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="KM_RECORRIDOS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="CONDUCTOR" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FONDO_RENDIR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOT_RENDIDO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MONTO_DEV_REC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="LTS_TRANSPORTADOS" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TRANSPORTE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ZONA_NRO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_INF_RUTASXSUC" Method="PR_REP_INF_RUTASXSUC">
+    <Parameter Name="FDESDE" Parameter="fDESDE" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FHASTA" Parameter="fHASTA" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FSUC" Parameter="fSUC" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_INF_RUTASXSUCResult">
+      <Column Name="FOLIO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="REFERENCIA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PATENTE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="RAMPLA" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AREA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="ZONA" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="REGION_ORIGEN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="COMUNA_ORIGEN" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="DIR_ORIGEN" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="KM_INICIAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="REGION_DESTINO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="COM_DESTINO" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="DIR_DESTINO" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="KM_FINAL" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="KM_RECORRIDOS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OBSERVACION" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_KILOS_TRANSPORTADOS" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_REP_CAB_BULTOS_TRANSPORTADOS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USUARIO" Type="System.String" DbType="VarChar(201)" CanBeNull="true" />
+      <Column Name="CONDUCTOR" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ASISTENTE" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="DESPACHADOR" Type="System.String" DbType="VarChar(241)" CanBeNull="true" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FONDO_RENDIR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TOT_RENDIDO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MONTO_DEV_REC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="LTS_TRANSPORTADOS" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="TRANSPORTE" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ZONA_NRO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_MUESTRA_CONDUCTORES" Method="PR_REP_MUESTRA_CONDUCTORES">
+    <Parameter Name="BUSCAR" Parameter="bUSCAR" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="PR_REP_MUESTRA_CONDUCTORESResult">
+      <Column Name="PK_PAR_CON_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_NOMBRE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_CODIGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PK_PAR_EST_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_LISTA_TRANS_CONDUCTOR" Method="PR_REP_LISTA_TRANS_CONDUCTOR">
+    <Parameter Name="RUT" Parameter="rUT" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_LISTA_TRANS_CONDUCTORResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PATENTE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_ELIMINA_TRANS_CONDUCTOR" Method="PR_REP_ELIMINA_TRANS_CONDUCTOR">
+    <Parameter Name="RUT" Parameter="rUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_LISTA_TRANS_POR_SUC" Method="PR_REP_LISTA_TRANS_POR_SUC">
+    <Parameter Name="IDSUC" Parameter="iDSUC" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_LISTA_TRANS_POR_SUCResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PATENTE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_ASIGNA_SUC_A_CONDUCTOR" Method="PR_REP_ASIGNA_SUC_A_CONDUCTOR">
+    <Parameter Name="RUT" Parameter="rUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID_VEH" Parameter="iD_VEH" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ACTUALIZA_CONDUCTOR" Method="PR_REP_ACTUALIZA_CONDUCTOR">
+    <Parameter Name="ARUT" Parameter="aRUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ACOD" Parameter="aCOD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ANOM" Parameter="aNOM" Type="System.String" DbType="VarChar(200)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ACT_DESAC_COND" Method="PR_REP_ACT_DESAC_COND">
+    <Parameter Name="RUT" Parameter="rUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="TIPO" Parameter="tIPO" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_MUESTRA_VEHICULOS" Method="PR_REP_MUESTRA_VEHICULOS">
+    <Parameter Name="BUSCAR" Parameter="bUSCAR" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="PR_REP_MUESTRA_VEHICULOSResult">
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_MODELO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_MARCA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_CAPACIDAD_KGS" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_CAPACIDAD_M3" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_AGREGA_TRANSPORTE" Method="PR_REP_AGREGA_TRANSPORTE">
+    <Parameter Name="PATENTE" Parameter="pATENTE" Type="System.String" DbType="VarChar(7)" />
+    <Parameter Name="MARCA" Parameter="mARCA" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="MODELO" Parameter="mODELO" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="CAP_KGS" Parameter="cAP_KGS" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="CAP_M3" Parameter="cAP_M3" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ACTUALIZA_VEHICULO" Method="PR_REP_ACTUALIZA_VEHICULO">
+    <Parameter Name="VID" Parameter="vID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PATENTE" Parameter="pATENTE" Type="System.String" DbType="VarChar(7)" />
+    <Parameter Name="MARCA" Parameter="mARCA" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="MODELO" Parameter="mODELO" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="VKG" Parameter="vKG" Type="System.Int32" DbType="Int" />
+    <Parameter Name="VM3" Parameter="vM3" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_LISTA_SUC_ASIGNADAS" Method="PR_REP_LISTA_SUC_ASIGNADAS">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_REP_LISTA_SUC_ASIGNADASResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_REP_ASIGNA_SUCURSAL" Method="PR_REP_ASIGNA_SUCURSAL">
+    <Parameter Name="ID_MOVIL" Parameter="iD_MOVIL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID_SUC" Parameter="iD_SUC" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_ELIMINA_SUCURSAL" Method="PR_REP_ELIMINA_SUCURSAL">
+    <Parameter Name="ID_MOVIL" Parameter="iD_MOVIL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID_SUC" Parameter="iD_SUC" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_REP_LISTA_SUC_NO_ASIGNADAS" Method="PR_REP_LISTA_SUC_NO_ASIGNADAS">
+    <Parameter Name="ID_MOVIL" Parameter="iD_MOVIL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="BUSCAR" Parameter="bUSCAR" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="PR_REP_LISTA_SUC_NO_ASIGNADASResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SUCURSAL" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

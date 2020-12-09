@@ -1,0 +1,117 @@
+﻿@model MvcReporteViajes.Models.DetalleGastosModels
+@{
+    ViewBag.Title = "_editardetalleGastos";
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#FECHADETGASTOS").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+    });
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-result").html(data.Mensaje);
+            $("#dialog-result").dialog("open");
+
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+    $("#PEAJE").focus();
+
+    function teclaEnter(e, idElemento) {
+        var esIE = (document.all);
+        tecla = (esIE) ? event.keyCode : e.which;
+        if (tecla == 13) {
+            $("#" + idElemento).focus();
+        }
+    }
+
+</script>
+
+
+
+
+
+
+@using (Ajax.BeginForm("ActuaDetalleGastos", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmActualizaGastos" }))
+{
+  
+    @Html.HiddenFor(m => m.IDGTOS)
+    
+    <table>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.FECHADETGASTOS)</strong></td>
+            <td>@Html.TextBoxFor(m => m.FECHADETGASTOS, new { @style = "width:70px;font-size: 10px" })</td>
+       </tr>
+       <tr>
+        <td></td>
+        <td colspan="2">@Html.ValidationMessageFor(m=>m.FECHADETGASTOS)</td>
+      </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.PEAJE)</strong></td>
+            <td>@Html.TextBoxFor(m => m.PEAJE, new { @style = "width:100px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'ESTACIONAMIENTO');" })
+            @Html.ValidationMessageFor(m => m.PEAJE)
+            </td>
+       </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.ESTACIONAMIENTO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.ESTACIONAMIENTO, new { @style = "width:100px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'VIATICO');" })
+             @Html.ValidationMessageFor(m => m.ESTACIONAMIENTO)
+            </td>
+       </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.VIATICO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.VIATICO, new { @style = "width:100px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'ALOJAMIENTO');" })
+             @Html.ValidationMessageFor(m => m.VIATICO)
+            </td>
+       </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.ALOJAMIENTO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.ALOJAMIENTO, new { @style = "width:100px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'MANTENIMIENTO');" })
+             @Html.ValidationMessageFor(m => m.ALOJAMIENTO)
+            </td>
+       </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.MANTENIMIENTO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.MANTENIMIENTO, new { @style = "width:100px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'CARGADESCARGA');" })
+             @Html.ValidationMessageFor(m => m.MANTENIMIENTO)
+            </td>
+       </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.CARGADESCARGA)</strong></td>
+            <td>@Html.TextBoxFor(m => m.CARGADESCARGA, new { @style = "width:100px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'OTROS');" })
+             @Html.ValidationMessageFor(m => m.CARGADESCARGA)
+            </td>
+       </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.OTROS)</strong></td>
+            <td>@Html.TextBoxFor(m => m.OTROS, new { @style = "width:100px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'IVA');" })
+            @Html.ValidationMessageFor(m => m.OTROS)
+            </td>
+       </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.IVA)</strong></td>
+            <td>@Html.TextBoxFor(m => m.IVA, new { @style = "width:100px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'OBSERVACIONGASTOS');" })
+             @Html.ValidationMessageFor(m => m.IVA)
+            </td>
+       </tr>
+       <tr>
+            <td><strong> @Html.LabelFor(m => m.OBSERVACIONGASTOS)</strong></td>
+            <td>@Html.TextBoxFor(m => m.OBSERVACIONGASTOS, new { @style = "width:200px;font-size: 10px"})</td>
+       </tr>
+  </table>
+      
+}

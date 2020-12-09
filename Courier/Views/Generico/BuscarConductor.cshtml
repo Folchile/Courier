@@ -1,0 +1,96 @@
+﻿@model Courier.Models.GenericCondModels
+           
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet"type="text/css" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#dialog-buscarconductor").dialog({ autoOpen: false, title: 'Buscar Conductor', modal: true, width: 800, buttons: {
+            Cancelar: function () {
+                $(this).dialog("close");
+            }
+        }
+        });
+
+
+        //        $("#imgCargandoServicio").hide();
+    })
+
+    function ActualizaListaCond(TextoFiltro) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#myGridBusquedaCond").html('<img src="@Url.Content("~/Images/8.gif")" border="0">');
+
+        $("#myGridBusquedaCond").load('@Url.Action("BuscarCond", "Generico")?r=' + randomnumber + '&TextoFiltro=' + TextoFiltro + ' #myGridBusquedaCond',
+            function (response, status, xhr) {
+                if (status == 'error') {
+                    $("#myGridBusquedaCond").html("No fue posible actualizar la información");
+                }
+            });
+    }
+    function BuscarConductor(rt) {
+        $("#BUSCARRUT").val(rt);
+        //        alert($("#BUSCARRUT").val());
+        cargaConductores(rt);
+        $("#dialog-buscarconductor").dialog("close");
+        //        ChangeCodigoSap(CodSap);
+    }
+
+    $(document).ready(function () {
+        $("#dialog-buscarconductor").dialog("open");
+        closeWaitingDialog();
+    })
+</script>
+
+
+<div id="dialog-buscarconductor">
+   <div class="editor-label">
+        @Html.LabelFor(m => m.StringBusquedaCond)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(m => m.StringBusquedaCond, new { size = 20, maxlength = 20 })
+        @Html.ValidationMessageFor(m => m.StringBusquedaCond)
+    </div>    
+    @{
+        var grid = new WebGrid(Model.ListaBuscarCond, rowsPerPage: 15, ajaxUpdateContainerId: "myGridBusquedaCond");    
+    } 
+    <div  id="myGridBusquedaCond">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {                
+                grid.Column("Rut","RUT",@<text>
+                <a href="#" onclick="javascript:BuscarConductor('@item.Rut');">
+                    @item.Rut
+                </a>
+                </text>),
+                grid.Column("Nombre","NOMBRE",@<text>
+                <a href="#" onclick="javascript:BuscarConductor('@item.Rut');">
+                     @item.Nombre
+                </a>
+                </text>),
+                grid.Column("Codigo","Codigo Conductor",@<text>
+                <a href="#" onclick="javascript:BuscarConductor('@item.Rut');">
+                     @item.Codigo
+                </a>
+                </text>)                      
+            })
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#StringBusquedaCond").keyup(function () {
+            ActualizaListaCond($(this).val());
+        });
+    })
+</script>
+

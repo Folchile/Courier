@@ -1,0 +1,5 @@
+﻿@model Courier.Models.DespachoProveedorModels
+@using (Ajax.BeginForm("CerrarManCarga", "Proveedor", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:Fin2(data)", OnFailure = "Javascript:Fin2()" }, new { id = "frmCerrarManCarga" }))
+{
+    @Html.DropDownListFor(m => m.Conductor, Model.oListaConductores)
+}

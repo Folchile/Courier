@@ -1,0 +1,27 @@
+﻿@model Courier.Models.EnRutaTroncalModels
+@{
+    var grid = new WebGrid(Model.oListaRecepcionDetalle, rowsPerPage: 10, ajaxUpdateContainerId: "div_info");    
+} 
+<div id="div_info">
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+tableStyle:"mGrid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("PK_FOL_OTP_ID","OT",@<text>
+        @item.PK_FOL_OTP_ID-@item.PK_FOL_OTD_ID
+    </text>),     
+    grid.Column("PESO","Peso.",@<text>
+                @item.PESO.ToString("#0.00")
+            </text>)
+    
+})
+</div>

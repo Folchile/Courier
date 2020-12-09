@@ -1,0 +1,92 @@
+﻿@model Courier.Models.RectificacionRecepcionModels
+@{
+    ViewBag.Title = "Recepcion OK, Excepción";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#dialog-mensajeError").dialog({ autoOpen: false, title: "Error", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#OT").focus();
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#OT").focus();
+        $("#Rec01_Guardar").button()
+            .click(function (event) {
+                borrar_contenido();
+                event.preventDefault();
+                $.validator.unobtrusive.parse("#frmBuscarRec");
+                if ($("#frmBuscarRec").valid() == true) {
+                    waitingDialog({ title: "Validando OT", message: "Validando OT...<br/>" });
+                    var randomnumber = Math.floor(Math.random() * 11111111)
+                    $.ajax({
+                        url: '@Url.Action("ValiadOT","Validation")?OT=' + $("#OT").val() + '&r=' + randomnumber,
+                        type: "POST",
+                        success: function (data) {
+                            closeWaitingDialog();
+                            if (data.Ok == true) {
+                                $("#frmBuscarRec").submit();
+                            }
+                            else {
+                                closeWaitingDialog();
+                                $("#dialog-mensajeError").html('<p>' + data.Mensaje + '</p>');
+                                $("#dialog-mensajeError").dialog("open");
+                            }
+
+                        },
+                        error: function () {
+                            closeWaitingDialog();
+                        }
+                    });
+
+                }
+            });
+    })
+
+    function InicioRec() {
+        waitingDialog({ title: "Validando", message: "Validando Datos...<br/>" });
+    }
+    function FinAgregarRec(data) {
+        closeWaitingDialog();
+        $("#formContent").html(data);
+    }
+    function FinErrorRec() {
+        closeWaitingDialog();
+        alert("No fue posible validar la información");
+    }
+    function modificacion() {
+        $("#formContent").html("");
+    }
+</script>
+<div id="dialog-mensajeError"></div>
+
+@using (Ajax.BeginForm("RecepcionOkModificar", "Rectificacion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:InicioRec()", OnSuccess = "Javascript:FinAgregarRec(data)", OnFailure = "Javascript:FinErrorRec()" }, new { id = "frmBuscarRec" }))
+{
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.OT)</td>        
+        </tr>
+        <tr>
+            <td>@Html.TextBoxFor(m => m.OT, new { @onchange="javascript:modificacion();" })</td>
+            <td>
+                <button id="Rec01_Guardar"> 
+                    <div style="float:left;width:80px;">       
+                    <div style="float:left;"><img alt="Cambiar Manifiesto" src='@Url.Content("~/Images/system_search.png")' /></div>                 
+                    <div style="float:left;">&nbsp;Buscar</div>                        
+                    </div>                       
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">@Html.ValidationMessageFor(m=>m.OT)</td>
+        </tr>
+    </table>
+}
+<div id="formContent"></div>

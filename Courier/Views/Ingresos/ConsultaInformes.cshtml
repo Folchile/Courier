@@ -1,0 +1,160 @@
+﻿@model MvcReporteViajes.Models.InformeViajesModels
+@{
+    ViewBag.Title = "ConsultaInformes";
+}
+
+@*<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />*@
+@*<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>*@
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+
+
+<script type="text/javascript">
+
+
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');
+    }
+
+
+
+
+    $(function () {
+        $(".tipofecha").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+    })
+
+    $(function () {
+        $("#btnGeneraInf").button()
+       .click(function () {
+           $.validator.unobtrusive.parse("#frmInformes");
+           if ($("#frmInformes").valid() == true) {
+               //           alert($("#Informes").val());
+
+               var inicio = $("#FechaIni").val();
+               var final = $("#FechaTer").val();
+
+               var DateIni = inicio;
+               var elem = DateIni.split('-');
+               diai = String(elem[0]); mesi = String(elem[1]); añoi = String(elem[2]);
+
+               var DateTer = final;
+               var elem = DateTer.split('-');
+               diat = String(elem[0]); mest = String(elem[1]); añot = String(elem[2]);
+
+               inicio = añoi + mesi + diai
+               final = añot + mest + diat
+
+               if (inicio > final) {
+                   alert("Fecha Inicio debe ser menor a fecha de Termino");
+                   return;
+               }
+
+               if (inicio == "") {
+                   alert("Debe Ingresar fecha Desde");
+                   return;
+               }
+
+               if (final == "") {
+                   alert("Debe Ingresar fecha Hasta");
+                   return;
+               }
+
+               if ($("#Informes").val() == "0") {
+                   alert("Debe seleccionar un tipo de informe");
+                   return;
+               }
+
+               if ($("#Informes").val() == "1") {
+                   window.open('@Url.Action("GeneraExcelCombustible","Ingresos")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val());
+               } else if ($("#Informes").val() == "2") {
+                   window.open('@Url.Action("GeneraExcelGastos","Ingresos")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val());
+               } else if ($("#Informes").val() == "3") {
+                   window.open('@Url.Action("GeneraExcelRutas","Ingresos")?FECINI=' + $("#FechaIni").val() + '&FECTER=' + $("#FechaTer").val());
+               }
+           }
+       })
+    });
+
+    $(function () {
+        $("#btnLimpiaInf").button()
+                         .click(function () {
+                             $("#FechaIni").val("");
+                             $("#FechaTer").val("");
+                             $("#Informes").val("");
+                             borrar_contenido();
+                         })
+    });
+
+//    function CambiaFiltroInformes(informe_id) {
+//        $("#formContent2").html('<img src="@Url.Content("~/Images/8.gif")" />');
+//        var randomnumber = Math.floor(Math.random() * 1111111);
+//        $("#formContent2").load('@Url.Action("VerFiltroInformes", "Informes")?Informes=' + informe_id + '&r=' + randomnumber + '');
+//    }
+
+</script>
+
+
+
+
+
+
+
+
+
+@using (Ajax.BeginForm("VerL", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinVer(data)", OnFailure = "Javascript:Fin()" }, new { id = "frmInformes" }))
+{
+    <table>
+        <tr>
+            <td colspan="3">@Html.LabelFor(m => m.Informes)
+                @Html.ValidationMessageFor(m => m.Informes)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.DropDownListFor(m => m.Informes, Model.ListaInformes, new {@style = "width:220px;font-size: 15px" })</td>
+            <td>@Html.TextBoxFor(m => m.FechaIni, new { @class = "tipofecha" })</td> 
+            <td colspan="2">@Html.ValidationMessageFor(m => m.FechaIni)</td>
+            <td>@Html.TextBoxFor(m => m.FechaTer, new { @class = "tipofecha" })</td>
+            <td colspan="2">@Html.ValidationMessageFor(m => m.FechaTer)</td>
+            @*<td>*@
+           @* <input type="hidden" name="informe_id" id="informe_id" />*@
+               
+           @* </td>*@
+            @*<td><input type="button" id="btnGeneraInf"  name="btnGeneraInf" value="Generar Datos Excel" style="width:90px;height:25px; font-size:8pt"/></td>*@
+        </tr>
+    </table>
+}
+
+ 
+
+@*<input type="button" id="btnGeneraInf" name="btnGeneraInf" value="Generar Datos Excel" style="width:180px;height:25px; font-size:8pt" />*@
+<div>
+    <table>
+          <tr>
+             <td>
+               @*<input type="hidden" name="informe_id" id="informe_id" />*@
+                <button id="btnGeneraInf" >
+                   <div style="float:left;width:150px;">       
+                   <div style="float:left;"><img alt="Generar Datos Excel" src="@Url.Content("~/Images/doc_excel_table.png")" /></div>                 
+                   <div style="float:left;">&nbsp;Descarga Informe</div>                        
+                   </div>                          
+                </button> 
+             </td>
+             <td>
+             <button id="btnLimpiaInf">
+                 <div style="float:left;"><img alt="Limpiar" src="@Url.Content("~/Images/refresh.png")" /></div>                 
+                 <div style="float:left;">&nbsp;Limpiar</div>                        
+                               
+            </button> 
+             </td>
+          </tr>
+        </table>
+</div>
+

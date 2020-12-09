@@ -1,0 +1,123 @@
+﻿@model Courier.Models.HistorialModels
+@{
+    ViewBag.Title = "_HistorialOT";
+}
+<script type="text/javascript">
+    $(function () {
+        $("#tabsPop").tabs();
+    });
+</script>
+ <div id="tabsPop">
+    <ul>
+        @if (Model.oListaHistoriaBulto != null)
+        {
+	        <li><a href="#tabsPop-1">Historia Bulto</a></li>		    
+        }        
+        @if (Model.oListaHistoriaOTD != null)
+        {
+	        <li><a href="#tabsPop-2">Historia OT</a></li>		    
+        }  
+        @if (Model.oListaHistoriaOTP != null)
+        {
+	        <li><a href="#tabsPop-3">Historia OT Padre</a></li>		    
+        }      
+    </ul>
+    @if (Model.oListaHistoriaBulto != null)
+    {
+        var grid = new WebGrid(Model.oListaHistoriaBulto, rowsPerPage: 10, ajaxUpdateContainerId: "GridBulto");
+        <div id="tabsPop-1">
+            <div id="GridBulto">
+                @grid.GetHtml(
+                fillEmptyRows: true,
+                alternatingRowStyle: "fila-alternativa",
+                headerStyle: "encabezado-grid",
+                tableStyle: "mGrid",
+                footerStyle: "pie-grid",
+                mode: WebGridPagerModes.All,
+                firstText: "<< Primera",
+                previousText: "< Anterior",
+                nextText: "Siguiente >",
+                lastText: "Última >>",
+                columns: new[]
+                {                
+                    grid.Column("PK_FOL_HIB_ID","N°"), 
+                    grid.Column("PK_FOL_BLT_ID","ID Bulto"), 
+                    grid.Column("PK_FOL_OTP_ID","OT",format:@<text>
+                    @item.PK_FOL_OTP_ID-@item.PK_FOL_OTD_ID
+                    </text>), 
+                    grid.Column("FL_FOL_HIB_FECHA","Fecha"), 
+                    grid.Column("FL_PAR_SUC_NOMBRE","Sucursal"), 
+                    grid.Column("FL_FOL_EST_NOMBRE","Estado"), 
+                    grid.Column("FL_FOL_EST_DESCRIPCION","Estado_Detalle"),
+                    grid.Column("FL_PAR_USU_NOMBRES","Usuario",format:@<text>
+                    @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS                
+                    </text>)
+                })
+            </div>
+        </div>
+    }
+    @if (Model.oListaHistoriaOTD != null)
+    {
+        var grid = new WebGrid(Model.oListaHistoriaOTD, rowsPerPage: 10, ajaxUpdateContainerId: "GridOTD");
+        <div id="tabsPop-2">
+            <div id="GridOTD">
+                @grid.GetHtml(
+                fillEmptyRows: true,
+                alternatingRowStyle: "fila-alternativa",
+                headerStyle: "encabezado-grid",
+                tableStyle: "mGrid",
+                footerStyle: "pie-grid",
+                mode: WebGridPagerModes.All,
+                firstText: "<< Primera",
+                previousText: "< Anterior",
+                nextText: "Siguiente >",
+                lastText: "Última >>",
+                columns: new[]
+                {                
+                    grid.Column("PK_FOL_HID_ID","N°"),                     
+                    grid.Column("PK_FOL_OTP_ID","OT",format:@<text>
+                    @item.PK_FOL_OTP_ID-@item.PK_FOL_OTD_ID
+                    </text>), 
+                    grid.Column("FL_FOL_HID_FECHA","Fecha"), 
+                    grid.Column("FL_PAR_SUC_NOMBRE","Sucursal"), 
+                    grid.Column("FL_FOL_EST_NOMBRE","Estado"), 
+                    grid.Column("FL_FOL_EST_DESCRIPCION","Estado_Detalle"),
+                    grid.Column("FL_PAR_USU_NOMBRES","Usuario",format:@<text>
+                    @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS                
+                    </text>)
+                })
+            </div>
+        </div>
+    }
+    @if (Model.oListaHistoriaOTP != null)
+    {
+        var grid = new WebGrid(Model.oListaHistoriaOTP, rowsPerPage: 10, ajaxUpdateContainerId: "GridOTP");
+        <div id="tabsPop-3">
+            <div id="GridOTP">
+                @grid.GetHtml(
+                fillEmptyRows: true,
+                alternatingRowStyle: "fila-alternativa",
+                headerStyle: "encabezado-grid",
+                tableStyle: "mGrid",
+                footerStyle: "pie-grid",
+                mode: WebGridPagerModes.All,
+                firstText: "<< Primera",
+                previousText: "< Anterior",
+                nextText: "Siguiente >",
+                lastText: "Última >>",
+                columns: new[]
+                {                
+                    grid.Column("PK_FOL_HIP_ID","N°"),                     
+                    grid.Column("PK_FOL_OTP_ID","OT Padre"), 
+                    grid.Column("FL_FOL_HIP_FECHA","Fecha"), 
+                    grid.Column("FL_PAR_SUC_NOMBRE","Sucursal"), 
+                    grid.Column("FL_FOL_EST_NOMBRE","Estado"), 
+                    grid.Column("FL_FOL_EST_DESCRIPCION","Estado_Detalle"),
+                    grid.Column("FL_PAR_USU_NOMBRES","Usuario",format:@<text>
+                    @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS                
+                    </text>)
+                })
+            </div>
+        </div>
+    }
+</div>

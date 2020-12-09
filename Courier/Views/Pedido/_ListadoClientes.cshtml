@@ -1,0 +1,31 @@
+﻿@model Courier.Models.IngresoMasivoModel
+@{
+    var grid = new WebGrid(Model.oItems,rowsPerPage:15,ajaxUpdateContainerId:"myGrid");    
+} 
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+tableStyle:"mGrid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("PK_CLI_EMP_RUT","Rut"), 
+    grid.Column("FL_CLI_EMP_DV","Dv"),
+    grid.Column("FL_CLI_EMP_RAZON_SOCIAL","Razon Social"),
+    @*grid.Column("",header:"Acciones",format:@<text>
+        <a href="#"><img title="Ver" alt="Ver" src="@Url.Content("~/Images/magnifier_zoom.png")"  style="border:0;" /></a>
+        <a href="#"><img title="Borrar" alt="Borrar" src="../../Images/user_male_delete.png"  style="border:0;" /></a>
+        <a href="#"><img title="Editar" alt="Editar" src="../../Images/24.png"  style="border:0;" /></a>
+    </text>),*@
+
+    
+grid.Column("",header:"Acciones",format:@<text>
+                                        @Html.ActionLink("Editar","edit",new{id=item.PK_CLI_EMP_RUT})
+                                    </text>)
+})

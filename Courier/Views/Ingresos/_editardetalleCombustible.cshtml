@@ -1,0 +1,80 @@
+﻿@model MvcReporteViajes.Models.DetalleCombustibleModels
+@{
+    ViewBag.Title = "_editardetalleCombustible";
+}
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#FECHADETCOMB").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+//        $(".tipofecha").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+    });
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-result").html(data.Mensaje);
+            $("#dialog-result").dialog("open");
+
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+
+</script>
+
+
+
+@using (Ajax.BeginForm("ActuaDetalleCombustible", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmActualizaCombustible" }))
+{
+  
+      @Html.HiddenFor(m => m.IDCOMB)
+     <table>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.FECHADETCOMB)</strong></td>
+            @*<td>@Html.TextBoxFor(m => m.FECHADETCOMB, new { @class = "tipofecha" })</td>*@
+            <td>@Html.TextBoxFor(m => m.FECHADETCOMB, new { @style = "width:100px;font-size: 10px" })</td>
+         </tr>
+         <tr>
+            <td></td>
+            <td colspan="2">@Html.ValidationMessageFor(m => m.FECHADETCOMB)</td>
+        </tr>
+        
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.NUMERO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.NUMERO, new { @style = "width:80px;font-size: 10px;text-align:right" })
+             @Html.ValidationMessageFor(m => m.NUMERO)
+            </td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.LITROS)</strong></td>
+            <td>@Html.TextBoxFor(m => m.LITROS, new { @style = "width:60px;font-size: 10px;text-align:right" })
+             @Html.ValidationMessageFor(m => m.LITROS)
+            </td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.VALOR)</strong></td>
+            <td>@Html.TextBoxFor(m => m.VALOR, new { @style = "width:60px;font-size: 10px;text-align:right" })
+             @Html.ValidationMessageFor(m => m.VALOR)
+            </td>
+         </tr>    
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.OBSERVACIONCOMB)</strong></td>
+            <td>@Html.TextBoxFor(m => m.OBSERVACIONCOMB, new { @style = "width:220px;font-size: 10px" })</td>
+         </tr> 
+         
+    
+    
+    </table>
+}

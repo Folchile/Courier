@@ -1,0 +1,54 @@
+﻿@model Courier.Models.MantencionModels
+@{
+    var grid = new WebGrid(Model.LstaSucCltes, rowsPerPage: 8, ajaxUpdateContainerId: "gridlstSucClientes");
+}
+
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#agregasuc").button()
+        .click(function () {
+            alert('aca');
+        });
+    });
+
+</script>
+
+
+<table style="width:100%;"><tr><td style="width:100%; text-align:right;">
+  <input type="button" id="agregasuc" name="agregasuc" value="Agregar Sucursal" style="width:120px;height:25px; font-size:8pt" /></td></tr>
+</table>
+
+
+<div id="gridlstSucClientes">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       
+       grid.Column("Sid","ID"),
+       grid.Column("Sdescripcion","SUCURSAL"),
+       grid.Column("Stipo","TIPO"),
+       @*grid.Column("",header:"ACCIÓN",format:@<text>
+                                              <a href="#" onclick="javascript:EliminarRelSuc('@item.Sid')"><img border="0" src='@Url.Content("~/Images/deletered.png")' alt="Eliminar @item.Sdescripcion" title="Editar @item.Sdescripcion"/></a>
+                                    </text>) 
+       *@
+        
+ })
+</div>

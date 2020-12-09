@@ -1,0 +1,65 @@
+﻿@model Courier.Models.AdministracionUsuario
+@using (Ajax.BeginForm("UpdateRegister", "Account", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "frmUsuario", OnComplete = "javascript:finOperacion();", OnBegin = "javascript:inicioOperacion()", OnSuccess = "javascript:finOperacionSuccess(data);" }, new { id = "frmRegistroUsuario" }))
+{    
+    @Html.HiddenFor(m => m.UserNameEdit)
+    @Html.HiddenFor(m => m.Sucursal)
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.UserName)</td>
+        </tr>
+        <tr>
+            <td colspan="4">                
+                <strong>@Model.UserName</strong>
+                </td>
+        </tr>                          
+        <tr>
+            <td>@Html.LabelFor(m => m.Nombres)</td>
+            <td>@Html.LabelFor(m => m.Apellidos)</td>                    
+        </tr>
+        <tr>
+            <td>@Html.TextBoxFor(m => m.Nombres, new { size = 30, length = 100 })</td>  
+            <td>@Html.TextBoxFor(m => m.Apellidos, new { size = 30, length = 100 })</td>                    
+        </tr> 
+               
+        <tr>
+            <td>@Html.LabelFor(m => m.Email)</td>
+        </tr><tr>
+            <td colspan="4">@Html.TextBoxFor(m => m.Email, new { size = 40, length = 256 })</td>                    
+        </tr>                
+        <tr>            
+            <td colspan="4">            
+                <fieldset><legend>Roles</legend>
+                <table>
+                @{
+                int oC = 1;
+                HtmlString oTr = new HtmlString("<tr>");
+                HtmlString oFinTr = new HtmlString("</tr>");
+                }
+                @foreach (var oItem in Model.Roles)
+                {
+                    if (oC == 1)
+                    {
+                        @oTr
+                    }
+                    <td>@Html.CheckBox(oItem.Text, oItem.Value)@oItem.DisplayName</td>
+                    oC++;
+                    if (oC == 4)
+                    {
+                        oC = 1;
+                        @oFinTr
+                    }
+
+                }  
+                @if (oC == 2 || oC == 3)
+                {
+                    @oFinTr
+                }
+                </table>       
+                </fieldset>   
+            </td>
+        </tr>                             
+        <tr>
+            <td colspan="4">@Html.ValidationSummary()</td>
+        </tr>                     
+    </table>    
+}

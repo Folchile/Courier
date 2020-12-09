@@ -1,0 +1,253 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    var grid = new WebGrid(Model.DetalleGastos, rowsPerPage: 7, ajaxUpdateContainerId: "gridDetalleGastos"); 
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+
+<script type="text/javascript">
+
+    $(function () {
+//        $(document).ready(function () {
+//            borrar_contenido();
+//            CalculateSum();
+//        });
+        CargaGridTotales();
+        $("#agregagastos").button()
+        .click(function () {
+            CargaDetalleGastos();
+        });
+        $("#detalleGstos").dialog({ autoOpen: false, title: "Ingreso Detalle", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+            buttons: {
+                Grabar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmEnviarGastos");
+                    if ($("#frmEnviarGastos").valid() == true) {
+                        $("#frmEnviarGastos").submit();
+                        $(this).dialog("close");
+//                        CargaControlGastos();
+
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+
+
+    });
+
+    
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editardetallegstos").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmActualizaGastos");
+                    if ($("#frmActualizaGastos").valid() == true) {
+                        $("#frmActualizaGastos").submit();
+                        $(this).dialog("close");
+                        CargaControlGastos();
+
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog-result").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    });
+
+
+
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-eliminardetallegstos").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmeliminardetallegstos").submit();
+                    
+                    CargaControlGastos();
+                    $(this).dialog("close");
+                    $("#dialog-resultado").dialog("open");
+                    alert("Registro Eliminado Satisfactoriamente");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+    function CargaGridTotales() {
+        borrar_contenido();
+        //        $("#totdetalle").load('@Url.Action("TotalGridGastos","Ingresos")', function (response, status, xhr) {
+        $("#totdetalle").load('@Url.Action("TotalGridGastos","Ingresos")?FOLIO=' + $("#FOLIO").val());
+        //        });
+    }
+
+    function CargaDetalleGastos() {
+        $("#detalleGstos").dialog("open");
+        $("#detalleGstos").load('@Url.Action("DetalleGastos","Ingresos")', function (response, status, xhr) {
+            borrar_contenido();
+      });
+    }
+
+    function EliminardetGastos(id_gastos) {
+        var opTabs = $("#tabs").tabs('option', 'selected');
+        $("#dialog-resultado").html("");
+        $("#dialog-eliminardetallegstos").dialog("open");
+        $("#id_gastos").val(id_gastos);
+        $("#dialog-eliminardetallegstos").html("<p>¿Está seguro(a) que desea eliminar el Item <strong>" + id_gastos + " </strong> ? </p>");
+    }
+
+
+    function EditarDetGastos(id_gastos) {
+        $("#Detallegstos_edit_id").val(id_gastos);
+        $("#dialog-resultado").html("");
+
+        $("#frmeditardetgastos").submit();
+        $("#dialog-editardetallegstos").dialog("open");
+    }
+
+//    $(document).ready(function () {
+//        var total = 0;
+//        $("#gridDetalleGastos.DGpeaje").each(function () {
+//            total = total + parseFloat($(this)[0].innerHTML.toLocaleString());
+//       
+//        });
+//        $("totalesRuta").append('<tr><td><b>Total</b></td><td><b>' + total.toFixed(0) + '</b></td></tr>');
+//    });
+
+//    function CalculateSum() {
+//        alert('aca');
+//        var total = 0;
+//        $("#gridDetalleGastos.DGviatico").each(function () {
+//            total = total + parseFloat($(this)[0].innerHTML.toLocaleString());
+//        });
+//        alert(total);
+//        $("tbody").append("<tr><td><b>Total</b></td><td><b>" + total.toFixed(0) + "</b></td></tr>");
+// 
+//    }
+
+//    function ShowTotal() {
+//        CalculateSum();
+//    }
+
+</script>
+
+
+@{
+    var Texto = "";
+    if ((Model.MMOUSUARIO != 1) || (Model.CONUSUARIO == 0))
+    {
+        Texto = "disabled='disabled'";
+    }
+    }
+
+
+
+
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-eliminardetallegstos" title="Eliminar Detalle"></div> 
+<div id="dialog-editardetallegstos" title="Mantención"></div> 
+
+@using (Ajax.BeginForm("EliminarDetalleGastos", "Ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmeliminardetallegstos" }))
+{
+    <input type="hidden" name="id_gastos" id="id_gastos" />
+}
+
+
+ @using (Ajax.BeginForm("EditarDetalleGastos", "ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editardetallegstos" }, new { id = "frmeditardetgastos" }))
+ {
+    <input type="hidden" name="Detallegstos_edit_id" id="Detallegstos_edit_id" />   
+ }
+
+
+
+<table style="width:100%;"><tr><td style="width:100%; text-align:right;">
+  <input type="button"  @Texto id="agregagastos" name="agregagastos" value="Agrega Detalle Gastos" style="width:180px;height:25px; font-size:8pt" /></td></tr>
+</table>
+
+<div id="gridDetalleGastos">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle:"mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("DGid","ID"),
+       grid.Column("DGfecha","FECHA",format:@<text>
+       @item.DGfecha.ToShortDateString() 
+       </text>), 
+       grid.Column("DGpeaje","PEAJE"),
+       grid.Column("DGestacionamiento","ESTAC."),   
+       grid.Column("DGviatico","VIATICO"),
+       grid.Column("DGalojamiento","ALOJ."),
+       grid.Column("DGmantencion","MANTEN."),
+       grid.Column("DGcargadescarga","CARGA/DESC."),
+       grid.Column("DGotros","OTROS"),
+       grid.Column("DGiva","IVA"),
+       grid.Column("DGtotal","TOTAL"),                  
+       grid.Column("DGObservacion","OBSERVACIÓN"),
+       
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                       @if (Model.MMOUSUARIO==1)
+                                       {
+                                         <a href="#" onclick="javascript:EditarDetGastos('@item.DGid')"><img border="0" src='@Url.Content("~/Images/24.png")' alt="Editar @item.DGid" title="Editar @item.DGid"/></a>
+                                         <a href="#" onclick="javascript:EliminardetGastos('@item.DGid')"><img border="0" src='@Url.Content("~/Images/deletered.png")' alt="Eliminar @item.DGid" title="Eliminar @item.DGid"/></a>
+                                       }
+                                    </text>)
+
+       
+        
+ })
+
+</div>
+
+ <div id="detalleGstos"></div>
+ @*<div id="totalesRuta"></div>*@
+
+<div id="totdetalle"></div>

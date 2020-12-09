@@ -1,0 +1,56 @@
+﻿@model Courier.Models.AdministracionUsuario
+@{
+    var grid = new WebGrid(Model.oListaUsuarios,rowsPerPage:10,ajaxUpdateContainerId:"myGrid1");    
+} 
+<div id="myGrid1">
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle:"mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+        grid.Column("FL_PAR_TUS_NOMBRE","Tipo"),
+        grid.Column("FL_CLI_EMP_FANTASIA","Empresa"),        
+        grid.Column("FL_PAR_SUC_NOMBRE","Sucursal"),
+        grid.Column("UserName","Rut"),
+        grid.Column("FL_PAR_USU_NOMBRES","Nombres"),
+        grid.Column("FL_PAR_USU_APELLIDOS","Apellidos"),
+        grid.Column("LastActivityDate","Ult.Fecha"),
+        grid.Column("islockedout","Bloqueado",@<text>
+            @if (item.islockedout)
+            {
+                <div>Bloqueado</div>
+            }            
+        </text>),
+        
+    
+    grid.Column("",header:"Acciones",format:@<text>
+    <a href="#" onclick="javascript:EditarUsuario('@item.UserName')"><img border="0" src='@Url.Content("~/Images/user_blue_edit.png")' alt="Editar @item.UserName" title="Editar @item.UserName"/></a>
+    <a href="#" onclick="javascript:EditarClave('@item.UserName')"><img border="0" src='@Url.Content("~/Images/key2.png")' alt="Cambiar Clave @item.UserName" title="Cambiar Clave @item.UserName"/></a>
+    @*<a href="#" onclick="javascript:EliminarUsuario('@item.UserName')"><img border="0" src='@Url.Content("~/Images/user_blue_delete.png")' alt="Eliminar @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS" title="Eliminar @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS"/></a>*@
+    <a href="#" onclick="javascript:SucursalesUsuario('@item.UserName')"><img border="0" src='@Url.Content("~/Images/business_finance_plaza.png")' alt="Sucursales @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS" title="Sucursales @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS"/></a>
+    <a href="#" onclick="javascript:CorreoUsuario('@item.UserName')"><img border="0" src='@Url.Content("~/Images/48.png")' alt="@item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS" title="@item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS"/></a>
+    <a href="#" onclick="javascript:CargaFormularioRestricciones(@item.PK_PAR_USU_RUT)"><img border="0" src='@Url.Content("~/Images/eye.png")' alt="Permisos Visualización @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS" title="Permisos Visualización @item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS"/></a>
+    @if (item.islockedout)
+    {
+        <a href="#" onclick="javascript:AbrirConsulta01(@item.PK_PAR_USU_RUT,'@item.islockedout');">
+            <img alt="Desbloquear" title="Desbloquear" border="0" src="@Url.Content("~/Images/user_male_go.png")" />
+        </a>
+    }
+    else
+    {
+        <a href="#" onclick="javascript:AbrirConsulta01(@item.PK_PAR_USU_RUT,'@item.islockedout');">
+            <img alt="Bloquear" title="Bloquear" border="0" src="@Url.Content("~/Images/user_blue_delete.png")" />
+        </a>
+    }
+    </text>)
+
+    })
+</div>

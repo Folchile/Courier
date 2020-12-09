@@ -1,0 +1,513 @@
+﻿@model Courier.Models.CambiaDireccionModels
+@{
+    ViewBag.Title = "Administrar OT";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet"type="text/css" />
+<script type="text/javascript">
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');
+    }
+
+    function cargaGrilla(){
+
+        if ($("#OTP").val() != ""){
+            var randomnumber = Math.floor(Math.random() * 11111111);
+            $.ajax({
+            url: '@Url.Action("FormularioRectifica", "Administracion")',
+                data: { r: randomnumber,
+                OTP: $("#OTP").val(),
+                OTD: $("#OTD").val()
+                },
+                success: function (data) {
+                    $("#myGridEntrega").html(data);
+                },
+                error: function () {
+                }
+            });
+        }
+
+    }
+
+    function CargaFormularioRecepcion()
+    {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Recepcion OK", message: "Cargando Formulario...<br/>" });  
+        $.ajax({
+            url: '@Url.Action("FormularioRecepcionOK","Administracion")',
+            data: {
+                _r: randomnumber,
+                ROK_OT: $("#OT").val()
+            },
+            type: "POST",
+            success: function (data) {                    
+                $("#dialog-FormularioRecepcionOK").html(data);
+                $("#dialog-FormularioRecepcionOK").dialog("open");
+                borrar_contenido();
+            },
+            complete:function(){
+                closeWaitingDialog();
+            },
+            error: function () {
+                alert("Error al buscar la información");
+            }
+        }); 
+    }
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-message").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+        $("#dialog-resultbuscarOT").dialog({
+            autoOpen: false,
+            modal: true,
+            title:'Error',
+            buttons: {
+                Aceptar: function () {
+                    $("#OT").focus();
+                    $(this).dialog("close");
+                }             
+            }
+        }); 
+
+        $("#dialog-direccion").dialog({ autoOpen: false, title: "Editar Entrega", position: 'left+5% top+5%', width: 'auto', minWidth: 400, minHeight: 250, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    var auxLat = $("#Lat_Entrega").val();
+                    var auxLng = $("#Lng_Entrega").val();
+                    var auxEnt = $("#EntId").val();
+                    ActualizaEntrega(auxEnt, auxLat, auxLng);
+                    $(this).dialog("close");
+                },
+
+                 Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog-siniestrar").dialog({autoOpen: false,modal: true,title:'Consulta',
+            buttons: {
+                Aceptar: function () {
+                    GuardarSiniestrarOT();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {                    
+                    $(this).dialog("close");
+                }            
+            }
+        });   
+        $("#dialog-FormularioRecepcionOK").dialog({ autoOpen: false,minWidth:600,modal: true,title:'Recepción Ok Manual',
+            buttons: {
+                Aceptar: function () {                    
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmGuardarRecep");                   
+                    if ($("#frmGuardarRecep").valid() == true) {
+                        $("#frmGuardarRecep").submit();                                              
+                    }                                  
+                },
+                Cancelar: function () {                    
+                    $(this).dialog("close");
+                }            
+            }
+        });                       
+         $("#dialog-cambiadireccion").dialog({
+            autoOpen: false,
+            modal: true,
+            minWidth:400,
+            title:'Editar Dirección',
+            buttons: {
+                "Guardar Cambios": function () {      
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmGuardarDireccion");                   
+                    if ($("#frmGuardarDireccion").valid() == true) {
+                        $("#frmGuardarDireccion").submit();                       
+                    }                                  
+                },
+                "Cancelar": function () {                    
+                    $(this).dialog("close");
+                }
+            }
+        }); 
+        
+         $("#dialog-mapa").dialog({ autoOpen: false, title: "Ver en Mapa", position: 'left+20% top+5%', width: 'auto', minWidth: 600, minHeight: 400, modal: true,
+            buttons: {
+                Cerrar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+               
+        $("#dialog-CS").dialog({
+            autoOpen: false,
+            modal: true,
+            minWidth:400,
+            title:'Editar Servicio',
+            buttons: {
+                "Guardar Cambios": function () {      
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmCS");                   
+                    if ($("#frmCS").valid() == true) {
+                        $("#frmCS").submit();                       
+                    }                                  
+                },
+                "Cancelar": function () {                    
+                    $(this).dialog("close");
+                }
+            }
+        }); 
+        $("#dialog-OBS").dialog({
+            autoOpen: false,
+            modal: true,
+            minWidth:400,
+            title:'Editar Observación',
+            buttons: {
+                "Guardar Cambios": function () {      
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmOBS");                   
+                    if ($("#frmOBS").valid() == true) {
+                        $("#frmOBS").submit();                       
+                    }                                  
+                },
+                "Cancelar": function () {                    
+                    $(this).dialog("close");
+                }
+            }
+        }); 
+
+//        $("#dialog-rectifica").dialog({
+//            autoOpen: false,
+//            modal: true,
+//            minWidth:800,
+//            title:'Rectificar Direcciones',
+//            buttons: {
+//                "Cancelar": function () {                    
+//                    $(this).dialog("close");
+//                }
+//            }
+//        }); 
+
+
+        $("#btnBuscar").button()
+            .click(function (event) {
+                BuscarDatos();
+            });        
+        $("#OT").focus();
+        $("#tabs").tabs();
+    });
+    function CargaConsultaSiniestrar() 
+    {
+        $("#dialog-siniestrar").html("<p>¿Está seguro(a) que desea siniestrar la OT?</p>");
+        $("#dialog-siniestrar").dialog("open");
+    }
+
+    function ActualizaEntrega(auxEnt, auxLat, auxLng) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("ActualizaEntrega", "Administracion")',
+            data: { r: randomnumber,
+                EntId: auxEnt,
+                Lat: auxLat,
+                Lng: auxLng
+            },
+            success: function (data) {
+                var aux = data;
+                if (data.Ok == true) {
+                    cargaGrilla();
+                } else {
+                    alert(data.Mensaje);
+                }
+            },
+            error: function () {
+            }
+        });
+
+    }
+
+    function BuscarDatos()
+    {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $("#Idc").val(randomnumber);
+        event.preventDefault();
+        borrar_contenido();
+        $.validator.unobtrusive.parse("#frmBuscar");
+        if ($("#frmBuscar").valid() == true) {
+            $("#frmBuscar").submit();
+        }
+    }
+    function GuardarSiniestrarOT()
+    {        
+        borrar_contenido();               
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $.ajax({
+            url: '@Url.Action("GuardarSiniestrarOT","Administracion")',
+            data: {
+                _r: randomnumber,
+                OT: $("#OT").val()
+            },
+            type: "POST",
+            success: function (data) {                    
+                if (data.Ok == true) {
+                    CargarFormularioEnviado();
+                }
+                else {
+                    $("#dialog-resultbuscarOT").html('<p>' + data.Mensaje + '</p>');
+                    $("#dialog-resultbuscarOT").dialog("open");
+                }
+            },
+            error: function () {
+                alert("Error al buscar la información");
+            }
+        });        
+    }
+    function CargarFormularioEnviado()
+    {
+        var randomnumber = Math.floor(Math.random() * 1111111)                
+        borrar_contenido();
+        $.validator.unobtrusive.parse("#frmBuscar");
+        if ($("#frmBuscar").valid() == true) {
+            $("#frmBuscar").submit();
+        }
+    }
+    function Inicio() {
+        waitingDialog({ title: "Cargando", message: "Cargando...<br/>" });
+    }
+    function FinBuscarAnular(data) {        
+        if (data.Error==0)
+        {   
+            $("#OTP").val(data.OTP)
+            $("#OTD").val(data.OTD)
+            CargaInformacionOTD(data.OTP,data.OTD);
+            CargaBultos(data.OTP,data.OTD);
+            CargaOpcionesEditar();
+        }
+        else
+        {
+            $("#dialog-resultbuscarOT").html('<p>' + data.Mensaje + '</p>');
+            $("#dialog-resultbuscarOT").dialog("open");
+        }
+        closeWaitingDialog();
+    }
+    function FinBuscarAnularError() {
+        closeWaitingDialog();
+        alert("Se produjo un error al cargar el formulario");
+    }
+    function CargaListaObservaciones(Estado) {        
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#Observacion").hide();
+        $("#DivEstado").html("<img src='@Url.Content("~/images/38.gif")' border='0'>")
+        $("#Observacion").load('@Url.Action("ActualizaListaObservaciones","Administracion")?Estado=' + Estado + "&r=" + randomnumber + " #Observacion option", function (response, status, xhr) {            
+            $("#DivEstado").html("");           
+            $("#Observacion").show();
+            if (status != "success") {
+                alert("No fue posible cargar la información");
+            }
+        });
+    }    
+    function CargaInformacionOTD(OTP, OTD) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#otdContent").html("<img src='@Url.Content("~/images/38.gif")' border='0'>")
+        $("#otdContent").load('@Url.Action("DatosOTD","Generico")?OTP=' + OTP + '&OTD=' + OTD + "&r=" + randomnumber, function (response, status, xhr) {            
+            if (status != "success") {
+                alert("No fue posible cargar la información");
+            }
+        });
+    }
+    function CargaOpcionesEditar() {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#formContent").html("<img src='@Url.Content("~/images/38.gif")' border='0'>")
+        $("#formContent").load('@Url.Action("OpcionesCambioDireccion","Administracion")?r='+ randomnumber, function (response, status, xhr) {            
+            if (status != "success") {
+                alert("No fue posible cargar la información");
+            }
+        });
+    }
+    function CargaBultos(OTP,OTD) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#tabs-2").html("<img src='@Url.Content("~/images/38.gif")' border='0'>")
+        $("#tabs-2").load('@Url.Action("AdministrarBultos","Administracion")?bOTP=' + OTP + '&bOTD=' + OTD + '&r='+ randomnumber, function (response, status, xhr) {            
+            if (status != "success") {
+                alert("No fue posible cargar la información");
+            }            
+        });
+    }
+    function CargaFormularioEditarDireccion() {       
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        waitingDialog({ title: "Cambia Dirección", message: "Cargando Formulario...<br/>" });                                
+        $("#dialog-cambiadireccion").load('@Url.Action("FormularioCambiaDireccion","Administracion")?OTP=' + $("#OTP").val() + '&OTD=' + $("#OTD").val() + '&r='+ randomnumber, function (response, status, xhr) {            
+            closeWaitingDialog();            
+            if (status != "success") {
+                alert("No fue posible cargar la información");
+            }
+            else
+            {
+                $("#dialog-cambiadireccion").dialog("open");
+                borrar_contenido();
+
+            }
+        });
+    }
+    function CargaFormularioCS() {       
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        waitingDialog({ title: "Cambia Servicio", message: "Cargando Formulario...<br/>" });                                
+        $("#dialog-CS").load('@Url.Action("FormularioCS","Administracion")?OTP=' + $("#OTP").val() + '&OTD=' + $("#OTD").val() + '&r='+ randomnumber, function (response, status, xhr) {            
+            closeWaitingDialog();            
+            if (status != "success") {
+                alert("No fue posible cargar la información");
+            }
+            else
+            {
+                $("#dialog-CS").dialog("open");
+                borrar_contenido();
+            }
+        });
+    }
+    function CargaFormularioOBS() {       
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        waitingDialog({ title: "Cambia Observación", message: "Cargando Formulario...<br/>" });                                
+        $("#dialog-OBS").load('@Url.Action("FormularioOBS","Administracion")?obsOTP=' + $("#OTP").val() + '&obsOTD=' + $("#OTD").val() + '&r='+ randomnumber, function (response, status, xhr) {            
+            closeWaitingDialog();            
+            if (status != "success") {
+                alert("No fue posible cargar la información");
+            }
+            else
+            {
+                $("#dialog-OBS").dialog("open");
+                borrar_contenido();
+            }
+        });
+    }
+
+    //FORMULARIO RECEPCIÓN OK/RECHAZADO
+    function I01Begin()
+    {       
+        waitingDialog({ title: "Guardando", message: "Guardando la recepción...<br/>" });
+    }
+    function I01Success(data)
+    {
+        if (data.Ok==true)
+        {
+            $("#dialog-FormularioRecepcionOK").dialog("close");
+            CargarFormularioEnviado();
+        }
+        else
+        {
+            $("#dialog-resultbuscarOT").html('<p>' + data.Mensaje + '</p>');            
+            $("#dialog-resultbuscarOT").dialog("open");
+        }        
+    }
+    function I01Complete()
+    {       
+        closeWaitingDialog(); 
+    }
+    function I01Failure()
+    {
+        alert("No fue posible guardar la información");
+    }
+     
+    function EditarDireccion(ent_id) {
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $("#dialog-direccion").dialog("open");
+        $("#dialog-direccion").html('<div style="text-align:center; vertical-align:middle;"><img src="@Url.Content("~/Images/loader.gif")" /></div>');
+        $("#dialog-direccion").load('@Url.Content("~/Administracion/EditaEntregaUbicacion")?ent_id=' + ent_id + '&r=' + randomnumber, function (response, status, xhr) {
+            if (status == 'success') {
+
+            }
+        });
+    }
+
+    function BuscarEnMapa(ent) {
+
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $("#dialog-mapa").dialog("open");
+        $("#dialog-mapa").html('<div style="text-align:center; vertical-align:middle;"><img src="@Url.Content("~/Images/loader.gif")" /></div>');
+        $("#dialog-mapa").load('@Url.Content("~/Administracion/VerMapa")?ent=' + ent + '&r=' + randomnumber, function (response, status, xhr) {
+            if (status == 'success') {
+
+            }
+        });
+
+    } 
+    
+      
+</script>
+
+<div id="dialog-FormularioRecepcionOK"></div>
+<div id="dialog-resultbuscarOT"></div>
+<div id="dialog-siniestrar"></div>
+<div id="dialog-CS"></div>
+<div id="dialog-OBS"></div>
+<div id="dialog-direccion" style="min-height:250px;min-width:400px;"></div>
+<div id="dialog-mapa" style="min-height:250px;min-width:400px;"></div>
+
+@*<div id="dialog-rectifica"></div>*@
+
+<input type="hidden" id="OTP" name="OTP"/>
+<input type="hidden" id="OTD" name="OTD"/>
+@using (Ajax.BeginForm("BuscarOTCambioDireccion", "Administracion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinBuscarAnular(data)", OnFailure = "Javascript:FinBuscarAnularError()" }, new { id = "frmBuscar" }))
+{
+    <input type="hidden" id="Idc" />
+    <table>
+        <tr>
+            <td colspan="3">
+                @Html.LabelFor(m => m.OT)            
+                @Html.ValidationMessageFor(m => m.OT)</td>
+        </tr>
+        <tr>                    
+            <td>
+                @Html.TextBoxFor(m => m.OT)
+            </td>        
+            <td>
+                <button id="btnBuscar">
+                    <div style="float:left;width:80px;">       
+                    <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/magnifier.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Buscar</div>                        
+                    </div>                       
+                </button>
+            </td>
+        </tr>        
+    </table>    
+}
+<div id="dialog-cambiadireccion"></div>
+<div id="CuadroImpresion" style="background-color:Gray;width:0px;height:00px"></div>
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Datos OT</a></li>		    
+        <li><a href="#tabs-2">Datos Bultos</a></li>	
+        <li><a href="#tabs-3" onclick="cargaGrilla();">Datos Entrega</a></li>	    
+    
+    </ul>        
+    <div id="tabs-1">           
+        <div id="otdContent"></div><hr />
+        <div id="formContent"></div>
+    </div>
+    <div id="tabs-2">           
+        Sin Datos
+    </div>
+    <div id="tabs-3">  
+        <div  id="myGridEntrega" style="min-width:600px;">                    
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#OT").change(function () {
+            $("#formContent").html("");
+        });
+    })
+</script>

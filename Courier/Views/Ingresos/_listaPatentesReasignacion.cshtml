@@ -1,0 +1,68 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    ViewBag.Title = "_listaPatentesReasignacion";
+}
+
+
+<script type="text/javascript">
+
+    
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            CargaFolioReasig();
+            $("#dialog-resultr").html(data.Mensaje);
+            $("#dialog-resultr").dialog("open");
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+    $(function () {
+        $("#dialog-resultr").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+
+</script>
+
+
+<div id="dialog-resultr" title="Resultado"></div>
+
+
+<div>
+@using (Ajax.BeginForm("cReasignaPatente", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmReasignaPatente" }))
+{
+   @Html.HiddenFor(m => m.FOLIOABUSCAR)
+    <table class="mGridFija">
+   <tr>
+
+      <td><strong>@Html.LabelFor(m => m.VEHICULO)</strong></td>
+      <td>@Html.DropDownListFor(m => m.VEHICULO,Model.ListaVehiculos2, "--Selección--", new { @style = "width:160px;font-size: 10px" })</td>
+   </tr>
+   </table>
+    
+}
+</div>

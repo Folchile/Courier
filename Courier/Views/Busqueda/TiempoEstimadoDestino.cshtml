@@ -1,0 +1,96 @@
+﻿@model Courier.Models.BusquedaModels
+
+@{
+    ViewBag.Title = "Tiempo estimado entrega destino";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/TableBlue.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+    $(function () {
+        $("#procesar")
+            .button()
+            .click(function () {
+                borrar_contenido();
+                event.preventDefault();
+                $.validator.unobtrusive.parse("#frmEnviar");
+                if ($("#frmEnviar").valid()) {
+                    $("#frmEnviar").submit();
+                    borrar_contenido();
+                }
+            });
+        $("#tabs").tabs();
+    });
+    function Inicio() {
+        waitingDialog({ title: "Cargando", message: "Cargando Resultado...<br/>" });
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+</script>
+
+@using (Ajax.BeginForm("ProcesarDestino", "Busqueda", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "divResult", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:Fin();" }, new { id = "frmEnviar" }))
+{
+    <table>
+        <tr> 
+            <td>Origen</td>          
+            <td colspan="3">@Html.DropDownListFor(m=>m.SucursalOrigen,Model.ListaSucursal,"-- Seleccione Sucursal Origen --")
+            @Html.ValidationMessageFor(m=>m.SucursalOrigen)
+            </td>
+        </tr>
+        <tr>          
+            <td>Destino</td>  
+            <td>@Html.DropDownListFor(m=>m.RegionDestino,Model.ListaRegion, "-- Seleccione Región --")</td>        
+            <td>
+                <div id="divComunaDestino">
+                    @Html.DropDownListFor(m => m.ComunaDestino, Model.ListaBlancoComuna)                    
+                </div>
+            </td>        
+            <td>
+                <div id="divLocalidadDestino">
+                    @Html.DropDownListFor(m => m.LocalidadDestino, Model.ListaBlancoLocalidad)
+                </div>
+            </td>            
+        </tr>  
+        <tr>
+            <td></td>
+            <td>@Html.ValidationMessageFor(m => m.RegionDestino)</td>
+            <td>@Html.ValidationMessageFor(m => m.ComunaDestino)</td>
+        </tr>      
+    </table>
+    
+    <input type="button" name="procesar" id="procesar" value="Procesar"/>        
+}
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Resultado</a></li>		
+	</ul>
+	<div id="tabs-1">
+		<div id="divResult"></div>
+	</div>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#RegionDestino").change(function () {
+            $("#divComunaDestino").html('<img src="@Url.Content("~/Images/38.gif")" />');
+            $("#divComunaDestino").load("@Url.Action("DropDownComuna", "Busqueda")?idRegion=" + $(this).val());
+            $("#divLocalidadDestino").html('<img src="@Url.Content("~/Images/38.gif")" />');
+            $("#divLocalidadDestino").load("@Url.Action("DropDownLocalidad", "Busqueda")?idComuna=");
+        });
+    });
+
+</script>

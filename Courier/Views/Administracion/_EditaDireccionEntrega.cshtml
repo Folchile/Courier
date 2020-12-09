@@ -1,0 +1,55 @@
+﻿@model Courier.Models.RetornoDireccionEntregaModels
+
+@{
+    ViewBag.Title = "Editar Ubicación Entrega";
+}
+
+
+<fieldset>
+    <legend>
+        Datos del Pedido
+    </legend>
+    <table class="">
+        <tr>
+            <td>
+                @Html.HiddenFor(m => m.EntId)
+                @*@Html.LabelFor(m => m.Lat_OT)*@ Lat Destino
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.Lat_OT, new { size = 15, length = 15, @readonly = "true" }) &nbsp (Sugerido)
+            </td>
+        </tr>
+        <tr>
+            <td>
+               @* @Html.LabelFor(m => m.Lng_OT)*@ Lng Destino
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.Lng_OT, new { size = 15, length = 15, @readonly = "true" }) &nbsp (Sugerido)
+            </td>
+        </tr>
+    </table>
+</fieldset>
+<br />
+<fieldset>
+    <legend>
+        Datos de la Entrega
+    </legend>
+    <table class="">
+        <tr>
+            <td>
+                @*@Html.LabelFor(m => m.Lat_Entrega)*@ Lat Entrega
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.Lat_Entrega, new { size = 15, length = 15 })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @*@Html.LabelFor(m => m.Lng_Entrega)*@ Lng Entrega
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.Lng_Entrega, new { size = 15, length = 15 })
+            </td>
+        </tr>
+    </table>
+</fieldset>

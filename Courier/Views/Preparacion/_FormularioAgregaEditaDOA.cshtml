@@ -1,0 +1,77 @@
+﻿@model Courier.Models.DocumentosModels
+<script type="text/javascript">
+    function FinDocumento(data) {        
+        ActualizaGridDocumentos($("#OTP").val(), $("#OTD").val());
+        $("#Tipo").val("");
+        $("#Numero").val("");
+        $("#Tipo").focus();
+        closeWaitingDialog();
+    }
+    function ChangeTipo(valor) {
+        
+        if ($("#Tipo").val() == "") {
+            OcultarTodo();
+        }
+        else {
+            VerNumero();
+        }        
+        if (valor == "2") {
+            VerContraPago();
+        }
+        else {
+            OcultarContraPago();
+        }
+        $("#Numero").focus();
+        borrar_contenido();
+    }
+    function OcultarTodo() {
+        $("#Numero").hide();
+        $("#OC_Numero").hide();
+        OcultarContraPago();
+    }
+    function OcultarContraPago() {
+        $("#OC_ContraPago").hide();
+        $("#ContraPago").hide();
+    }
+    function VerNumero() {
+        $("#Numero").show();
+        $("#OC_Numero").show();
+    }
+    function VerContraPago() {
+        $("#OC_ContraPago").show();
+        $("#ContraPago").show();
+    }
+    $(function () {
+        $("#GuardarDocumento").button()
+        .click(function () {            
+        });
+        borrar_contenido();
+        $("#Tipo").focus();
+        OcultarTodo();        
+    });
+</script>
+@using (Ajax.BeginForm("AgregarDocumentoAsociado", "Preparacion", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinDocumento(data)", OnFailure = "Javascript:FinDocumento()" }, new { id = "frmAgregarDocumento" }))
+{
+    @Html.HiddenFor(m => m.OTP)
+    @Html.HiddenFor(m => m.OTD)
+    @Html.HiddenFor(m => m.Edita)
+    @Html.HiddenFor(m => m.DOA_ID)
+    <table>
+        <tr>
+            <td>Tipo Documento</td><td>@Html.DropDownListFor(m => m.Tipo, Model.ListaTipo, "-- Seleccione --", new { @onchange = "javascript:ChangeTipo(this.value);" })</td>
+        </tr><tr>
+            <td>Número</td><td>@Html.TextBoxFor(m => m.Numero, new { @style = "text-align:right;" })</td>
+        </tr><tr>
+            <td><div id="OC_ContraPago">Contra Pago</div></td><td>@Html.TextBoxFor(m => m.ContraPago, new { @style = "text-align:right;" })</td>
+        </tr>                   
+    </table>    
+        <p>@Html.ValidationMessageFor(m => m.Tipo)</p>
+        <p>@Html.ValidationMessageFor(m => m.Numero)</p>
+        <p>@Html.ValidationMessageFor(m => m.ContraPago)</p>
+}
+@if (Model.Edita=="Editar")
+{
+<script type="text/javascript">
+    ChangeTipo(@Model.Tipo);
+</script>
+}

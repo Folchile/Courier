@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Versión";
+}
+
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />
+<div class="info"> 
+    <strong>20-05-2013</strong>
+    <ul>  
+        <li>Se permite la creación de manifiestos en paralelo</li>        
+        <li>Se permite descargar un pre-manifiesto</li>                
+    </ul>  
+</div>
+<div class="info"> 
+    <strong>13-05-2013</strong>
+    <ul>  
+        <li>Mejoras en el módulo despacho</li>        
+        <li>Vía y Sucursal, ahora más grande en etiquita</li>        
+        <li>Se incorpora, parámetro, Tipo de Servicios: Courier y Dedicado</li>                
+    </ul>  
+</div>
+<div class="info"> 
+    <strong>25-04-2013</strong>
+    <ul>  
+        <li>Se incorpora opción para ver manifiesto padre</li>        
+        <li>Recepción desordenada activada</li>        
+        <li>Las cargas masivas permiten alfanumericos en las referencias (SAP e Id. Interno)</li>        
+        <li>La Busqueda por OT se puede realizar sin ingresar el Rut Cliente.</li>
+    </ul>  
+</div>
+<div class="info"> 
+    <strong>20-03-2013</strong>
+    <ul>  
+        <li>Se incorpora Contra Pago</li>        
+        <li>Informe de recepción</li>        
+        <li>Mejoras en módulo Despacho</li>        
+    </ul>  
+</div>
+<div class="info"> 
+    <strong>15-03-2013</strong>
+    <ul>  
+        <li>Cambios en la generación de etiquetas</li>
+    </ul>
+</div>
+<div class="info"> 
+    <strong>01-03-2013</strong>
+    <ul>  
+        <li>Validar que no se puedan conectar 2 o más usarios con las mismas credenciales</li>
+        <li>Se modifica módulo de retiros programados, se permite reservar números de OT</li>
+        <li>Al momendo de recepcionar el sistema valida que los bultos recepcionados correspondan a la sucursal de destino, de lo contrario emite una alerta indicando que el bulto corresponde a otra sucursal, esto no es condicionante para la recepción</li>
+        <li>Se crean los moviles troncal sur, troncal norte y troncal centro, ya que las sucursales no tendran los datos de los moviles ni de los conductores correspondientes</li>
+        <li>Se crea un módulo de ingreso de observaciones</li>
+        <li>Modulo para regularizar estados, debe permitir lo sgte.: Agregar y Eliminar estados (solo administrador del sistema)., Solo los estados, Recepcionado OK y Rechazo Total</li>
+        <li>Se incorpora Impresión masiva de etiquetas (por ot principal)</li>
+        <li>Reportes</li>
+        <li>Manuales</li>
+    </ul>  
+</div>
+<div class="info"> 
+    <strong>30-01-2013</strong>
+    <ul>        
+        <li>Se agrega comuna, dirección cliente y telefono - Impresión Manifiesto de carga</li>
+        <li>Se permite seleccionar la sucursal de origen al momento de generar el manifiesto y de acuerdo a esto validar que no se envie un pedido de otra sucursal</li>
+        <li>Se agrega via y se modifica el tamaño de la información de Comuna y Localidad</li>
+        <li>Se deja en blanco el nombre y rut de la persona que recibe - Opción en telefono</li>
+        <li>Se permite crear OT sin numero de referencia (guia, id, factura, etc).</li>
+        <li>Se incorpora opción de listar manifiesto en la consulta por OT</li>
+        <li>Todas las consultas parecen filtradas por la sucursal correspondiente, y para los agentes zonales no existe el filtro.</li>
+        <li>Se cambia ingreso de usuarios (Log In), ahora no aparece menu</li>
+    </ul>
+</div>
+<div class="info"> 
+    <strong>17-01-2013</strong>
+    <ul>        
+        <li>Corrección a error de referencias, daba error en ingreso manual y masivo bajo ciertas circunstancias.</li>
+        <li>Se agrega “Buscar En”,  en preparación, habilitando la opción de preparar por OT.</li>
+        <li>Campo "Buscar En", mantiene la última selección realizada por el usuario (Por Cliente)</li>
+    </ul>
+</div>
+<div class="info"> 
+    <strong>15-01-2013</strong>
+    <ul>
+        <li>Se agrega opción de búsqueda de manifiesto, carpeta búsqueda</li>
+        <li>Se aplican mejoras en el funcionamiento de la definición de archivo de carga</li>
+        <li>Se mejora el funcionamiento del menú izquierdo</li>
+        <li>Módulo de Recepción ahora permite la recepción desordenada de OT</li>
+        <li>Se corrige error que permitía cerrar manifiesto en blanco</li>
+    </ul>
+</div>
+<div class="info"> 
+    <strong>10-01-2013</strong>
+    <ul>
+        <li>Versión 1.0</li>
+    </ul>
+</div>

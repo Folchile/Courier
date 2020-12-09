@@ -1,0 +1,83 @@
+﻿@model Courier.Models.DesasociarModels
+<p>¿Esta seguro(a) que desea desasociar el OT <strong>@Model.OTP-@Model.OTD</strong>?</p>
+<p>Elementos a eliminar del manifiesto:</p>
+
+@if (Model.oListaDespacho != null)
+{
+    var grid = new WebGrid(Model.oListaDespacho, rowsPerPage: 15, ajaxUpdateContainerId: "myGridDesasociar");
+    <div  id="myGridDesasociar">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,                      
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {                
+                grid.Column("OK","OK",format:@<text>
+                @if (item.OK==true)
+                {
+                    <img src='@Url.Content("~/Images/tick.png")' alt="Ok" border="0" />
+                }                                                    
+                </text>), 
+                grid.Column("xn","X/n"),        
+                grid.Column("idBulto","Código Bulto"),
+                grid.Column("OTD","OT",format:@<text>
+                @item.OTP-@item.OTD
+                </text>),
+                grid.Column("Estado","Estado"),                
+                grid.Column("EstadoDetalle","Estado Detalle"),     
+                grid.Column("Largo","Largo (CM)",format:@<text>
+                <div style="float:right">
+                    @if (item.Largo!=null)
+                    {
+                    @String.Format("{0:0.000}", item.Largo)
+                    }
+                </div>
+                </text>),
+                grid.Column("Alto","Alto (CM)",format:@<text>
+                <div style="float:right">    
+                @if (item.Alto!=null)
+                    {            
+                @String.Format("{0:0.000}", item.Alto)
+                    }
+                </div>
+                </text>),
+                grid.Column("Ancho","Ancho (CM)",format:@<text>
+                <div style="float:right">
+                @if (item.Ancho!=null)
+                    {
+                    @String.Format("{0:0.000}", item.Ancho)
+                    }
+                </div>
+                </text>),
+                grid.Column("Peso","Peso (KG)",format:@<text>
+                <div style="float:right">
+                @if (item.Peso!=null)
+                    {
+                    @String.Format("{0:0.000}", item.Peso)
+                    }
+                </div>
+                </text>),
+                grid.Column("PesoVOlumetrico","Peso Vol.",format:@<text>
+                <div style="float:right">
+                @if (item.PesoVOlumetrico!=null)
+                    {
+                    @String.Format("{0:0.000}", item.PesoVOlumetrico)
+                    }
+                </div>
+                </text>)                       
+            })
+        </div>
+    </div>
+}
+else
+{
+    <div>No Se han ingresado Bultos</div>
+}

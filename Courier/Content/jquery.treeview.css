@@ -1,0 +1,156 @@
+.divfiletree
+{
+    overflow:auto;    
+    height:92%;
+}
+.treeview, .treeview ul { 
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.treeview ul {
+	background-color: white;
+	margin-top: 4px;
+}
+
+.treeview .hitarea {
+	background: url(../images/treeview-default.gif) -64px -25px no-repeat;
+	height: 16px;
+	width: 16px;
+	margin-left: -16px;
+	float: left;
+	cursor: pointer;
+}
+/* fix for IE6 */
+* html .hitarea {
+	display: inline;
+	float:none;
+}
+
+.treeview li { 
+	margin: 0;
+	padding: 3px 0pt 3px 16px;
+}
+
+.treeview a.selected {
+	background-color: #eee;
+}
+
+#treecontrol { margin: 1em 0; display: none; }
+
+.treeview .hover { color: red; cursor: pointer; }
+
+.treeview li { background: url(../images/treeview-default-line.gif) 0 0 no-repeat; }
+.treeview li.collapsable, .treeview li.expandable { background-position: 0 -176px; }
+
+.treeview .expandable-hitarea { background-position: -80px -3px; }
+
+.treeview li.last { background-position: 0 -1766px }
+.treeview li.lastCollapsable, .treeview li.lastExpandable { background-image: url(../images/treeview-default.gif); }  
+.treeview li.lastCollapsable { background-position: 0 -111px }
+.treeview li.lastExpandable { background-position: -32px -67px }
+
+.treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea { background-position: 0; }
+
+.treeview-red li { background-image: url(../images/treeview-red-line.gif); }
+.treeview-red .hitarea, .treeview-red li.lastCollapsable, .treeview-red li.lastExpandable { background-image: url(../images/treeview-red.gif); } 
+
+.treeview-black li { background-image: url(../images/treeview-black-line.gif); }
+.treeview-black .hitarea, .treeview-black li.lastCollapsable, .treeview-black li.lastExpandable { background-image: url(../images/treeview-black.gif); }  
+
+.treeview-gray li { background-image: url(../images/treeview-gray-line.gif); }
+.treeview-gray .hitarea, .treeview-gray li.lastCollapsable, .treeview-gray li.lastExpandable { background-image: url(../images/treeview-gray.gif); } 
+
+.treeview-famfamfam li { background-image: url(../images/treeview-famfamfam-line.gif); }
+.treeview-famfamfam .hitarea, .treeview-famfamfam li.lastCollapsable, .treeview-famfamfam li.lastExpandable { background-image: url(../images/treeview-famfamfam.gif); } 
+
+.treeview .placeholder {
+	background: url(../images/ajax-loader.gif) 0 0 no-repeat;
+	height: 16px;
+	width: 16px;
+	display: block;
+}
+
+.filetree li { padding: 3px 0 2px 16px; }
+.filetree span.folder, .filetree span.file { padding: 1px 0 1px 18px; display: block; }
+.filetree span.folder { background: url(../images/folder.gif) 0 0 no-repeat; }
+
+.filetree li.expandable span.folder { background: url(../images/folder-closed.gif) 0 0 no-repeat; }
+
+
+.filetree span.file { background: url(../images/file.gif) 0 0 no-repeat; }
+
+.filetree span a
+{
+    text-decoration:none; 
+    color:Black;
+}
+
+.filetree span .hover
+{ 
+    color: red; 
+    cursor: pointer; 
+    list-style: none;       
+}
+.filetree span.foward { background: url(../images/lorrygreen2.png) 0 0 no-repeat; }
+.filetree span.manual { background: url(../images/properties.png) 0 0 no-repeat; }
+.filetree span.automatico { background: url(../images/gear_blue.png) 0 0 no-repeat; }
+.filetree span.programado { background: url(../images/watch.png) 0 0 no-repeat; }
+.filetree span.anular { background: url(../images/undo.png) 0 0 no-repeat; }
+.filetree span.box { background: url(../images/shipping_box_tokyo.png) 0 0 no-repeat; }
+.filetree span.backward { background: url(../images/gnome_go_next.png) 0 0 no-repeat; }
+.filetree span.add { background: url(../images/edit_add.png) 0 0 no-repeat; }
+.filetree span.find { background: url(../images/user.png) 0 0 no-repeat; }
+.filetree span.service { background: url(../images/network_service.png) 0 0 no-repeat; }
+.filetree span.direction { background: url(../images/direction_pencil.png) 0 0 no-repeat; }
+.filetree span.serviceclient { background: url(../images/network_service_client.png) 0 0 no-repeat; }
+.filetree span.editar { background: url(../images/24.png) 0 0 no-repeat; }
+.filetree span.columna { background: url(../images/fileview_column.png) 0 0 no-repeat; }
+.filetree span.excel { background: url(../images/page_white_excel.png) 0 0 no-repeat; }
+.filetree span.tractor { background: url(../images/tractorunitblack.png) 0 0 no-repeat; }
+.filetree span.login { background: url(../images/refresh.png) 0 0 no-repeat; }
+.filetree span.tiempocalendario { background: url(../images/preferences_system_time.png) 0 0 no-repeat; }
+.filetree span.entrar { background: url(../images/log_in.png) 0 0 no-repeat; }
+.filetree span.salir { background: url(../images/system_log_out.png) 0 0 no-repeat; }
+.filetree span.search { background: url(../images/system_search.png) 0 0 no-repeat; }
+.filetree span.rollback { background: url(../images/alert16.png) 0 0 no-repeat; }
+.filetree span.resend { background: url(../images/mail-send-receive.png) 0 0 no-repeat; }
+.filetree span.new { background: url(../images/gnome_document_new.png) 0 0 no-repeat; }
+.filetree span.paper { background: url(../images/document.png) 0 0 no-repeat; }
+.filetree span.eliminar { background: url(../images/history_clear.png) 0 0 no-repeat; }
+.filetree span.building { background: url(../images/two_storied_house_sh.png) 0 0 no-repeat; }
+.filetree span.grafico { background: url(../images/54.png) 0 0 no-repeat; }
+
+.filetree span.manual,
+.filetree span.automatico,
+.filetree span.programado,
+.filetree span.anular,
+.filetree span.foward,
+.filetree span.backward,
+.filetree span.box,
+.filetree span.find,
+.filetree span.service,
+.filetree span.direction,
+.filetree span.serviceclient,
+.filetree span.add,
+.filetree span.editar,
+.filetree span.columna,
+.filetree span.excel,
+.filetree span.tiempocalendario,
+.filetree span.login,
+.filetree span.tractor,
+.filetree span.entrar,
+.filetree span.salir,
+.filetree span.search,
+.filetree span.rollback,
+.filetree span.resend,
+.filetree span.new,
+.filetree span.paper,
+.filetree span.eliminar,
+.filetree span.building,
+.filetree span.grafico
+
+{ padding: 1px 0 1px 18px; display: block; }
+
+

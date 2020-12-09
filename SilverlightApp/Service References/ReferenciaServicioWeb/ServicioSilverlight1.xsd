@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Courier.WebService" />
+  <xs:element name="DoWork">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DoWorkResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DoWorkResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ModificarImpresora">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oNombreImpresora" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oRut" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ModificarImpresoraResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ModificarImpresoraResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionEtiqueta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OTP" type="xs:decimal" />
+        <xs:element minOccurs="0" name="OTD" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionEtiquetaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Courier.WebService" minOccurs="0" name="ImpresionEtiquetaResult" nillable="true" type="q1:ServicioSilverlight.wsEncabezado" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionEtiquetaPallet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OTP" type="xs:decimal" />
+        <xs:element minOccurs="0" name="OTD" type="xs:decimal" />
+        <xs:element minOccurs="0" name="NPALLET" type="xs:int" />
+        <xs:element minOccurs="0" name="BLTOS" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionEtiquetaPalletResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Courier.WebService" minOccurs="0" name="ImpresionEtiquetaPalletResult" nillable="true" type="q2:ServicioSilverlight.wsEncabezado" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionEtiquetaPorOTP">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OTP" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionEtiquetaPorOTPResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Courier.WebService" minOccurs="0" name="ImpresionEtiquetaPorOTPResult" nillable="true" type="q3:ArrayOfServicioSilverlight.wsEncabezado" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionGuiaMasiva">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OTP" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionGuiaMasivaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Courier.WebService" minOccurs="0" name="ImpresionGuiaMasivaResult" nillable="true" type="q4:ArrayOfServicioSilverlight.classImpresionGuia" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionCustom">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OTP" type="xs:decimal" />
+        <xs:element minOccurs="0" name="OTD" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Cantidad" type="xs:int" />
+        <xs:element minOccurs="0" name="TipoEtiqueta" type="xs:int" />
+        <xs:element minOccurs="0" name="Bulto1" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Bulto2" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Bulto3" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Bulto4" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpresionCustomResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Courier.WebService" minOccurs="0" name="ImpresionCustomResult" nillable="true" type="q5:ServicioSilverlight.wsEncabezado" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

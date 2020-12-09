@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+    <title>jQuery UI Resizable and Draggable with d3</title>
+          <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+          <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+          <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+          <script src="http://d3js.org/d3.v3.js"></script>
+          <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+          <style>
+                #resizable { width: 750px; height: 250px; padding: 0.5em; }
+                #resizable h3 { text-align: center; margin: 0; }
+                svg {
+                  font: 10px sans-serif;
+                }
+
+                circle {
+                  -webkit-transition: fill-opacity 250ms linear;
+                }
+
+                .selecting circle {
+                  fill-opacity: .2;
+                }
+
+                .selecting circle.selected {
+                  stroke: #f00;
+                }
+
+                .resize path {
+                  fill: #666;
+                  fill-opacity: .8;
+                  stroke: #000;
+                  stroke-width: 1.5px;
+                }
+
+                .axis path, .axis line {
+                  fill: none;
+                  stroke: #000;
+                  shape-rendering: crispEdges;
+                }
+
+                .brush .extent {
+                  fill-opacity: .125;
+                  shape-rendering: crispEdges;
+                }
+              
+          </style>
+    </head>
+    
+    <body>
+         <div id="resizable" class="ui-widget-content">
+               <h3 class="ui-widget-header">jQuery UI Resizable and Draggable with d3 Inside</h3>
+         </div>
+         <div id="div_pie" class="ui-widget-content">
+               <h3 class="ui-widget-header">Entregas</h3>
+         </div>
+        <script type="text/javascript">
+            //code references all listed below; each offered bits and pieces to this final work
+            //http://bl.ocks.org/mbostock/4349545 for the d3 chart
+            //http://jqueryui.com/resizable/#synchronous-resize
+            //https://gist.github.com/rduplain/2414111
+
+            $(document).ready(function () {
+
+                $(function () {
+                    //add resizable functionality to the box
+                    $("#resizable").resizable({
+                        //when box is resized redraw the d3
+                        stop: function (event, ui) {
+                            if (typeof Function === typeof draw_d3) {
+                                draw_d3("#resizable", data, ui.size.width, ui.size.height);
+                            }
+                        }
+                    });
+                    $("#div_pie").resizable({
+                        //when box is resized redraw the d3
+                        stop: function (event, ui) {
+                            if (typeof Function === typeof draw_d3) {
+                                draw_d3("#div_pie", data, ui.size.width, ui.size.height);
+                            }
+                        }
+                    });
+                    //add default draggable functionality to the box
+                    $("#resizable").draggable();
+                    $("#div_pie").draggable();
+                });
+
+                //generate random data to fill the graph
+                var data = d3.range(800).map(Math.random);
+
+                //initially draw the d3 chart with beginning dimensions of resizable box 750 and 250
+                draw_d3("#resizable", data, 750, 250);
+                draw_d3("#div_pie", data, 750, 250);
+
+                //set up a function to draw the d3 graph
+                //we will separate this into a function so we can redraw with each resize
+                function draw_d3(reference, data, width, height) {
+
+                    d3.select(reference).selectAll("svg").remove();
+
+                    var margin = { top: 50, right: 50, bottom: 50, left: 50 },
+                        width = width - margin.left - margin.right,
+                        height = height - margin.top - margin.bottom;
+
+                    var svg = d3.select(reference).append("svg")
+                                .attr("width", width + margin.left + margin.right)
+                                .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                    var x = d3.scale.linear()
+                        .range([0, width]);
+
+                    var y = d3.random.normal(height / 2, height / 8);
+
+                    var brush = d3.svg.brush()
+                        .x(x)
+                        .extent([.3, .5])
+                        .on("brushstart", brushstart)
+                        .on("brush", brushmove)
+                        .on("brushend", brushend);
+
+                    var arc = d3.svg.arc()
+                        .outerRadius(height / 2)
+                        .startAngle(0)
+                        .endAngle(function (d, i) { return i ? -Math.PI : Math.PI; });
+
+                    svg.append("g")
+                        .attr("class", "x axis")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(d3.svg.axis().scale(x).orient("bottom"));
+
+                    var circle = svg.append("g").selectAll("circle")
+                        .data(data)
+                      .enter().append("circle")
+                        .attr("transform", function (d) { return "translate(" + x(d) + "," + y() + ")"; })
+                        .attr("r", 3.5);
+
+                    var brushg = svg.append("g")
+                        .attr("class", "brush")
+                        .call(brush);
+
+                    brushg.selectAll(".resize").append("path")
+                        .attr("transform", "translate(0," + height / 2 + ")")
+                        .attr("d", arc);
+
+                    brushg.selectAll("rect")
+                        .attr("height", height);
+
+                    brushstart();
+                    brushmove();
+
+                    function brushstart() {
+                        svg.classed("selecting", true);
+                    }
+
+                    function brushmove() {
+                        var s = brush.extent();
+                        circle.classed("selected", function (d) { return s[0] <= d && d <= s[1]; });
+                    }
+
+                    function brushend() {
+                        svg.classed("selecting", !d3.event.target.empty());
+                    }
+                }
+            });
+        </script>
+      </body>
+</html>

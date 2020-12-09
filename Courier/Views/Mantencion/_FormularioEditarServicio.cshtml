@@ -1,0 +1,76 @@
+﻿@model Courier.Models.MantencionModels
+@{
+    ViewBag.Title = "_FormularioEditarServicio";
+}
+
+<script type="text/javascript">
+    function InicioGuardarServicio() {
+        waitingDialog({ title: "Guardando", message: "Guardando Datos...<br/>" });
+    }
+    function FinGuardarServicio(data) {
+        closeWaitingDialog();        
+        if (data.Ok == true) {
+            CargaListaServicio($("#RutCliente").val());
+        }
+        else {
+            alert(data.Mensaje);
+        }        
+    }
+    function FinErrorServicio() {
+        closeWaitingDialog();
+    }
+    function AlertaKilo2() {        
+        if ($('input[name="AlertaKilo"]').is(":checked")) {
+            $("#idAlerta").show();
+        }
+        else {
+            $("#idAlerta").hide();
+            $("#ValorAlertaKilo").val("");
+        }
+    }
+</script>
+@Html.HiddenFor(m => m.TDO_ID)
+@using (Ajax.BeginForm("GuardarServicio", "Mantencion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:InicioGuardarServicio()", OnSuccess = "Javascript:FinGuardarServicio(data)", OnFailure = "Javascript:FinErrorServicio()" }, new { id = "frmServicio" }))
+{
+    @Html.HiddenFor(m => m.Servicio)
+    @Html.HiddenFor(m => m.RutClienteServicio)
+    <table>
+        <tr><td>@Html.LabelFor(m => m.Servicio)</td><td><strong>@Html.TextBoxFor(m => m.NombreServicio)</strong></td></tr>
+        <tr><td></td><td>@Html.ValidationMessageFor(m => m.NombreServicio)</td></tr>
+    </table>
+    <hr />
+    <table>
+    
+        <tr><td>@Html.LabelFor(m => m.Referencia1)</td><td>
+            <div id="imgReferencia1">
+                <img src="@Url.Content("~/Images/38.gif")" border="0" title="Cargando" alt="Cargando" />    
+            </div>@Html.DropDownListFor(m => m.Referencia1, Model.ListaDocumentos, "", new { @onchange = "javascript:CargaListaDocumentos('Referencia2', this.value)" })</td></tr>
+        <tr><td>@Html.LabelFor(m => m.Referencia2)</td><td>
+            <div id="imgReferencia2">
+                <img src="@Url.Content("~/Images/38.gif")" border="0" title="Cargando" alt="Cargando" /> 
+            </div>        
+            @Html.DropDownListFor(m => m.Referencia2, Model.ListaDocumentos, "", new { @onchange = "javascript:CargaListaDocumentos('Referencia1', this.value)" })</td></tr>
+         <tr><td>@Html.LabelFor(m => m.FactorVolumetrico)</td><td>@Html.TextBoxFor(m => m.FactorVolumetrico, new { @style = "text-align:right;" })</td></tr>
+         <tr><td></td><td>@Html.ValidationMessageFor(m => m.FactorVolumetrico)</td></tr>
+         <tr>
+            <td>@Html.LabelFor(m => m.TipoServicio)</td>
+            <td>@Html.DropDownListFor(m => m.TipoServicio,Model.oListaTipoServicio, "-- Seleccione --")</td>
+            <td>@Html.ValidationMessageFor(m => m.TipoServicio)</td>
+         </tr>
+         <tr>
+            <td>@Html.LabelFor(m => m.CantidadVisitas)</td>
+            <td>@Html.TextBoxFor(m => m.CantidadVisitas, new { @style = "text-align:right;" })</td>
+            <td>@Html.ValidationMessageFor(m => m.CantidadVisitas)</td>
+         </tr>
+         
+    </table>
+    <hr />
+    <h3>Preparación</h3>
+    <table>
+        <tr><td>@Html.CheckBoxFor(m => m.PideKG)</td><td>@Html.LabelFor(m => m.PideKG)</td></tr>
+        <tr><td>@Html.CheckBoxFor(m => m.PideDimensiones)</td><td>@Html.LabelFor(m => m.PideDimensiones)</td></tr>
+        <tr><td>@Html.CheckBoxFor(m => m.PideHU)</td><td>@Html.LabelFor(m => m.PideHU)</td></tr>
+        <tr><td>@Html.CheckBoxFor(m => m.AlertaKilo, new { @onchange = "javascript:AlertaKilo2();" })</td><td>@Html.LabelFor(m => m.AlertaKilo)</td><td><div id="idAlerta">@Html.TextBoxFor(m=>m.ValorAlertaKilo)@Html.ValidationMessageFor(m=>m.ValorAlertaKilo)</div></td></tr>
+    </table>
+   
+}

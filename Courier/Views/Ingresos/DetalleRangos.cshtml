@@ -1,0 +1,33 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    var grid = new WebGrid(Model.DetalleRgoPatentes, rowsPerPage: 20, ajaxUpdateContainerId: "gridDetalleRangos"); 
+}
+
+
+
+<div id="gridDetalleRangos">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Ffolio","FOLIO"),
+       grid.Column("Fpatente","PATENTE"),
+       grid.Column("Frampla","RAMPLA"),
+       grid.Column("Fusuario","USUARIO"),
+       grid.Column("Fconductor","CONDUCTOR"),
+       grid.Column("Fktransp","KG-TRANSP"),
+       grid.Column("Fbtransp","BLTOS-TRANSP"),
+       grid.Column("Festado","ESTADO"),
+       grid.Column("Fsucursal","SUCURSAL"),
+       
+ })
+</div>

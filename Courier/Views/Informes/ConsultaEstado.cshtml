@@ -1,0 +1,89 @@
+﻿@model Courier.Models.InformesConsultaEstadosModels
+@{
+    ViewBag.Title = "Consulta de Estados";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');
+    }
+    $(function () {
+        $("#btnExcel").button()
+                        .click(function (event) {
+                            //                            alert("aaaaaaa");
+                            if ($("#Estado").val() == "") {
+                                alert("Debe seleccionar la consulta a descargar.");
+                                return;
+                            }
+                            window.open('@Url.Action("IndexConsultas","Informes")?pEstado=' + $("#Estado").val());
+                        });
+        $("#btnConsulta").button()
+                         .click(function (event) {
+                             event.preventDefault();
+                             borrar_contenido();
+                             $.validator.unobtrusive.parse("#frmConsulta");
+                             if ($("#frmConsulta").valid() == true) {
+                                 $("#frmConsulta").submit();
+                             }
+                         });
+    })
+    function Inicio() {
+        waitingDialog({ title: "Cargando", message: "Cargando...<br/>" });
+    }
+    function FinVer(data) {
+        $("#formContent").hide();
+        $("#formContent").html(data);
+        $("#formContent").show("fade", {}, 500);
+        closeWaitingDialog();     
+    }
+    function Fin() {
+        alert("Ocurrio un error");
+        closeWaitingDialog();
+    }
+</script>
+
+
+@using (Ajax.BeginForm("VerListaEstados", "Informes", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinVer(data)", OnFailure = "Javascript:Fin()" }, new { id = "frmConsulta" }))
+{
+    <table>
+        <tr><td colspan="3">@Html.LabelFor(m => m.Estado)
+        @Html.ValidationMessageFor(m => m.Estado)
+        </td></tr>
+        <tr>
+            <td>@Html.DropDownListFor(m => m.Estado, Model.ListaEstados, "-- Seleccione --")</td>
+            <td>
+                <button id="btnConsulta">
+                    <div style="float:left;width:100px;">       
+                    <div style="float:left;"><img alt="Consulta Estado" src="@Url.Content("~/Images/gnome_go_next.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Consultar</div>                        
+                    </div>                       
+                </button> 
+
+            </td>
+        </tr>
+    </table>
+}
+    <table>
+        <tr>
+            <td>
+                <button id="btnExcel">
+                    <div style="float:left;width:140px;">       
+                    <div style="float:left;"><img alt="Descarga Excel" src="@Url.Content("~/Images/page_white_excel.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Descarga Excel</div>                        
+                    </div>                       
+                </button> 
+            </td>
+        </tr>
+    </table>
+
+
+<div id="formContent">

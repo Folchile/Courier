@@ -1,0 +1,134 @@
+﻿@model Courier.Models.ManifiestoModels
+@{
+    ViewBag.Title = "Envio Manifiesto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $("#Manifiesto").focus();
+    })
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == false) {
+           alert(data.Mensaje)
+         }
+
+   }
+
+
+
+   function EnviarManifiesto() {
+       var randomnumber = Math.floor(Math.random() * 1111111)
+       $.ajax({
+           url: '@Url.Action("EnviarManifiesto", "Manifiesto")',
+           data: {
+               IDMANIFIESTO: $("#Manifiesto").val(),
+               _r: randomnumber
+           }
+       })
+            .done(function (data) {
+                var randomnumber = Math.floor(Math.random() * 11111111);
+              
+            });
+   }
+
+
+
+   $(function () {
+       $("#enviarmanifiesto").button()
+        .click(function (event) {
+            event.preventDefault();
+            var randomnumber = Math.floor(Math.random() * 1111111);
+            $.ajax({
+                url: '@Url.Action("EnviarManifiesto", "Manifiesto")',
+                type: "POST",
+                data: {
+                    IDMANIFIESTO: $("#IDMANIFIESTO").val(),
+                    _r: randomnumber
+                }
+            }).done(function (data) {
+                msjevalid(data.Mensaje);
+            });
+        });
+   });
+
+
+    $(function () {
+        $("#dialog-msjevalid").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    });
+    $(function () {
+        $("#tabs").tabs();
+    });
+    
+
+    function msjevalid(mensaje) {
+        $("#dialog-msjevalid").dialog("open");
+        $("#dialog-msjevalid").html(mensaje);
+    }
+
+
+</script>
+
+<div id="dialog-msjevalid" title="Mensaje"></div>
+
+
+@using (Ajax.BeginForm("EnviarManifiesto", "Manifiesto", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinVer(data)", OnFailure = "Javascript:Fin()" }, new { id = "frmBuscaManifiesto" }))
+{
+    <table>
+    <div id="fol">
+         <tr>
+           <td><strong> @Html.LabelFor(m => m.Manifiesto)</strong></td>
+           <td>@Html.TextBoxFor(m => m.IDMANIFIESTO, new { @style = "width:80px;font-size: 14px;text-align:right" })</td>
+           
+           <td>        
+           
+                <button id="enviarmanifiesto">
+                    <div style="float:left;width:80px;">       
+                        <div style="float:left;"><img alt="Siguiente" src="@Url.Content("~/Images/gnome_go_next.png")" /></div>                 
+                        <div style="float:left;">&nbsp;Enviar</div>                        
+                    </div>                       
+                </button>
+            </td>
+
+        </tr>
+        <tr>
+        <td></td>
+           <td colspan="2">@Html.ValidationMessageFor(m => m.IDMANIFIESTO)</td>
+       </tr>
+
+    
+        </div> 
+    </table>
+}
+
+
+

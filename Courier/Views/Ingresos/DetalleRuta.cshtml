@@ -1,0 +1,208 @@
+﻿@model MvcReporteViajes.Models.DetalleRutaModels
+@{
+    ViewBag.Title = "DetalleRuta";
+}
+
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        borrar_contenido();
+        $("#FECHA").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+    })
+    $(function () {
+
+
+//        $("#DIRORIGEN").focus(1);
+        $("#REGORIGEN").change(function () {
+            CargarComunaOrgen($(this).val());
+        })
+
+        $("#REGDESTINO").change(function () {
+            CargarComunaDestino($(this).val());
+        })
+
+        $("#dialog-erroringdetallerta").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+
+    });
+
+//    $(function () {
+//        $("#REGORIGEN").change(function () {
+//            CargarComunaOrgen($(this).val());
+//        })
+
+//        $("#REGDESTINO").change(function () {
+//            CargarComunaDestino($(this).val());
+//        })
+//    });
+
+
+
+
+    function CargarComunaOrgen(idOrigen) {
+        waitingDialog({ title: "Buscando", message: "Buscando Comunas...<br/>" });
+        $("#COMORIGEN").load('@Url.Action("CargaComunaOrigen","Ingresos")?idOrigen=' + idOrigen + ' #COMORIGEN option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+                }
+          
+     })
+    }
+
+
+    function CargarComunaDestino(idDestino) {
+        waitingDialog({ title: "Buscando", message: "Buscando Comunas...<br/>" });
+        $("#COMDESTINO").load('@Url.Action("CargaComunaDestino","Ingresos")?idDestino=' + idDestino + ' #COMDESTINO option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+
+        })
+    }
+
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#detalleRtas").dialog("close");
+            CargaControlRutas();
+            $("#dialog-result").html(data.Mensaje);
+            $("#dialog-result").dialog("open");
+           
+
+        }
+        else {
+//            alert(data.Mensaje);
+            $("#dialog-erroringdetallerta").html(data.Mensaje);
+            $("#dialog-erroringdetallerta").dialog("open");
+        }
+
+    }
+
+
+
+    var infocomb = $("#FOLIO").val();
+    $("#FOLRTA").val(infocomb);
+//    $("#REGORIGEN").focus();
+
+
+
+</script>
+
+
+
+
+@*@{
+    Model.FECHA = DateTime.Today.ToShortDateString();
+    //Model.FECHA = DateTime.Today;
+}*@
+
+<div id="dialog-erroringdetallerta" title="Atención"></div> 
+
+@using (Ajax.BeginForm("AgregaDetalleRuta", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmEnviarRuta" }))
+{
+     
+    @Html.HiddenFor(m => m.FOLRTA)
+    
+    <table>
+            
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.FECHA)</strong></td>
+            @*<td>@Html.TextBoxFor(m => m.FECHA, new { @readonly = "readonly" })</td> *@
+           @* <td>@Html.TextBoxFor(m => m.FECHA, new { @style = "width:70px;font-size: 10px", @readonly = "readonly" }) </td>          *@
+            <td>@Html.TextBoxFor(m => m.FECHA, new { @style = "width:70px;font-size: 10px", @readonly = "readonly" }) </td>          
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">@Html.ValidationMessageFor(m => m.FECHA)</td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.REGORIGEN)</strong></td>
+            <td>@Html.DropDownListFor(m => m.REGORIGEN, Model.ListaRegion, "--Seleccione Origen--", new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.REGORIGEN)
+             </td> 
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.COMORIGEN)</strong></td>
+            <td>@Html.DropDownListFor(m => m.COMORIGEN, Model.oListaBlanco, "--Seleccione Comuna--", new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.COMORIGEN)
+             </td> 
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.DIRORIGEN)</strong></td>
+            <td>@Html.TextBoxFor(m => m.DIRORIGEN, new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.DIRORIGEN)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.KMINICIAL)</strong></td>
+            <td>@Html.TextBoxFor(m => m.KMINICIAL, new { @style = "width:60px;font-size: 10px;text-align:right" })
+            @Html.ValidationMessageFor(m => m.KMINICIAL)
+            </td>
+        </tr>
+         <tr>
+            <td><strong>@Html.LabelFor(m => m.REGDESTINO)</strong></td>
+            <td>@Html.DropDownListFor(m => m.REGDESTINO, Model.ListaRegion, "--Seleccione Destino--", new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.REGDESTINO)
+             </td> 
+        </tr>
+
+         <tr>
+            <td><strong>@Html.LabelFor(m => m.COMDESTINO)</strong></td>
+            <td>@Html.DropDownListFor(m => m.COMDESTINO, Model.oListaBlanco, "--Seleccione Comuna--", new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.COMDESTINO)
+             </td> 
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.DIRDESTINO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.DIRDESTINO, new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.DIRDESTINO)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.KMFINAL)</strong></td>
+            <td>@Html.TextBoxFor(m => m.KMFINAL, new { @style = "width:60px;font-size: 10px;text-align:right" })
+             @Html.ValidationMessageFor(m => m.KMFINAL)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.OBSERVACION)</strong></td>
+            <td>@Html.TextBoxFor(m => m.OBSERVACION, new { @style = "width:220px;font-size: 10px" })</td>
+         </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.PEDIDO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.PEDIDO, new { @style = "width:120px;font-size: 10px" })</td>
+         </tr>
+         <tr><td>@Html.ValidationMessageFor(m => m.PEDIDO)</td></tr>
+         <tr>
+            <td><strong>@Html.LabelFor(m => m.TRANSPORTE)</strong></td>
+            <td>@Html.TextBoxFor(m => m.TRANSPORTE, new { @style = "width:120px;font-size: 10px" })</td>
+         </tr>
+         <tr><td>@Html.ValidationMessageFor(m => m.TRANSPORTE)</td></tr>
+          <tr>
+            <td><strong>@Html.LabelFor(m => m.ZONA)</strong></td>
+            <td>@Html.TextBoxFor(m => m.ZONA, new { @style = "width:60px;font-size: 10px" })</td>
+         </tr>
+         <tr><td>@Html.ValidationMessageFor(m => m.ZONA)</td></tr>
+</table>
+    
+}

@@ -1,0 +1,294 @@
+﻿@model Courier.Models.PreparacionModels
+@{
+    ViewBag.Title = "Preparación Pedido";
+}
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    function CargarUltimoMovimientoUsuario() {
+        //waitingDialog({ title: "Buscando", message: "Buscando último movimiento...<br/>" });
+        $.ajax({
+            url: '@Url.Action("UltimoMovimientoUsuario","Validation")',
+            type: "POST",
+            success: function (data) {
+                $("#RutCliente").val(data);
+                ChangeRutCliente(data);
+                //closeWaitingDialog();
+            },
+            error: function () {
+                //closeWaitingDialog();
+            }
+        });
+    }
+    function BorrarReferencia() {
+        $("#Referencia").val("");        
+    }
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-ControlClienteServicio").dialog({
+            autoOpen: false,
+            width: 'auto',
+            modal: true,
+            buttons: {
+                Cerrar: function () { $(this).dialog("close"); }
+            }
+        });
+        $("#dialog-errores").dialog({
+            autoOpen: false,
+            width: 'auto',
+            modal: true,
+            buttons: {
+                Aceptar: function () { $(this).dialog("close"); }
+            }
+        });
+        $("#dialog-validaPreparacion").dialog({
+            autoOpen: false,
+            width: 'auto',
+            modal: true,
+            buttons: {
+                Cerrar: function () { $(this).dialog("close"); }
+            }
+        });
+        $("#dialog-formularioHU").dialog({
+            autoOpen: false,
+            width: 'auto',
+            modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmHU");
+                    if ($("#frmHU").valid() == true) {
+                        $("#frmHU").submit();
+                    }
+                    else {
+                        $("#huHU").focus();
+                    }
+
+                },
+                Cancelar: function () { $(this).dialog("close") }
+            }
+        });
+    });
+    function CargarFormularioEnviado() {
+        var randomnumber = Math.floor(Math.random() * 111111111);
+        $("#random123").val(randomnumber);
+        if ($("#frmVerOTD").valid() == true) {
+            $("#frmVerOTD").submit();
+        }
+        else {
+            $("#dialog-errores").html($("#idSummary").html());
+            $("#dialog-errores").dialog("open");
+
+        }
+    }
+    $(function () {
+        $("#CargarFormulario").button();
+    });
+    function Inicio() {        
+        waitingDialog({ title: "Cargando", message: "Cargando Información...<br/>" });
+    }
+    function Fin() {    
+        closeWaitingDialog();
+    }
+    function FinPrep(data) {        
+        $("#formContent").hide();
+        $("#formContent").html(data);
+        $("#formContent").show();
+        closeWaitingDialog();
+    }
+    function ChangeRutCliente(Rut) {        
+        waitingDialog({ title: "Buscando", message: "Buscando Información...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111)
+        $("#TipoReferencia").load('@Url.Action("DropDownBuscarEn","Preparacion")?RutCliente=' + Rut + '&random=' + randomnumber + ' #TipoReferencia option', function (response, status, xhr) {
+            closeWaitingDialog();
+            $("#Referencia").focus();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        })
+    }
+    function preValidaOT(e) {
+        e.preventDefault();   
+        borrar_contenido();
+        $.validator.unobtrusive.parse("#frmVerOTD");
+        if ($("#frmVerOTD").valid() == true) {            
+            ValidaOT();
+        }
+    }
+    function ValidaOT() {
+        $("#formContent").html("");
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Validando OT", message: "Validando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("ValidarOTPOP", "Preparacion")',
+            data: {
+                _r: randomnumber,
+                Referencia: $("#Referencia").val(),
+                TipoReferencia: $("#TipoReferencia").val(),
+                RutCliente: $("#RutCliente").val()
+            }
+        })
+            .done(function (data) {
+                if (data.Ok == true) {
+                    if (data.HU == true) {
+                        FormularioHU(data.OTP, data.OTD);
+                    }
+                    else {
+                        CargarFormularioEnviado();
+                    }
+                }
+                else {
+                    $("#dialog-validaPreparacion").html("<p>" + data.Mensaje + "</p>");
+                    $("#dialog-validaPreparacion").dialog("open");
+                }
+            })
+            .error(function () {
+                alert("No fue posible cargar la información");
+            })
+            .complete(function () {
+                closeWaitingDialog();
+            });
+        }
+     function FormularioHU(otp, otd) {
+            var randomnumber = Math.floor(Math.random() * 1111111);
+            waitingDialog({ title: "Cargando Forulario", message: "Cargando...<br/>" });
+            $.ajax({
+                url: '@Url.Action("_FormularioHU", "Preparacion")',
+                data: {
+                    _r: randomnumber,
+                    huOTP: otp,
+                    huOTD: otd
+                }
+            })
+            .done(function (data) {
+                $("#dialog-formularioHU").html(data);
+                $("#dialog-formularioHU").dialog("open");
+                borrar_contenido();
+            })
+            .error(function () {
+                alert("No fue posible cargar el formulario");
+            })
+            .complete(function () {
+                closeWaitingDialog();
+            });
+        }
+</script>
+
+<div id="dialog-validaPreparacion" title="Mensaje"></div>
+<div id="dialog-formularioHU" title="Ingreso"></div>
+
+
+<div id="dialog-errores" title="Error"></div>
+@if (Session["SucName"] == null || Session["Menu"] == null || Session["Menu"].ToString() == "" || Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+{
+    var oVC = new Courier.Controllers.ValidationController();
+    var oResult=oVC.Sucursal(User.Identity.Name.ToString());
+    Session["SucName"] = oResult.Nombre;
+    Session["SucId"] = oResult.id;        
+    Session["RutEmpresa"] = "";
+    if (oResult.Tipo == 2)
+    {
+        Session["SucName"] = oResult.NombreEmpresa;
+        Session["RutEmpresa"] = oResult.idEmpresa + "-" + oResult.DvEmpresa;     
+    }    
+} 
+@using (Ajax.BeginForm("IngresoTotalBultos", "Preparacion", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinPrep(data)", OnFailure = "Javascript:FinPrep()" }, new { id = "frmVerOTD" }))
+{        
+        @*Inicio Control Busqueda Rut*@                             
+                if (Session["RutEmpresa"] != string.Empty && Session["RutEmpresa"]!=null)
+                {
+                    @Html.HiddenFor(m => m.RutCliente)
+                }
+                <table cellspacing="1">
+                    <tr>  
+      
+                        @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+                        {
+                        <td>@Html.LabelFor(m => m.RutCliente)</td>
+        
+                        <td></td>                        
+                        }        
+                        <td>@Html.LabelFor(m => m.TipoReferencia)</td>
+                        <td>Valor</td>
+                    </tr>
+                    <tr>       
+                         @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+                         {     
+                            <td>@Html.TextBoxFor(m => m.RutCliente, new { size = 10, maxlength = 10, onchange = "javascript:CargaListaBuscarEn(this.value);" })</td>                
+                            <td>
+                                <a href="#"><img alt="Buscar Cliente" title="Buscar Cliente" id="imgBuscarCliente" style="width:22px;height:22px" border="0"  src="@Url.Content("~/images/kghostview.png")"/></a>
+                            </td>                 
+                         }                                         
+        <td>@Html.DropDownListFor(m=>m.TipoReferencia,Model.ListaTipoReferencia,"-- Seleccione --") </td>
+        <td>@Html.TextBoxFor(m => m.Referencia)</td>    
+        <td>        
+            <input type="hidden" id="random123" name="random123" />
+            <button id="CargarFormulario" onclick="javascript:preValidaOT(event);">
+                <div style="float:left;width:80px;">       
+                    <div style="float:left;"><img alt="Siguiente" src="@Url.Content("~/Images/gnome_go_next.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Procesar</div>                        
+                </div>                       
+            </button>
+        </td>
+    </tr>    
+</table>
+<div id="divservicio" style="visibility:hidden;height:0px;">
+    <select name="Servicio"></select>
+    <div id="imgCargandoServicio">
+        <img alt="Cargando" src="@Url.Content("~/Images/38.gif")" border="0" />
+    </div>
+</div> 
+<div style="visibility:hidden;height:0px;">
+    @Html.ValidationSummary(null, new { id = "idSummary" })
+</div>
+}
+<script type="text/javascript">
+    $("#Referencia").keypress(function (event) {
+        if (event.which == 13) {
+            if ($("#frmVerOTD").valid() == true) {
+                event.preventDefault();
+                ValidaOT();
+            }
+            else {
+                $("#dialog-errores").html($("#idSummary").html());
+                $("#dialog-errores").dialog("open");
+            }
+        }
+    })
+        
+</script>
+<div id="formContent"></div>
+@*Inicio Control Busqueda Rut*@
+<div id="CargaBusquedaGenerico"></div>
+<script type="text/javascript">
+    $(function () {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $("#CargaBusquedaGenerico").load('@Url.Action("BuscarCliente", "Generico")?r=' + randomnumber + '&TextoFiltro=',
+        function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert("No fue posible actualizar la información");
+            }
+            else {
+                CargarUltimoMovimientoUsuario();
+                $("#imgCargandoServicio").hide();
+            }
+        });
+        $("#TipoReferencia").change(function () {
+            $("#Referencia").val("");
+            $("#Referencia").focus();
+            $("#formContent").html("");
+        })
+        $("#Referencia").change(function () {            
+            $("#formContent").html("");
+        })
+        $("#Referencia").focus();      
+    })
+</script>
+@*Fin Control Busqueda Rut*@

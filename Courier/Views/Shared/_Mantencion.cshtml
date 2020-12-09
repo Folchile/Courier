@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+
+<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.9.1.custom.css")" rel="stylesheet"
+    type="text/css" />
+
+<script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.21.custom.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")"  type="text/javascript"></script>
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>SISTEMA FOL COURIER</title>
+<style type="text/css">
+	
+}
+</style>
+</head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#accordion").accordion();
+    });    
+</script>
+<body onresize="resizeWindow()" onload="resizeWindow()">
+            <div class="header">
+            	<div>
+	            	Bienvenido Usuario | <a href="#">Cuenta</a> | <a href="#">Salir</a> | <a href="#">Ayuda</a>
+            	</div>
+            	<span class="title">Sistema Fol Courier</span><br />
+            	<span style="margin-left:5px;">Logistica</a></span>
+            </div>
+			<div class="toolbar">
+				<div class="toolbarLeft"></div>
+				<div class="toolbarContent">
+					<a href="../home"><img src="@Url.Content("~/Images/61.png")" alt="" />Inicio</a> | 
+                    <a href="../mantencion"><img src="../images/40.png" alt="" />Mantenedores</a>
+					@*<a href="#"><img src="../images/41.png" alt="" />Another button</a> | 					 
+					<a href="#"><img src="../images/54.png" alt="" />Another action</a> |
+					<a href="#"><img src="../images/24.png" alt="" />And one loooong, long button</a>*@
+				</div>
+				<div class="toolbarRight"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="toolbar">
+				<div class="toolbarLeft"></div>
+				<div class="toolbarContent">
+					<a href="#"><img src="../images/51.png" alt="" />Ayuda</a> @*| 
+					<a href="#"><img src="../images/14.png" alt="" />Another additional button</a> *@
+				</div>
+				<div class="toolbarRight"></div>
+				<div class="clear"></div>
+			</div>
+ 		<div class="clear"></div>
+        <div class="navigation" id="navigation">            
+            <div class="subHeader">
+            	<div>Administración</div>
+            </div>
+            <div id="accordion">
+                <h3><a href="#">Cliente</a></h3>
+               
+                    <div class="navPanel">
+                        <a href="../Mantencion/BuscarCliente" onclick="this.submit();" id="lnkbuscarcliente"><img src="../images/find.png" alt="" />Buscar Cliente</a>                        
+                	    <a href="../Mantencion/AgregarCliente"><img src="../images/edit_add.png" alt="" />Agregar Cliente</a>
+                	    <a href="#"><img src="../images/24.png" alt="" />Direcciones</a>
+                	    <a href="#"><img src="../images/24.png" alt="" />Servicios</a>
+                        
+                    </div>
+               
+                <h3>
+                    
+                <a href="#">Parámetros</a>
+                    
+                </h3>
+                <div class="navPanel">
+                	    <a href="#"><img src="../images/24.png" alt="" />Región</a>
+                        <a href="#"><img src="../images/24.png" alt="" />Provincia</a>
+                        <a href="#"><img src="../images/24.png" alt="" />Comuna</a>
+                </div>
+                <h3><a href="#">Usuarios</a></h3>
+               
+                    <div class="navPanel">                	    
+                	    <a href="#"><img src="../images/24.png" alt="" />Usuarios</a>
+                	    <a href="#"><img src="../images/24.png" alt="" />Perfiles</a>
+                        
+                    </div>
+               
+            </div>
+                     	    
+               @*<div class="navPanel">
+                	<a href="../Pedido/IngresoMasivo"><img src="../images/gear_blue.png" alt="" />Ingreso Masivo</a>
+                	<a href="../Pedido/IngresoManual"><img src="../images/properties.png" alt="" />Ingreso Manual</a>
+                	<a href="../Pedido/IngresoRetiroProgramado"><img src="../images/watch.png" alt="" />Ingreso Retiro Programado</a>
+                	<a href="../Pedido/AnularPedido"><img src="../images/undo.png" alt="" />Anular Pedido</a>
+                </div>
+                <div class="navSelect">
+                	<div class="navSeparator"></div>
+                	<a href="#"><img src="../images/modify.png" alt="" />Preparar Pedido</a>
+                	<a href="#"><img src="../images/lorrygreen.png" alt="" />Despachar Pedido</a>
+                	<a href="#"><img src="../images/ark.png" alt="" />Recepcionar Pedido</a>
+                    <a href="#"><img src="../images/BarChart.png" alt="" />Informes</a>
+                </div>*@
+            </div>
+
+            @*<div class="content" id="content">
+            	<div class="subHeader">
+            		<div>Ingreso Manual</div>
+            	</div>
+            	<div class="contentPanel" id="contentPanel">
+                    
+					@RenderBody()
+				</div>
+            </div>*@
+            
+            @RenderBody()
+               
+            <div class="clear"></div>
+</body>
+    <script type="text/javascript">
+
+        function resizeWindow() {
+            var windowHeight = getWindowHeight();
+
+            document.getElementById("content").style.height = (windowHeight - 110) + "px";
+            document.getElementById("contentPanel").style.height = (windowHeight - 160) + "px";
+            document.getElementById("navigation").style.height = (windowHeight - 110) + "px";
+        }
+
+        function getWindowHeight() {
+            var windowHeight = 0;
+            if (typeof (window.innerHeight) == 'number') {
+                windowHeight = window.innerHeight;
+            }
+            else {
+                if (document.documentElement && document.documentElement.clientHeight) {
+                    windowHeight = document.documentElement.clientHeight;
+                }
+                else {
+                    if (document.body && document.body.clientHeight) {
+                        windowHeight = document.body.clientHeight;
+                    }
+                }
+            }
+            return windowHeight;
+        }
+    </script>
+
+</html>
+

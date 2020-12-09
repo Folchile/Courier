@@ -1,0 +1,281 @@
+﻿@model Courier.Models.GenericOTDModels 
+@{
+    ViewBag.Title = "DatosOTD";
+}
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+function CambiarVia() {
+    waitingDialog({ title: "Actualizando", message: "Actualizando Vía...<br/>" });
+    var randomnumber = Math.floor(Math.random() * 11111111)
+    $.ajax({
+        url: '@Url.Action("CambiarVia","Administracion")',
+        data: {
+            sOTP: $("#OTP").val(),
+            sOTD: $("#OTD").val(),
+            r: randomnumber
+        },
+        success: function (data) {
+            closeWaitingDialog();
+            if (data.Ok == true) {
+                CargarFormularioEnviado();
+            }
+            else {
+                alert(data.Mensaje);
+            }
+        },
+        error: function () {
+            alert("Ocurrio un error mientras se ejecutaba la consulta");
+            closeWaitingDialog();
+        }
+    });
+}
+function CargaHistoriaMan(OTP,OTD) {
+    waitingDialog({ title: "Buscando Manifiestos", message: "Buscando...<br/>" });
+    var randomnumber = Math.floor(Math.random() * 11111111);
+    $("#dialog-historiaman").load('@Url.Action("ConsultaManHistorico","Generico")?OTP=' + OTP + '&OTD=' + OTD + '&r=' + randomnumber + '', function (response, status, xhr) {
+        closeWaitingDialog();
+        if (status == 'error') {
+            alert('Error al cargar la información');
+        }
+        else {            
+            $("#dialog-historiaman").dialog("open");
+        }
+    });
+}
+function DescargaPDF(MAN_ID) {
+    var randomnumber = Math.floor(Math.random() * 11111111);
+    window.open('@Url.Action("Index","Reporte")?MAN_ID=' + MAN_ID + '&r=' + randomnumber, '_blank');
+}
+function CargaHistorialOT(OTP, OTD, IdBulto) {
+    var randomnumber = Math.floor(Math.random() * 11)
+    $("#dialog-HistorialOT").dialog("open");
+    $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+    $("#dialog-HistorialOT").load('@Url.Content("~/Preparacion/VerHistorialOT")?OTP=' + OTP + '&OTD=' + OTD + '&IdBulto=' + IdBulto + '&iOTP=0&iOTD=1&iBulto=0&r=' + randomnumber);
+}
+function VerDocumentosAsociados(OTP, OTD) {
+    var randomnumber = Math.floor(Math.random() * 11)
+    $("#dialog-documentos").dialog("open");
+    $("#dialog-documentos").html('<img src="@Url.Content("~/Images/8.gif")" />');
+    $("#dialog-documentos").load('@Url.Content("~/Preparacion/ListaDocumentos")?OTP=' + OTP + '&OTD=' + OTD + '&r=' + randomnumber);
+}
+function VerObservaciones(OTP, OTD) {
+    waitingDialog({ title: "Cargando Observaciones", message: "Buscando...<br/>" });
+    var randomnumber = Math.floor(Math.random() * 11)        
+    $("#dialog-observaciones").load('@Url.Content("~/Generico/Observaciones")?OTP=' + OTP + '&OTD=' + OTD + '&r=' + randomnumber, function (response, status, xhr) {
+        closeWaitingDialog();
+        if (status == 'error') {
+            alert('Error al cargar la información');
+        }
+        else {
+            $("#dialog-observaciones").dialog("open");
+        }
+    });
+}
+$(function () {
+    $("#btncambiarvia").button()
+        .click(function () {
+            $("#dialog-cambiarvia").dialog("open");
+        });
+    $("#btnVerDocumentosAsociados").button()
+        .click(function () {
+            VerDocumentosAsociados($("#OTP").val(), $("#OTD").val());
+        });
+    $("#btnVerHistorialMan").button()
+        .click(function () {
+            CargaHistoriaMan($("#OTP").val(), $("#OTD").val());
+        });
+
+    $("#btnVerHistorialOT").button()
+        .click(function () {
+            CargaHistorialOT($("#OTP").val(), $("#OTD").val(), 0);
+        });
+
+    $("#btnObservaciones").button().click(function () {
+        VerObservaciones($("#OTP").val(), $("#OTD").val());
+    });
+
+    $("#dialog-HistorialOT").dialog({ autoOpen: false, title: "Historial", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+        buttons: {
+            Aceptar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#dialog-documentos").dialog({ autoOpen: false, title: "Documentos Asociados", width: 'auto', minWidth: 400, minHeight: 400, modal: true,
+        buttons: {
+            Aceptar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#dialog-historiaman").dialog({ autoOpen: false, title: "Manifiesto(s)", width: 'auto', modal: true,
+        buttons: {
+            Aceptar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $("#dialog-observaciones").dialog({ autoOpen: false, title: "Observaciones", width: 'auto', modal: true });
+    $("#dialog-cambiarvia").dialog({ autoOpen: false, title: "Cambiar Vía", width: 'auto', modal: true,
+        buttons: {
+            Aceptar: function () {
+                CambiarVia();
+                $(this).dialog("close");
+            },
+            Cancelar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+})
+</script>
+<div id="dialog-cambiarvia">
+    @if (@Model.OTD_DATOS.FL_PAR_VIA_NOMBRE == "Terrestre")
+    {
+        <p>¿Desea cambiar la vía de Terrestre a Aérea?</p>
+    }
+    else
+    {
+        <p>¿Desea cambiar la vía de Aérea a Terrestre?</p>
+    }
+</div>
+<div id="dialog-observaciones"></div>
+<div id="dialog-historiaman"></div>
+<div id="dialog-documentos"></div>
+<div id="dialog-HistorialOT" style="min-height:300px;min-width:500px;"></div>
+@if (Model.ContraPago == true)
+{
+    <div class="info">
+        CONTRA PAGO        
+    </div>
+}
+
+<table>            
+    <tr>
+        <td>OT</td>
+        <td>Estado</td>
+        <td>Cliente</td>
+        <td>Servicio</td>                
+        <td>Nombre Destinatario</td>
+        <td>Rut</td>                
+    </tr>
+    <tr>
+        <td><div class="textfield_effect"><strong>@Model.OTD_DATOS.PK_FOL_OTP_ID-@Model.OTD_DATOS.PK_FOL_OTD_ID&nbsp;</strong></div></td>
+        <td><div class="textfield_effect"><strong>@Model.OTD_DATOS.FL_FOL_EST_NOMBRE&nbsp;</strong></div></td>
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_CLI_EMP_RAZON_SOCIAL&nbsp;</div></td>
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_PAR_SER_NOMBRE&nbsp;</div></td>                
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_FOL_OTD_DESTINATARIO_NOMBRE&nbsp;</div></td>
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_FOL_OTD_DESTINATARIO_RUT&nbsp;</div></td>                
+    </tr>
+</table>
+<table>
+    <tr>
+        <td>Suc. Destino</td>
+        <td>Región</td>
+        <td>Comuna</td>
+        @if (Model.OTD_DATOS.FL_PAR_LOC_NOMBRE != null && @Model.OTD_DATOS.FL_PAR_LOC_NOMBRE != "")
+        {
+            <td>Localidad</td>
+        }
+        <td>Dirección</td>             
+        <td>Teléfono</td>   
+    </tr>
+    <tr>
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_PAR_SUC_NOMBRE&nbsp;</div></td>
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_PAR_REG_NOMBRE&nbsp;</div></td>                
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_PAR_COM_NOMBRE (@Model.OTD_DATOS.FL_PAR_COM_CODIGO)&nbsp;</div></td> 
+        @if (Model.OTD_DATOS.FL_PAR_LOC_NOMBRE != null && @Model.OTD_DATOS.FL_PAR_LOC_NOMBRE != "")
+        {
+            <td><div class="textfield_effect">@Model.OTD_DATOS.FL_PAR_LOC_NOMBRE&nbsp;</div></td>
+        }        
+        <td><div class="textfield_effect">
+        @if (@Model.OTD_DATOS.FL_FOL_DEN_DIRECCION != null)
+        {
+            if (@Model.OTD_DATOS.FL_FOL_DEN_DIRECCION.Count() > 90)
+            {
+            <div title="@Model.OTD_DATOS.FL_FOL_DEN_DIRECCION">@Model.OTD_DATOS.FL_FOL_DEN_DIRECCION.Substring(0, 90)...</div>
+            }
+            else
+            {    
+                <label>@Model.OTD_DATOS.FL_FOL_DEN_DIRECCION&nbsp;@Model.OTD_DATOS.FL_FOL_DEN_NUMERO&nbsp;</label>
+            }
+        }
+        else
+        {
+            <label>@Model.OTD_DATOS.FL_FOL_DEN_DIRECCION&nbsp;@Model.OTD_DATOS.FL_FOL_DEN_NUMERO&nbsp;</label>
+        }</div></td>
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_FOL_OTD_TELEFONO&nbsp;</div></td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td>Vía</td>
+        @if (Model.EditaVia == true)
+        {
+            <td></td>
+        }
+        <td>Fecha Estimada Entrega</td>
+        <td>Ref. 1 @if (Model.NombreReferencia1 != null && Model.NombreReferencia1 != "")
+                   {<label>(@Model.NombreReferencia1)</label>}</td> 
+        <td>Ref. 2 @if (Model.NombreReferencia2 != null && Model.NombreReferencia2 != "")
+                   {<label>(@Model.NombreReferencia2)</label>}</td> 
+        <td>Cantidad Bultos</td>                
+    </tr>
+    <tr>
+        <td>
+            <div class="textfield_effect" id="viaactual">@Model.OTD_DATOS.FL_PAR_VIA_NOMBRE&nbsp;</div>           
+        </td>
+        @if (Model.EditaVia == true)
+        {
+        <td>
+            <button id="btncambiarvia" style="margin-bottom:8px;">
+                <div style="float:left;">       
+                <div style="float:left;"><img alt="" src="@Url.Content("~/Images/pencil_edit.png")?" /></div>                 
+                <div style="float:left;">&nbsp;Cambiar Vía</div>                        
+                </div>                       
+            </button>
+        </td>
+        }
+        <td><div class="textfield_effect">@Convert.ToDateTime(@Model.OTD_DATOS.FL_FOL_OTD_FECHA_ESTIMADA).ToShortDateString().Trim()&nbsp;</div></td>
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_FOL_OTD_REFERENCIA1&nbsp;</div></td>   
+        <td><div class="textfield_effect">@Model.OTD_DATOS.FL_FOL_OTD_REFERENCIA2&nbsp;</div></td>  
+        <td><div class="textfield_effect">@Model.CantidadBultos&nbsp;</div></td>          
+    </tr>
+    </table>
+    <div style="width:100%;text-align:right;">
+        <button id="btnVerHistorialOT">
+            <div style="float:left;width:130px;">       
+            <div style="float:left;"><img alt="" src="@Url.Content("~/Images/file_temporary.png")?" /></div>                 
+            <div style="float:left;">&nbsp;Ver Historial OT</div>                        
+            </div>                       
+        </button>
+        
+        <button id="btnVerDocumentosAsociados">
+            <div style="float:left;width:130px;">       
+            <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/folder_explore.png")" /></div>                 
+            <div style="float:left;">&nbsp;Doc. Asociados</div>                        
+            </div>                       
+        </button>
+
+        <button id="btnVerHistorialMan">
+            <div style="float:left;width:130px;">       
+            <div style="float:left;"><img alt="" src="@Url.Content("~/Images/lorrygreen2.png")?" /></div>                   
+            <div style="float:left;">&nbsp;Ver Manifiesto</div>                        
+            </div>                       
+        </button>  
+         <button id="btnObservaciones">
+            <div style="float:left;width:130px;">       
+            <div style="float:left;"><img alt="" src="@Url.Content("~/Images/gnome_sticky_notes_applet.png")?" /></div>                   
+            <div style="float:left;">&nbsp;Observaciones</div>                        
+            </div>                       
+        </button>        
+    </div>
+@if (@Model.OTD_DATOS.FL_FOL_OTD_DEVOLUCION == true)
+{
+    <div class="warning">        
+        La OT @Model.OTD_DATOS.PK_FOL_OTP_ID-@Model.OTD_DATOS.PK_FOL_OTD_ID se encuentra <strong>EN DEVOLUCIÓN</strong>
+    </div>
+}

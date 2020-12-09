@@ -1,0 +1,22 @@
+﻿@model Courier.Models.IngresoPedidoModel
+
+@{
+    ViewBag.Title = "GuardarIngresoManual";    
+}
+<script type="text/javascript">
+    $(function () {
+        $("#Volver")
+            .button()
+            .click(function () {
+                location.href = "IngresoManual";
+            });
+    });
+</script>
+
+    listado anterior:
+    @Html.TextBoxFor(m => m.Cliente.Rut)
+    <br />
+    <br />
+    <input id="Volver" type="button" value="Volver" />
+
+

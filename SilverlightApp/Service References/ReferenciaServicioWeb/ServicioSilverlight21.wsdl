@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="/Imports">
+      <xsd:import schemaLocation="http://192.168.33.4/FolCourier/WebService/ServicioSilverlight.svc?xsd=xsd0" />
+      <xsd:import schemaLocation="http://192.168.33.4/FolCourier/WebService/ServicioSilverlight.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://192.168.33.4/FolCourier/WebService/ServicioSilverlight.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Courier.WebService" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ServicioSilverlight_DoWork_InputMessage">
+    <wsdl:part name="parameters" element="DoWork" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_DoWork_OutputMessage">
+    <wsdl:part name="parameters" element="DoWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ModificarImpresora_InputMessage">
+    <wsdl:part name="parameters" element="ModificarImpresora" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ModificarImpresora_OutputMessage">
+    <wsdl:part name="parameters" element="ModificarImpresoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionEtiqueta_InputMessage">
+    <wsdl:part name="parameters" element="ImpresionEtiqueta" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionEtiqueta_OutputMessage">
+    <wsdl:part name="parameters" element="ImpresionEtiquetaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionEtiquetaPallet_InputMessage">
+    <wsdl:part name="parameters" element="ImpresionEtiquetaPallet" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionEtiquetaPallet_OutputMessage">
+    <wsdl:part name="parameters" element="ImpresionEtiquetaPalletResponse" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionEtiquetaPorOTP_InputMessage">
+    <wsdl:part name="parameters" element="ImpresionEtiquetaPorOTP" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionEtiquetaPorOTP_OutputMessage">
+    <wsdl:part name="parameters" element="ImpresionEtiquetaPorOTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionGuiaMasiva_InputMessage">
+    <wsdl:part name="parameters" element="ImpresionGuiaMasiva" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionGuiaMasiva_OutputMessage">
+    <wsdl:part name="parameters" element="ImpresionGuiaMasivaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionCustom_InputMessage">
+    <wsdl:part name="parameters" element="ImpresionCustom" />
+  </wsdl:message>
+  <wsdl:message name="ServicioSilverlight_ImpresionCustom_OutputMessage">
+    <wsdl:part name="parameters" element="ImpresionCustomResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServicioSilverlight">
+    <wsdl:operation name="DoWork">
+      <wsdl:input wsaw:Action="urn:ServicioSilverlight/DoWork" message="ServicioSilverlight_DoWork_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ServicioSilverlight/DoWorkResponse" message="ServicioSilverlight_DoWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ModificarImpresora">
+      <wsdl:input wsaw:Action="urn:ServicioSilverlight/ModificarImpresora" message="ServicioSilverlight_ModificarImpresora_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ServicioSilverlight/ModificarImpresoraResponse" message="ServicioSilverlight_ModificarImpresora_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImpresionEtiqueta">
+      <wsdl:input wsaw:Action="urn:ServicioSilverlight/ImpresionEtiqueta" message="ServicioSilverlight_ImpresionEtiqueta_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ServicioSilverlight/ImpresionEtiquetaResponse" message="ServicioSilverlight_ImpresionEtiqueta_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImpresionEtiquetaPallet">
+      <wsdl:input wsaw:Action="urn:ServicioSilverlight/ImpresionEtiquetaPallet" message="ServicioSilverlight_ImpresionEtiquetaPallet_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ServicioSilverlight/ImpresionEtiquetaPalletResponse" message="ServicioSilverlight_ImpresionEtiquetaPallet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImpresionEtiquetaPorOTP">
+      <wsdl:input wsaw:Action="urn:ServicioSilverlight/ImpresionEtiquetaPorOTP" message="ServicioSilverlight_ImpresionEtiquetaPorOTP_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ServicioSilverlight/ImpresionEtiquetaPorOTPResponse" message="ServicioSilverlight_ImpresionEtiquetaPorOTP_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImpresionGuiaMasiva">
+      <wsdl:input wsaw:Action="urn:ServicioSilverlight/ImpresionGuiaMasiva" message="ServicioSilverlight_ImpresionGuiaMasiva_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ServicioSilverlight/ImpresionGuiaMasivaResponse" message="ServicioSilverlight_ImpresionGuiaMasiva_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImpresionCustom">
+      <wsdl:input wsaw:Action="urn:ServicioSilverlight/ImpresionCustom" message="ServicioSilverlight_ImpresionCustom_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ServicioSilverlight/ImpresionCustomResponse" message="ServicioSilverlight_ImpresionCustom_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

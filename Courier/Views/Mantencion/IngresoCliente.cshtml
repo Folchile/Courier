@@ -1,0 +1,557 @@
+﻿@model Courier.Models.IngresoPedidoModel
+
+                      
+@{
+    ViewBag.Title = "Ingreso Cliente";
+}
+<link href="@Url.Content("~/Content/Cliente.css")" rel="stylesheet" type="text/css">
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-message").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {                       
+                    $(this).dialog("close");
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+    });
+    $(function () {
+        $("#btnguardar")
+        .button()
+        .click(function () {
+            $("#dialog-message").dialog("open");
+        });
+    });
+    $(function () {
+        $("#btn1").button();
+        $("#btn2").button();
+        $("#btn3").button();
+        $("#btn4").button();
+        $("#btn5").button();
+    });
+</script>
+<!--div id="padre">
+ <div id="hijo">Bla bla</div>
+ </div-->
+
+<!--input type="button" value="Ocultar/Mostrar" onclick='$("#nombre_div").toggle(200);'>
+<div id="nombre_div" style="background-color:#eeeeee;border:1px solid">
+Este Div Se Oculta
+</div-->
+ 
+ <div id="dialog-message">
+ <p>¿Esta seguro(a) que desea guardar la información?</p>
+ </div>
+
+
+
+    @*<h2>@ViewBag.Message</h2>*@
+    <div>
+    <table>        
+        <tr>
+            <td class= "Cliente">@Html.LabelFor(m => m.Cliente.SNegocio)</td>
+            <td>@Html.TextBoxFor(m => m.Cliente.SNegocio)</td>
+            <td class= "Cliente">@Html.LabelFor(m => m.Cliente.FApertura)</td>
+            <td>@Html.TextBoxFor(m => m.Cliente.FApertura)</td>
+            <td class= "Cliente">@Html.LabelFor(m => m.Cliente.FInicio)</td>
+            <td>@Html.TextBoxFor(m => m.Cliente.FInicio)</td>
+        </tr>
+    </table>
+     </div>
+   
+     <h2>Datos Cliente</h2>
+         <table class="cliente">
+            <tr>
+                <td class= "input">@Html.LabelFor(m => m.Cliente.RutCliente)</td>
+                <td>@Html.LabelFor(m=>m.Cliente.RSocial)</td>
+                <td>@Html.LabelFor(m => m.Cliente.NFantasia)</td>
+                <td>@Html.LabelFor(m => m.Cliente.GComercial)</td>
+                <tr>
+                 <td >@Html.TextBoxFor(m => m.Cliente.RutCliente, new { @class = "textolargorut" })</td>
+                 <td>@Html.TextBoxFor(m => m.Cliente.RSocial, new { @class = "textolargonombre" })</td>
+                 <td>@Html.TextBoxFor(m => m.Cliente.NFantasia, new { @class = "textolargofantasia" })</td>
+                 <td>@Html.TextBoxFor(m => m.Cliente.GComercial, new { @class = "textolargonombre" })</td>
+                </tr>
+            </tr>
+        </table>
+        <!--table class="cliente">
+            <tr>
+                
+                <td>@Html.LabelFor(m => m.Cliente.GComercial)</td>
+                 <tr>                    
+                    <td>@Html.TextBoxFor(m => m.Cliente.GComercial, new { @class = "textolargonombre" })</td>
+                 </tr>
+            </tr>
+        </table-->
+        <table class="cliente">
+            <tr>
+                <td>@Html.LabelFor(m => m.Cliente.RutRepr)</td>
+                <td>@Html.LabelFor(m => m.Cliente.NRepr)</td>
+                <td>@Html.LabelFor(m => m.Cliente.APaterno)</td>
+                <td>@Html.LabelFor(m => m.Cliente.AMaterno)</td>
+                 <tr>
+                    <td>@Html.TextBoxFor(m => m.Cliente.RutRepr, new { @class = "textolargorut" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.NRepr, new { @class = "textolargonombre" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.APaterno, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.AMaterno, new { @class = "textolargoapellido" })</td>
+                 </tr>
+            </tr>
+           
+
+        </table>
+       
+        
+       <!--h2>Dirección</h2-->
+            <table class="cliente">
+                    <tr>
+                    <td class="anchofijo">@Html.LabelFor(m => m.Cliente.Direccion)</td>
+                    <td>@Html.LabelFor(m => m.Cliente.Comuna)</td>
+                    <td>@Html.LabelFor(m => m.Cliente.Ciudad)</td>
+                    <td>@Html.LabelFor(m => m.Cliente.Region)</td>
+                    <tr>
+                        <td>@Html.TextBoxFor(m => m.Cliente.Direccion, new { @class = "textolargodireccion" })</td>
+                        
+                        <td class ="textolargocomuna">@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                            <select style="width:190px">
+                                <option value="1">Seleccione una Opción</option>
+                                <option value="1">Comuna 1</option>
+                                <option value="2">Comuna 2</option>
+                                <option value="3">Comuna 3</option>
+                            </select>
+        
+                        </td>
+
+                        <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                            <select style="width:190px">
+                                <option value="1">Seleccione una Opción</option>
+                                <option value="1">Ciudad 1</option>
+                                <option value="2">Ciudad 2</option>
+                                <option value="3">Ciudad 3</option>
+                            </select>
+                        </td-->
+                        <td>@Html.TextBoxFor(m => m.Cliente.Ciudad, new { @class = "textolargoregion" })</td>
+                        
+                        <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                            <select style="width:210px">
+                                <option value="1">Seleccione una Opción</option>
+                                <option value="1">Región 1</option>
+                                <option value="2">Región 2</option>
+                                <option value="3">Región 3</option>
+                            </select>
+                        </td-->
+                        <td>@Html.TextBoxFor(m => m.Cliente.Region, new { @class = "textolargoregion" })</td>
+
+                        <table class="cliente">
+                            <tr>
+                            
+                                <td>@Html.LabelFor(m=>m.Cliente.Telefono)</td>
+                                <td>@Html.LabelFor(m=>m.Cliente.Fax)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.TextBoxFor(m => m.Cliente.Telefono)</td>
+                                <td>@Html.TextBoxFor(m=>m.Cliente.Fax)</td>
+                            </tr>
+                        </table>
+                    </tr>
+                </tr>
+            </table>
+           
+            <input id="btn1"  type="button" value="Contacto Comercial" onclick='$("#contacto_div").toggle(200); $("#retiro_div").hide(); $("#docto_div").hide();$("#mercaderia_div").hide();$("#cobranza_div").hide();'/>
+            <input id="btn2"  type="button" value="Lugar de Retiro" onclick='$("#retiro_div").toggle(200); $("#contacto_div").hide(); $("#docto_div").hide();$("#mercaderia_div").hide();$("#cobranza_div").hide();'/>
+            <input id="btn3"  type="button" value="Devolución de Documentos" onclick='$("#docto_div").toggle(200); $("#contacto_div").hide(); $("#retiro_div").hide();$("#mercaderia_div").hide();$("#cobranza_div").hide();'/>
+            <input id="btn4"  type="button" value="Devolución de Mercaderia" onclick='$("#mercaderia_div").toggle(200);$("#contacto_div").hide(); $("#retiro_div").hide();$("#docto_div").hide();$("#cobranza_div").hide();'/>
+            <input id="btn5"  type="button" value="Cobranza" onclick='$("#cobranza_div").toggle(200);$("#contacto_div").hide(); $("#retiro_div").hide();$("#docto_div").hide();$("#mercaderia_div").hide();'/>
+        
+            <td>
+                <input id="btnguardar" type="button" value="Grabar" > 
+            </td>
+            <div id="contacto_div" style="display:none">
+
+            <h2>Contacto Comercial</h2>
+
+            <table class="cliente">
+            <tr>
+                <!--td class= "input">@Html.LabelFor(m => m.Cliente.RutCont)</td-->
+                <td>@Html.LabelFor(m => m.Cliente.NCont)</td>
+                <td>@Html.LabelFor(m => m.Cliente.APaternoCont)</td>
+                <td>@Html.LabelFor(m => m.Cliente.AMaternoCont)</td>
+                <td>@Html.LabelFor(m=>m.Cliente.EmailCont)</td>
+                <tr>
+                    <!--td>@Html.TextBoxFor(m => m.Cliente.RutCont, new { @class = "textolargorut" })</td-->
+                    <td>@Html.TextBoxFor(m => m.Cliente.NCont, new { @class = "textolargonombre" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.APaternoCont, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.AMaternoCont, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.EmailCont, new { @class = "textolargoemail" })</td>
+                </tr>
+            </tr>
+            </table>
+                <table class="cliente">
+                    <tr>
+                        <td class="anchofijo">@Html.LabelFor(m => m.Cliente.DirCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.ComunaCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.CiudadCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.RegionCont)</td>
+                        <tr>
+                            <td>@Html.TextBoxFor(m => m.Cliente.DirCont, new { @class = "textolargodireccion" })</td>
+                        
+                            <td class ="textolargocomuna">@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:190px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Comuna 1</option>
+                                    <option value="2">Comuna 2</option>
+                                    <option value="3">Comuna 3</option>
+                                </select>
+        
+                            </td>
+
+                            <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:190px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Ciudad 1</option>
+                                    <option value="2">Ciudad 2</option>
+                                    <option value="3">Ciudad 3</option>
+                                </select>
+                            </td-->
+                            <td>@Html.TextBoxFor(m => m.Cliente.Ciudad, new { @class = "textolargoregion" })</td>
+
+                            <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:210px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Región 1</option>
+                                    <option value="2">Región 2</option>
+                                    <option value="3">Región 3</option>
+                                </select>
+                            </td-->
+                            <td>@Html.TextBoxFor(m => m.Cliente.RegionCont, new { @class = "textolargoregion" })</td>
+                            <table class="cliente">
+                                <tr>
+                            
+                                    <td>@Html.LabelFor(m=>m.Cliente.TelefonoCont)</td>
+                                    <td>@Html.LabelFor(m=>m.Cliente.FaxCont)</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>@Html.TextBoxFor(m => m.Cliente.TelefonoCont)</td>
+                                    <td>@Html.TextBoxFor(m => m.Cliente.FaxCont)</td>
+                                    
+                                </tr>
+                            </table>
+                        </tr>
+                </tr>
+            </table>
+
+            </div>
+
+            
+            <div id="retiro_div" style="display:none">
+
+            <h2>Lugar de Retiro</h2>
+            
+            
+            <table class="cliente">
+            <tr>
+                <!--td class= "input">@Html.LabelFor(m => m.Cliente.RutCont)</td-->
+                <td>@Html.LabelFor(m => m.Cliente.NCont)</td>
+                <td>@Html.LabelFor(m => m.Cliente.APaternoCont)</td>
+                <td>@Html.LabelFor(m => m.Cliente.AMaternoCont)</td>
+                <td>@Html.LabelFor(m => m.Cliente.EmailCont)</td>
+                <tr>
+                    <!--td>@Html.TextBoxFor(m => m.Cliente.RutRet, new { @class = "textolargorut" })</td-->
+                    <td>@Html.TextBoxFor(m => m.Cliente.NRet, new { @class = "textolargonombre" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.APaternoRet, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.AMaternoRet, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.EmailRet, new { @class = "textolargoemail" })</td>
+                </tr>
+            </tr>
+            </table>
+                <table class="cliente">
+                    <tr>
+                        <td class="anchofijo">@Html.LabelFor(m => m.Cliente.DirCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.ComunaCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.CiudadCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.RegionCont)</td>
+                        <tr>
+                            <td>@Html.TextBoxFor(m => m.Cliente.DirRet, new { @class = "textolargodireccion" })</td>
+                        
+                            <td class ="textolargocomuna">@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:190px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Comuna 1</option>
+                                    <option value="2">Comuna 2</option>
+                                    <option value="3">Comuna 3</option>
+                                </select>
+        
+                            </td>
+
+                            <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:190px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Ciudad 1</option>
+                                    <option value="2">Ciudad 2</option>
+                                    <option value="3">Ciudad 3</option>
+                                </select>        
+                            </td-->
+                            <td>@Html.TextBoxFor(m => m.Cliente.Ciudad, new { @class = "textolargoregion" })</td>
+
+                            <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:210px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Región 1</option>
+                                    <option value="2">Región 2</option>
+                                    <option value="3">Región 3</option>
+                                </select>
+                            </td-->
+                            <td>@Html.TextBoxFor(m => m.Cliente.RegionRet, new { @class = "textolargoregion" })</td>
+                            <table  class="cliente">
+                                <tr>
+                            
+                                    <td>@Html.LabelFor(m => m.Cliente.TelefonoCont)</td>
+                                    <td>@Html.LabelFor(m => m.Cliente.FaxCont)</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>@Html.TextBoxFor(m => m.Cliente.TelefonoRet)</td>
+                                    <td>@Html.TextBoxFor(m => m.Cliente.FaxRet)</td>
+                                    
+                                </tr>
+                            </table>
+                        </tr>
+                </tr>
+            </table>
+    </div>
+  
+    <div id="docto_div" style="display:none">
+            <h2>Devolución de Documentos</h2>
+            <table class="cliente">
+                <tr>
+                    <!--td class= "input">@Html.LabelFor(m => m.Cliente.RutCont)</td-->
+                    <td>@Html.LabelFor(m => m.Cliente.NCont)</td>
+                    <td>@Html.LabelFor(m => m.Cliente.APaternoCont)</td>
+                    <td>@Html.LabelFor(m => m.Cliente.AMaternoCont)</td>
+                    <td>@Html.LabelFor(m=>m.Cliente.EmailCont)</td>
+                    <tr>
+                        <!--td>@Html.TextBoxFor(m => m.Cliente.RutCont, new { @class = "textolargorut" })</td-->
+                        <td>@Html.TextBoxFor(m => m.Cliente.NCont, new { @class = "textolargonombre" })</td>
+                        <td>@Html.TextBoxFor(m => m.Cliente.APaternoCont, new { @class = "textolargoapellido" })</td>
+                        <td>@Html.TextBoxFor(m => m.Cliente.AMaternoCont, new { @class = "textolargoapellido" })</td>
+                        <td>@Html.TextBoxFor(m => m.Cliente.EmailCont, new { @class = "textolargoemail" })</td>
+                    </tr>
+                </tr>
+            </table>
+            <table class="cliente">
+                <tr>
+                    <td class="anchofijo">@Html.LabelFor(m => m.Cliente.DirCont)</td>
+                    <td>@Html.LabelFor(m => m.Cliente.ComunaCont)</td>
+                    <td>@Html.LabelFor(m => m.Cliente.CiudadCont)</td>
+                    <td>@Html.LabelFor(m => m.Cliente.RegionCont)</td>
+                    <tr>
+                        <td>@Html.TextBoxFor(m => m.Cliente.DirCont, new { @class = "textolargodireccion" })</td>
+                        
+                        <td class ="textolargocomuna">@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                            <select style="width:190px">
+                                <option value="1">Seleccione una Opción</option>
+                                <option value="1">Comuna 1</option>
+                                <option value="2">Comuna 2</option>
+                                <option value="3">Comuna 3</option>
+                            </select>
+        
+                        </td>
+
+                        <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                            <select style="width:190px">
+                                <option value="1">Seleccione una Opción</option>
+                                <option value="1">Ciudad 1</option>
+                                <option value="2">Ciudad 2</option>
+                                <option value="3">Ciudad 3</option>
+                            </select>        
+                        </td-->
+                        <td>@Html.TextBoxFor(m => m.Cliente.Ciudad, new { @class = "textolargoregion" })</td>
+
+                        <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                            <select style="width:210px">
+                                <option value="1">Seleccione una Opción</option>
+                                <option value="1">Región 1</option>
+                                <option value="2">Región 2</option>
+                                <option value="3">Región 3</option>
+                            </select>
+                        </td-->
+                        <td>@Html.TextBoxFor(m => m.Cliente.RegionCont, new { @class = "textolargoregion" })</td>
+                        <table class="cliente">
+                            <tr>
+                            
+                                <td>@Html.LabelFor(m=>m.Cliente.TelefonoCont)</td>
+                                <td>@Html.LabelFor(m=>m.Cliente.FaxCont)</td>
+                                    
+                            </tr>
+                            <tr>
+                                <td>@Html.TextBoxFor(m => m.Cliente.TelefonoCont)</td>
+                                <td>@Html.TextBoxFor(m => m.Cliente.FaxCont)</td>
+                                    
+                            </tr>
+                        </table>
+                    </tr>
+                </tr>
+            </table>
+    </div>
+
+    <div id="mercaderia_div" style="display:none">
+            
+             <h2>Devolución de Mercaderia</h2>
+            
+          
+            
+            <table class="cliente">
+            <tr>
+                <!--td class= "input">@Html.LabelFor(m => m.Cliente.RutCont)</td-->
+                <td>@Html.LabelFor(m => m.Cliente.NCont)</td>
+                <td>@Html.LabelFor(m => m.Cliente.APaternoCont)</td>
+                <td>@Html.LabelFor(m => m.Cliente.AMaternoCont)</td>
+                <td>@Html.LabelFor(m=>m.Cliente.EmailCont)</td>
+                <tr>
+                    <!--td>@Html.TextBoxFor(m => m.Cliente.RutCont, new { @class = "textolargorut" })</td-->
+                    <td>@Html.TextBoxFor(m => m.Cliente.NCont, new { @class = "textolargonombre" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.APaternoCont, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.AMaternoCont, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.EmailCont, new { @class = "textolargoemail" })</td>
+                </tr>
+            </tr>
+            </table>
+                <table class="cliente">
+                    <tr>
+                        <td class="anchofijo">@Html.LabelFor(m => m.Cliente.DirCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.ComunaCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.CiudadCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.RegionCont)</td>
+                        <tr>
+                            <td>@Html.TextBoxFor(m => m.Cliente.DirCont, new { @class = "textolargodireccion" })</td>
+                        
+                            <td class ="textolargocomuna">@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:190px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Comuna 1</option>
+                                    <option value="2">Comuna 2</option>
+                                    <option value="3">Comuna 3</option>
+                                </select>
+        
+                            </td>
+
+                            <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:190px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Ciudad 1</option>
+                                    <option value="2">Ciudad 2</option>
+                                    <option value="3">Ciudad 3</option>
+                                </select>
+                            </td-->
+                            <td>@Html.TextBoxFor(m => m.Cliente.Ciudad, new { @class = "textolargoregion" })</td>
+                                                   
+                            <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:210px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Región 1</option>
+                                    <option value="2">Región 2</option>
+                                    <option value="3">Región 3</option>
+                                </select>
+                            </td-->
+                            <td>@Html.TextBoxFor(m => m.Cliente.RegionCont, new { @class = "textolargoregion" })</td>
+                            <table class="cliente">
+                                <tr>
+                            
+                                    <td>@Html.LabelFor(m=>m.Cliente.TelefonoCont)</td>
+                                    <td>@Html.LabelFor(m=>m.Cliente.FaxCont)</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>@Html.TextBoxFor(m => m.Cliente.TelefonoCont)</td>
+                                    <td>@Html.TextBoxFor(m => m.Cliente.FaxCont)</td>
+                                    
+                                </tr>
+                            </table>
+                        </tr>
+                </tr>
+            </table>
+    </div>
+            
+    <div id="cobranza_div" style="display:none">
+            <h2>Cobranza</h2>
+           
+            
+            <table class="cliente">
+            <tr>
+                <!--td class= "input">@Html.LabelFor(m => m.Cliente.RutCont)</td-->
+                <td>@Html.LabelFor(m => m.Cliente.NEncargado)</td>
+                <td>@Html.LabelFor(m => m.Cliente.APaternoCont)</td>
+                <td>@Html.LabelFor(m => m.Cliente.AMaternoCont)</td>
+                <td>@Html.LabelFor(m=>m.Cliente.EmailCont)</td>
+                <tr>
+                    <!--td>@Html.TextBoxFor(m => m.Cliente.RutCont, new { @class = "textolargorut" })</td-->
+                    <td>@Html.TextBoxFor(m => m.Cliente.NEncargado, new { @class = "textolargonombre" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.APaternoCont, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.AMaternoCont, new { @class = "textolargoapellido" })</td>
+                    <td>@Html.TextBoxFor(m => m.Cliente.EmailCont, new { @class = "textolargoemail" })</td>
+                </tr>
+            </tr>
+            </table>
+                <table class="cliente">
+                    <tr>
+                        <td class="anchofijo">@Html.LabelFor(m => m.Cliente.DirCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.ComunaCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.CiudadCont)</td>
+                        <td>@Html.LabelFor(m => m.Cliente.RegionCont)</td>
+                        <tr>
+                            <td>@Html.TextBoxFor(m => m.Cliente.DirCont, new { @class = "textolargodireccion" })</td>
+                        
+                            <td class ="textolargocomuna">@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:190px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Comuna 1</option>
+                                    <option value="2">Comuna 2</option>
+                                    <option value="3">Comuna 3</option>
+                                </select>
+        
+                            </td>
+
+                            <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:190px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Ciudad 1</option>
+                                    <option value="2">Ciudad 2</option>
+                                    <option value="3">Ciudad 3</option>
+                                </select>        
+                            </td-->
+                            <td>@Html.TextBoxFor(m => m.Cliente.Ciudad, new { @class = "textolargoregion" })</td>
+
+                            <!--td>@*@Html.TextBoxFor(m => m.Cliente.Servicio)*@
+                                <select style="width:210px">
+                                    <option value="1">Seleccione una Opción</option>
+                                    <option value="1">Región 1</option>
+                                    <option value="2">Región 2</option>
+                                    <option value="3">Región 3</option>
+                                </select>
+                            </td-->
+                            <td>@Html.TextBoxFor(m => m.Cliente.RegionCont, new { @class = "textolargoregion" })</td>
+                            <table  class="cliente">
+                                <tr>
+                            
+                                    <td>@Html.LabelFor(m=>m.Cliente.TelefonoCont)</td>
+                                    <td>@Html.LabelFor(m=>m.Cliente.FaxCont)</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>@Html.TextBoxFor(m => m.Cliente.TelefonoCont)</td>
+                                    <td>@Html.TextBoxFor(m => m.Cliente.FaxCont)</td>
+                                    
+                                </tr>
+                            </table>
+                        </tr>
+                </tr>
+            </table>
+        </div>
+

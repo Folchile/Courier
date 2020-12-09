@@ -1,0 +1,25 @@
+﻿@model Courier.Models.FolTrackModels         
+
+@*@Html.DevExpress().Calendar(
+    settings => {
+        settings.Name = "calendar";
+        settings.Properties.Columns = 3;
+        settings.Properties.Rows = 1;
+        settings.Width = Unit.Percentage(100);
+    }).Bind(DateTime.Today).GetHtml()
+*@
+
+@{
+
+    Html.EnableUnobtrusiveJavaScript();
+    var DateEdit = Html.DevExpress().DateEdit(
+                settings =>
+                {
+                    settings.Name = "FechaConsulta";
+                    settings.Properties.DisplayFormatString = "D";
+                    settings.Date = Model.FechaConsulta;
+                    settings.Width = Unit.Percentage(100);
+                }
+            );
+}
+@DateEdit.GetHtml()

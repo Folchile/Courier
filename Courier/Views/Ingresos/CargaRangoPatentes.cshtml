@@ -1,0 +1,76 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    var grid = new WebGrid(Model.RangoPatentes, rowsPerPage: 20, ajaxUpdateContainerId: "gridrangopatentes"); 
+}
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+
+
+ 
+
+
+
+    function DetalleFolios(id_folR) {
+        $("#id_folR").val(id_folR);
+        $("#dialog-detallerango").dialog("open");
+        $("#dialog-detallerango").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#dialog-detallerango").load('@Url.Action("CargadetRangoFolios","Ingresos")?id_folR=' + $("#id_folR").val());
+    }
+
+
+    $("#dialog-detallerango").dialog({ autoOpen: false, title: "Detalle Rango", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+        buttons: {
+            Aceptar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    
+
+</script>
+
+
+<div id="dialog-detallerango"></div>
+
+
+
+@using (Ajax.BeginForm("CargadetRangoFolios", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmdetallerango" }))
+{
+    <input type="hidden" name="id_folR" id="id_folR" />
+}
+
+
+
+
+<div id="gridrangopatentes">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Fpatente","PATENTE"),
+       grid.Column("Fid","ID"),
+       grid.Column("Fdesde","FOL-DESDE"),
+       grid.Column("Fhasta","FOL-HASTA"),
+       grid.Column("Fusuario","USUARIO CARGA"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                        <a href="#" title="Detalle Folios @item.Fid" onclick="DetalleFolios('@item.Fid')">Detalle</a>
+                                       @* <a href="#" title="Reasignar Folios @item.Fid" onclick="ReasignarFolios('@item.Fid')">Reasignar</a>*@
+                                    </text>)
+ })
+</div>

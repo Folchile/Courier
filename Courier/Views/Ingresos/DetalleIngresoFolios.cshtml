@@ -1,0 +1,107 @@
+﻿@model MvcReporteViajes.Models.IngresoFoliosModels
+@{
+    var grid = new WebGrid(Model.DetalleFolios, rowsPerPage: 14, ajaxUpdateContainerId: "gridDetalleFolios");
+}
+
+
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-EliminaFolios").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                  var randomnumber = Math.floor(Math.random() * 1111111);
+                  $.ajax({
+                  url: '@Url.Action("ElimFolios", "Ingresos")',
+                  type: "POST",
+                  data: {
+                      IDFOLIO: $("#IDFOLIO").val(),
+                      _r: randomnumber
+                    }
+                 }).done(function (data) {
+                     if (data.Ok == true) {
+                       
+                        alert(data.Mensaje);
+                        cargaDetalleFolios();
+                      
+                  }
+                  else {
+                      alert(data.Mensaje);
+                  }
+                });
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+
+    });
+
+
+function deleteFolios(id_folio) {
+  $("#IDFOLIO").val(id_folio); 
+  $("#dialog-resultado").html("");
+  $("#dialog-EliminaFolios").dialog("open");
+  $("#id_folio").val(id_folio);
+  $("#dialog-EliminaFolios").html("<p>¿Está seguro(a) que desea eliminar el Item <strong>" + id_folio + " </strong> ? </p>");
+}
+
+</script>
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-EliminaFolios" title="Eliminar Folios"></div>
+
+@* @using (Ajax.BeginForm("EliminaFolios", "Ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmeliminaFolios" }))
+ {
+    <input type="hidden" name="id_folio" id="id_folio" />
+ }*@
+
+@Html.HiddenFor(m=>m.IDFOLIO)
+
+<div id="gridDetalleFolios">
+
+@grid.GetHtml( 
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle:"mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+        grid.Column("Fid","ID"),
+        grid.Column("FTrans","TRANSPORTE"),
+        grid.Column("Fdesde","DESDE"),
+        grid.Column("Fhasta","HASTA"),
+        grid.Column("Ffecha","FECHA",format:@<text>
+        @item.Ffecha.ToShortDateString()
+        </text>),
+        grid.Column("Frut","USUARIO CARGA"),
+       
+         grid.Column("",header:"Acciones",format:@<text>
+                                        <a href="#" onclick="javascript:deleteFolios('@item.Fid')"><img border="0" src='@Url.Content("~/Images/deletered.png")' alt="Eliminar @item.Fid" title="Eliminar @item.Fid"/></a>
+                                       @* <a href="#" title="Editar @item.DRid" onclick="EditarSubCarpeta('@item.DRid')">Editar</a>
+                                        <a href="#" title="Eliminar @item.DRid" onclick="ElimninarSubCarpeta('@item.DRid','@HttpUtility.HtmlEncode(@item.DRid)')">Eliminar</a>*@
+                                    </text>)    
+        
+        
+    })     
+
+
+       
+
+</div>
+

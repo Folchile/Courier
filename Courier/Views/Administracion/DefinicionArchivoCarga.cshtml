@@ -1,0 +1,44 @@
+﻿@model   Courier.Models.AdministracionExcel
+@{
+    ViewBag.Title = "Definición Archivo Carga";
+}
+<script type="text/javascript">
+    function CambiaServicio(Servicio) {
+        $("#idCuerpo").html("");
+        waitingDialog({ title: "Buscando", message: "Buscando Columnas...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 1111111)
+        $("#idCuerpo").load('@Url.Action("ActualizaListaSerCol","Administracion")?Servicio=' + Servicio + '&random=' + randomnumber + '', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        })
+    }
+    function CargaListaEdicionComuna(Cliente) {
+        $("#idCuerpo").html("");
+        waitingDialog({ title: "Buscando", message: "Buscando Servicios...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 1111111)
+        $("#Servicio").load('@Url.Action("DropDownServicio","Administracion")?CLI_RUT=' + Cliente + '&random=' + randomnumber + ' #Servicio option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        })
+    }
+
+</script>
+
+<div id="dialog-resultado" title="Resultado"></div>
+<table>
+    <tr>
+        <td>@Html.LabelFor(m=>m.Cliente)</td>
+        <td>@Html.LabelFor(m => m.Servicio)</td>
+    </tr>
+    <tr>
+        <td>@Html.DropDownListFor(m => m.Cliente, Model.oListaCliente, "-- Seleccione Cliente --", new { onchange = "JavaScript:CargaListaEdicionComuna(this.value)" })</td>            
+        <td>@Html.DropDownListFor(m => m.Servicio, Model.oServiceList,"-- Seleccione Servicio --", new { onchange = "JavaScript:CambiaServicio(this.value)" })</td>
+    </tr>
+</table>        
+<div id="idCuerpo">
+    @Html.Partial("_CargaListaColumnasExcel",Model)
+</div>

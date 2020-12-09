@@ -1,0 +1,39 @@
+﻿@model Courier.Models.MantencionModels
+@{
+    ViewBag.Title = "Mantención";    
+}
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@{
+    WebGrid grid = new WebGrid(Model.oItems);    
+}    
+
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("PK_CLI_EMP_RUT"), 
+    grid.Column("FL_CLI_EMP_DV"),
+    grid.Column("FL_CLI_EMP_RAZON_SOCIAL"),
+    grid.Column("",header:"Acciones",format:@<text>
+        <a href="#"><img alt="Imprimir" src="@Url.Content("~/Images/magnifier_zoom.png")"  style="border:0;" /></a>
+        <a href="#"><img alt="Imprimir" src="@Url.Content("~/Images/user_male_delete.png")"  style="border:0;" /></a>
+        <a href="#"><img alt="Borrar" src="@Url.Content("~/Images/24.png")"  style="border:0;" /></a>
+    </text>)
+
+    @*,
+    grid.Column("",header:"Acciones",format:@<text>
+                                                @Html.ActionLink("Editar","edit",new{id=item.pk_cli_emp_rut})
+                                            </text>)*@
+})
+

@@ -1,0 +1,51 @@
+﻿@model Courier.Models.ReenviarPedidoModels
+@{
+    var grid = new WebGrid(Model.oListaOTDVI, rowsPerPage: 15, ajaxUpdateContainerId: "myGrid");
+} 
+@if (Model.oListaOTDVI != null)
+{
+    <div id="myGrid">
+        <div >
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {   
+                grid.Column("PK_FOL_OTP_ID","OT",@<text>
+                @item.PK_FOL_OTP_ID-@item.PK_FOL_OTD_ID
+                </text>),                
+                grid.Column("FL_FOL_OTD_REFERENCIA1","Ref.1"),
+                grid.Column("FL_FOL_OTD_REFERENCIA2","Ref.2"),
+                grid.Column("FL_CLI_EMP_RAZON_SOCIAL","Empresa"),
+                grid.Column("FL_PAR_SER_NOMBRE","Servicio"),
+                grid.Column("FL_FOL_EST_NOMBRE","Estado_Actual"),
+                grid.Column("FL_FOL_OTD_DEVOLUCION","En Devolución",@<text>
+                    @if (item.FL_FOL_OTD_DEVOLUCION==true)
+                    {
+                        <font>Sí</font>
+                    }
+                </text>),
+                grid.Column("FL_FOL_EST_NOMBRE","Opciones",@<text>
+                @if (item.FL_FOL_OTD_DEVOLUCION==true)
+                {
+                    <a href="#" onclick="javascript:QuitarDevolucion(@item.PK_FOL_OTP_ID,@item.PK_FOL_OTD_ID)">[Quitar Devolución]</a>
+                }                
+                <a href="#" onclick="javascript:CargaFormularioIngreso(@item.PK_FOL_OTP_ID, @item.PK_FOL_OTD_ID)">[Cambiar dirección Entrega]</a>                                
+                </text>)
+            
+            })
+        </div>        
+    </div>
+}
+else
+{
+    <div>No Se encontraron pedidos en devolución</div>
+}

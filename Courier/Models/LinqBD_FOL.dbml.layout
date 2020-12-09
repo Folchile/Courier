@@ -1,0 +1,817 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 30.25, 30.625" name="LinqBD_FOL">
+  <DataContextMoniker Name="/LinqBD_FOLDataContext" />
+  <nestedChildShapes>
+    <classShape Id="e733708e-ccb3-4c43-8a1f-fc675364b41e" isExpanded="false" absoluteBounds="0.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_IMPRESORA_USUARIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5cbdef00-27dd-4b25-a957-ddc52e9051f2" absoluteBounds="0.515, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="953e3dfa-5b65-4a78-94a9-4bc0e91377af" isExpanded="false" absoluteBounds="0.5, 1, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_WEB_SERVICE_SILVERLIGHT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f4f2e0bb-ed2d-45d3-a63f-84f3d811e770" absoluteBounds="0.515, 1.46, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="22877249-6f3e-4dcb-90db-f6ae344a231c" isExpanded="false" absoluteBounds="0.5, 2, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_VER_OT_DETALLE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="caab8a4a-9745-4d77-8082-0cc5b0d43f24" absoluteBounds="0.51500000000000012, 2.46, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b8ad5553-2f1e-4088-8d14-23299a62b27a" absoluteBounds="9.75, 0.75, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_CAR_CARGA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="839f0253-91cd-4b66-b703-7055240104f7" absoluteBounds="9.765, 1.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" absoluteBounds="18.125, 11.25, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="750956c1-393b-4d68-9b44-c93ab2428c2b" absoluteBounds="18.14, 11.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="66034440-649d-49fa-8e7f-78f8018e2aca" absoluteBounds="13.625, 6.125, 2.625, 1.3862939453125005">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAB_MANIFIESTO_BULTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="895fbc01-729b-41c6-8384-e4b53d7cbe67" absoluteBounds="13.64, 6.585, 2.5949999999999998, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5c700c7e-052f-4adb-bd32-000a91be7ef0" absoluteBounds="8.5, 17.125, 2.875, 1.1939925130208309">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAE_MANIFIESTO_ESTADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="26f023e5-b54a-4008-8f2d-c1eb49838841" absoluteBounds="8.515, 17.585, 2.8449999999999998, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="669a9f5b-3e98-460e-ae2e-cc40e02af03a" isExpanded="false" absoluteBounds="6.625, 9.75, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_OTD_BULTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eed50854-50c6-4c75-8c5c-755c78012ac5" absoluteBounds="6.64, 10.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cb0d176d-c4ff-4b4d-8495-301f67b8352a" absoluteBounds="11, 6, 2, 3.1170068359375">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_BLT_BULTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="60c06037-cb42-4dd2-b5ef-4d7170dc0901" absoluteBounds="11.015, 6.46, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(13 : 8.686708984375); (14.1578791666667 : 8.686708984375 : JumpStart); (14.3245458333333 : 8.686708984375 : JumpEnd); (15.34375 : 8.686708984375); (15.34375 : 7.5112939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_BLT_BULTO/TB_FOL_BLT_BULTO_TB_FOL_MAB_MANIFIESTO_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="cb0d176d-c4ff-4b4d-8495-301f67b8352a" />
+        <classShapeMoniker Id="66034440-649d-49fa-8e7f-78f8018e2aca" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(18.523436125 : 11.25); (18.523436125 : 8.22880039713542); (15.4270833333333 : 8.22880039713542 : JumpStart); (15.2604166666667 : 8.22880039713542 : JumpEnd); (14.3245458333333 : 8.22880039713542 : JumpStart); (14.1578791666667 : 8.22880039713542 : JumpEnd); (13 : 8.22880039713542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_BLT_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="cb0d176d-c4ff-4b4d-8495-301f67b8352a" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="0020e43e-6968-4dd4-bc09-2eaa2e43f097" isExpanded="false" absoluteBounds="12.375, 2, 3.375, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_HIB_HISTORIA_BULTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5dfa0064-3d72-4451-980d-d71e397e39fb" absoluteBounds="12.39, 2.46, 3.3449999999999998, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="617dc302-57e1-4d09-806f-ba6793bd0571" isExpanded="false" absoluteBounds="12.375, 0.75, 3.375, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_HIP_HISTORIA_PRINCIPAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="29bea7f1-68fd-42ff-adbe-d194c8eeb6d9" absoluteBounds="12.39, 1.21, 3.3449999999999998, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ea60464b-44b6-4171-827d-e9d0834da8e8" isExpanded="false" absoluteBounds="12.375, 1.375, 3.375, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_HID_HISTORIA_DETALLE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4faa56fb-5d2e-48be-9d61-3651d06a38b8" absoluteBounds="12.39, 1.835, 3.3449999999999998, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="95972b92-eb65-4828-9bc5-623955ae1c9d" isExpanded="false" absoluteBounds="12.375, 3.875, 3.375, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_TRA_CON_MAN" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f56a279b-4106-4585-9ed1-27c11e4a3658" absoluteBounds="12.39, 4.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="169d6f9c-723a-4c4d-98a1-04b355d33b55" isExpanded="false" absoluteBounds="3.5, 1.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_REC_RECEPCION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="237d837b-7020-4f69-ab8b-ffce47d3fc6c" absoluteBounds="3.5149999999999997, 2.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3f823225-148b-4664-ae1f-7d6fa4767711" isExpanded="false" absoluteBounds="16, 1.375, 2.375, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_ESTADO_OT_GROUP" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4f330c0b-275b-4417-8ee9-0b72d00b5cb3" absoluteBounds="16.015, 1.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8b707a85-906e-4cc2-989d-cb85f2000ecb" isExpanded="false" absoluteBounds="12.375, 3.25, 3.375, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_RESUMEN_MAN" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d2df2065-9f1c-43b7-b30b-4dde48209237" absoluteBounds="12.39, 3.71, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5288dcc5-dcbb-4fa5-b1b8-756419de7653" isExpanded="false" absoluteBounds="16, 2, 2.375, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_BULTOS_MAN_GROUP_OT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a04377ba-4f04-48a5-8e0a-f1b0c1e8cc1c" absoluteBounds="16.015, 2.46, 2.3449999999999998, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="39e20cd9-6980-4e50-a7fc-43bc0579c1e5" absoluteBounds="1.875, 17.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_RET_RETIRO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9c62a45a-c99a-48f8-9008-b21748138a67" absoluteBounds="1.8899999999999997, 17.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="42523054-cba1-4434-8408-a86ff578fd23" absoluteBounds="3.625, 3.625, 2, 1.0016910807291668">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_ESA_ESTADO_ALTER" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0bbfed2b-5329-4f5f-b06b-acd45f587320" absoluteBounds="3.6399999999999997, 4.085, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(18.125 : 11.25); (17.75 : 10.875); (14.3245458333333 : 10.875 : JumpStart); (14.1578791666667 : 10.875 : JumpEnd); (6 : 10.875); (6 : 5.00169108072917); (5.625 : 4.62669108072917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_ESA_ESTADO_ALTER" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="42523054-cba1-4434-8408-a86ff578fd23" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5b08e4b4-a321-434f-a1ce-a4cdcd362c00" absoluteBounds="3.625, 4.75, 2, 1.0016910807291668">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EEX_ESTADO_EXCEPCION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d414c890-5049-4159-ad5f-94fe62776297" absoluteBounds="3.6399999999999997, 5.21, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(19.76562675 : 11.25); (19.76562675 : 4.90625); (19.4270828333333 : 4.90625 : JumpStart); (19.2604161666667 : 4.90625 : JumpEnd); (19.0052055833333 : 4.90625 : JumpStart); (18.8385389166667 : 4.90625 : JumpEnd); (11.7708328333333 : 4.90625 : JumpStart); (11.6041661666667 : 4.90625 : JumpEnd); (6.23958333333333 : 4.90625 : JumpStart); (5.8212255859375 : 4.90625 : JumpEnd); (5.625 : 4.90625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_EEX_ESTADO_EXCEPCION" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="5b08e4b4-a321-434f-a1ce-a4cdcd362c00" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="0ed78cd3-f041-432d-82ac-844b394c1fb6" absoluteBounds="3.625, 6, 2, 1.0016910807291668">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_ERO_ESTADO_ROLL_BACK" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a08f795b-d512-405b-ae90-16f6d0d8b44b" absoluteBounds="3.6400000000000006, 6.46, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(18.125 : 12.5176987021484); (14.3245458333333 : 12.5176987021484 : JumpStart); (14.1578791666667 : 12.5176987021484 : JumpEnd); (8.45833333333333 : 12.5176987021484 : JumpStart); (8.29166666666667 : 12.5176987021484 : JumpEnd); (6.23958333333333 : 12.5176987021484 : JumpStart); (5.96353916666667 : 12.5176987021484 : JumpEnd); (5.59375 : 12.5176987021484); (5.59375 : 7.00169108072917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_ERO_ESTADO_ROLL_BACK" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="0ed78cd3-f041-432d-82ac-844b394c1fb6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="278b2f65-4af3-4f47-9efe-31cf8a29199e" isExpanded="false" absoluteBounds="3.5, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_UAB_UBICACION_ACTUAL_BULTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ca711218-3184-4245-8e6c-17aedc86e128" absoluteBounds="3.5149999999999997, 2.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11 : 6.84047096604567); (5.0625 : 6.84047096604567); (5.0625 : 7.18919108072917); (3.5625 : 7.18919108072917); (3.5625 : 2.91875); (4.5 : 2.91875); (4.5 : 2.825)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_BLT_BULTO/TB_FOL_BLT_BULTO_TB_FOL_UAB_UBICACION_ACTUAL_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="cb0d176d-c4ff-4b4d-8495-301f67b8352a" />
+        <classShapeMoniker Id="278b2f65-4af3-4f47-9efe-31cf8a29199e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a0291b0f-2456-41b3-907f-e8fc480cf57e" isExpanded="false" absoluteBounds="6.25, 2.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_UOR_UBICACION_ORIGEN_BULTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cb5079fb-8249-4854-8f23-74068595ca5f" absoluteBounds="6.265, 3.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11.6874995 : 6); (11.6874995 : 3.5401025390625); (9.5 : 3.5401025390625); (9.5 : 2.85); (8.25 : 2.85)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_BLT_BULTO/TB_FOL_BLT_BULTO_TB_FOL_UOR_UBICACION_ORIGEN_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="cb0d176d-c4ff-4b4d-8495-301f67b8352a" />
+        <classShapeMoniker Id="a0291b0f-2456-41b3-907f-e8fc480cf57e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="3ac6953f-e6c9-46fa-af95-b8412d4454b9" isExpanded="false" absoluteBounds="0.5, 1.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_VER_BULTO_ESTADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a559f58b-86fd-4732-ba44-a207850f3fd7" absoluteBounds="0.51499999999999968, 1.96, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="db26bd20-3416-4fe9-8d06-b11a664d9e9b" isExpanded="false" absoluteBounds="12.375, 2.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_BULTOS_MAN" />
+      <nestedChildShapes>
+        <elementListCompartment Id="66d83f76-b1a3-4e1a-9222-6a562f4bb06f" absoluteBounds="12.39, 3.085, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b37d3cb4-39a9-44ad-9318-18586f1efdbe" absoluteBounds="0.5, 7.5, 2, 1.0016910807291666">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_DAR_DOC_RECEPCION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="77511fa1-61ee-4075-8a56-8aed65bb4437" absoluteBounds="0.51500000000000012, 7.96, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(19.132810875 : 11.25); (19.132810875 : 9.3670068359375); (14.3245458333333 : 9.3670068359375 : JumpStart); (14.1578791666667 : 9.3670068359375 : JumpEnd); (6.08333333333333 : 9.3670068359375 : JumpStart); (5.91666666666667 : 9.3670068359375 : JumpEnd); (5.75 : 9.3670068359375); (5.75 : 8.2); (2.875 : 8.2); (2.875 : 8.00084554036458); (2.5 : 8.00084554036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_DAR_DOC_RECEPCION" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="b37d3cb4-39a9-44ad-9318-18586f1efdbe" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="3157d537-d274-448d-9f90-02500c4b25cf" absoluteBounds="16, 24.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EDO_ESTADO_DOCUMENTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="785ee976-f942-452c-b413-9283a74265cc" absoluteBounds="16.015, 24.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a4e51ce0-ce41-4c06-a292-184b8953e83b" isExpanded="false" absoluteBounds="16, 2.625, 2.375, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_DATOS_ANULAR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0ec39778-065a-41a3-95e4-881757d6063e" absoluteBounds="16.015, 3.085, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="07ce9aff-b95f-4419-ac85-3bbb2930be23" isExpanded="false" absoluteBounds="0.5, 3.125, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_ENT_LISTA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f5cbdd28-5a43-48fe-9fd7-bd3f66797830" absoluteBounds="0.51499999999999968, 3.585, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="aea9fdbf-45f2-49a0-82b0-dc4f330ffe5c" absoluteBounds="28, 15.5, 2, 1.0016910807291668">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_ERE_ESTADO_RECEPCION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6cb9bc67-be9b-40f4-8605-e71ed78f9a56" absoluteBounds="28.015, 15.96, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(19.125 : 12.6362939453125); (19.125 : 16.0008455403646); (19.5729191666667 : 16.0008455403646 : JumpStart); (19.7395858333333 : 16.0008455403646 : JumpEnd); (28 : 16.0008455403646)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_ERE_ESTADO_RECEPCION" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="aea9fdbf-45f2-49a0-82b0-dc4f330ffe5c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="ffeaeff4-6c69-4fcd-bc66-c41ae2996f09" isExpanded="false" absoluteBounds="0.5, 4.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_DEN_DIRECCION_ENTREGA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5d0d8525-30ed-4c27-92ca-b48f0948da6c" absoluteBounds="0.515, 5.085, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="59abb0ed-3079-429f-b970-fea2815d5dfa" isExpanded="false" absoluteBounds="0.5, 4.125, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_OTD_DATOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="996a87f6-625c-420a-898d-6182ca3fddc3" absoluteBounds="0.51499999999999968, 4.585, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d10def75-4b5b-4678-98e5-a6651fe4d506" absoluteBounds="6.375, 5.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_REP_REPORTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a80080aa-666b-4bb6-8ee4-ea742ac1a7db" absoluteBounds="6.39, 5.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="97a0fb6e-f650-4f70-89af-867c69bf60e4" isExpanded="false" absoluteBounds="3.5, 1, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_REB_RECEPCION_BULTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f995bb04-988b-400c-b63b-4f2cdede0b77" absoluteBounds="3.5149999999999997, 1.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11 : 8.52335952524039); (6.23958333333333 : 8.52335952524039 : JumpStart); (5.51041666666667 : 8.52335952524039 : JumpEnd); (5.0625 : 8.52335952524039); (5.0625 : 7.06419108072917); (3.64583333333333 : 7.06419108072917 : JumpStart); (3.47916666666667 : 7.06419108072917 : JumpEnd); (3.1875 : 7.06419108072917); (3.1875 : 1.54375); (3.35416666666667 : 1.54375 : JumpStart); (3.52083333333333 : 1.54375 : JumpEnd); (4.5 : 1.54375); (4.5 : 1.45)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_BLT_BULTO/TB_FOL_BLT_BULTO_TB_FOL_REB_RECEPCION_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="cb0d176d-c4ff-4b4d-8495-301f67b8352a" />
+        <classShapeMoniker Id="97a0fb6e-f650-4f70-89af-867c69bf60e4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 1.625); (4.5 : 1.45)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_REC_RECEPCION/TB_FOL_REC_RECEPCION_TB_FOL_REB_RECEPCION_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="169d6f9c-723a-4c4d-98a1-04b355d33b55" />
+        <classShapeMoniker Id="97a0fb6e-f650-4f70-89af-867c69bf60e4" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="d812a15f-23c4-4694-a853-53da48bd242b" isExpanded="false" absoluteBounds="0.5, 5.125, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_MAL_MANIFIESTO_LISTA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2078cad5-d83f-4ffb-ba62-42951d8023dd" absoluteBounds="0.51499999999999968, 5.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="eb2bb860-7edd-4ff6-9178-3f025603a830" absoluteBounds="0.5, 9.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_UPL_UPLOAD" />
+      <nestedChildShapes>
+        <elementListCompartment Id="af90adc2-690e-4fe0-93dc-e7512d8942a6" absoluteBounds="0.51499999999999968, 9.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7f7d7ae9-7370-43df-8995-66d98f20fefa" absoluteBounds="6.5, 22.875, 2, 2.5401025390625">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_REA_REF_ASOCIADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a120dfd9-01f1-4b85-9a4c-6479c3df7e65" absoluteBounds="6.515, 23.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="254ab2f9-fc21-46e5-999c-03978e559d81" isExpanded="false" absoluteBounds="0.5, 2.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_VER_OT_GUARDADA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="21c692ba-c926-479b-b69f-36f30924487f" absoluteBounds="0.51499999999999968, 3.085, 1.9700000000000002, 8.3260498046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="917653c1-dd88-4ae3-ad42-8636819de65b" isExpanded="false" absoluteBounds="5.75, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_ULS_ULTIMA_SELECCION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ed08863e-d674-40a0-b77c-073d326826f2" absoluteBounds="5.765, 0.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b97408d4-d50a-402d-af06-4742324d7229" absoluteBounds="10.875, 13.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_TPM_TIPO_MANIFIESTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bd955c42-9818-41d7-a03e-355499d2eb0f" absoluteBounds="10.89, 14.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bd641e7a-9f17-4190-9aaa-bc9cce0c2c60" absoluteBounds="16.75, 16.625, 2, 1.3862939453125023">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAD_MAN_DESTINO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="42e3341a-a114-4396-b438-888861dbef14" absoluteBounds="16.765, 17.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bc821517-f747-477e-aca3-0a5424495058" absoluteBounds="13.625, 15.125, 2, 2.73240397135417">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAN_MANIFIESTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="68db7772-3078-41fa-82aa-4810a65ed1f9" absoluteBounds="13.64, 15.585, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(14.2412125 : 15.125); (14.2412125 : 7.5112939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAN_MANIFIESTO/TB_FOL_MAN_MANIFIESTO_TB_FOL_MAB_MANIFIESTO_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="bc821517-f747-477e-aca3-0a5424495058" />
+        <classShapeMoniker Id="66034440-649d-49fa-8e7f-78f8018e2aca" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(15.625 : 17.2412019856771); (16.75 : 17.2412019856771)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAN_MANIFIESTO/TB_FOL_MAN_MANIFIESTO_TB_FOL_MAD_MAN_DESTINO" />
+      <nodes>
+        <classShapeMoniker Id="bc821517-f747-477e-aca3-0a5424495058" />
+        <classShapeMoniker Id="bd641e7a-9f17-4190-9aaa-bc9cce0c2c60" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.375 : 17.4912019856771); (13.625 : 17.4912019856771)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAE_MANIFIESTO_ESTADO/TB_FOL_MAE_MANIFIESTO_ESTADO_TB_FOL_MAN_MANIFIESTO" />
+      <nodes>
+        <classShapeMoniker Id="5c700c7e-052f-4adb-bd32-000a91be7ef0" />
+        <classShapeMoniker Id="bc821517-f747-477e-aca3-0a5424495058" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12.875 : 14.3469962565104); (14.1578791666667 : 14.3469962565104 : JumpStart); (14.3245458333333 : 14.3469962565104 : JumpEnd); (14.96435875 : 14.3469962565104); (14.96435875 : 15.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_TPM_TIPO_MANIFIESTO/TB_FOL_TPM_TIPO_MANIFIESTO_TB_FOL_MAN_MANIFIESTO" />
+      <nodes>
+        <classShapeMoniker Id="b97408d4-d50a-402d-af06-4742324d7229" />
+        <classShapeMoniker Id="bc821517-f747-477e-aca3-0a5424495058" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="279c5865-d88f-4909-ab2a-a67a489b815e" isExpanded="false" absoluteBounds="4, 3, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_TOB_TIPO_OBS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="924f49d0-9294-4ead-b912-0b1f46a3e6af" absoluteBounds="4.015, 3.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4102d9da-583e-4457-ad36-22de139c6d60" isExpanded="false" absoluteBounds="3.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OBS_OBSERVACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f719ee7a-e366-43dd-82c0-a1a5c8561678" absoluteBounds="3.5149999999999997, 0.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.2499995 : 3); (5.2499995 : 2.8875); (5.5625 : 2.8875); (5.5625 : 0.725); (5.5 : 0.725)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_TOB_TIPO_OBS/TB_FOL_TOB_TIPO_OBS_TB_FOL_OBS_OBSERVACION" />
+      <nodes>
+        <classShapeMoniker Id="279c5865-d88f-4909-ab2a-a67a489b815e" />
+        <classShapeMoniker Id="4102d9da-583e-4457-ad36-22de139c6d60" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5eeb40c2-99bb-4bb0-9bb4-9ab0216e0515" isExpanded="false" absoluteBounds="0.5, 6.25, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_OBSERVACIONES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e4fcadf1-07d5-4aed-ac59-90e773ea0bf8" absoluteBounds="0.51499999999999968, 6.71, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="19c06ab3-a830-4140-995f-455b7036878e" absoluteBounds="6, 3.625, 2.625, 1.0016910807291668">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EOB_ESTADO_OBSERVACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="69754527-e944-49bc-b019-776cad0d0b65" absoluteBounds="6.015, 4.085, 2.5949999999999998, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(18.92187225 : 11.25); (18.92187225 : 4.50709554036458); (11.7708328333333 : 4.50709554036458 : JumpStart); (11.6041661666667 : 4.50709554036458 : JumpEnd); (8.625 : 4.50709554036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_EOB_ESTADO_OBSERVACION" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="19c06ab3-a830-4140-995f-455b7036878e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5d519319-dfe6-447c-8c05-33b228c3c54b" absoluteBounds="16.5, 6, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_ESTADO_OT_GROUP_SUC" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2628122e-ac84-4dfd-af50-c06b0b78f711" absoluteBounds="16.515, 6.4600000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="70166cf0-33e4-4544-8397-3746a67b8978" isExpanded="false" absoluteBounds="16, 0.75, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_CONSULTA_ESTADOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cebf5d3c-d9fe-4fe2-8715-298c1e73a893" absoluteBounds="16.015, 1.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="85d0661b-9635-43c1-b142-38c84f7a11ed" absoluteBounds="7.375, 14, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTP_OT_PRINCIPAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="148ec059-b666-44bc-90ef-c39e0de7996c" absoluteBounds="7.3900000000000006, 14.46, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(18.125 : 11.9743989726562); (14.3245458333333 : 11.9743989726562 : JumpStart); (14.1578791666667 : 11.9743989726562 : JumpEnd); (8.375 : 11.9743989726562); (8.375 : 14)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_OTP_OT_PRINCIPAL" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="85d0661b-9635-43c1-b142-38c84f7a11ed" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="d3375182-3de0-4e0c-92d7-1e1fb8c69b80" absoluteBounds="2, 22.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OMA_OT_MANUAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a53f7f24-131e-4abd-ab50-8698f3df6fdd" absoluteBounds="2.0150000000000006, 22.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2b9a10be-e3f5-4f6d-8a44-9011be817e56" absoluteBounds="3.875, 25.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_ROO_RELACION_OTP_OMA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dd4f6175-33c1-4898-81c1-19ace9ea490a" absoluteBounds="3.8900000000000006, 25.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4 : 23.0376611328125); (4.5312505 : 23.0376611328125); (4.5312505 : 25.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OMA_OT_MANUAL/TB_FOL_OMA_OT_MANUAL_TB_FOL_ROO_RELACION_OTP_OMA" />
+      <nodes>
+        <classShapeMoniker Id="d3375182-3de0-4e0c-92d7-1e1fb8c69b80" />
+        <classShapeMoniker Id="2b9a10be-e3f5-4f6d-8a44-9011be817e56" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.375 : 15.1739005533854); (6.53646083333333 : 15.1739005533854 : JumpStart); (6.36979416666667 : 15.1739005533854 : JumpEnd); (6.36458333333333 : 15.1739005533854 : JumpStart); (5.96353916666667 : 15.1739005533854 : JumpEnd); (5.95833333333333 : 15.1739005533854 : JumpStart); (5.61978916666667 : 15.1739005533854 : JumpEnd); (4.82812775 : 15.1739005533854); (4.82812775 : 25.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTP_OT_PRINCIPAL/TB_FOL_OTP_OT_PRINCIPAL_TB_FOL_ROO_RELACION_OTP_OMA" />
+      <nodes>
+        <classShapeMoniker Id="85d0661b-9635-43c1-b142-38c84f7a11ed" />
+        <classShapeMoniker Id="2b9a10be-e3f5-4f6d-8a44-9011be817e56" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="262c8351-7875-433a-910e-24e0d5f67665" isExpanded="false" absoluteBounds="0.5, 6.875, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_OMA_LISTA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6d382e57-ea58-4016-8c85-844e854c8147" absoluteBounds="0.51499999999999968, 7.3350000000000009, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8407b981-ddbc-4b8f-bb86-1d3114067078" absoluteBounds="2.875, 9.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_HID_HISTORIA_DETALLE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d07fb963-16c4-48d1-a702-4dcf72537358" absoluteBounds="2.8899999999999997, 10.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(18.125 : 11.5809519863281); (14.3245458333333 : 11.5809519863281 : JumpStart); (14.1578791666667 : 11.5809519863281 : JumpEnd); (6.53646083333333 : 11.5809519863281 : JumpStart); (6.36979416666667 : 11.5809519863281 : JumpEnd); (6.36458333333333 : 11.5809519863281 : JumpStart); (5.96353916666667 : 11.5809519863281 : JumpEnd); (5.95833333333333 : 11.5809519863281 : JumpStart); (5.51041666666667 : 11.5809519863281 : JumpEnd); (4.875 : 11.5809519863281)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_HID_HISTORIA_DETALLE" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="8407b981-ddbc-4b8f-bb86-1d3114067078" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c324309c-5ca8-4373-a417-a976f0b1d7a6" absoluteBounds="0.875, 14.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_RMD_RELACION_MDO_DOA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="21bc0b09-6680-4bfc-b3b5-b7df44fdaaba" absoluteBounds="0.88999999999999968, 15.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="641d4571-6d6b-49c0-a839-87669706126a" absoluteBounds="0.875, 12.625, 2.625, 1.7708968098958331">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MDO_MANIFIESTO_DOCUMENTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7020d6ee-86ca-4782-afe0-a1069b923f0c" absoluteBounds="0.89, 13.085, 2.5949999999999998, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.71875 : 14.3958968098958); (2.71875 : 14.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MDO_MANIFIESTO_DOCUMENTO/TB_FOL_MDO_MANIFIESTO_DOCUMENTO_TB_FOL_RMD_RELACION_MDO_DOA" />
+      <nodes>
+        <classShapeMoniker Id="641d4571-6d6b-49c0-a839-87669706126a" />
+        <classShapeMoniker Id="c324309c-5ca8-4373-a417-a976f0b1d7a6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.85937525 : 17.125); (9.85937525 : 13.1186027018229); (6.13020583333333 : 13.1186027018229 : JumpStart); (5.96353916666667 : 13.1186027018229 : JumpEnd); (3.5 : 13.1186027018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAE_MANIFIESTO_ESTADO/TB_FOL_MAE_MANIFIESTO_ESTADO_TB_FOL_MDO_MANIFIESTO_DOCUMENTO" />
+      <nodes>
+        <classShapeMoniker Id="5c700c7e-052f-4adb-bd32-000a91be7ef0" />
+        <classShapeMoniker Id="641d4571-6d6b-49c0-a839-87669706126a" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="41116e5a-5fe1-41ab-b99c-9821ebf0419e" isExpanded="false" absoluteBounds="0.5, 11.75, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_MDO_LISTA_DOA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ba06d92e-d325-4aa4-849e-de9339bdbf94" absoluteBounds="0.51499999999999968, 12.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" absoluteBounds="5.125, 16.5, 2, 5.8092268880208326">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a0f71243-bd34-470c-b37e-8fb3f99dbfae" absoluteBounds="5.1400000000000006, 16.96, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.28125 : 16.5); (6.28125 : 7.55850341796875); (11 : 7.55850341796875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_BLT_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="cb0d176d-c4ff-4b4d-8495-301f67b8352a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.125 : 18.6739005533854); (4.20833333333333 : 18.6739005533854 : JumpStart); (4.04166666666667 : 18.6739005533854 : JumpEnd); (3.875 : 18.6739005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_RET_RETIRO" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="39e20cd9-6980-4e50-a7fc-43bc0579c1e5" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.15625 : 16.5); (6.15625 : 4.6875); (6.02083333333333 : 4.6875 : JumpStart); (5.85416666666667 : 4.6875 : JumpEnd); (5.76914225260416 : 4.6875 : JumpStart); (5.6024755859375 : 4.6875 : JumpEnd); (3.64583333333333 : 4.6875 : JumpStart); (3.47916666666667 : 4.6875 : JumpEnd); (2.59375 : 4.6875); (2.59375 : 4.85); (2.5 : 4.85)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_DEN_DIRECCION_ENTREGA" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="ffeaeff4-6c69-4fcd-bc66-c41ae2996f09" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.8125 : 22.3092268880208); (6.8125 : 22.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_REA_REF_ASOCIADO" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="7f7d7ae9-7370-43df-8995-66d98f20fefa" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.875 : 16.5); (5.875 : 4.70481608072917); (5.78645833333333 : 4.70481608072917 : JumpStart); (5.61979166666667 : 4.70481608072917 : JumpEnd); (3.64583333333333 : 4.70481608072917 : JumpStart); (3.47916666666667 : 4.70481608072917 : JumpEnd); (3.4375 : 4.70481608072917); (3.4375 : 0.725); (3.5 : 0.725)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_OBS_OBSERVACION" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="4102d9da-583e-4457-ad36-22de139c6d60" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.7031225 : 16.5); (5.7031225 : 11.1967234931641); (5.67708333333333 : 11.1967234931641 : JumpStart); (5.51041666666667 : 11.1967234931641 : JumpEnd); (4.875 : 11.1967234931641)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_HID_HISTORIA_DETALLE" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="8407b981-ddbc-4b8f-bb86-1d3114067078" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(19.6562525 : 12.6362939453125); (19.6562525 : 19.5969962565104); (7.125 : 19.5969962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_OTD_OT_DETALLE" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.37499999999989 : 16.3478011067708); (7.125 : 16.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTP_OT_PRINCIPAL/TB_FOL_OTP_OT_PRINCIPAL_TB_FOL_OTD_OT_DETALLE" />
+      <nodes>
+        <classShapeMoniker Id="85d0661b-9635-43c1-b142-38c84f7a11ed" />
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="cc8e16c3-061c-4e5d-b8f2-74a5bfa9ffb3" isExpanded="false" absoluteBounds="0.5, 8.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_OTD_RECEPCION_SUCURSAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f40a8a13-8070-40c1-abb3-510cd7196ebe" absoluteBounds="0.51499999999999968, 9.085, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5fbfa3b7-814f-4b86-bdb9-2b73eafbac45" absoluteBounds="10.75, 22, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_DOA_DOC_ASOCIADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8771771c-ce69-49b0-bdb6-0a5050d83ffd" absoluteBounds="10.765, 22.46, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.75 : 23.3662019856771); (8.75 : 23.3662019856771); (8.75 : 22.625); (6.89583333333333 : 22.625 : JumpStart); (6.72916666666667 : 22.625 : JumpEnd); (4.5 : 22.625); (4.5 : 16.7035953776042); (4.20833333333333 : 16.7035953776042 : JumpStart); (4.04166666666667 : 16.7035953776042 : JumpEnd); (1.875 : 16.7035953776042); (1.875 : 16.3285953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_DOA_DOC_ASOCIADO/TB_FOL_DOA_DOC_ASOCIADO_TB_FOL_RMD_RELACION_MDO_DOA" />
+      <nodes>
+        <classShapeMoniker Id="5fbfa3b7-814f-4b86-bdb9-2b73eafbac45" />
+        <classShapeMoniker Id="c324309c-5ca8-4373-a417-a976f0b1d7a6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.125 : 20.8297501282552); (12.09375 : 20.8297501282552); (12.09375 : 22)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_DOA_DOC_ASOCIADO" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="5fbfa3b7-814f-4b86-bdb9-2b73eafbac45" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="2677654a-fd23-4997-9bec-82fc3eecced1" absoluteBounds="14.25, 20.875, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_RDO_DOA_EDO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3a5742a3-9ca3-479c-808c-ec6dee3df7a7" absoluteBounds="14.265, 21.335, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.75 : 22.6114005533854); (14.25 : 22.6114005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_DOA_DOC_ASOCIADO/TB_FOL_DOA_DOC_ASOCIADO_TB_FOL_RDO_DOA_EDO" />
+      <nodes>
+        <classShapeMoniker Id="5fbfa3b7-814f-4b86-bdb9-2b73eafbac45" />
+        <classShapeMoniker Id="2677654a-fd23-4997-9bec-82fc3eecced1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(17.1250005 : 24.125); (17.1250005 : 22.0489005533854); (16.25 : 22.0489005533854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EDO_ESTADO_DOCUMENTO/TB_FOL_EDO_ESTADO_DOCUMENTO_TB_FOL_RDO_DOA_EDO" />
+      <nodes>
+        <classShapeMoniker Id="3157d537-d274-448d-9f90-02500c4b25cf" />
+        <classShapeMoniker Id="2677654a-fd23-4997-9bec-82fc3eecced1" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8f95726b-f860-496e-aa2c-237bdd9e4b5a" isExpanded="false" absoluteBounds="8.125, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_CONSULTA_RECEPCION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="86ac2901-a571-485f-9e3f-033b988e4b39" absoluteBounds="8.14, 0.96, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4badcd52-fd4b-4824-98b0-6d647b16127d" absoluteBounds="1.375, 27, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAP_MANIFIESTO_PADRE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f09bc573-d4ec-4d39-844f-e15946bd96a9" absoluteBounds="1.3899999999999997, 27.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9303af5e-1532-4f80-a22a-a67ef255f2d8" absoluteBounds="3.75, 29.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MMR_MAN_MAP_RELACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="40c50afc-c6f5-433f-af79-031b4d90b148" absoluteBounds="3.7649999999999997, 29.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(13.9746078125 : 17.8574039713542); (13.9746078125 : 29.7219962565104); (5.75 : 29.7219962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAN_MANIFIESTO/TB_FOL_MAN_MANIFIESTO_TB_FOL_MMR_MAN_MAP_RELACION" />
+      <nodes>
+        <classShapeMoniker Id="bc821517-f747-477e-aca3-0a5424495058" />
+        <classShapeMoniker Id="9303af5e-1532-4f80-a22a-a67ef255f2d8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.375 : 28.7708968098958); (3.75 : 29.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAP_MANIFIESTO_PADRE/TB_FOL_MAP_MANIFIESTO_PADRE_TB_FOL_MMR_MAN_MAP_RELACION" />
+      <nodes>
+        <classShapeMoniker Id="4badcd52-fd4b-4824-98b0-6d647b16127d" />
+        <classShapeMoniker Id="9303af5e-1532-4f80-a22a-a67ef255f2d8" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="4b736145-3eda-4f1f-8500-ef00bda78e29" absoluteBounds="5, 27.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MDB_MAN_DESTINO_BULTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b8f7a813-4a11-4c20-b396-9520fc423278" absoluteBounds="5.015, 27.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(13.76855140625 : 17.8574039713542); (13.76855140625 : 27.8181469726563); (7 : 27.8181469726563)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_MAN_MANIFIESTO/TB_FOL_MAN_MANIFIESTO_TB_FOL_MDB_MAN_DESTINO_BULTO" />
+      <nodes>
+        <classShapeMoniker Id="bc821517-f747-477e-aca3-0a5424495058" />
+        <classShapeMoniker Id="4b736145-3eda-4f1f-8500-ef00bda78e29" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="59eb1b48-c382-41f7-8e44-9aee1b78ebcc" isExpanded="false" absoluteBounds="0.5, 3.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_MAN_CONSULTA_MAP" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ba13c64a-06c6-4c69-b642-2a07c4f48950" absoluteBounds="0.51499999999999968, 4.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1ff74072-845f-49fa-9dc2-253c7a9ab522" absoluteBounds="27.25, 2.625, 2, 1.9631982421875">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_HIP_HISTORIA_PRINCIPAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a68645b1-6291-472a-afd5-9a61bc9a2ba7" absoluteBounds="27.265, 3.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(19.3437495 : 11.25); (19.3437495 : 3.89349609375); (24.6666666666667 : 3.89349609375 : JumpStart); (24.8333333333333 : 3.89349609375 : JumpEnd); (27.25 : 3.89349609375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_HIP_HISTORIA_PRINCIPAL" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="1ff74072-845f-49fa-9dc2-253c7a9ab522" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.375 : 14.4859961282552); (9.77604191666667 : 14.4859961282552 : JumpStart); (9.94270858333333 : 14.4859961282552 : JumpEnd); (10.625 : 14.4859961282552); (10.625 : 13.5); (14.1578791666667 : 13.5 : JumpStart); (14.3245458333333 : 13.5 : JumpEnd); (19.5729191666667 : 13.5 : JumpStart); (19.7395858333333 : 13.5 : JumpEnd); (24.6666666666667 : 13.5 : JumpStart); (24.8333333333333 : 13.5 : JumpEnd); (27.718748 : 13.5); (27.718748 : 4.5881982421875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTP_OT_PRINCIPAL/TB_FOL_OTP_OT_PRINCIPAL_TB_FOL_HIP_HISTORIA_PRINCIPAL" />
+      <nodes>
+        <classShapeMoniker Id="85d0661b-9635-43c1-b142-38c84f7a11ed" />
+        <classShapeMoniker Id="1ff74072-845f-49fa-9dc2-253c7a9ab522" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="50fcd23c-0c9f-4d6e-b63c-54107ce23a7a" absoluteBounds="23.75, 1.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_RMM_REL_TMM_OTP" />
+      <nestedChildShapes>
+        <elementListCompartment Id="120085c7-0728-44ea-bda3-aa6c1817b3e4" absoluteBounds="23.765, 2.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(9.375 : 15.0344962565104); (14.1578791666667 : 15.0344962565104 : JumpStart); (14.3245458333333 : 15.0344962565104 : JumpEnd); (24.75 : 15.0344962565104); (24.75 : 3.1362939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTP_OT_PRINCIPAL/TB_FOL_OTP_OT_PRINCIPAL_TB_FOL_RMM_REL_TMM_OTP" />
+      <nodes>
+        <classShapeMoniker Id="85d0661b-9635-43c1-b142-38c84f7a11ed" />
+        <classShapeMoniker Id="50fcd23c-0c9f-4d6e-b63c-54107ce23a7a" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="46271485-943f-4e47-a133-2225501a6816" isExpanded="false" absoluteBounds="0.5, 5.75, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_MAN_CONSULTA_HIST" />
+      <nestedChildShapes>
+        <elementListCompartment Id="14ad80ac-4853-4941-b045-f20151ab1ccc" absoluteBounds="0.51499999999999968, 6.2100000000000009, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6a3a53dc-e333-40b9-bef0-92297e1840ce" isExpanded="false" absoluteBounds="16.125, 3.375, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/VI_FOL_BULTOS_REC" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1c5573aa-70e4-426c-8ef4-861e05085938" absoluteBounds="16.14, 3.835, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b70f7a1b-0974-474a-9bd0-fa1010c6af4e" absoluteBounds="19.375, 1.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OES_OBSERVACION_ESTADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a925996b-4c3f-4724-b303-b1ed088af9ee" absoluteBounds="19.39, 1.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(19.5078135 : 11.25); (19.5078135 : 2.82859537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_OES_OBSERVACION_ESTADO" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="b70f7a1b-0974-474a-9bd0-fa1010c6af4e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="687cc9b0-5e35-47d5-9cba-234a5ec0664f" absoluteBounds="2, 20.375, 2, 1.0016910807291668">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_ESE_ESTADO_ENTREGA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a1609325-5ca5-4af4-b4df-30baa3ca146d" absoluteBounds="2.0149999999999997, 20.835, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(18.125 : 12.3365984589844); (14.3245458333333 : 12.3365984589844 : JumpStart); (14.1578791666667 : 12.3365984589844 : JumpEnd); (6.13020583333333 : 12.3365984589844 : JumpStart); (5.96353916666667 : 12.3365984589844 : JumpEnd); (4.125 : 12.3365984589844); (4.125 : 20); (3 : 20); (3 : 20.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_EST_ESTADO/TB_FOL_EST_ESTADO_TB_FOL_ESE_ESTADO_ENTREGA" />
+      <nodes>
+        <classShapeMoniker Id="d1da0758-c1d6-49d1-857d-0db9ab8a8e36" />
+        <classShapeMoniker Id="687cc9b0-5e35-47d5-9cba-234a5ec0664f" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a99666d1-f6d8-486e-9486-7b41f3126a99" isExpanded="false" absoluteBounds="3, 7.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_CEN_CONTACTO_ENTREGA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7e35ba32-6d6f-4a87-9b91-c97a36f184dd" absoluteBounds="3.0149999999999997, 7.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.4531275 : 16.5); (6.4531275 : 7.75425170898438); (6.36458333333333 : 7.75425170898438 : JumpStart); (5.76041416666667 : 7.75425170898438 : JumpEnd); (5.67708333333333 : 7.75425170898438 : JumpStart); (5.51041666666667 : 7.75425170898438 : JumpEnd); (5 : 7.75425170898438)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_CEN_CONTACTO_ENTREGA" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="a99666d1-f6d8-486e-9486-7b41f3126a99" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="2af3fdca-a326-4419-92b8-fc1b9f2aa60a" isExpanded="false" absoluteBounds="6, 1.875, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_PIN_PESO_INFORMADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b65e17b8-d9d1-4019-b78b-9d08805934f3" absoluteBounds="6.015, 2.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.0468725 : 16.5); (6.0468725 : 4.81419108072917); (5.9375 : 4.81419108072917); (5.9375 : 3.5125); (6.0625 : 3.5125); (6.0625 : 2.3875); (5.9375 : 2.3875); (5.9375 : 2.1); (6 : 2.1)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_PIN_PESO_INFORMADO" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="2af3fdca-a326-4419-92b8-fc1b9f2aa60a" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="88581eec-2d32-491a-b4b7-6dc16897ae60" absoluteBounds="0.5, 24.625, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_RCL_REFERENCIA_CLIENTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0084a433-60f7-425a-be30-c7b8022469b4" absoluteBounds="0.51500000000000012, 25.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.125 : 17.0705476888021); (4.20833333333333 : 17.0705476888021 : JumpStart); (4.04166666666667 : 17.0705476888021 : JumpEnd); (1.15625 : 17.0705476888021); (1.15625 : 24.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_RCL_REFERENCIA_CLIENTE" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="88581eec-2d32-491a-b4b7-6dc16897ae60" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8abfad79-74e8-4c2a-9da6-fe277c015a2e" isExpanded="false" absoluteBounds="0.5, 0.5, 2.625, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_TDE_TIPO_DIRECCION_ENTREGA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="34fdb3fd-5f35-4c30-8a34-6c9b0c55da0f" absoluteBounds="0.515, 0.96, 2.5949999999999998, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.859375 : 0.95); (2.859375 : 4.9937525); (2.5 : 4.9937525)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_TDE_TIPO_DIRECCION_ENTREGA/TB_FOL_TDE_TIPO_DIRECCION_ENTREGA_TB_FOL_DEN_DIRECCION_ENTREGA" />
+      <nodes>
+        <classShapeMoniker Id="8abfad79-74e8-4c2a-9da6-fe277c015a2e" />
+        <classShapeMoniker Id="ffeaeff4-6c69-4fcd-bc66-c41ae2996f09" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="ecf6d985-216c-4d38-b420-d3e7f4612755" absoluteBounds="23.875, 20.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_IHU_HU" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2d00a871-8558-4b7a-97e5-a9f042ff4a1f" absoluteBounds="23.89, 20.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.125 : 20.5398750641276); (13.8912744791667 : 20.5398750641276 : JumpStart); (14.0579411458333 : 20.5398750641276 : JumpEnd); (23.875 : 20.5398750641276)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_IHU_HU" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="ecf6d985-216c-4d38-b420-d3e7f4612755" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="843dbe6e-45db-4c2f-ba37-003ae586271b" isExpanded="false" absoluteBounds="5.875, 1.125, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OCA_OBSERVACION_CARGA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="39c40dca-793d-49ef-bb49-53061c67ecd5" absoluteBounds="5.89, 1.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.8437475 : 16.5); (5.8437475 : 4.72044108072917); (5.9375 : 4.72044108072917); (5.9375 : 3.54375); (6.0625 : 3.54375); (6.0625 : 2.45); (5.8125 : 2.45); (5.8125 : 1.35); (5.875 : 1.35)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_FOLDataContext/TB_FOL_OTD_OT_DETALLE/TB_FOL_OTD_OT_DETALLE_TB_FOL_OCA_OBSERVACION_CARGA" />
+      <nodes>
+        <classShapeMoniker Id="93f8536d-1a9a-4d76-bea7-525ccc39f27a" />
+        <classShapeMoniker Id="843dbe6e-45db-4c2f-ba37-003ae586271b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="7f566bc8-0ca9-4b09-b99b-cbf00e775ec6" absoluteBounds="3.5, 8.625, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/LinqBD_FOLDataContext/TB_FOL_PAO_PALLET_ASOCIADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1bc3897a-f2a2-4734-8bbc-537c6d161584" absoluteBounds="3.515, 9.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

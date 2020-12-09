@@ -1,0 +1,18 @@
+﻿@model Courier.Models.BusquedaModels           
+@if (Model.ListaComuna != null)
+{           
+    @Html.DropDownListFor(m => m.ComunaDestino, Model.ListaComuna, "-- Seleccione Comuna --")
+
+    <script type="text/javascript">
+        $(function () {       
+            $("#ComunaDestino").change(function () {
+                $("#divLocalidadDestino").html('<img src="@Url.Content("~/Images/38.gif")" />');
+                $("#divLocalidadDestino").load("@Url.Action("DropDownLocalidad", "Busqueda")?idComuna=" + $(this).val());
+            });
+        });
+    </script>
+}
+else
+{
+    @Html.DropDownListFor(m => m.ComunaDestino, Model.ListaBlancoComuna)
+}

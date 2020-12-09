@@ -1,0 +1,54 @@
+﻿@model Courier.Models.PreparacionModels
+@{
+    var grid = new WebGrid(Model.ListaOTDBulto,rowsPerPage:10,ajaxUpdateContainerId:"myMasivo");    
+} 
+@if (Model.ListaOTDBulto != null)
+{
+    <div>
+        <div id="myMasivo">
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {   
+                grid.Column("FL_FOL_OTD_REFERENCIA1","Referencia 1"),             
+                grid.Column("PK_FOL_OTP_ID","OTP"),
+                grid.Column("PK_FOL_OTD_ID","OTD"),
+                grid.Column("PK_FOL_BLT_ID","Código Bulto"), 
+                grid.Column("FL_FOL_EST_DESCRIPCION","Estado"),
+                grid.Column("FL_FOL_BLT_PESO","Peso (KG)",format:@<text>                
+                <div style="float:right">@item.FL_FOL_BLT_PESO</div>
+                </text>),        
+                grid.Column("FL_FOL_BLT_LARGO","Largo (CM)",format:@<text>                
+                <div style="float:right">@item.FL_FOL_BLT_LARGO</div>
+                </text>),
+                grid.Column("FL_FOL_BLT_ALTO","Alto (CM)",format:@<text>                
+                <div style="float:right">@item.FL_FOL_BLT_ALTO</div>
+                </text>),
+                grid.Column("FL_FOL_BLT_ANCHO","Ancho (CM)",format:@<text>                
+                <div style="float:right">@item.FL_FOL_BLT_ANCHO</div>
+                </text>),
+                grid.Column("FL_FOL_BLT_PESO_VOLUMETRICO","Peso Vol.",format:@<text>                
+                <div style="float:right">@item.FL_FOL_BLT_PESO_VOLUMETRICO</div>
+                </text>),
+                grid.Column("PK_FOL_BLT_ID","Opciones",format:@<text>
+               <div style="width:100%;text-align:center;">                               
+                <a href="#"><img src="@Url.Content("~/Images/agt_print16.png")" onclick="Javascript:ImprimeGuiaUnica(@item.PK_FOL_OTP_ID,@item.PK_FOL_OTD_ID)" title="Imprimir" border="0" /></a>
+               </div>
+               </text>)                
+            })
+        </div>
+    </div>
+}
+else
+{
+    <div>No Se han ingresado datos</div>
+}

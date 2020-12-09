@@ -1,0 +1,273 @@
+﻿@model Courier.Models.ReenviarPedidoModels
+@{
+    ViewBag.Title = "Reenviar pedido a cliente";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/TableBlue.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    function CargarUltimoMovimientoUsuario() {
+        //waitingDialog({ title: "Buscando", message: "Buscando último movimiento...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 111111111);        
+        $.ajax({            
+            url: '@Url.Action("UltimoMovimientoUsuario", "Validation")?r=' + randomnumber,
+            type: "POST",
+            success: function (data) {                                
+                $("#RutCliente").val(data);
+                ChangeRutCliente(data);
+                //callService(data);
+                //closeWaitingDialog();
+            },
+            error: function () {
+                //closeWaitingDialog();
+            }
+        });
+    }
+    function ChangeRutCliente(Rut) {
+        waitingDialog({ title: "Buscando", message: "Buscando Información...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111)
+        $("#TipoReferencia").load('@Url.Action("DropDownBuscarEn","Preparacion")?RutCliente=' + Rut + '&random=' + randomnumber + ' #TipoReferencia option', function (response, status, xhr) {
+            closeWaitingDialog();
+            $("#Referencia").val("");
+            $("#Referencia").focus();
+
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        })
+    }
+    $(function () {
+        $("#tabs").tabs();
+        $("#dialog-FormularioIngreso").dialog({ autoOpen: false, title: "Formulario Ingreso", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmGuardarDevolucion");
+                    if ($("#frmGuardarDevolucion").valid() == true) {
+                        $("#frmGuardarDevolucion").submit();                        
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#RP001_Error").dialog({ autoOpen: false, title: "Error", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        
+
+
+        $("#RP001_QuitarDevolucion").dialog({ autoOpen: false, title: "Confirmación", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    RP001_AplicarQuitarDevolucion($("#RP001_OTP").val(),$("#RP001_OTD").val())
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#RP001_CargarFormulario").button()
+            .click(function () {
+                RP001_BuscarDatos()
+            });
+        })
+        function QuitarDevolucion(OTP, OTD) {
+            $("#RP001_OTP").val(OTP)
+            $("#RP001_OTD").val(OTD)
+            $("#RP001_QuitarDevolucion").html("<p>¿Esta seguro(a) que desea quitar el estado <strong>En Devolución</strong>.?</p>");
+            $("#RP001_QuitarDevolucion").dialog("open");
+        }
+    function CargaFormularioIngreso(OTP, OTD) {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 111111111)
+        $("#dialog-FormularioIngreso").load('@Url.Action("FormularioIngreso","Devolucion")?OTP=' + OTP + '&OTD=' + OTD + '&r=' + randomnumber, function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar el formulario');
+            }
+            else {
+                $("#dialog-FormularioIngreso").dialog("open");
+                borrar_contenido();
+            }
+        });
+    }
+    function RP001_AplicarQuitarDevolucion(OTP, OTD) {
+        waitingDialog({ title: "Procesando", message: "Quitando Marca Devolución...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("RP001_AplicarQuitarDevolucion", "Administracion")',
+            data:
+            {
+                r: randomnumber,
+                OTP: OTP,
+                OTD: OTD
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == true) {
+                    RP001_BuscarDatos();                    
+                }
+                else {
+                    $("#RP001_Error").html('<p>' + data.Mensaje + '</p>');
+                    $("#RP001_Error").dialog("open");
+                }
+            },
+            error: function () {
+                alert("No fue posible buscar la información");
+            },
+            complete: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function RP001_BuscarDatos() {
+        waitingDialog({ title: "Buscando", message: "Buscando OT...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("RP001_BuscarDatosOT", "Administracion")',
+            data:
+            {
+                r: randomnumber,
+                RutCliente: $("#RutCliente").val(),
+                TipoReferencia: $("#TipoReferencia").val(),
+                Referencia: $("#Referencia").val()
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == false) {
+                    $("#RP001_Error").html('<p>' + data.Mensaje + '</p>');
+                    $("#RP001_Error").dialog("open");
+                }
+                else {
+                    RP001_ActualizaLista(data.OTP, data.OTD);
+                }
+            },
+            error: function () {
+                alert("No fue posible buscar la información");
+            },
+            complete: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function RP001_ActualizaLista(OTP,OTD) {
+        waitingDialog({ title: "Actualizando", message: "Actualizando Lista...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("RP001_ActualizaLista", "Administracion")',
+            data:
+            {
+                r: randomnumber,
+                OTP: OTP,
+                OTD: OTD
+            },
+            success: function (data) {                
+                $("#tabs-1").html(data);
+            },
+            error: function () {
+                alert("No fue posible buscar la información");
+            },
+            complete: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+</script>
+
+<input type="hidden" id="RP001_OTP" />
+<input type="hidden" id="RP001_OTD" />
+<div id="dialog-FormularioIngreso"></div>
+
+@*Inicio Control Busqueda Rut*@                             
+@if (Session["RutEmpresa"] != string.Empty && Session["RutEmpresa"]!=null)
+{
+    @Html.HiddenFor(m => m.RutCliente)
+}
+@*Inicio Control Busqueda Rut*@                             
+@if (Session["RutEmpresa"] != string.Empty && Session["RutEmpresa"]!=null)
+    {
+        @Html.HiddenFor(m => m.RutCliente)
+    }
+    <table cellspacing="1" border="0">
+        <tr>  
+      
+            @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+            {
+            <td>@Html.LabelFor(m => m.RutCliente)</td>
+        
+            <td></td>                        
+            }        
+            <td>@Html.LabelFor(m => m.TipoReferencia)</td>
+            <td>Valor</td>
+        </tr>
+        <tr style="">
+                @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+                {     
+                <td valign="top">@Html.TextBoxFor(m => m.RutCliente, new { size = 10, maxlength = 10, onchange = "javascript:CargaListaBuscarEn(this.value);" })</td>                
+                <td>
+                    <a href="#"><img alt="Buscar Cliente" title="Buscar Cliente" id="imgBuscarCliente" style="width:22px;height:22px" border="0"  src="@Url.Content("~/images/kghostview.png")"/></a>
+                </td>                 
+                }                                         
+<td style="" valign="top">@Html.DropDownListFor(m => m.TipoReferencia, Model.ListaTipoReferencia, "-- Seleccione --", new { @style = "height:21px;margin-top:2px" }) </td>
+<td style="" valign="top">@Html.TextBoxFor(m => m.Referencia)</td>    
+            <td rowspan="2">        
+                <input type="button" id="RP001_CargarFormulario" value="Buscar"  style="margin-top:0px;"/>
+            </td>
+</tr>    
+
+</table>
+@*Fin Control Busqueda Rut*@
+<div id="RP001_Error"></div>
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Lista</a></li>	         
+    </ul>        
+   
+    <div id="tabs-1">  
+    
+    </div>
+</div>
+@*Inicio Control Busqueda Rut*@
+<div id="CargaBusquedaGenerico"></div>
+<div id="RP001_QuitarDevolucion"></div>
+<script type="text/javascript">
+    $(function () {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $("#CargaBusquedaGenerico").load('@Url.Action("BuscarCliente", "Generico")?r=' + randomnumber + '&TextoFiltro=',
+        function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert("No fue posible actualizar la información");
+            }
+            else {
+                CargarUltimoMovimientoUsuario();
+                $("#imgCargandoServicio").hide();
+            }
+        });
+
+        $("#Servicio").change(function () {
+            $("#idFormulario").html("");
+        });
+
+        $('input#Referencia').keypress(function (e) {
+            if (e.keyCode == '13') {
+                e.preventDefault();
+                RP001_BuscarDatos();
+            }
+        });
+    })
+</script>
+@*Fin Control Busqueda Rut*@

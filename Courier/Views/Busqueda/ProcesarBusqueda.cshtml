@@ -1,0 +1,29 @@
+﻿@model Courier.Models.BusquedaModels
+@{
+    var grid = new WebGrid(Model.ListaTiempo,rowsPerPage:8,ajaxUpdateContainerId:"grid1");    
+} 
+<div id="grid1">
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+        tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+        grid.Column("Linea","Linea"), 
+        grid.Column("Horas","Horas")
+    })
+   @if (Model.ListaTiempo.Sum(m => m.Horas) > 0)
+   {
+    <table>
+        <tr><td>Tiempo Estimado de Entrega</td><td>: @Model.ListaTiempo.Sum(m => m.Horas) Horas</td></tr>
+        <tr><td>Fecha Estimada de Entrega</td><td>: @DateTime.Now.AddHours(@Model.ListaTiempo.Sum(m => m.Horas)).ToString("dd-MM-yyyy")</td></tr>
+    </table>        
+   }
+</div>

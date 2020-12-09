@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="SilverlightApp.PrintbyBrowser"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="171" d:DesignWidth="402">
+    
+    <Grid x:Name="LayoutRoot" Background="White" Height="167">
+        <Border BorderBrush="#FF030303" BorderThickness="1" Height="119" HorizontalAlignment="Left" Name="border1" VerticalAlignment="Top" Width="229">
+            <Rectangle Height="118" Name="rectangle1" Stroke="Black" StrokeThickness="1" Width="228" />
+        </Border>
+        <Button Content="Print Element 2" Height="23" HorizontalAlignment="Left" Margin="261,121,0,0" Name="button1" VerticalAlignment="Top" Width="108" Click="button1_Click" />
+    </Grid>
+</UserControl>

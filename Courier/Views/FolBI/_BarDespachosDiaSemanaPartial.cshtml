@@ -1,0 +1,58 @@
+﻿@model Courier.Models.FolBIModels 
+
+
+@using (Html.BeginForm()) {
+
+    @Html.DevExpress().Chart(settings => {
+        settings.Name = "BarchartDiaSemana";
+        settings.Width = 400;
+        settings.Height = 400;
+        settings.BorderOptions.Visibility = DefaultBoolean.False;
+        settings.CrosshairEnabled = DefaultBoolean.True;
+
+        settings.Legends.Default(l => {
+            //l.AlignmentHorizontal = LegendAlignmentHorizontal.RightOutside;
+            l.Visibility = DefaultBoolean.False;
+        }); 
+        //settings.ClientSideEvents.ObjectSelected = "alert";
+        settings.Series.Template(t => {
+            t.Views().SideBySideBarSeriesView(v => {
+                v.BarWidth = 3;
+                v.SeriesLabel(l => {
+                    l.ResolveOverlappingMode = ResolveOverlappingMode.Default;
+                    l.TextPattern = "{V}";
+                    l.Font = new System.Drawing.Font("Tahoma", 8, System.Drawing.FontStyle.Bold);
+                    l.Position = BarSeriesLabelPosition.Center;
+                });
+            });
+            t.SetDataMembers("Dia", "Cantidad");
+            t.LabelsVisibility = DefaultBoolean.False;
+        });
+        
+    
+        Palette myPalette = new Palette("MyPalette");
+        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkSlateBlue));
+
+        //myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkSlateBlue));
+        settings.PaletteRepository.Add("MyPalette", myPalette);
+        settings.PaletteName = "MyPalette";
+    
+        settings.XYDiagram(d => {
+            d.Rotated = false;
+            d.AxisY.Interlaced = true;
+            d.AxisY.Title.Text = "Despachos";
+            d.AxisY.GridLines.MinorVisible = true;
+            d.AxisY.Title.Visibility = DefaultBoolean.True;
+            d.AxisY.Label.TextPattern = "{V}";
+        });
+
+        settings.Titles.Add(new ChartTitle() {
+            Font = new System.Drawing.Font("Tahoma", 18),
+            Text = "Despachos por Día de la Semana"
+        });
+
+    }).Bind(Model.listaReporteDiaSemana, seriesDataMember: "Cantidad").GetHtml();
+                                                     
+                                                     
+}
+

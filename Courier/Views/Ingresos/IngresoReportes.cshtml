@@ -1,0 +1,244 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    ViewBag.Title = "Ingreso Reportes";
+}
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+    function EnviarDatos()
+    {
+        borrar_contenido();
+        $.validator.unobtrusive.parse("#frmConsulta");
+        if ($("#frmConsulta").valid() == true) {
+            var randomnumber = Math.floor(Math.random() * 1111111)
+            $.ajax({
+                url: '@Url.Action("RetornoValidarFolio", "Ingresos")',
+                data: {
+                    FOLIO: $("#FOLIO").val(),
+                    _r: randomnumber
+                }
+            })
+            .done(function (data) {
+                var randomnumber = Math.floor(Math.random() * 11111111);
+                if (data.ExisteFolio == true) {
+                    if (data.UsuFolio == "") {
+                        var cusuario = 0;
+                        $("#CONUSUARIO").val(cusuario); //usuario vacio
+                        //alert('usuario vacio')
+                    }
+                    else {
+                        var cusuario = 1;
+                        $("#CONUSUARIO").val(cusuario); //con usuario
+                        //alert('con usuario')
+                    }
+                    if (data.MismoUsuario == true) {
+                        var infocomb = 1;
+                        if (data.FolioActivo == false) {
+                            var infocomb = 2;
+                            //                            $("#dialog-folioinactivo").dialog("open");
+                        }
+                        $("#MMOUSUARIO").val(infocomb);
+                    }
+                    else {
+                        var infocomb = 2;
+                        $("#MMOUSUARIO").val(infocomb);
+                        //                        $("#usuorig").html(data.UsuFolio);
+                        //                        $("#dialog-otrousuario").dialog("open");
+                    }
+                    $("#cargacabeceravehiculos").show();
+                    $("#cargacabecera").show();
+                    CargaCabeceravehiculos();
+                    CargaCabecera();
+                    $("#tabs").tabs().show();
+                    $("#ctrlcomb").show();
+                    $("#ctrlgastos").show();
+                    $("#ctrlruta").show();
+
+                    CargaControlRutas();
+                    CargaControlCombustible();
+                    CargaControlGastos();
+                    //                   }
+
+                }
+                else {
+                    $("#tabs").tabs().hide();
+                    $("#cargacabeceravehiculos").hide();
+                    $("#cargacabecera").hide();
+                    alert("ATENCIÓN - Folio ingresado no existe")
+                }
+            });
+        }
+    }
+//    function apretame() {
+//        $("#btngrabar").attr({
+//            disabled:'disabled'
+//        });
+//    }
+    $(function () {
+        borrar_contenido();
+        $("#tabs").tabs().hide();
+        $("#btnaceptar").button()
+           .click(function () {
+                EnviarDatos();               
+           })
+
+        $("#FOLIO").focus(1);
+    });
+
+
+    function CargaCabeceravehiculos() {
+        borrar_contenido();
+        $("#cargacabeceravehiculos").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#cargacabeceravehiculos").load('@Url.Action("MostrarDatosVehiculo", "Ingresos")?FOLIO=' + $("#FOLIO").val() + '&MMOUSUARIO=' + $("#MMOUSUARIO").val());
+//        $("#cargacabeceravehiculos").load('@Url.Action("MostrarDatosVehiculo", "Ingresos")?FOLIO=' + $("#FOLIO").val());
+     
+    }
+
+
+    function CargaCabecera() {
+        borrar_contenido();
+        $("#cargacabecera").html('<img src="@Url.Content("~/images/38.gif")">');
+//        $("#cargacabecera").load('@Url.Action("MostrarCabecera", "Ingresos")?FOLIO=' + $("#FOLIO").val());
+        $("#cargacabecera").load('@Url.Action("MostrarCabecera", "Ingresos")?FOLIO=' + $("#FOLIO").val() + '&MMOUSUARIO=' + $("#MMOUSUARIO").val() + '&CONUSUARIO=' + $("#CONUSUARIO").val());
+        //        $("#tabs").show();
+    }
+
+
+    function CargaControlCombustible() {
+        $("#ctrlcomb").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#ctrlcomb").load('@Url.Action("dcontrolCombustible","Ingresos")?FOLIO=' + $("#FOLIO").val() + '&MMOUSUARIO=' + $("#MMOUSUARIO").val() + '&CONUSUARIO=' + $("#CONUSUARIO").val());
+//        $("#ctrlcomb").load('@Url.Action("dcontrolCombustible","Ingresos")?FOLIO=' + $("#FOLIO").val());
+        $("#tabs").show();
+    }
+
+    function CargaControlGastos() {
+       $("#ctrlgastos").html('<img src="@Url.Content("~/images/38.gif")">');
+       $("#ctrlgastos").load('@Url.Action("dcontrolGastos","Ingresos")?FOLIO=' + $("#FOLIO").val() + '&MMOUSUARIO=' + $("#MMOUSUARIO").val() + '&CONUSUARIO=' + $("#CONUSUARIO").val());
+//       $("#ctrlgastos").load('@Url.Action("dcontrolGastos","Ingresos")?FOLIO=' + $("#FOLIO").val());
+       $("#tabs").show();
+    }
+
+
+    function CargaControlRutas() {
+        $("#ctrlruta").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#ctrlruta").load('@Url.Action("dcontrolRutas","Ingresos")?FOLIO=' + $("#FOLIO").val() + '&MMOUSUARIO=' + $("#MMOUSUARIO").val() + '&CONUSUARIO=' + $("#CONUSUARIO").val());
+        $("#tabs").show();
+    }
+
+    function FolioEnter(e) {
+        if (e.keyCode == '13') {
+            EnviarDatos();
+        }
+    }
+
+     $(function () {
+         $("#dialog-otrousuario").dialog({ autoOpen: false, title: "ATENCIÓN", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {                   
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+
+
+    $(function () {
+        $("#dialog-folioinactivo").dialog({ autoOpen: false, title: "ATENCIÓN", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+
+</script>
+
+
+<div id="dialog-otrousuario">
+   <div class="info">
+      <p>Folio Ingresado por Usuario. <div id="usuorig"> </div></p>
+      <p>No puede realizar cambios, solo consultar información.</p>
+   </div>
+</div>
+
+<div id="dialog-folioinactivo">
+   <div class="info2">
+      <p>Folio Ingresado No se encuentra ACTIVO </p>
+      <p>No puede realizar cambios, solo consultar información.</p>
+   </div>
+</div>
+
+
+<table>
+   <tr>
+      <td>
+         @using (Ajax.BeginForm("RendicionGuardar", "Documento", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinAgregar(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmConsulta" }))
+         
+         {
+            @Html.HiddenFor(m => m.MMOUSUARIO)
+            @Html.HiddenFor(m => m.CONUSUARIO)  
+         <table>
+            <tr>
+               <td>
+                  <strong>@Html.LabelFor(m => m.FOLIO) </strong>
+               </td>
+                   <td>@Html.TextBoxFor(m => m.FOLIO, new { @style = "width:80px;font-size: 10px ;text-align:right", @onkeypress = "FolioEnter(event);" })</td>
+                   
+                   <td><input type="button" id="btnaceptar" name="btnaceptar" value="Aceptar"style="width:90px;height:25px; font-size:8pt" /></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.FOLIO)</td>
+            </tr>
+         </table>
+         }
+      </td>
+      <td><div id="cargacabeceravehiculos">
+      </div></td>
+   </tr>
+</table>
+
+
+<div id="cargacabecera" >
+
+</div>
+
+@*<input type="button" onclick="javascript:apretame();" value="aapretame" id="asdasd" />*@
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Control de Ruta</a></li>
+         @if (Model.AdminReport == true)
+         {		
+            <li><a href="#tabs-2">Control de Combustible</a></li>	
+            <li><a href="#tabs-3">Control de Gastos</a></li>
+         }
+	</ul>
+    	
+	<div id="tabs-1">		
+        <div id="ctrlruta">
+
+        </div>
+	</div>	
+    @if (Model.AdminReport == true)
+    {
+        <div id="tabs-2">		
+            <div id="ctrlcomb">
+
+            </div>
+	    </div>	
+        <div id="tabs-3">		
+            <div id="ctrlgastos">
+
+            </div>
+	    </div>
+    }
+</div>
+

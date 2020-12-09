@@ -1,0 +1,47 @@
+﻿@model Courier.Models.IngresoMasivoModel
+@{
+    
+    //ViewBag.Title = "_CargaIngresoMasivo";
+    //Layout = "~/Views/Shared/_Layout.cshtml";    
+}
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+        $("#descargaexcel").button();
+    });
+</script>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Lista Errores</a></li>
+	</ul>
+	<div id="tabs-1">
+        @*<div style="float:right">
+            <input type="button" id="descargaexcel" value="Descargar En Excel" />
+        </div>*@		
+       <div id="contenedor-grid2">     
+            @{
+                var grid = new WebGrid(Model.ListaErrores, rowsPerPage: 15, ajaxUpdateContainerId: "contenedor-grid2");    
+            }
+                @grid.GetHtml(
+                fillEmptyRows: true,
+                alternatingRowStyle: "fila-alternativa",
+                headerStyle: "encabezado-grid",
+                         tableStyle: "mGrid",
+                footerStyle: "pie-grid",
+                mode: WebGridPagerModes.All,
+                firstText: "<< Primera",
+                previousText: "< Anterior",
+                nextText: "Siguiente >",
+                lastText: "Última >>",
+                columns: new[]
+                {
+        
+                    grid.Column("Fila","Fila"), 
+                    grid.Column("Error","Error"),
+                })
+            </div>
+	</div>
+</div>
+
+
+

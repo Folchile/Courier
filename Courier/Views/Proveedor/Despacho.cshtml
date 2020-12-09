@@ -1,0 +1,223 @@
+﻿@model Courier.Models.DespachoProveedorModels
+@{
+    ViewBag.Title = "Despacho por Proveedor";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#NumeroBusquedaManifiesto").focus()
+            .click(function () {
+                $("#NumeroBusquedaManifiesto").val("");
+                $("#NumeroBusquedaManifiesto").focus();
+            });
+        $("#AbreBuscarManifiesto").button()
+        .click(function () {
+            $("#dialog-EditarManifiesto").dialog("open");
+            $("#NumeroBusquedaManifiesto").val("");
+            $("#NumeroBusquedaManifiesto").focus();
+            borrar_contenido();
+        });
+
+        $("#dialog-result-valida-error").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    $("#AgregaOT").focus();
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog-result-valida-ok").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    $("#AgregaOT").focus();
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#InicioDespacho").button()
+        .click(function () {
+            CargaInicioDespacho();
+        });
+        $("#CrearManifiesto").button()
+        .click(function () {
+            ValidaExisteManifiestoAntesNuevo();
+        });
+
+        $("#dialog:ui-dialog").dialog("destroy");
+
+        $("#dialog-NuevoManifiesto").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    $.validator.unobtrusive.parse("#frmNuevoManifiesto");
+                    if ($("#frmNuevoManifiesto").valid() == true) {
+                        $("#frmNuevoManifiesto").submit();
+                        $(this).dialog("close");
+                        borrar_contenido();
+                    }
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+
+        $("#dialog-EditarManifiesto").dialog({ autoOpen: false, width: '250', modal: true,
+            buttons: {
+                Buscar: function (event) {
+                    borrar_contenido();
+                    event.preventDefault();
+                    $.validator.unobtrusive.parse("#frmEditarManifiesto");
+                    if ($("#frmEditarManifiesto").valid() == true) {
+                        $("#frmEditarManifiesto").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+
+        $("#dialog-existe").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    var randomnumber = Math.floor(Math.random() * 11111111);
+                    $("#random").val(randomnumber);
+                    $("#frmEditarManifiesto").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+
+    });
+    function CargaInicioDespacho() {
+        waitingDialog({ title: "Cargando", message: "Cargando Manifiestos...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("ListaManifiesto", "Proveedor")',
+            data: { r: randomnumber },
+            success: function (data) {
+                $("#formContent").html(data);
+                closeWaitingDialog();
+            },
+            error: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function Inicio() {
+        waitingDialog({ title: "Cargando", message: "Cargando...<br/>" });
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+    function FinCargaEdit(data) {
+        $("#formContent").hide();
+        $("#formContent").html(data);
+        $("#formContent").show();
+        closeWaitingDialog();
+    }
+
+    function InicioAgregarOT() {
+        waitingDialog({ title: "Validando Contenido", message: "Validando...<br/>" });
+    }
+    function FinAgregarOT(data) {
+        closeWaitingDialog();
+        if (data.Ok == false) {
+            ActualizaListados();
+            $("#AgregaOT").focus();
+            $("#AgregaOT").val("");
+            $("#dialog-result-valida-error").html('<p>' + data.Mensaje + '</p>')
+            $("#dialog-result-valida-error").dialog("open");
+        }
+        else {
+            $("#AgregaOT").val("");
+            ActualizaListados();
+            VerIngresoOKOT();
+        }
+    }
+    function FinErrorAgregarOT(data) {
+        closeWaitingDialog();
+        alert("No fue posible validar la información")
+    }
+
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');
+    }
+    function CargarEditar(Man_Id) {
+        $("#NumeroBusquedaManifiesto").val(Man_Id);
+        $("#frmEditarManifiesto").submit();
+    }
+
+    function ValidaExisteManifiestoAntesNuevo() {
+        $("#dialog-NuevoManifiesto").html("<p>¿Esta seguro(a) que desea crear un nuevo manifiesto?</p>");
+        $("#dialog-NuevoManifiesto").dialog("open");
+    }
+    function DecargarPDF(Man_Id) {
+        window.open('@Url.Action("Index","Reporte")?MAN_ID=' + Man_Id, '_blank');
+    }
+</script>
+<div id="dialog-result-valida-error" title="Agregar OT"></div>
+<div id="dialog-result-valida-ok" title="Agregar OT"></div>
+<div id="dialog-existe" title="Manifiesto"></div>
+<div style="text-align:right;width:100%;">
+    <button id="InicioDespacho">
+        <div style="float:left;width:160px;">
+            <div style="float:left;"><img alt="Buscar" src="@Url.Content("~/Images/21.png")" /></div>
+            <div style="float:left;">&nbsp;Manifiestos Abiertos</div>
+        </div>
+    </button>
+    <button id="AbreBuscarManifiesto">
+        <div style="float:left;width:140px;">
+            <div style="float:left;"><img alt="Buscar" src="@Url.Content("~/Images/magnifier.png")" /></div>
+            <div style="float:left;">&nbsp;Buscar Manifiesto</div>
+        </div>
+    </button>
+    <button id="CrearManifiesto">
+        <div style="float:left;width:140px;">
+            <div style="float:left;"><img alt="Crear Manifiesto" src="@Url.Content("~/Images/gnome_document_new.png")" /></div>
+            <div style="float:left;">&nbsp;Nuevo Manifiesto</div>
+        </div>
+    </button>
+</div>
+<div id="dialog-NuevoManifiesto" title="Nuevo Manifiesto"></div>
+<div id="dialog-EditarManifiesto" title="Buscar Manifiesto">
+    @using (Ajax.BeginForm("EditarManifiesto", "Proveedor", new AjaxOptions { HttpMethod = "Get", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinCargaEdit(data)", OnFailure = "Javascript:FinCargaEdit()" }, new { id = "frmEditarManifiesto" }))
+    {
+        <input type="hidden" id="random" name="random" />
+        <table>
+            <tr><td colspan="5">@Html.LabelFor(m => m.NumeroBusquedaManifiesto)</td></tr>
+            <tr>
+                <td>@Html.TextBoxFor(m => m.NumeroBusquedaManifiesto, new { size = 20 })</td>
+            </tr>
+        </table>
+        @Html.ValidationMessageFor(m => m.NumeroBusquedaManifiesto)
+    }
+</div>
+
+@using (Ajax.BeginForm("NuevoManifiesto", "Proveedor", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:Fin()", OnFailure = "Javascript:Fin()", UpdateTargetId = "formContent" }, new { id = "frmNuevoManifiesto" }))
+{
+
+}
+<div id="formContent">
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        CargaInicioDespacho();
+        @*ValidaExisteManifiesto(); *@
+        });
+</script>

@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 16.5, 21.125" name="LinqBD_REP_REPORTE_VIAJES">
+  <DataContextMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext" />
+  <nestedChildShapes>
+    <classShape Id="f60c8db2-2d3f-4547-b05d-3e6a80d83eff" absoluteBounds="3.75, 3.125, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ARE_AREA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8bcb4f60-f37f-484a-8b75-6c6ec81b9b7d" absoluteBounds="3.765, 3.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7230e522-cb06-4f05-8892-a1585554934f" absoluteBounds="3.75, 5.125, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TP_REP_ECF_ESTADO_CABECERA_FOLIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bdfb4720-16bd-4729-bb15-28fcf164d150" absoluteBounds="3.765, 5.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="97bff965-082a-492a-9a74-b5bfce49497f" absoluteBounds="0.75, 8.5, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ASI_ASISTENTES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7e87e7f7-ab8f-4fa4-872b-878edc8fc7b6" absoluteBounds="0.765, 8.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" absoluteBounds="6.5, 7.125, 2, 4.6554182942708335">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_CAB_CABECERA_FOLIOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fa517a0c-ce83-4714-ad04-664df6995861" absoluteBounds="6.515, 7.585, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8f064104-9306-4cbb-b2df-419870647bea" absoluteBounds="9.25, 8, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="63da7583-7e4e-46e4-ab7c-955ca8edcd04" absoluteBounds="9.265, 8.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c8cf929d-a559-453b-831a-e40bb8d38a72" absoluteBounds="9.25, 13.875, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_DCG_DETALLE_CONTROL_GASTOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d1af7f1b-b6e2-4a84-9e0d-a5025c4a4d7e" absoluteBounds="9.265, 14.335, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e27cc72f-363b-4975-8be7-cf192f21792e" absoluteBounds="9.25, 10.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_DCR_DETALLE_CONTROL_RUTA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4f51b420-bafd-4eca-8de7-e510184f85fd" absoluteBounds="9.265, 11.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="589597a2-b136-4972-a82d-af52327bc5da" absoluteBounds="3.75, 16.125, 2, 1.9631982421875023">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_DES_DESPACHADORES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3d47632e-6cc3-4cb9-95e7-8a579e588ba8" absoluteBounds="3.765, 16.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="57819fb8-8ce3-4296-8cdc-4d865c1bdf67" absoluteBounds="0.75, 0.75, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ESE_ESTADO_EMPLEADOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="58eca088-0091-4710-8565-38f7aac15335" absoluteBounds="0.765, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7d361e9e-30fd-4909-be43-f7973d8819d5" absoluteBounds="3.75, 18.875, 2, 1.9631982421875023">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_FOL_FOLIOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d9582d83-01f1-453c-8cac-0dac237c30cb" absoluteBounds="3.765, 19.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2c12e901-60df-41cb-947c-355b7c01bb6d" absoluteBounds="9.25, 4, 2, 1.193992513020834">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_RAM_RAMPLAS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0409239a-f8d5-4d11-bdd7-b733004cf23c" absoluteBounds="9.265, 4.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="25354ed0-119c-4c2c-9be3-f7871d7f360f" absoluteBounds="3.5, 8.625, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="89afb5a8-ea3b-415a-8b88-ae1838a14ff0" absoluteBounds="3.515, 9.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3cf42f93-10c9-41d7-afff-9ef22b234db6" absoluteBounds="6.5, 4.625, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_RAZ_RELACION_AREA_ZONA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cbe3b63d-854a-44f1-9d3a-60d82438cf07" absoluteBounds="6.515, 5.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="59cd4b9a-c786-4422-9196-fa0fbae83662" absoluteBounds="6.5, 16.375, 2, 1.3862939453125023">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="956ba8f1-9056-40f2-ac6e-4762e1ecdb0b" absoluteBounds="6.515, 16.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d9b5554c-e2d0-4c68-948d-352de90742b4" absoluteBounds="12.25, 8.75, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_RFA_RELACION_FOLIO_ASISTENTES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b51eb0dd-af9b-4136-bfe2-1114b533c5a5" absoluteBounds="12.265, 9.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2da0a812-9e80-49f6-a3d0-2216dc7a36c0" absoluteBounds="12, 10.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ROD_RELACION_ORIGEN_DESTINO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="443b1033-032c-4f7f-ad0f-3bfb9db49d90" absoluteBounds="12.015, 11.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ab6df117-073b-4481-8ce1-448ed70a5b76" absoluteBounds="3.75, 12, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_SER_SERVICIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="86571c6e-9a00-4ccc-8e21-9440a91bb8b8" absoluteBounds="3.765, 12.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7713770d-762a-400b-902a-c8aa5d77f4b9" absoluteBounds="9.25, 18.375, 2, 1.1939925130208309">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_TOD_TIPO_ORIGEN_DESTINO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="57c7a9a9-6490-4107-9eb9-bf6c66e41294" absoluteBounds="9.265, 18.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dbc049a6-1fef-47fe-a708-d0412f306406" absoluteBounds="3.75, 14, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ZON_ZONA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9e2a9d3e-7564-4e3d-87ae-4e1fe478a8b6" absoluteBounds="3.765, 14.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.73071242863582 : 4.31899251302083); (6.125 : 4.49048895104369); (6.125 : 9.45270914713542); (6.5 : 9.45270914713542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ARE_AREA/TB_REP_ARE_AREA_TB_REP_CAB_CABECERA_FOLIOS" />
+      <nodes>
+        <classShapeMoniker Id="f60c8db2-2d3f-4547-b05d-3e6a80d83eff" />
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 8.53125); (6.5 : 8.53125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ASI_ASISTENTES/TB_REP_ASI_ASISTENTES_TB_REP_CAB_CABECERA_FOLIOS" />
+      <nodes>
+        <classShapeMoniker Id="97bff965-082a-492a-9a74-b5bfce49497f" />
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.65625 : 6.31899251302083); (5.65625 : 7.7968725); (6.04166666666667 : 7.7968725 : JumpStart); (6.20833333333333 : 7.7968725 : JumpEnd); (6.5 : 7.7968725)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TP_REP_ECF_ESTADO_CABECERA_FOLIO/TP_REP_ECF_ESTADO_CABECERA_FOLIO_TB_REP_CAB_CABECERA_FOLIOS" />
+      <nodes>
+        <classShapeMoniker Id="7230e522-cb06-4f05-8892-a1585554934f" />
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 9.07774983723958); (9.25 : 9.07774983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_CAB_CABECERA_FOLIOS/TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCC_DETALLE_CONTROL_COMBUSTIBLE" />
+      <nodes>
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+        <classShapeMoniker Id="8f064104-9306-4cbb-b2df-419870647bea" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 11.7804182942708); (8.875 : 12.1554182942708); (8.875 : 15.5296541341146); (9.25 : 15.5296541341146)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_CAB_CABECERA_FOLIOS/TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCG_DETALLE_CONTROL_GASTOS" />
+      <nodes>
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+        <classShapeMoniker Id="c8cf929d-a559-453b-831a-e40bb8d38a72" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 11.2964566471354); (9.25 : 11.2964566471354)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_CAB_CABECERA_FOLIOS/TB_REP_CAB_CABECERA_FOLIOS_TB_REP_DCR_DETALLE_CONTROL_RUTA" />
+      <nodes>
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+        <classShapeMoniker Id="e27cc72f-363b-4975-8be7-cf192f21792e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 16.1884254047476); (6.1875 : 15.7509254047476); (6.1875 : 10.6478157207031); (6.5 : 10.6478157207031)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_DES_DESPACHADORES/TB_REP_DES_DESPACHADORES_TB_REP_CAB_CABECERA_FOLIOS" />
+      <nodes>
+        <classShapeMoniker Id="589597a2-b136-4972-a82d-af52327bc5da" />
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 18.9067122023738); (6.28125 : 18.3754622023738); (6.28125 : 11.245369007487); (6.5 : 11.245369007487)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_FOL_FOLIOS/TB_REP_FOL_FOLIOS_TB_REP_CAB_CABECERA_FOLIOS" />
+      <nodes>
+        <classShapeMoniker Id="7d361e9e-30fd-4909-be43-f7973d8819d5" />
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 7.125); (8.875 : 6.75); (8.875 : 4.59699625651042); (9.25 : 4.59699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_CAB_CABECERA_FOLIOS/TB_REP_CAB_CABECERA_FOLIOS_TB_REP_RAM_RAMPLAS" />
+      <nodes>
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+        <classShapeMoniker Id="2c12e901-60df-41cb-947c-355b7c01bb6d" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 9.51044840494792); (3.5 : 9.51044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ASI_ASISTENTES/TB_REP_ASI_ASISTENTES_TB_REP_RAS_RELACION_ASISTENTE_SUCURSAL" />
+      <nodes>
+        <classShapeMoniker Id="97bff965-082a-492a-9a74-b5bfce49497f" />
+        <classShapeMoniker Id="25354ed0-119c-4c2c-9be3-f7871d7f360f" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 4.31899251302083); (6.5 : 4.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ARE_AREA/TB_REP_ARE_AREA_TB_REP_RAZ_RELACION_AREA_ZONA" />
+      <nodes>
+        <classShapeMoniker Id="f60c8db2-2d3f-4547-b05d-3e6a80d83eff" />
+        <classShapeMoniker Id="3cf42f93-10c9-41d7-afff-9ef22b234db6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 17.0681469726563); (6.5 : 17.0681469726563)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_DES_DESPACHADORES/TB_REP_DES_DESPACHADORES_TB_REP_RDS_RELACION_DESPACHADOR_SUCURSAL" />
+      <nodes>
+        <classShapeMoniker Id="589597a2-b136-4972-a82d-af52327bc5da" />
+        <classShapeMoniker Id="59cd4b9a-c786-4422-9196-fa0fbae83662" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 8.5); (1.75 : 6.875); (11.875 : 6.875); (11.875 : 9.44314697265625); (12.25 : 9.44314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ASI_ASISTENTES/TB_REP_ASI_ASISTENTES_TB_REP_RFA_RELACION_FOLIO_ASISTENTES" />
+      <nodes>
+        <classShapeMoniker Id="97bff965-082a-492a-9a74-b5bfce49497f" />
+        <classShapeMoniker Id="d9b5554c-e2d0-4c68-948d-352de90742b4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 10.5152498372396); (14.15625 : 10.5152498372396); (14.15625 : 10.1362939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_CAB_CABECERA_FOLIOS/TB_REP_CAB_CABECERA_FOLIOS_TB_REP_RFA_RELACION_FOLIO_ASISTENTES" />
+      <nodes>
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+        <classShapeMoniker Id="d9b5554c-e2d0-4c68-948d-352de90742b4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.25 : 11.9527498372396); (12 : 11.9527498372396)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_DCR_DETALLE_CONTROL_RUTA/TB_REP_DCR_DETALLE_CONTROL_RUTA_TB_REP_ROD_RELACION_ORIGEN_DESTINO" />
+      <nodes>
+        <classShapeMoniker Id="e27cc72f-363b-4975-8be7-cf192f21792e" />
+        <classShapeMoniker Id="2da0a812-9e80-49f6-a3d0-2216dc7a36c0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 12.5969962565104); (7.4687475 : 12.5969962565104); (7.4687475 : 11.7804182942708)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_SER_SERVICIO/TB_REP_SER_SERVICIO_TB_REP_CAB_CABECERA_FOLIOS" />
+      <nodes>
+        <classShapeMoniker Id="ab6df117-073b-4481-8ce1-448ed70a5b76" />
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.25 : 19.2300032552083); (12.34375 : 19.2300032552083); (12.34375 : 13.0304996744792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_TOD_TIPO_ORIGEN_DESTINO/TB_REP_TOD_TIPO_ORIGEN_DESTINO_TB_REP_ROD_RELACION_ORIGEN_DESTINO" />
+      <nodes>
+        <classShapeMoniker Id="7713770d-762a-400b-902a-c8aa5d77f4b9" />
+        <classShapeMoniker Id="2da0a812-9e80-49f6-a3d0-2216dc7a36c0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 14.6931469726562); (6.95312125 : 14.6931469726562); (6.95312125 : 11.7804182942708)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ZON_ZONA/TB_REP_ZON_ZONA_TB_REP_CAB_CABECERA_FOLIOS" />
+      <nodes>
+        <classShapeMoniker Id="dbc049a6-1fef-47fe-a708-d0412f306406" />
+        <classShapeMoniker Id="07b74bd9-45d8-4205-a9ce-5d6d9fe933e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 14.03092401878); (6.12857443490112 : 13.6523495838789 : JumpStart); (6.34017556509888 : 13.4407484536811 : JumpEnd); (6.34375 : 13.43717401878); (6.34375 : 5.25324825651042); (6.5 : 5.25324825651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/TB_REP_ZON_ZONA/TB_REP_ZON_ZONA_TB_REP_RAZ_RELACION_AREA_ZONA" />
+      <nodes>
+        <classShapeMoniker Id="dbc049a6-1fef-47fe-a708-d0412f306406" />
+        <classShapeMoniker Id="3cf42f93-10c9-41d7-afff-9ef22b234db6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5b10e542-c789-4ff1-bedc-78c6babefff3" absoluteBounds="0.75, 2.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/VI_REP_AREA_ZONA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a4773186-ef0d-4be6-bbed-cf786e5c3989" absoluteBounds="0.765, 3.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="69ce2dd8-484e-4222-bcdd-5180de290462" absoluteBounds="0.75, 11.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/VI_REP_TOTAL_GRILLA_GASTOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6f2df2a8-c509-4bf5-96a8-0ecf303afa7e" absoluteBounds="0.765, 12.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ec4ebade-32b7-457e-b426-200f1873f3ae" absoluteBounds="12.75, 0.75, 2, 4.4631168619791666">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/VI_REP_ORIGEN_DESTINO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5e0b319a-ee04-4f57-9967-d5835308dcf4" absoluteBounds="12.765, 1.21, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c2b9e9b1-113c-4219-92e4-3486d2aefbd2" absoluteBounds="3.75, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/VI_REP_PROVINCIA_COMUNA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="842de696-41a2-4311-a017-18631db891c1" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ed62e745-6fd4-4682-82a3-db339eccdb3e" absoluteBounds="14.25, 16.25, 2, 4.6554182942708326">
+      <DataClassMoniker Name="/LinqBD_REP_REPORTE_VIAJESDataContext/VI_REP_ORIGEN_DESTINO2" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1e3fc7c9-d75f-4d58-814f-1c425bde608b" absoluteBounds="14.265, 16.71, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -1,0 +1,149 @@
+﻿.blueGrid {
+
+  border-collapse: collapse;
+
+  border: 1px solid #03476F;
+  
+  font: normal 11px verdana, arial, helvetica, sans-serif;
+
+  color: #363636;
+  
+
+
+  
+  width:100%;
+
+  }
+
+.blueGrid caption {
+
+  text-align: center;
+
+  font: bold 18px arial, helvetica, sans-serif;
+
+  background: transparent;
+
+  padding:6px 4px 8px 0px;
+
+  color: #03476F;
+
+  text-transform: uppercase;
+
+  }
+
+.blueGrid td, th {
+
+  border: 1px dotted #03476F;
+
+  padding: .4em;
+
+  color: #363636;
+
+  }
+
+
+
+.blueGrid thead th, tfoot th {
+
+  font: bold 11px verdana, arial, helvetica, sans-serif;
+
+  border: 1px solid #03476F;;
+
+  text-align: left;
+    
+  background-image:url('../images/toolbar_bg.png');
+
+  color: #10428C;
+
+  padding-top:3px;
+
+  }
+
+.blueGrid tbody td a {
+
+  background: transparent;
+
+  text-decoration: none;
+
+  color: #363636;
+
+  }
+
+.blueGrid tbody td a:hover {
+
+  background: #C2F64D;
+
+  color: #363636;
+
+  }
+
+.blueGrid tbody th a {
+
+  font: normal 11px verdana, arial, helvetica, sans-serif;
+
+  background: transparent;
+
+  text-decoration: none;
+
+  font-weight:normal;
+
+  color: #363636;
+
+  }
+
+.blueGrid tbody th a:hover {
+
+  background: transparent;
+
+  color: #363636;
+
+  }
+
+.blueGrid tbody th, tbody td {
+
+  vertical-align: top;
+
+  text-align: left;
+
+  }
+
+.blueGrid tfoot td {
+
+  border: 1px solid #03476F;
+
+ /*background-image:url('../images/subheader_bg.png'); background-repeat:repeat-x;*/
+
+  padding-top:3px;
+
+  color: #000;
+
+  }
+
+.blueGrid .odd {
+
+  background: #AEE239;
+
+  }
+
+.blueGrid tbody tr:hover {
+
+  background: #FFffdd;
+
+  border: 1px solid #03476F;
+
+  color: #FFFFFF;
+
+  }
+
+.blueGrid tbody tr:hover th,
+
+.blueGrid tbody tr.odd:hover th {
+
+  background: #FFD800;
+
+  color: #FFFFFF;
+
+  }
+  
+  
+ 

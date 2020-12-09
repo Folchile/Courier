@@ -1,0 +1,109 @@
+﻿@model Courier.Models.DespachoModels
+
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $("#ResultadoEditManifiesto").dialog({ autoOpen: false, title: "Manifiesto", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");                   
+                }
+            }
+        });
+    })
+    function InicioFormularioDPM() {
+        waitingDialog({ title: "Creando Nuevo Manifiesto", message: "En Proceso...<br/>" });
+    }
+    function FinFormularioDPM(data) {
+        closeWaitingDialog();
+        if (data.OK == true) {
+            $("#dialog-NuevoManifiesto").dialog("close");
+            $("#cTipoManifiesto").val($("#TipoManifiesto").val());
+            $("#cSucursalDestino").val($("#SucursalDestino").val());
+            $("#frmNuevoManifiesto").submit();
+            $("#dialog-NuevoManifiesto").html("");             
+        }
+        else {
+            $("#RespuestaValidaciones").html(data.Mensaje);
+            $("#RespuestaValidaciones").show();
+        }
+    }
+    function ErrorFormularioDPM() {
+        closeWaitingDialog();
+        alert("No fue posible crear el manifiesto, error desconocido");
+    }
+    function FinEditFormularioDPM(data) {
+        closeWaitingDialog();
+        if (data.OK == true) {
+            $("#dialog-CambiaDatos").dialog("close");
+            $("NumeroBusquedaManifiesto").val($("#EditNumeroManifiesto").val())
+            $("#frmEditarManifiesto").submit();
+
+            $("#ResultadoEditManifiesto").html("<p>Cambios realizados exitosamente!</p>");
+            $("#ResultadoEditManifiesto").dialog("open")
+        }
+        else {
+            $("#RespuestaValidaciones").html(data.Mensaje);
+            $("#RespuestaValidaciones").show();
+        }
+    }
+    function ErrorEditFormularioDPM() {
+        closeWaitingDialog();
+        alert("No fue posible crear el manifiesto, error desconocido");
+    }
+</script>
+@{
+    int swt = 0;    
+}
+@if (Model.NumeroManifiesto != null)
+{
+    if (Model.NumeroManifiesto > 0)
+    {
+        swt = 1;
+        Model.EditNumeroManifiesto = Model.NumeroManifiesto;       
+        using (Ajax.BeginForm("GuardarCambiosEditPrevios", "Preparacion", new AjaxOptions { OnBegin = "javascript:InicioFormularioDPM()", OnSuccess = "Javascript:FinEditFormularioDPM(data)", OnFailure = "Javascript:ErrorEditFormularioDPM()" }, new { id = "frmprevioMan" }))
+        {  
+            @Html.HiddenFor(m => m.EditNumeroManifiesto)        
+            <table>
+                <tr><td>@Html.LabelFor(m => m.TipoManifiesto)</td><td>@Html.DropDownListFor(m => m.TipoManifiesto, Model.ListaTipoManifiesto, "-- Seleccione --")</td></tr>
+                <tr><td></td><td>@Html.ValidationMessageFor(m => m.TipoManifiesto)</td></tr>
+                <tr><td>@Html.LabelFor(m => m.SucursalDestino)</td><td>@Html.DropDownListFor(m => m.SucursalDestino, Model.ListaSucursalDestino, "-- Seleccione --")</td></tr>
+            </table> 
+        }
+    }
+}
+
+@if (swt == 0)
+{
+             
+        <div class="info">
+            Esta información puede ser modificada posteriormente
+        </div>
+    using (Ajax.BeginForm("ValidaDatosPreviosMan", "Preparacion", new AjaxOptions { OnBegin = "javascript:InicioFormularioDPM()", OnSuccess = "Javascript:FinFormularioDPM(data)", OnFailure = "Javascript:ErrorFormularioDPM()" }, new { id = "frmprevioMan" }))
+    {
+            <table>
+                <tr><td>@Html.LabelFor(m => m.TipoManifiesto)</td><td>@Html.DropDownListFor(m => m.TipoManifiesto, Model.ListaTipoManifiesto, "-- Seleccione --")</td></tr>
+                <tr><td></td><td>@Html.ValidationMessageFor(m => m.TipoManifiesto)</td></tr>
+                <tr><td>@Html.LabelFor(m => m.SucursalDestino)</td><td>@Html.DropDownListFor(m => m.SucursalDestino, Model.ListaSucursalDestino, "-- Seleccione --")</td></tr>
+            </table>        
+    }
+}
+<div id="ResultadoEditManifiesto"></div>
+<div class="error" id="RespuestaValidaciones"></div>
+<script type="text/javascript">
+    $("#TipoManifiesto").change(function () {
+        waitingDialog({ title: "Buscando", message: "Buscando Sucursales...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 111111)
+        $("#SucursalDestino").load('@Url.Action("DropDownSucursalDestino", "Preparacion")?TipoManifiesto=' + $(this).val() + '&random=' + randomnumber + ' #SucursalDestino option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        })
+    })
+    $("#SucursalDestino").change(function () {
+        $("#RespuestaValidaciones").hide();
+    })
+
+    $("#RespuestaValidaciones").hide();
+</script>

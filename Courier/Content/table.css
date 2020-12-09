@@ -1,0 +1,56 @@
+﻿table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;	
+	width:100%;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+anchofijo
+{
+    width:50px;
+}
+
+
+div.TableCourier
+{  
+    margin-bottom:5px;
+    border-bottom:solid 1px #666666;
+    border-right:solid 1px #666666;
+}
+div.TableCourier div
+{       
+    height:27px;		
+	background-image:url('../images/subheader_bg.png'); background-repeat:repeat-x;	    
+}
+div.TableCourier .TableCourierContent
+{         
+    height:130px;
+    overflow:auto;			
+}
+div.TableCourier div div 			
+{        
+		border:solid 1px #6394CE;		
+		font-size:14px;
+		font-family: Tahoma, Arial, Helvetica, sans-serif;
+		font-weight:bold;
+		color:#10428C;
+		padding:5px;						
+}
+
+

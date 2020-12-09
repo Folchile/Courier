@@ -1,0 +1,5 @@
+﻿@model MvcReporteViajes.Models.DetalleRutaModels
+@{
+   <p>@Html.DropDownListFor(m => m.COMDESTINO, Model.ListaComunasOrigen, "-- Seleccione Comuna --")</p>
+   <p>@Html.DropDownListFor(m => m.EDCOMDESTINO, Model.ListaComunasOrigen, "-- Seleccione Comuna --")</p>
+}

@@ -1,0 +1,190 @@
+﻿@model Courier.Models.MantencionModels
+@{
+    ViewBag.Title = "Servicios";    
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function CargarUltimoMovimientoUsuario() {
+        //waitingDialog({ title: "Buscando", message: "Buscando último movimiento...<br/>" });
+        $.ajax({
+            url: '@Url.Action("UltimoMovimientoUsuario","Validation")',
+            type: "POST",
+            success: function (data) {
+                $("#RutCliente").val(data);
+                CargaListaServicio(data);
+                //closeWaitingDialog();
+            },
+            error: function () {
+                //closeWaitingDialog();
+            }
+        });
+    }
+    function ChangeRutCliente(Rut) {        
+        CargaListaServicio(Rut);
+    }
+</script>
+<script type="text/javascript">
+    $(function () {
+
+        $("#btnBuscar").button()
+        .click(function () {
+            ChangeRutCliente($("#RutCliente").val());
+        });
+
+
+        $("#btnAgregar").button()
+            .click(function () {
+                CargaEditarServicio(0);
+            });
+        $("#tabs").tabs();
+
+        $("#FormularioServicio").dialog({ autoOpen: false, title: "Mantención Servicio", width: 'auto', modal: true,
+            buttons: {
+                Guardar: function (event) {
+                    event.preventDefault();
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmServicio");
+                    if ($("#frmServicio").valid() == true) {
+                        $("#frmServicio").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+    function CargaListaServicio(RutCliente) {
+        waitingDialog({ title: "Buscando", message: "Buscando Servicios Cliente...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111)
+        $("#ListaServicios").load('@Url.Action("MantencionListaServicios","Mantencion")?RutCliente=' + RutCliente + '&random=' + randomnumber, function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        })
+    }
+
+    function CargaEditarServicio(Servicio) {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111)
+        $("#FormularioServicio").load('@Url.Action("CargaEditarServicio","Mantencion")?Servicio=' + Servicio + '&RutClienteServicio=' + $("#RutCliente").val() + '&random=' + randomnumber, function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+            else {
+                $("#FormularioServicio").dialog("open");
+                CargaListaDocumentos("Referencia1", $("#Referencia2").val());
+                CargaListaDocumentos("Referencia2", $("#Referencia1").val());
+                if (!$('input[name="AlertaKilo"]').is(":checked")) {
+                    $("#idAlerta").hide();
+                }
+                borrar_contenido();
+            }
+        })
+    }
+    function CargaListaDocumentos(Referencia,  TDO_ID) {        
+        //waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 1111111)
+        $('#' + Referencia).hide();
+        $('#img' + Referencia).show();
+        var a = $("#" + Referencia).val();
+        $('#' + Referencia).load('@Url.Action("CargaListaDocumentos","Mantencion")?TDO_ID=' + TDO_ID + '&random=' + randomnumber + ' #Referencia1 option', function (response, status, xhr) {
+            //closeWaitingDialog();     
+            $('#' + Referencia).val(a);
+            $('#' + Referencia).show();
+            $('#img' + Referencia).hide();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        })
+    }
+    function BorrarListado() {
+        $("#tabs-1").html("");
+    }
+</script>
+
+<div id="FormularioServicio"></div>
+@*Inicio Control Busqueda Rut*@                             
+@if (Session["RutEmpresa"] != string.Empty && Session["RutEmpresa"]!=null)
+{
+    @Html.HiddenFor(m => m.RutCliente)
+}
+
+<table cellspacing="1">
+    <tr>  
+      
+        @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+        {
+        <td>@Html.LabelFor(m => m.RutCliente)</td>
+        
+        <td></td>                        
+        }        
+        <td></td>        
+    </tr>
+    <tr>       
+            @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+            {     
+            <td>@Html.TextBoxFor(m => m.RutCliente, new { size = 10, maxlength = 10, onchange = "javascript:BorrarListado();" })</td>                
+            <td>
+                <a href="#"><img alt="Buscar Cliente" title="Buscar Cliente" id="imgBuscarCliente" style="width:22px;height:22px" border="0"  src="@Url.Content("~/images/kghostview.png")"/></a>
+            </td>                 
+            }                                         
+    <td></td>
+    <td></td>    
+    <td>        
+        <button id="btnBuscar">
+            <div style="float:left;width:80px;">       
+                <div style="float:left;"><img alt="Siguiente" src="@Url.Content("~/Images/gnome_go_next.png")" /></div>                 
+                <div style="float:left;">&nbsp;Procesar</div>                        
+            </div>                       
+        </button>
+    </td>
+</tr>    
+</table>
+
+<div style="text-align:right">
+    <button id="btnAgregar">
+        <div style="float:left;width:130px;">       
+            <div style="float:left;"><img alt="Siguiente" src="@Url.Content("~/Images/add.png")" /></div>                 
+            <div style="float:left;">&nbsp;Agregar Servicio</div>                        
+        </div>                       
+    </button>
+</div>
+
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Servicios</a></li>		    
+    </ul>        
+    <div id="tabs-1">   
+        <div id="ListaServicios">
+            
+        </div>
+    </div>
+</div>
+
+@*Inicio Control Busqueda Rut*@
+<div id="CargaBusquedaGenerico"></div>
+<script type="text/javascript">
+    $(function () {        
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });        
+        $("#CargaBusquedaGenerico").load('@Url.Action("BuscarCliente", "Generico")?r=' + randomnumber + '&TextoFiltro=',
+        function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert("No fue posible actualizar la información");
+            }
+            else {
+                CargarUltimoMovimientoUsuario();              
+            }
+        });        
+    })
+</script>
+@*Fin Control Busqueda Rut*@
+

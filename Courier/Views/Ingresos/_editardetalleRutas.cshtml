@@ -1,0 +1,187 @@
+﻿@model MvcReporteViajes.Models.DetalleRutaModels
+@{
+    ViewBag.Title = "_editardetalleRutas";
+}
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        borrar_contenido();
+
+        $("#EDFECHA").datepicker("hide");
+//        $("#FECHA").datepicker("option", "disabled", true);
+        //        $("#FECHA").datepicker("hide");
+//        $("#FECHA").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+        //        $("#FECHA").datepicker("hide");
+        $("#EDDIRORIGEN").focus(1);
+    });
+
+    $(function () {
+        //        borrar_contenido();
+//        $("#btnNroPedido").button();
+        //        $("#FECHA").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+//        $("#REGORIGEN").change(function () {
+//            alert($(this).val());
+//            CargarComunaOrgen($(this).val());
+//            //            if ($(this).val() == "") {
+//            //                CargarComunaOrgen(0);
+//            //            }
+//            //            else {
+//            //                CargarComunaOrgen($(this).val());
+//            //            }
+//        });
+
+        $("#EDREGDESTINO").change(function () {
+            CargarComunaDestino($(this).val());
+        });
+    });
+
+    function AbrirCalendario() {
+       $("#EDFECHA").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+//      $("#FECHA").datepicker("open");
+      $("#EDFECHA").datepicker("show");
+    }
+
+
+    function CargarComunaOrgenEdicion(idOrigen) {
+        waitingDialog({ title: "Buscando", message: "Buscando Comunas...<br/>" });
+        $("#EDCOMORIGEN").load('@Url.Action("CargaComunaOrigen","Ingresos")?idOrigen=' + idOrigen + ' #EDCOMORIGEN option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+
+        })
+    }
+
+
+    function CargarComunaDestino(idDestino) {
+        waitingDialog({ title: "Buscando", message: "Buscando Comunas...<br/>" });
+        $("#EDCOMDESTINO").load('@Url.Action("CargaComunaDestino","Ingresos")?idDestino=' + idDestino + ' #EDCOMDESTINO option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+
+        })
+    }
+
+
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-result").html(data.Mensaje);
+            $("#dialog-result").dialog("open");
+
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+
+
+
+</script>
+
+
+
+
+
+
+@using (Ajax.BeginForm("ModificaDetalleRuta", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmActualizaRutas" }))
+{
+    @Html.HiddenFor(m => m.IDRTA)
+    <table>
+            
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.EDFECHA)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDFECHA, new { @style = "width:70px;font-size: 10px", @readonly = "readonly", @onclick = "javascript:AbrirCalendario();" }) </td>          
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">@Html.ValidationMessageFor(m => m.EDFECHA)</td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.EDREGORIGEN)</strong></td>
+            <td>@Html.DropDownListFor(m => m.EDREGORIGEN, Model.ListaRegion, "--Seleccione Origen--", new { @style = "width:220px;font-size: 10px", @onchange = "javascript:CargarComunaOrgenEdicion(this.value);" })
+             @Html.ValidationMessageFor(m => m.EDREGORIGEN)
+             </td> 
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.EDCOMORIGEN)</strong></td>
+            <td>@Html.DropDownListFor(m => m.EDCOMORIGEN, Model.ListaComOrigen, "--Seleccione Comuna--", new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.EDCOMORIGEN)
+             </td> 
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.EDDIRORIGEN)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDDIRORIGEN, new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.EDDIRORIGEN)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.EDKMINICIAL)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDKMINICIAL, new { @style = "width:60px;font-size: 10px" })
+            @Html.ValidationMessageFor(m => m.EDKMINICIAL)
+            </td>
+        </tr>
+         <tr>
+            <td><strong>@Html.LabelFor(m => m.EDREGDESTINO)</strong></td>
+            <td>@Html.DropDownListFor(m => m.EDREGDESTINO, Model.ListaRegion, "--Seleccione Destino--", new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.EDREGDESTINO)
+             </td> 
+        </tr>
+
+         <tr>
+            <td><strong>@Html.LabelFor(m => m.EDCOMDESTINO)</strong></td>
+            <td>@Html.DropDownListFor(m => m.EDCOMDESTINO, Model.ListaComDestino, "--Seleccione Comuna--", new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.EDCOMDESTINO)
+             </td> 
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.EDDIRDESTINO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDDIRDESTINO, new { @style = "width:220px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.EDDIRDESTINO)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.EDKMFINAL)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDKMFINAL, new { @style = "width:60px;font-size: 10px" })
+             @Html.ValidationMessageFor(m => m.EDKMFINAL)
+            </td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.EDOBSERVACION)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDOBSERVACION, new { @style = "width:220px;font-size: 10px" })</td>
+         </tr>
+         <tr>
+            <td><strong>@Html.LabelFor(m => m.EDPEDIDO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDPEDIDO, new { @style = "width:220px;font-size: 10px" })</td>
+         </tr>
+         <tr><td>@Html.ValidationMessageFor(m => m.EDPEDIDO)</td></tr>
+          <tr>
+            <td><strong>@Html.LabelFor(m => m.EDTRANSPORTE)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDTRANSPORTE, new { @style = "width:220px;font-size: 10px" })</td>
+         </tr>
+         <tr><td>@Html.ValidationMessageFor(m => m.EDTRANSPORTE)</td></tr>
+         <tr>
+            <td><strong>@Html.LabelFor(m => m.EDZONA)</strong></td>
+            <td>@Html.TextBoxFor(m => m.EDZONA, new { @style = "width:60px;font-size: 10px" })</td>
+         </tr>
+         <tr><td>@Html.ValidationMessageFor(m => m.EDZONA)</td></tr>
+</table>
+
+     
+}

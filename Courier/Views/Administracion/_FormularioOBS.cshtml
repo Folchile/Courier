@@ -1,0 +1,29 @@
+﻿@model Courier.Models.FormularioOBSModels
+<script type="text/javascript">
+    function OBSIFormDev() {
+        waitingDialog({ title: "Guardando", message: "Guardando Formulario...<br/>" });
+        $("#dialog-OBS").dialog("close");
+    }
+    function OBSIFormErr() {
+        closeWaitingDialog();
+        alert("No fue posible guardar la información")
+    }
+    function OBSIFormSuc(data) {
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            CargarFormularioEnviado();
+            $("#dialog-OBS").dialog("close");
+        }
+        else {
+            alert(data.Mensaje);
+        }
+    }    
+</script>
+@using (Ajax.BeginForm("GuardarOBS", "Administracion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:OBSIFormDev();", OnFailure = "javascript:OBSIFormErr();", OnSuccess = "javascript:OBSIFormSuc(data);" }, new { id = "frmOBS" }))
+{    
+    @Html.HiddenFor(m=>m.obsOTP)
+    @Html.HiddenFor(m => m.obsOTD)
+    <table>
+        <tr><td>@Html.LabelFor(m => m.obsObservacion)</td><td>@Html.TextBoxFor(m => m.obsObservacion, new { @size="50",@maxlenght="255" })</td></tr>        
+    </table>        
+}

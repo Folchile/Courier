@@ -1,0 +1,274 @@
+﻿@model Courier.Models.CambiaEstadoBultoModels
+<script type="text/javascript">
+    $(function () {        
+        $("#tabs").tabs();        
+    })
+
+    function CargaHistorialOT(OTP, OTD, IdBulto) {        
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load('@Url.Content("~/Preparacion/VerHistorialOT")?OTP=' + OTP + '&OTD=' + OTD + '&IdBulto=' + IdBulto + '&iOTP=0&iOTD=1&iBulto=0');
+    }
+    function CargaHistorialBulto(OTP, OTD, IdBulto) {
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load('@Url.Content("~/Preparacion/VerHistorialOT")?OTP=' + OTP + '&OTD=' + OTD + '&IdBulto=' + IdBulto + '&iOTP=0&iOTD=1&iBulto=1');
+    }
+    function VerDocumentosAsociados(OTP, OTD) {
+        $("#dialog-documentos").dialog("open");
+        $("#dialog-documentos").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-documentos").load('@Url.Content("~/Preparacion/ListaDocumentos")?OTP=' + OTP + '&OTD=' + OTD);
+    }
+    $(function () {
+        $("#btnVerDocumentosAsociados").button()
+        .click(function () {
+            VerDocumentosAsociados($("#OTP").val(), $("#OTD").val());
+        });
+
+        $("#btnVerHistorialOT").button()
+        .click(function () {
+            CargaHistorialOT($("#OTP").val(), $("#OTD").val(), 0);
+        });
+
+        $("#dialog-FinPrep").dialog({ autoOpen: false, title: "Resultado", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-HistorialOT").dialog({ autoOpen: false, title: "Historial", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-documentos").dialog({ autoOpen: false, title: "Documentos Asociados", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-cambio").dialog({ autoOpen: false, title: "Cambio de Estado", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmCambiarEstado");
+                    if ($("#frmCambiarEstado").valid() == true) {
+                        //alert($("#frmCambiarEstado").valid());
+                        $("#frmCambiarEstado").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+    function InicioCambiar() {
+        waitingDialog({ title: "Guardando", message: "Guardando Formulario...<br/>" });
+    }
+    function FinCambiar(data) {
+        closeWaitingDialog();
+        if (data.Ok = true) {
+            event.preventDefault();
+            borrar_contenido();
+            $.validator.unobtrusive.parse("#frmBuscar");
+            if ($("#frmBuscar").valid() == true) {
+                $("#frmBuscar").submit();
+            }            
+        }
+        else {
+            alert(data.Error);
+        }
+    }
+    function FinErrorCambiar() {
+        closeWaitingDialog();
+        alert("No fue posible guardar la información");
+    }
+    function VerCambioEstado(Bulto) {
+        waitingDialog({ title: "Buscando", message: "Buscando Formulario...<br/>" });
+        $("#dialog-cambio").load('@Url.Action("FormCambiaEstadoBulto","Administracion")?Bulto=' + Bulto, function (response,status,xhr) {
+            closeWaitingDialog();            
+            if (status == "success") {
+                $("#dialog-cambio").dialog("open");
+                borrar_contenido();
+            }
+            else {
+                alert("No fue posible cargar la información");
+            }
+        });
+    }
+    function VerCambioEstadoRoll(Bulto) {
+        waitingDialog({ title: "Buscando", message: "Buscando Formulario...<br/>" });
+        $("#dialog-cambio").load('@Url.Action("FormRollBack","Administracion")?Bulto=' + Bulto, function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == "success") {
+                $("#dialog-cambio").dialog("open");
+                borrar_contenido();
+            }
+            else {
+                alert("No fue posible cargar la información");
+            }
+        });
+    }    
+</script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<div id="dialog-cambio"></div>
+<div id="dialog-FinPrep"></div>
+<div id="dialog-documentos"></div>
+<div id="dialog-HistorialOT" style="min-height:300px;min-width:500px;"></div>
+<div id="dialog-Anular"></div>
+<input type="hidden" id="OTP" name="OTP" value="@Model.DatosAnular.PK_FOL_OTP_ID" />
+<input type="hidden" id="OTD" name="OTD" value="@Model.DatosAnular.PK_FOL_OTD_ID" />
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Datos del Pedido</a></li>		    
+    </ul>        
+    <div id="tabs-1">   
+        <table>
+            <tr>
+                <td>Cliente</td>
+                <td>Servicio</td>                
+                <td>Nombre Destinatario</td>
+                <td>Rut</td>
+                <td>Teléfono</td>
+            </tr>
+            <tr>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_CLI_EMP_RAZON_SOCIAL&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_PAR_SER_NOMBRE&nbsp;</div></td>                
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_DESTINATARIO_NOMBRE&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_DESTINATARIO_RUT&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_TELEFONO&nbsp;</div></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>Suc. Destino</td>
+                <td>Región</td>
+                <td>Comuna</td>
+                <td>Dirección</td>                
+            </tr>
+            <tr>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_PAR_SUC_NOMBRE&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_PAR_REG_NOMBRE&nbsp;</div></td>                
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_PAR_COM_NOMBRE (@Model.DatosAnular.FL_PAR_COM_CODIGO)&nbsp;</div></td>                
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_DESTINATARIO_DIRECCION&nbsp;@Model.DatosAnular.FL_FOL_OTD_DESTINATARIO_NUMERO&nbsp;</div></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>Fecha Estimada Entrega</td>
+                <td>Referencia 1 @Model.Referencia1</td> 
+                <td>Referencia 2 @Model.Referencia2</td>                
+            </tr>
+            <tr>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_FECHA_ESTIMADA&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_REFERENCIA1&nbsp;</div></td>   
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_REFERENCIA2&nbsp;</div></td>  
+                <td>
+                <button id="btnVerHistorialOT">
+                    <div style="float:left;width:130px;">       
+                    <div style="float:left;"><img alt="" src="@Url.Content("~/Images/file_temporary.png")?" /></div>                 
+                    <div style="float:left;">&nbsp;Ver Historial OT</div>                        
+                    </div>                       
+                </button>
+            </td>
+            <td>
+                <button id="btnVerDocumentosAsociados">
+                    <div style="float:left;width:130px;">       
+                    <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/folder_explore.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Doc. Asociados</div>                        
+                    </div>                       
+                </button>
+            </td>
+            </tr>
+        </table>
+        @{
+            var grid = new WebGrid(Model.ListaBultos, rowsPerPage: 9, ajaxUpdateContainerId: "myGrid");    
+        }         
+        <div  id="myGrid" style="min-width:600px;">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {                
+                    
+                grid.Column("PK_FOL_BLT_ID","Cod.Bulto"),     
+                grid.Column("FL_FOL_EST_NOMBRE","Estado"), 
+                grid.Column("SUC_ACTUAL","Suc.Actual"),    
+                grid.Column("FL_FOL_BLT_LARGO","Largo(CM)",format:@<text>
+                <div style="float:right">
+                    @if (item.FL_FOL_BLT_LARGO != null)
+                    {
+                    @String.Format("{0:0.000}", item.FL_FOL_BLT_LARGO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_ALTO","Alto(CM)",format:@<text>
+                <div style="float:right">    
+                @if (item.FL_FOL_BLT_ALTO != null)
+                    {            
+                @String.Format("{0:0.000}", item.FL_FOL_BLT_ALTO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_ANCHO","Ancho(CM)",format:@<text>
+                <div style="float:right">
+                @if (item.FL_FOL_BLT_ANCHO != null)
+                    {
+                    @String.Format("{0:0.000}", item.FL_FOL_BLT_ANCHO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_PESO","Peso(KG)",format:@<text>
+                <div style="float:right">
+                @if (item.FL_FOL_BLT_PESO != null)
+                    {
+                    @String.Format("{0:0.000}", item.FL_FOL_BLT_PESO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_PESO_VOLUMETRICO","PesoVol.",format:@<text>
+                <div style="float:right">
+                @if (item.FL_FOL_BLT_PESO_VOLUMETRICO != null)
+                    {
+                    @String.Format("{0:0.000}", item.FL_FOL_BLT_PESO_VOLUMETRICO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_PESO_VOLUMETRICO","Opciones",format:@<text>
+                    <div style="text-align:center;">
+                        @if (Model.ListaEsa.Where(m=>m.PK_FOL_EST_ID==item.PK_FOL_EST_ID).Count()>0)
+                        {
+                            <a href="#" onclick="javascript:VerCambioEstado(@item.PK_FOL_BLT_ID)">
+                                [Cambiar Estado]
+                            </a>
+                        }
+                        else if (Model.ListaEEX.Where(m=>m.PK_FOL_EST_ID==item.PK_FOL_EST_ID).Count()>0)
+                        {
+                            <a href="#" onclick="javascript:VerCambioEstadoRoll(@item.PK_FOL_BLT_ID)">
+                                [Regresar Estado]
+                            </a>
+                        }
+
+                    </div>
+                </text>)                          
+            })
+        </div>
+    </div>
+    </div>
+</div>

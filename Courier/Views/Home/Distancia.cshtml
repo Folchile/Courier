@@ -1,0 +1,11 @@
+﻿@model Courier.Models.ComunasCoordenadasModels
+
+<p>Kilometros: <strong>@Model.Kilometros</strong></p>
+
+
+@Html.HiddenFor(m => m.cOrigen.Latitud)
+@Html.HiddenFor(m => m.cOrigen.Longitud)
+
+
+@Html.HiddenFor(m => m.cDestino.Latitud)
+@Html.HiddenFor(m => m.cDestino.Longitud)

@@ -1,0 +1,70 @@
+﻿@model Courier.Models.MapOtModels      
+    
+@{
+    var grid = new WebGrid(Model.resultLista, rowsPerPage: 15, ajaxUpdateContainerId: "myDetalles");
+}
+<script type="text/javascript">
+    $(function () {
+        $("#tabsMan").tabs();
+        $(".boton").button();
+    })
+
+
+
+</script>
+<div id="tabsMan">
+    <ul>
+        <li>Registros</li>
+    </ul>
+    
+    <div id="tabsMan-1">
+        @if (Model.resultLista != null)
+        {
+            <div id="myDetalles">
+                <div>
+                    @grid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {         
+                        grid.Column("OT","OT",@<text>
+                            <div style="width: 100px; text-align: center">      
+                                @item.OT
+                            </div>
+                        </text>) ,    
+                        grid.Column("COMUNA","Comuna"),  
+                        grid.Column("DIRECCION","Dirección"),
+                        grid.Column("NUMERO","Número"), 
+                        grid.Column("LATITUD","Latitud"), 
+                        grid.Column("LONGITUD","Longitud"),  
+                        grid.Column("FECHA_CREACION","Fecha Creación"),
+                        grid.Column("Ot","Opciones",@<text>
+                            <div style="width: 100%; text-align: center">  
+                                @if (@item.Latitud != null && @item.Latitud != 0)
+                                {
+                                    <a href="#" onclick="javascript:BuscarEnMapa('@item.OT')"><img border="0" title="Ver Mapa" alt="Ver Mapa" src="@Url.Content("~/Images/localizacion_s24.png")" /></a>                    
+                                }else{
+                                    <a href="#" onclick="javascript:BuscarLocalizacion('@item.OT', '@item.DIRECCION', '@item.NUMERO', '@item.COMUNA')"><img border="0" title="Buscar Localización" alt="Buscar Localización" src="@Url.Content("~/Images/localizacion_24.png")" /></a>                    
+                                }
+                                <a href="#" onclick="javascript:EditarDireccion('@item.OT')"><img border="0" title="Editar Dirección" alt="Editar Dirección" src="@Url.Content("~/Images/edit_address_24.png")" /></a>                    
+                            </div>
+                        </text>) 
+                    })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div>
+                No existen registros.</div>
+        }
+    </div>
+</div>

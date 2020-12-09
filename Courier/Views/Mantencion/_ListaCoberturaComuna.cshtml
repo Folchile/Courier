@@ -1,0 +1,109 @@
+﻿@model Courier.Models.CoberturaModels
+@{
+var grid = new WebGrid(Model.ListaCobertura, rowsPerPage: 11, ajaxUpdateContainerId: "grid");    
+} 
+<div id="grid">                
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {      
+    grid.Column("FL_PAR_REG_NOMBRE","Región"), 
+    grid.Column("FL_PAR_COM_NOMBRE","Comuna"), 
+    grid.Column("FL_PAR_COB_LU","Lunes",format:
+    @<text>
+                            
+        @if (item.FL_PAR_COB_LU == true)
+        {
+            <img alt="Lunes" title="Lunes" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+        }
+        else{
+            <img alt="Lunes" title="Lunes"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+        }
+                            
+    </text>),
+    grid.Column("FL_PAR_COB_MA","Martes",format:
+    @<text>
+                            
+        @if (item.FL_PAR_COB_MA== true)
+        {
+            <img alt="Martes" title="Martes"  style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+        }
+        else{
+            <img alt="Martes" title="Martes"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+        }
+                            
+    </text>),
+    grid.Column("FL_PAR_COB_MI","Miércoles",format:
+    @<text>
+                            
+        @if (item.FL_PAR_COB_MI== true)
+        {
+            <img alt="Miércoles" title="Miércoles"  style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+        }
+        else{
+            <img alt="Miércoles" title="Miércoles"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+        }
+                            
+    </text>),
+    grid.Column("FL_PAR_COB_JU","Jueves",format:
+    @<text>
+                            
+        @if (item.FL_PAR_COB_JU== true)
+        {
+            <img alt="Jueves" title="Jueves" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+        }
+        else{
+            <img alt="Jueves" title="Jueves" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+        }
+                            
+    </text>),
+    grid.Column("FL_PAR_COB_VI","Viernes",format:
+    @<text>
+                            
+        @if (item.FL_PAR_COB_VI== true)
+        {
+            <img alt="Viernes" title="Viernes" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+        }
+        else{
+            <img alt="Viernes" title="Viernes" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+        }
+                            
+    </text>),
+    grid.Column("FL_PAR_COB_SA","Sábado",format:
+    @<text>
+                            
+        @if (item.FL_PAR_COB_SA== true)
+        {
+            <img alt="Sabado" title="Sabado" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+        }
+        else{
+            <img alt="Sabado" title="Sabado" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+        }
+                            
+    </text>),
+    grid.Column("FL_PAR_COB_DO","Domingo",format:
+    @<text>
+                            
+        @if (item.FL_PAR_COB_DO== true)
+        {
+            <img alt="Domingo" title="Domingo" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+        }
+        else{
+            <img alt="Domingo" title="Domingo" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+        }
+                            
+    </text>)
+                        
+                
+    })
+    Comunas: @Model.ListaCobertura.Count()
+</div>

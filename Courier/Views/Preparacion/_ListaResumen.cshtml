@@ -1,0 +1,53 @@
+﻿@model Courier.Models.DespachoModels
+@{
+    var grid = new WebGrid(Model.oListaResumen, rowsPerPage: 15, ajaxUpdateContainerId: "myGridResumen");    
+} 
+@if (Model.oListaResumen != null)
+{
+    <div id="myGridResumen">
+        <div >
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {   
+                grid.Column("FL_PAR_SUC_NOMBRE","Ok",format:@<text>
+                @if (item.CANTIDAD_BULTOS == item.FL_FOL_OTD_BULTO)
+                {
+                    <img src='@Url.Content("~/Images/tick.png")' alt="Ok" border="0" />
+                }                
+                </text>),                       
+                grid.Column("FL_PAR_SUC_NOMBRE","Tipo",format:@<text>
+                @if (item.PK_PAR_SUC_ID==Model.idSucursalActual)
+                {
+                    <label>En Ruta Cliente</label>
+                }
+                else
+                {
+                    <label>En Ruta Sucursal</label>
+                }
+                </text>),
+                grid.Column("FL_PAR_SUC_NOMBRE","Sucursal Destino"),
+                grid.Column("FL_PAR_REG_NOMBRE","Región"),
+                grid.Column("FL_PAR_COM_NOMBRE","Comuna"),  
+                grid.Column("CANTIDAD_BULTOS","OK/Total",format:@<text>
+                <div style="float:right">
+                    @item.CANTIDAD_BULTOS/@item.FL_FOL_OTD_BULTO
+                </div>
+                </text>)             
+            })
+        </div>        
+    </div>
+}
+else
+{
+    <div>No Se han ingresado Bultos</div>
+}

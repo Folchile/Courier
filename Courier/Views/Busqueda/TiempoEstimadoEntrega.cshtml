@@ -1,0 +1,50 @@
+﻿@model Courier.Models.BusquedaModels
+
+@{
+    ViewBag.Title = "Tiempo estimado entrega";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/TableBlue.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $("#procesar")
+            .button()
+            .click(function () {
+                $("#frmEnviar").submit();
+            });
+        $("#tabs").tabs();
+    });
+    function Inicio() {
+        waitingDialog({ title: "Cargando", message: "Cargando Resultado...<br/>" });
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+</script>
+
+@using(Ajax.BeginForm("ProcesarBusqueda","Busqueda",new AjaxOptions { HttpMethod="Post",UpdateTargetId="divResult",OnBegin="javascript:Inicio();",OnComplete="javascript:Fin();",OnFailure="javascript:Fin();",OnSuccess="javascript:Fin();" },new { id ="frmEnviar"} ))
+{
+    <table>
+        <tr>
+            <td>Sucursal Origen</td>
+            <td>@Html.DropDownListFor(m=>m.SucursalOrigen,Model.ListaSucursal)</td>
+        </tr>
+        <tr>
+            <td>Sucursal Destino</td>
+            <td>@Html.DropDownListFor(m => m.SucursalDestino, Model.ListaSucursal, "-- Seleccione Destino --") </td>
+            <td><input type="button" name="procesar" id="procesar" value="Procesar"/></td>
+        </tr>            
+
+    </table>
+    
+}
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Resultado</a></li>		
+	</ul>
+	<div id="tabs-1">
+		<div id="divResult"></div>
+	</div>
+
+</div>

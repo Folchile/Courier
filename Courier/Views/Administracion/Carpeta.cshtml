@@ -1,0 +1,257 @@
+﻿ @model Courier.Models.AdministracionCarpeta
+@{
+    ViewBag.Title = "Carpeta";    
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+    function borrar_contenido()
+    {
+        
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');              
+    }
+    $(function () {
+        $("#tabs").tabs();
+        $("#llamar")
+                .button()
+                .click(function () {
+                    $("#dialog-agregarcarpeta").dialog("open");
+                    $('#dialog-agregarcarpeta').load('@Url.Action("formularios", "administracion") #frmcarpeta',
+                    function (responseText, textStatus, XMLHttpRequest) {
+                        if (textStatus == "success") {
+                            borrar_contenido();
+                        }
+                        if (textStatus == "error") {
+                            // oh noes!
+                        }
+                    });
+                });
+        $("#llamarSub")
+        .button()
+        .click(function () {
+            $("#dialog-agregarcarpeta").dialog("open");
+            $('#dialog-agregarcarpeta').load('@Url.Action("formulariosSubCarpeta", "administracion") #frmsubcarpeta',
+            function (responseText, textStatus, XMLHttpRequest) {
+                if (textStatus == "success") {
+                    borrar_contenido();
+                }
+                if (textStatus == "error") {
+                    // oh noes!
+                }
+            });
+        });
+
+        $("#llamarItem")
+        .button()
+        .click(function () {
+            $("#dialog-agregarcarpeta").dialog("open");
+            $('#dialog-agregarcarpeta').load('@Url.Action("formulariosItem", "administracion") #frmItem',
+
+            function (responseText, textStatus, XMLHttpRequest) {
+                if (textStatus == "success") {
+                    borrar_contenido();                   
+                }
+                if (textStatus == "error") {
+                    // oh noes!
+                }
+            });
+        });
+
+    });
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-agregarcarpeta").dialog({
+            autoOpen: false,     
+            width:"auto",
+            position:"top",      
+            modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    $.validator.unobtrusive.parse("#frmagregarelemento");                    
+                    if ($("#frmagregarelemento").valid()) {
+                        $("#frmagregarelemento").submit();
+                        $(this).dialog("close");                        
+                        $("#dialog-resultado").dialog("open");                                                
+                    }
+                    else {
+                        //alert("novalido");
+                        //$(this).dialog("close");
+
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+    
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    $('#myGrid1').load('@Url.Action("carpeta", "administracion") #myGrid1');
+                    $('#myGrid2').load('@Url.Action("subcarpeta", "administracion")');
+                    $('#myGrid3').load('@Url.Action("item", "administracion")');
+                }
+            }
+        });
+    });
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-eliminarcarpeta").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {                    
+                    $("#frmeliminarelemento").submit();
+                    $(this).dialog("close");
+                    $("#dialog-resultado").dialog("open");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-eliminarsubcarpeta").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmeliminarsubcarpeta").submit();
+                    $(this).dialog("close");
+                    $("#dialog-resultado").dialog("open");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editarcarpeta").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {                   
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+    function ElimninarCarpeta(carpeta_id, carpeta_name) {
+        $("#dialog-resultado").html("");
+        $("#dialog-eliminarcarpeta").dialog("open");        
+        $("#carpeta_id").val(carpeta_id);
+        //$("#carpeta_name").val(carpeta_name);
+        $("#dialog-eliminarcarpeta").html("<p>¿Está seguro(a) que desea eliminar la carpeta <strong>" + carpeta_name + " </strong> ? </p>");
+    }
+    function ElimninarSubCarpeta(carpeta_id, carpeta_name) {
+        $("#dialog-resultado").html("");
+        $("#dialog-eliminarsubcarpeta").dialog("open");
+        $("#subcarpeta_id").val(carpeta_id);        
+        $("#dialog-eliminarsubcarpeta").html("<p>¿Está seguro(a) que desea eliminar la Sub Carpeta <strong>" + carpeta_name + " </strong> ? </p>");
+    }
+    function EditarCarpeta(carpeta_id) {
+        $("#carpeta_edit_id").val(carpeta_id);
+        $("#dialog-resultado").html("");
+        $("#frmeditarelemento").submit();
+        $("#dialog-agregarcarpeta").dialog("open");
+    }
+    function EditarSubCarpeta(subcarpeta_id) {
+        $("#subcarpeta_edit_id").val(subcarpeta_id);
+        $("#dialog-resultado").html("");
+        $("#frmeditarsubcarpeta").submit();
+        $("#dialog-agregarcarpeta").dialog("open");
+    }
+    function CambiaCarpeta(carpeta_id) {
+        $("#id_load_sbc").val(carpeta_id);
+        $("#fmractualizasubcarpeta").submit();
+    }
+</script>
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-agregarcarpeta" title="Mantención"></div> 
+<div id="dialog-eliminarcarpeta" title="Eliminar Carpeta"></div> 
+<div id="dialog-eliminarsubcarpeta" title="Eliminar Sub Carpeta"></div> 
+
+
+
+ @using (Ajax.BeginForm("EliminarCarpeta", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmeliminarelemento" }))
+ {
+    <input type="hidden" name="carpeta_id" id="carpeta_id" />    
+ }
+ @using (Ajax.BeginForm("EditarCarpeta", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-agregarcarpeta" }, new { id = "frmeditarelemento" }))
+ {
+    <input type="hidden" name="carpeta_edit_id" id="carpeta_edit_id" />   
+ }
+ @using (Ajax.BeginForm("EliminarSubCarpeta", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmeliminarsubcarpeta" }))
+ {
+    <input type="hidden" name="subcarpeta_id" id="subcarpeta_id" />    
+ }
+  @using (Ajax.BeginForm("EditarSubCarpeta", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-agregarcarpeta" }, new { id = "frmeditarsubcarpeta" }))
+ {
+    <input type="hidden" name="subcarpeta_edit_id" id="subcarpeta_edit_id" />   
+ }
+
+ @using (Ajax.BeginForm("cargaidSubCarpeta", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ListaSBC" }, new { id = "fmractualizasubcarpeta" }))
+ {
+    <input type="hidden" name="id_load_sbc" id="id_load_sbc" />   
+ }
+ <div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Carpeta</a></li>
+		<li><a href="#tabs-2">SubCarpeta</a></li>
+		<li><a href="#tabs-3">Items</a></li>
+	</ul>
+	<div id="tabs-1">
+        <div style="float:right">            
+            <input type="button" id="llamar" value="+ Agregar Carpeta" />
+        </div>
+		<div id="myGrid1"> @Html.Partial("_ListaCarpetas",Model)</div>
+	</div>
+	<div id="tabs-2">
+        <div style="float:right">            
+            <input type="button" id="llamarSub" value="+ Agregar Sub Carpeta" />
+        </div>
+		<div id="myGrid2"> @Html.Partial("_ListaSubCarpetas",Model)</div>
+	</div>
+	<div id="tabs-3">
+        <div style="float:right">            
+            <input type="button" id="llamarItem" value="+ Agregar Item" />
+        </div>
+		<div id="myGrid3"> @Html.Partial("_ListaItems",Model)</div>
+	</div>
+</div>

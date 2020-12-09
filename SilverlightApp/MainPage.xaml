@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="SilverlightApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+    mc:Ignorable="d" Height="51" Width="147" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    
+    <Grid x:Name="LayoutRoot" Background="White" Height="64" Width="151" Opacity="3">
+        <Button Content="Impresión" Height="23" HorizontalAlignment="Left" Margin="36,87,0,0" Name="button4" VerticalAlignment="Top" Width="75" Click="button4_Click" />
+        <sdk:Label Height="16" HorizontalAlignment="Left" Margin="12,7,0,0" Name="label1" VerticalAlignment="Top" Width="120" Content="Impresión Etiqueta" Foreground="#FFE20000" />
+    </Grid>
+</UserControl>

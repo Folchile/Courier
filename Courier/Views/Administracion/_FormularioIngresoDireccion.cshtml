@@ -1,0 +1,67 @@
+﻿@model Courier.Models.FormularioCambiaDireccionModels
+<script type="text/javascript">
+    function IFormDev() {
+        waitingDialog({ title: "Guardando", message: "Guardando Formulario...<br/>" });
+        $("#dialog-cambiadireccion").dialog("close");
+    }
+    function IFormErr() {
+        closeWaitingDialog();
+        alert("No fue posible guardar la información")
+    }
+    function IFormSuc(data) {
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            CargarFormularioEnviado();
+            $("#dialog-cambiadireccion").dialog("close");
+        }
+        else {
+            alert(data.Mensaje);
+        }
+    }
+    function CambiarComuna(valor) {        
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 111111111)
+        $("#Localidad").load('@Url.Action("DropDownLocalidad","Devolucion")?Comuna=' + valor+ '&r=' + randomnumber + ' #Localidad option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar las comunas');
+            }
+        });
+    }
+</script>
+@using (Ajax.BeginForm("GuardarDireccion", "Administracion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:IFormDev();", OnFailure = "javascript:IFormErr();", OnSuccess = "javascript:IFormSuc(data);" }, new { id = "frmGuardarDireccion" }))
+{
+    @Html.HiddenFor(m=>m.DEN_ID)    
+    <table>
+        <tr><td>@Html.LabelFor(m=>m.Via)</td><td>@Html.DropDownListFor(m=>m.Via,Model.ListaVia,"-- Seleccione Vía --")</td></tr>
+        <tr><td></td><td>@Html.ValidationMessageFor(m=>m.Via)</td></tr>    
+        <tr><td>@Html.LabelFor(m=>m.Region)</td><td>@Html.DropDownListFor(m=>m.Region,Model.ListaRegion, "-- Seleccione Región --")</td></tr>
+        <tr><td></td><td>@Html.ValidationMessageFor(m=>m.Region)</td></tr>
+        <tr><td>@Html.LabelFor(m=>m.Comuna)</td><td>@Html.DropDownListFor(m => m.Comuna, Model.ListaComuna, "-- Seleccione Comuna --", new { @onchange = "javascript:CambiarComuna(this.value)" })</td></tr>
+        <tr><td></td><td>@Html.ValidationMessageFor(m=>m.Comuna)</td></tr>
+        <tr><td>@Html.LabelFor(m=>m.Localidad)</td><td>@Html.DropDownListFor(m=>m.Localidad,Model.ListaLocalidad, "-- Seleccione Localidad --")</td></tr>        
+        <tr><td></td><td>@Html.ValidationMessageFor(m=>m.Localidad)</td></tr>                           
+        <tr><td>@Html.LabelFor(m=>m.Direccion)</td><td>@Html.TextBoxFor(m => m.Direccion, new { @size="30",@maxlength="200" })</td></tr>
+        <tr><td></td><td>@Html.ValidationMessageFor(m=>m.Direccion)</td></tr>        
+        <tr><td>@Html.LabelFor(m=>m.Numero)</td><td>@Html.TextBoxFor(m=>m.Numero2, new { @size="10",@maxlength="10" })</td></tr>                
+        <tr><td></td><td>@Html.ValidationMessageFor(m=>m.Numero)</td></tr>
+        <tr><td>@Html.LabelFor(m=>m.TDE_ID)</td><td>@Html.DropDownListFor(m=>m.TDE_ID,Model.ListaTDE)</td></tr>                
+        <tr><td></td><td>@Html.ValidationMessageFor(m=>m.TDE_ID)</td></tr>
+    </table>    
+    <div>*Solo puede ser Devolución, cuando la OT está rechazada</div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#Region").change(function () {
+            waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+            var randomnumber = Math.floor(Math.random() * 111111111)
+            $("#Comuna").load('@Url.Action("DropDownComuna","Devolucion")?Region=' + $(this).val() + '&r=' + randomnumber+ ' #Comuna option', function (response, status, xhr) {
+                closeWaitingDialog();
+                if (status == 'error') {
+                    alert('Error al cargar las comunas');
+                }                
+            });
+        });
+    })
+</script>

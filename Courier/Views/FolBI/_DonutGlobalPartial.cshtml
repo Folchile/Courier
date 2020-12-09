@@ -1,0 +1,69 @@
+﻿@model Courier.Models.FolBIModels
+
+
+@using (Html.BeginForm())
+{
+
+    @Html.DevExpress().Chart(settings =>
+        { 
+        settings.Name = "chart";
+        settings.BorderOptions.Visibility = DefaultBoolean.False;
+        settings.Height = 400;
+        settings.Width = 400;
+
+        settings.Legends.Default(l =>
+        {
+            l.AlignmentHorizontal = LegendAlignmentHorizontal.Center;
+            l.AlignmentVertical = LegendAlignmentVertical.BottomOutside;
+            l.Direction = LegendDirection.LeftToRight;
+            l.MaxHorizontalPercentage = 60;
+            l.Border.Visibility = DefaultBoolean.False;
+                       
+        });
+        settings.ClientSideEvents.ObjectSelected = "chartClick";
+        
+        Palette myPalette = new Palette("MyPalette");
+        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkGreen));    
+        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkRed));
+        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkOrange));  
+        myPalette.Add(new PaletteEntry(System.Drawing.Color.Gray));    
+         
+         
+        settings.PaletteRepository.Add("MyPalette", myPalette);
+        settings.PaletteName = "MyPalette";
+        settings.Series.Add(s =>
+        {   
+            s.LabelsVisibility = DefaultBoolean.False;
+            s.Name = "Paises";
+            s.ArgumentDataMember = "EstadoNombre";
+            var aux = s;
+            s.ValueDataMembers[0] = "Cantidad";
+            s.LegendTextPattern = "{A}: {VP:P0}";  
+            s.ToolTipEnabled = DefaultBoolean.True;
+            s.ToolTipSeriesPattern = "{V}";          
+            s.Views().DoughnutSeriesView(v =>
+            {
+                v.Animation.Enabled = true;
+                v.HoleRadiusPercent = 60;
+                v.ExplodeMode = PieExplodeMode.None;
+                v.SeriesLabel(l =>
+                {   
+                    l.Position = PieSeriesLabelPosition.Inside;
+                    //l.TextPattern = "{A}: {VP:P0}";
+                    l.TextPattern = "{VP:P0}";
+                    l.TextColor = System.Drawing.Color.Black;
+                    l.BackColor = System.Drawing.Color.WhiteSmoke;
+                    l.LineVisibility = DefaultBoolean.False;
+                    l.Border.Visibility = DefaultBoolean.False;
+                });
+            });
+            
+        });
+        settings.Titles.Add(new ChartTitle()
+        {
+            Font = new System.Drawing.Font("Tahoma", 18),
+            Text = "Estados de Entrega"
+        });
+        }).Bind(Model.listaReportes.ToList()).GetHtml()
+}
+

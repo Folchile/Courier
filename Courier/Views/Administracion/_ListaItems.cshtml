@@ -1,0 +1,114 @@
+﻿@model Courier.Models.AdministracionCarpeta
+<script language="javascript" type="text/javascript">
+    function EliminarItem() {//codigo de comunas        
+        waitingDialog({ title: "Cargando", message: "Eliminando...<br/>" });
+        $.ajax({
+            url: "@Url.Action("EliminarItem","Administracion")?oitem=" + $("#eliminarlst").val(),
+            success: function (data) {
+                $('#myGrid3').load('@Url.Action("item", "administracion")');           
+                closeWaitingDialog();
+            }
+
+        });
+    }
+    function verdialogeliminaritem(oitem) {       
+        $("#eliminarlst").val(oitem);
+        $("#dialog-eliminaritem").html("<p>¿Está seguro(a) que desea eliminar el item?</p>");
+        $("#dialog-eliminaritem").dialog("open");
+    }
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-eliminaritem").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    EliminarItem($("#eliminarlst").val());
+                    $("#dialog-eliminaritem").dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-frmRoles").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmactualizarroles").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#frmResultRol").dialog({ autoOpen: false, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+    function EditarRoles(item) {        
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $.ajax({
+            url: '@Url.Action("EditarRolFuncion", "Administracion")?oItem=' + item,
+            success: function (data) {
+                closeWaitingDialog();
+                $("#dialog-frmRoles").html(data);
+                $("#dialog-frmRoles").dialog("open");
+            }
+        });
+
+    }
+
+    function inicioOperacion() {
+        waitingDialog({ title: "Espere", message: "Guardando/Actualizando...<br/>" });
+    }
+    function finOperacion() {
+        closeWaitingDialog();               
+        if ($("#frmResultRol").html() != "") {
+            $("#frmResultRol").dialog("open");
+        }
+    }
+</script>
+
+<div id="frmResultRol" title="Resultado"></div>
+<div id="dialog-frmRoles"></div>
+<div id="dialog-eliminaritem" title="Eliminar"></div>
+<input type="hidden" value="0" id="eliminarlst" />
+<div id="mygridlist">
+@{
+    var grid = new WebGrid(Model.oListaItemsForTable,rowsPerPage:15,ajaxUpdateContainerId:"mygridlist");    
+} 
+
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle:"mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {      
+                grid.Column("FL_PAR_CAR_NOMBRE","Carpeta"), 
+                grid.Column("FL_PAR_SBC_NOMBRE","Sub Carpeta"),   
+                grid.Column("FL_PAR_LST_NOMBRE","Item"),   
+                grid.Column("FL_PAR_LST_ORDEN","Orden"),  
+        
+    
+
+    
+                grid.Column("",header:"Acciones",format:@<text>
+                [<a href="#" onclick="javascript:verdialogeliminaritem(@item.pk_par_lst_id)">Eliminar</a>]
+                [<a href="#" onclick="javascript:EditarRoles(@item.pk_par_lst_id)">Roles</a>]
+                                                </text>)
+            })
+</div>

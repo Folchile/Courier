@@ -1,0 +1,7 @@
+﻿@model Courier.Models.IngresoPedidoModel   
+@using (Ajax.BeginForm("GuardarIngresoManual", "Pedido", new AjaxOptions { HttpMethod = "Post" })) 
+{                  
+    <div id="contentComunaResult">
+        @Html.DropDownListFor(m => m.RetiroComuna, Model.oListaComuna, "-- Seleccione Comuna --", new { onchange="javascript:CambioComunaRetiro(this.value)" })        
+    </div>
+}

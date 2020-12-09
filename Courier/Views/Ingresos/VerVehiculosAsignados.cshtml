@@ -1,0 +1,169 @@
+﻿@model MvcReporteViajes.Models.ConductoresModels
+@{
+    var grid = new WebGrid(Model.ListaTransAsoc, rowsPerPage: 14, ajaxUpdateContainerId: "gridVerTransAsoc");
+}
+
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinProcess(data2) {
+        if (data2.Ok == true) {
+            $("#dialog-resultado").html(data2.Mensaje);
+            $("#dialog-resultado").dialog("open");
+        }
+        else {
+            alert(data2.Mensaje);
+
+        }
+
+    }
+
+
+
+
+    $(function () {
+        $("#btasigtrans").button()
+        .click(function () {
+            AsigTransp('');
+        });
+    });
+
+    $(function () {
+        $("#asigtr").dialog({ autoOpen: false, title: "Asigna Transporte", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    //                    alert('aca');
+                    //                    cargaDetRecepcion();
+                    $(this).dialog("close");
+
+                }
+
+            }
+
+
+        });
+    })
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-elimasociacion").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmdesasociaTrans").submit();
+                    $(this).dialog("close");
+                    AsignaTransporte($("#RUTAUX").val(), $("#NOMAUX").val())
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+    function AsigTransp(bpat) {
+        $("#BUSCARPAT").val(bpat);
+        $("#asigtr").dialog("open");
+//        $("#asigtr").load('@Url.Action("MostrarTransporte","Ingresos")?BUSCARPAT=' + $("#BUSCARPAT").val(), function (response, status, xhr) {
+//            borrar_contenido();
+//        });
+        $("#asigtr").load('@Url.Action("MostrarTransporte","Ingresos")?RUTAUX=' + $("#RUTAUX").val() + '&BUSCARPAT=' + $("#BUSCARPAT").val(), function (response, status, xhr) {
+            borrar_contenido();
+        });
+    }
+
+
+
+    function EliminarAsoc(id_d, pte) {
+        $("#dialog-elimasociacion").dialog("open");
+        $("#IDPATENTE").val(id_d);
+//        alert($("#id_destr").val());
+        $("#dialog-elimasociacion").html("<p>¿Está seguro(a) que desea Desasociar la Patente <strong>" + pte + " </strong> ? </p>");
+    }
+
+
+</script>
+
+
+<div id="dialog-elimasociacion" title="Desasociar"></div>
+
+
+
+
+@using (Ajax.BeginForm("DesasociarTransporte", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinProcess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmdesasociaTrans" }))
+{
+    <input type="hidden" name="id_destr" id="id_destr" />
+   @Html.HiddenFor(m => m.IDPATENTE)
+   @Html.HiddenFor(m => m.RUTAUX)
+}
+
+
+<div style="float:right; margin-bottom:5px;"> 
+        <button id="btasigtrans">                
+               <table border="0" cellpadding="0" cellspacing="2">
+                     <tr valign="middle"><td><img alt="Asignar Transporte" src="@Url.Content("~/Images/car_add.png")" /></td><td>&nbsp;Asignar Transporte</td></tr>
+               </table>                                
+        </button>
+ </div>
+
+
+ @using (Html.BeginForm())
+ {
+     <table>
+          <tr>
+              <td><strong> @Html.LabelFor(m => m.NOMAUX)</strong></td>
+              <td>@Html.TextBoxFor(m => m.NOMAUX, new { @style = "width:200px;font-size: 10px;text-align:left", @readonly = "readonly" })</td>
+          </tr>
+     </table>
+ }
+
+
+<div>
+   @Html.HiddenFor(m => m.RUTAUX)
+   @Html.HiddenFor(m => m.BUSCARPAT)
+ </div>
+
+
+<div id="gridVerTransAsoc">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Tid","ID"),
+       grid.Column("Tpatente","PATENTE"),
+       grid.Column("Tmarca","MARCA"),
+       grid.Column("Tmodelo","MODELO"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                        <a href="#" onclick="javascript:EliminarAsoc('@item.Tid','@item.Tpatente')"><img border="0" src='@Url.Content("~/Images/car_minus.png")' alt="Eliminar @item.Tpatente" title="Eliminar @item.Tpatente"/></a>
+                                    </text>)
+ })
+</div>
+
+<div id="asigtr">
+
+</div>

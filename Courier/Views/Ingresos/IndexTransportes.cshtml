@@ -1,0 +1,240 @@
+﻿@model MvcReporteViajes.Models.VehiculosModels
+           
+<script type="text/javascript">
+    $(function () {
+        $(".boton").button();
+        $(document).ready(function () {
+            $("#tabss1").tabs();
+            $("#tabss2").tabs();
+            CargaListadoTransportes();
+
+        });
+
+        $("#dialog-confirm-elim").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Confirma', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    CargaListadoTransportes();
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-confirm-Asig").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Confirma', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    CargaListadoTransportes();
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-errores-Asig").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Atención', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+//        $("#asigtrans").dialog({ title: 'Nombre | : @Model.NombreConductor |Apellido | :    |',
+//            autoOpen: false, position: { my: 'center top', at: 'center top' }, minWidth: 1200, modal: true,
+//            buttons: {
+//                Cerrar: function () {
+//                    $(this).dialog("close");
+
+//                }
+//            }
+//        });
+    });
+
+    function CargaTransPorSucursal() {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $("#ListadoVehiculosPorSuc").html('<img src="@Url.Content("~/images/8.gif")">');
+        $.ajax({
+            url: '@Url.Action("LstTransPorSuc", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                SUCURSAL: $("#SUCURSAL").val()
+            }
+        })
+        .done(function (data) {
+            $("#ListadoVehiculosPorSuc").html(data);
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la información</p>");
+            $("#dialog-gral").dialog("open");
+        });
+    }
+
+    function CargaListadoTransportes() {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $("#LstVehicAsignadas").html('<img src="@Url.Content("~/images/8.gif")">');
+        $.ajax({
+            url: '@Url.Action("LstTransAsociados", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                RutCondAux: $("#RutCondAux").val()
+            }
+        })
+        .done(function (data) {
+            $("#LstVehicAsignadas").html(data);
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la información</p>");
+            $("#dialog-gral").dialog("open");
+        });
+    }
+    function mantienepag() {
+        $(".boton").button();
+    }
+
+    function fnAsignaMovil(Idp) {
+        $("#IdAux").val(Idp);
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Asignando Móvil", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("AsociarTransporte", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                RutCondAux: $("#RutCondAux").val(),
+                IdAux: $("#IdAux").val()
+            }
+        })
+        .done(function (data) {
+            if (data.Ok == true) {
+                $("#dialog-confirm-Asig").html("<p>Transporte Asignado!</p>");
+                $("#dialog-confirm-Asig").dialog("open");
+                //                CargaListadoTransportes();
+            }
+            else {
+//                alert(data.Mensaje);
+                $("#dialog-errores-Asig").html("<p>" + data.Mensaje + "</p>");
+                $("#dialog-errores-Asig").dialog("open");
+            }
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la lista de moviles</p>");
+            $("#dialog-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+
+
+    function fnEliminarMovil(tId) {
+        $("#IdAux").val(tId);
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Eliminando Movil", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("fnDesasociarMovil", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                RutCondAux: $("#RutCondAux").val(),
+                IdAux: $("#IdAux").val()
+            }
+        })
+        .done(function (data) {
+            if (data.Ok == true) {
+                $("#dialog-confirm-elim").html("<p>Transporte Eliminado!</p>");
+                $("#dialog-confirm-elim").dialog("open");
+//                CargaListadoTransportes();
+             }
+            else {
+                $("#dialog-errores-Asig").html("<p>" + data.Mensaje + "</p>");
+                $("#dialog-errores-Asig").dialog("open");
+            }
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la lista de sucursales</p>");
+            $("#dialog-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+
+    function CargaTransportes(idsel) {
+        $("#SUCURSAL").val(idsel);
+        CargaTransPorSucursal();
+    }
+
+
+</script>
+<table>
+     <tr>
+        <td><strong>@Html.LabelFor(m => m.NombreConductor):</strong>
+        @*</td>*@
+    @*</tr>
+     <tr>*@
+        @Html.TextBoxFor(m => m.NombreConductor, new { size = 30, @disabled = "disabled" })
+        
+   </td>
+    </tr>
+    @* @Html.TextBoxFor(m => m.NombreConductor, new { size = 30, @disabled = "disabled" })*@
+</table>
+@Html.HiddenFor(m => m.RutCondAux)
+@Html.HiddenFor(m => m.IdAux)
+<div>
+    
+    <div  style="float:left;width:50%;height:150%;"> 
+        <div id="tabss1">
+            <table> 
+                   <tr>
+                      @* <td>
+                         @Html.DropDownListFor(m => m.Ubicacion, Model.ListaUbicacionesReingreso, "---Seleccione---")</td>*@
+                         <td>@Html.LabelFor(m => m.SUCURSAL):</td>
+                         <td  valign="top">
+                                @Html.DropDownListFor(m => m.SUCURSAL, Model.LstSucursales, "-Seleccionar-", new { @onchange = "javascript:CargaTransportes(this.value);" })
+                            </td>
+            
+                    </tr>
+            </table>
+            <ul>
+               <li><a href="#tabss1-1">VEHICULOS</a></li>            
+            </ul>
+            
+           @* <div style="text-align:right;">
+                 <input type="button" class="boton" id="AsignTodas" onclick="javascript:AsignarTodas();" style="margin-bottom:7px;" value="Asignar Todas"/>
+            </div>*@
+            
+                @*<div style="text-align:right;margin-bottom:2px;">
+                    <button class="boton" @Texto id="AsignTodas" onclick="javascript:ConsultaRut()">
+                        <div style="float:left;height:23px;">       
+                            <div style="float:left;margin-top:2px;">&nbsp;Asignar Todas</div>                        
+                        </div>                       
+                    </button> 
+                </div> *@
+               
+            @*<table>
+                <tr><td>@Html.LabelFor(m=>m.BuscarPorAcc)</td>
+                <td>@Html.TextBoxFor(m => m.BuscarPorAcc, new { @style = "width:130px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event);" })</td>
+                <td><input type="button" id="BuscarAcc" onclick="javascript:ListaAccesorios();" style="margin-bottom:7px;" value="Filtrar"/></td></tr>
+            </table>*@
+            <div id="tabss1-1">
+                <div id="ListadoVehiculosPorSuc" style="height:300px;">
+            </div>
+          </div>       
+        </div>
+    </div>    
+    <div style="float:right;width:49%;height:100%;">
+        <div id="tabss2" style="height:100%;">
+	        <ul>
+		        <li><a href="#tabss2-1">VEHICULOS ASIGNADOS</a></li>                     
+	        </ul>
+            @*<div style="text-align:right;margin-bottom:2px;">
+                <button class="boton" id="DesasignarTodas" onclick="javascript:ConsultaRut()">
+                    <div style="float:left;height:23px;">       
+                        <div style="float:left;margin-top:2px;">&nbsp;Eliminar Todas</div>                        
+                    </div>                       
+                </button> 
+            </div>*@
+	        <div id="tabss2-1">             
+                <div id="LstVehicAsignadas" style="margin-top:0px;"></div>
+            </div>    
+        </div>
+    </div>
+</div>
+<div id="dialog-confirm-elim"></div>
+<div id="dialog-confirm-Asig"></div>
+<div id="dialog-errores-Asig"></div>

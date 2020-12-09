@@ -1,0 +1,32 @@
+﻿@model MvcReporteViajes.Models.DetalleGastosModels
+@{
+    ViewBag.Title = "_totalizaGastos";
+}
+
+
+
+
+@using (Ajax.BeginForm("Totaldetalle", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmenviartot" }))
+{
+    <table>
+          <tr>
+             <td><strong><div style="width:150px;;font-size: 14px">&nbsp;Totales</div></strong></td>
+             <td></td><td></td><td></td>
+             <td>@Html.TextBoxFor(m => m.TPeaje, new { @style = "width:50px;font-size: 10px;text-align:right" })</td>
+             <td>@Html.TextBoxFor(m => m.TEstac, new { @style = "width:55px;font-size: 10px;text-align:right" })</td>
+             <td>@Html.TextBoxFor(m => m.TViat, new { @style = "width:70px;font-size: 10px;text-align:right" })</td>
+             <td>@Html.TextBoxFor(m => m.TAloj, new { @style = "width:60px;font-size: 10px;text-align:right" })</td>
+             <td>@Html.TextBoxFor(m => m.TMant, new { @style = "width:70px;font-size: 10px;text-align:right" })</td>
+             <td>@Html.TextBoxFor(m => m.TCarDes, new { @style = "width:115px;font-size: 10px;text-align:right" })</td>
+             <td>@Html.TextBoxFor(m => m.TOtros, new { @style = "width:60px;font-size: 10px;text-align:right" })</td>
+             <td>@Html.TextBoxFor(m => m.TIva, new { @style = "width:65px;font-size: 10px;text-align:right" })</td>
+             <td>@Html.TextBoxFor(m => m.TTotal, new { @style = "width:50px;font-size: 10px;text-align:right" })</td>
+          </tr>
+    </table>
+    
+
+}
+
+
+
+

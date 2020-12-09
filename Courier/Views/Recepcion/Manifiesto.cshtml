@@ -1,0 +1,74 @@
+﻿@model Courier.Models.RecepcionManifiestoModels
+@{
+    ViewBag.Title = "Recepción Manifiesto";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#Guardar002").button()
+            .click(function () {
+                ValidarManifiesto();
+            });
+        $("#Mensaje002_1").dialog({ autoOpen: false, title: "Manifiesto", width: 'auto', modal: true,
+            buttons: {
+                'Aceptar': function () {
+                    $("#NumeroManifiesto").focus();
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+    function ValidarManifiesto() {
+        waitingDialog({ title: "Validar", message: "Validando N° Manifiesto...<br/>" });
+        $.ajax({
+            url: '@Url.Action("ValidarManifiesto","Recepcion")',
+            data: { NumeroManifiesto: $("#NumeroManifiesto").val() },
+            type: "POST",
+            success: function (data) {
+                if (data.Ok == true) {
+                    CargaDatosManifiesto();
+                }
+                else {
+                    $("#Mensaje002_1").html("<p>" + data.Mensaje + "</p>");
+                    $("#Mensaje002_1").dialog("open");
+                }
+                closeWaitingDialog();
+            },
+            error: function () {
+                alert("No fue posible validar la información");
+                closeWaitingDialog();
+            }
+        });
+    }
+    function EnterNumeroManifiesto(e) {
+        if (e.keyCode == '13') {
+            e.preventDefault();
+            ValidarManifiesto();
+        }
+    }
+    function CargaDatosManifiesto() {        
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#form0002_1").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#form0002_1").load('@Url.Action("BuscarManifiesto","Recepcion")?r=' + randomnumber + '&NumeroManifiesto=' + $("#NumeroManifiesto").val());
+    }
+</script>
+
+<div id="Mensaje002_1"></div>
+<table>
+<tr><td>@Html.LabelFor(m=>m.NumeroManifiesto)</td></tr>
+<tr>
+    <td>@Html.TextBoxFor(m => m.NumeroManifiesto, new { @onkeypress = "javascript:EnterNumeroManifiesto(event);" })</td>
+    <td>
+        <button id="Guardar002"> 
+            <div style="float:left;width:140px;">       
+            <div style="float:left;"><img alt="Cambiar Manifiesto" src='@Url.Content("~/Images/magnifier.png")' /></div>                 
+            <div style="float:left;">&nbsp;Buscar Manifiesto</div>                        
+            </div>                       
+        </button>
+    </td>
+</tr>
+</table>
+<div id="form0002_1"></div>
+<script type="text/javascript">
+    $("#NumeroManifiesto").focus();
+</script>

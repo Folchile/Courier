@@ -1,0 +1,228 @@
+﻿@model Courier.Models.AdministracionCarpeta
+
+@{
+    var oAccion = "";
+    switch (Model.Tipo)
+    {
+        case 1: oAccion = "AgregarCarpeta";
+            break;
+        case 2: oAccion = "SaveEditarCarpeta";
+            break;
+        case 3: oAccion = "AgregarSubCarpeta";
+            break;
+        case 4: oAccion = "SaveEditarSubCarpeta";
+            break;
+        case 5: oAccion = "AgregarItem";
+            break;
+        case 6: oAccion = "SaveEditarItem";
+            break;
+        default:
+            oAccion = "";
+            break;
+    }
+    if (Model.Tipo == 1 || Model.Tipo == 2)
+    {
+        <div id="frmcarpeta">
+        @using (Ajax.BeginForm(oAccion, "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmagregarelemento" }))
+        {
+                <fieldset>
+                    <legend>Información</legend>
+                    @Html.HiddenFor(m => m.Id)
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.NombreCarpeta)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(m => m.NombreCarpeta, new { size = 30, length = 30 })
+                        @Html.ValidationMessageFor(m => m.NombreCarpeta)
+                    </div>      
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Orden)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(m => m.Orden)
+                        @Html.ValidationMessageFor(m => m.Orden)
+                    </div>      
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Clase)
+                    </div>
+                    <div class="editor-field">
+                        <p>@Html.RadioButtonFor(m => m.Clase, "open", new { selected = "selected" })<img src='@Url.Content("~/Images/folder.gif")' />Abierta</p>
+                        <p>@Html.RadioButtonFor(m => m.Clase, "closed")<img src='@Url.Content("~/Images/folder-closed.gif")' />Cerrada</p>
+                        @Html.ValidationMessageFor(m => m.Clase)
+                    </div> 
+                </fieldset>
+        }
+        </div>
+    }
+    else if (Model.Tipo == 3 || Model.Tipo == 4)
+    {
+        <div id="frmsubcarpeta">
+        @using (Ajax.BeginForm(oAccion, "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmagregarelemento" }))
+        {
+                <fieldset>
+                    <legend>Información</legend>
+                    @Html.HiddenFor(m => m.Id)
+
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.IdPadre)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(m => m.IdPadre, Model.oListaCarpetasDropdown, "--Seleccione una Carpeta--")
+                        @Html.ValidationMessageFor(m => m.IdPadre)
+                    </div>      
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.NombreSubCarpeta)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(m => m.NombreSubCarpeta, new { size = 30, length = 30 })
+                        @Html.ValidationMessageFor(m => m.NombreSubCarpeta)
+                    </div>      
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Orden)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(m => m.Orden)
+                        @Html.ValidationMessageFor(m => m.Orden)
+                    </div>      
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Clase)
+                    </div>
+                    <div class="editor-field">
+                        <p>@Html.RadioButtonFor(m => m.Clase, "open", new { selected = "selected" })<img src='@Url.Content("~/Images/folder.gif")' />Abierta</p>
+                        <p>@Html.RadioButtonFor(m => m.Clase, "closed")<img src='@Url.Content("~/Images/folder-closed.gif")' />Cerrada</p>
+                        @Html.ValidationMessageFor(m => m.Clase)
+                    </div> 
+                </fieldset>
+        }
+        </div>
+    }
+    else if (Model.Tipo == 5 || Model.Tipo == 6)
+    {
+        <div id="frmItem">
+        @using (Ajax.BeginForm(oAccion, "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmagregarelemento" }))
+        {
+                <fieldset>
+                    <legend>Información</legend>
+                    @Html.HiddenFor(m => m.Id)
+                    <table cellspacing="1"> 
+                        <tr>
+                            <td>Sistema</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DropDownListFor(m=>m.sSistema,Model.oListaSistema)</td>
+                        </tr>
+                        <tr>
+                            <td><div class="editor-label">@Html.LabelFor(m => m.IdPadre)</div></td>
+                            <td><div class="editor-label">@Html.LabelFor(m => m.idSubCarpeta)</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="editor-field">
+                                    @Html.DropDownListFor(m => m.IdPadre, Model.oListaCarpetasDropdown, "--Seleccione una Carpeta--", new { onchange = "JavaScript:CambiaCarpeta(this.value)" })
+                                    @Html.ValidationMessageFor(m => m.IdPadre)
+                                </div> 
+                            </td>
+                            <td>
+                                <div class="editor-field" id="ListaSBC">                        
+                                    @Html.DropDownListFor(m => m.idSubCarpeta, Model.oListaSubCarpetasDropdown, "--Seleccione una Sub Carpeta--")
+                                    @Html.ValidationMessageFor(m => m.idSubCarpeta)
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                                                                                                                                   
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.NombreItem)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(m => m.NombreItem, new { size = 30, length = 30 })
+                        @Html.ValidationMessageFor(m => m.NombreItem)
+                    </div>      
+
+
+                    <table  cellspacing="1">
+                        <tr>
+                            <td><div class="editor-label">@Html.LabelFor(m => m.Controlador)</div></td>
+                            <td><div class="editor-label">@Html.LabelFor(m => m.Accion)</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(m => m.Controlador, new { size = 30, length = 30 })
+                                    @Html.ValidationMessageFor(m => m.Controlador)
+                                </div> 
+                            </td>
+                            <td>
+                                <div class="editor-field">                        
+                                    @Html.TextBoxFor(m => m.Accion, new { size = 30, length = 30 })
+                                    @Html.ValidationMessageFor(m => m.Accion)
+                                </div>
+                            </td>
+                        </tr>
+                    </table>                    
+
+                    <table>
+                        <tr>
+                            <td><div class="editor-label">@Html.LabelFor(m => m.ClaseItem)</div></td>
+                            <td><div class="editor-label">@Html.LabelFor(m => m.Orden)</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="editor-field">
+                                    @Html.DropDownListFor(m => m.ClaseItem, (IEnumerable<SelectListItem>)ViewBag.Clases, "--Seleccione--")
+                                    @Html.ValidationMessageFor(m => m.ClaseItem)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="editor-field">                        
+                                    @Html.TextBoxFor(m => m.Orden)
+                                    @Html.ValidationMessageFor(m => m.Orden)
+                                </div>
+                            </td>
+                        </tr>
+                    </table>                                                                                  
+                    <div class="editor-label">
+                        Roles
+                    </div>
+                    <table>
+                    @{
+                        int oCCC=1;
+                        HtmlString oStr = new HtmlString("");
+                        HtmlString oSfin= new HtmlString("");
+                        foreach (var oFile in Model.oCkeckBoxRoles)
+                        {
+                            if (oCCC==1)
+                            {
+                                oStr=new HtmlString("<tr>");
+                                oSfin=new HtmlString("");
+                            }
+                            else if (oCCC==4)
+                            {
+                                oSfin=new HtmlString("</tr>");
+                                oStr=new HtmlString("");
+                            }
+                            else
+                            {
+                                oStr=new HtmlString("");
+                                oSfin=new HtmlString("");
+                            }
+                            
+                            foreach (var oLista in oFile)
+                            {
+                                    @oStr<td>@Html.CheckBox(oLista.DisplayName, oLista.Value)@Html.Label(oLista.Text)</td>@oSfin
+                                    oCCC += 1;
+                            }   
+                            if (oCCC==5) 
+                            {
+                                oCCC=1;
+                            }
+                        }
+                    }      
+                    </table>             
+                </fieldset>
+        }
+        </div>
+    }
+
+    }
+

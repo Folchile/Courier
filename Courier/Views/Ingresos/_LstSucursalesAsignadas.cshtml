@@ -1,0 +1,49 @@
+﻿@model MvcReporteViajes.Models.VehiculosModels
+@{
+    var grid = new WebGrid(Model.LstSucAsignadas, rowsPerPage: 10, ajaxUpdateContainerId: "gridsucsasociados", ajaxUpdateCallback: "mantienepag2");
+
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".boton").button();
+    });
+
+</script>
+
+
+<div id="gridsucsasociados">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("ID","ID"),
+       grid.Column("SUCURSAL","SUCURSAL"),
+       grid.Column("",header:"OPCIONES",format:@<text>
+                                           <div style="text-align:center;">
+                                                <button class="boton" onclick="javascript:fnEliminarSucursal(@item.ID)">
+                                                    <div style="float:left;">       
+                                                        <div style="float:left;"><img alt="EliminaFila" src="@Url.Content("~/Images/left_green.png")" title="Elimina Transporte"/></div>                 
+                                                    </div>                       
+                                                </button>
+                                          </div>
+
+                                    </text>)  
+         
+ })
+</div>
+

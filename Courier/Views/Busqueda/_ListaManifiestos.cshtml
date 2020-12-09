@@ -1,0 +1,44 @@
+﻿@model Courier.Models.BuscarManifiestoModels
+
+@{
+    var grid = new WebGrid(Model.ListaManifiestos, rowsPerPage: 15, ajaxUpdateContainerId: "myGrid");    
+}         
+
+<div id="ListaManifiesto">
+    <div  id="myGrid" style="min-width:600px;">
+
+        @grid.GetHtml(
+        fillEmptyRows: true,
+        alternatingRowStyle: "fila-alternativa",
+        headerStyle: "encabezado-grid",
+        tableStyle: "mGrid",
+        footerStyle: "pie-grid",
+        mode: WebGridPagerModes.All,
+        firstText: "<< Primera",
+        previousText: "< Anterior",
+        nextText: "Siguiente >",
+        lastText: "Última >>",
+        columns: new[]
+        {                
+                    
+            grid.Column("PK_FOL_MAN_ID","N° Man."),
+            grid.Column("FL_FOL_MAN_FECHA_CREACION","Fecha Creación"), 
+            grid.Column("USU_NOMBRE","Creado Por"), 
+            grid.Column("FL_FOL_MAE_NOMBRE","Estado",@<text>
+            @if (item.FL_FOL_MAE_NOMBRE=="Cerrado")
+            {
+                <img src="@Url.Content("~/Images/circle_red_16_ns.png")" border="0" alt="Cerrado" /><span>&nbsp;Cerrado</span>
+            }
+            else                
+            {
+                <img src="@Url.Content("~/Images/circle_green_16_ns.png")" border="0" alt="Cerrado" /><span>&nbsp;Abierto</span>
+            }
+            </text>),    
+            grid.Column("FL_PAR_CON_NOMBRE","Conductor"),
+            grid.Column("FL_PAR_TRA_PATENTE","Transporte"),
+            grid.Column("FL_PAR_TRA_PATENTE","Opciones",@<text>           
+            <a href="#" onclick="javascript:ImprimirManifiesto(@item.PK_FOL_MAN_ID)"><img border="0" title="Descargar PDF" alt="PDF" src="@Url.Content("~/Images/doc_pdf.png")" /></a>            
+            </text>)          
+        })
+    </div>
+</div>

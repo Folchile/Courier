@@ -1,0 +1,158 @@
+﻿@model MvcReporteViajes.Models.VehiculosModels
+@{
+    ViewBag.Title = "VEHICULOS";
+}
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $("#tabs").tabs();
+        cargaVehiculos();
+        $("#btnBuscarMovil").button();
+        $("#agregamovil").button();
+        
+        $("#agregatransporte").dialog({ autoOpen: false, title: "Ingreso Datos", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+            buttons: {
+                Grabar: function () {
+                    $.validator.unobtrusive.parse("#frmAgregaTransporte");
+                    if ($("#frmAgregaTransporte").valid() == true) {
+                        $(this).dialog("close");
+                        var randomnumber = Math.floor(Math.random() * 1111111)
+                        $.ajax({
+                            url: '@Url.Action("InsertaVehiculo", "Ingresos")',
+                            data: {
+                                PATENTE: $("#PATENTE").val(),
+                                MARCA: $("#MARCA").val(),
+                                MODELO: $("#MODELO").val(),
+                                CAPACIDADKGS: $("#CAPACIDADKGS").val(),
+                                CAPACIDADM3: $("#CAPACIDADM3").val(),
+                                _r: randomnumber
+                            }
+                        })
+                       .done(function (data) {
+                           var randomnumber = Math.floor(Math.random() * 11111111);
+                           if (data.Ok == true) {
+                               alert(data.Mensaje);
+                               cargaVehiculos();
+                           }
+                           else {
+                               alert(data.Mensaje);
+                           }
+                       })
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+
+
+    });
+
+
+//    function cargaVehiculos() {
+//        $("#verDetalleVehic").load('@Url.Action("VerDetalleVehiculos","Ingresos")', function (response, status, xhr) {
+
+//            if (status == 'error')
+//                alert("No fue posible cargar la información");
+//        });
+//    }
+
+    function cargaVehiculos() {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Cargando", message: "Cargando Listado...<br/>" });
+        $.ajax({
+            url: '@Url.Action("VerDetalleVehiculos", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                BuscarPatente: $("#BuscarPatente").val()
+            }
+        })
+        .done(function (data) {
+            $("#verDetalleVehic").html(data);
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar el formulario</p>");
+            $("#dialog-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+
+    function teclaEnterVeh(e) {
+        var esIE = (document.all);
+        tecla = (esIE) ? event.keyCode : e.which;
+        if (tecla == 13) {
+            cargaVehiculos();
+        }
+    }
+
+    function AgregarTransporte() {
+        $("#agregatransporte").dialog("open");
+        $("#agregatransporte").load('@Url.Action("Form_AgregaTransporte","Ingresos")', function (response, status, xhr) {
+            borrar_contenido();
+        });
+    }
+
+</script>
+
+
+
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Detalle</a></li>		        
+	</ul>	
+	<div id="tabs-1">		
+       <table>
+        <tr>            
+            <td>@Html.LabelFor(m => m.BuscarPatente)</td>
+            <td>
+                @Html.TextBoxFor(m => m.BuscarPatente, new { @style = "width:100px;font-size: 12px;text-align:right", @onkeypress = "javascript:teclaEnterVeh(event);" })
+            </td>
+            <td valign="top">
+                <button class="boton" id="btnBuscarMovil" onclick="javascript:cargaVehiculos();">
+                    <div style="float:left;height:21px;">       
+                        <div style="float:left;"><img alt="Buscar" src="@Url.Content("~/Images/magnifier.png")"/></div>                 
+                        <div style="float:left;margin-top:2px;">&nbsp;Buscar</div>                        
+                    </div>                       
+                </button>
+                <button class="boton" id="agregamovil" onclick="javascript:AgregarTransporte();">
+                    <div style="float:left;height:21px;">       
+                        <div style="float:left;"><img alt="Buscar" src="@Url.Content("~/Images/truck-plus-icon-icon.png")"/></div>                 
+                        <div style="float:left;margin-top:2px;">&nbsp;Agregar Transporte</div>                        
+                    </div>                       
+                </button> 
+          </td>
+          </tr>
+          </table>
+        <div id="verDetalleVehic">
+
+        </div>
+    </div>
+</div>
+<div id="agregatransporte">
+
+</div>
+

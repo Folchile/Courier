@@ -1,0 +1,10 @@
+﻿@model MemoryStream
+@{     
+    Response.Clear();
+    Response.Buffer = false;
+    Response.AppendHeader("Content-Type", "application/png");
+    Response.AppendHeader("Content-Transfer-Encoding", "binary");
+    Response.AppendHeader("Content-Disposition", "attachment; filename=test.png");
+    Response.BinaryWrite(Model.GetBuffer());
+    Response.End();    
+}

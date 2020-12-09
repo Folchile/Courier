@@ -1,0 +1,67 @@
+﻿@model Courier.Models.PreparacionModels
+<script type="text/javascript">
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+    $(function () {
+        $("#tabs").tabs();
+        $("#GuardarTotal").button()
+            .click(function (event) {
+                event.preventDefault();
+                EnviarFormularioTotal()
+            });
+        $("#TotalBultos").focus();
+        borrar_contenido()
+    });
+    function EnviarFormularioTotal() {                
+        borrar_contenido();
+        $.validator.unobtrusive.parse("#frmGuardarTotal");
+        if ($("#frmGuardarTotal").valid() == true) {
+            $("#frmGuardarTotal").submit();
+        }
+    }
+</script>
+@using (Ajax.BeginForm("GuardarTotalBultos", "Preparacion", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:Fin()", OnFailure = "Javascript:Fin()", UpdateTargetId = "formContent" }, new { id = "frmGuardarTotal" }))
+{    
+    @Html.HiddenFor(m=>m.OTD)
+    @Html.HiddenFor(m => m.OTP)    
+<div id="tabs">
+	<ul>		    
+        <li><a href="#tabs-1">Ingreso Total Bultos y Vía</a></li>		    
+	</ul>        
+	<div id="tabs-1">   
+        <table>
+            <tr>
+                <td>@Html.LabelFor(m => m.TotalBultos)</td>      
+                <td>:@Html.TextBoxFor(m => m.TotalBultos)</td>
+                <td>@Html.ValidationMessageFor(m => m.TotalBultos)</td>                                
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Via)</td>        
+                <td>:@Html.DropDownListFor(m => m.Via, Model.ListaVia, "-- Seleccione --")</td> 
+                <td>@Html.ValidationMessageFor(m => m.Via)</td>                               
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button id="GuardarTotal">
+                        <div style="float:left;width:80px;">       
+                            <div style="float:left;"><img  alt="Guardar" src="@Url.Content("~/Images/save.png")" /></div>                 
+                            <div style="float:left;">&nbsp;Guardar</div>                        
+                        </div>                       
+                    </button>                    
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+}

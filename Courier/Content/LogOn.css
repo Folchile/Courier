@@ -1,0 +1,279 @@
+﻿/* COMMON */
+	body, html
+	{
+		height:100%;
+		margin: 0px auto;
+	}
+	body
+	{
+		margin:50px 0px; padding:0px; /* Need to set body margin and padding to get consistency between browsers. */
+	    text-align:center; /* Hack for IE5/Win */
+   		
+		font-family: Tahoma, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+		
+		background-color: #BDDEFF;
+		background-image:url('../images/page_bg.png'); background-repeat:repeat-x;
+				
+	}
+	.header{
+		padding:15px 5px;
+	}
+	.header div{
+		float:right;
+		padding:5px 0px;
+	}
+	.header div a{
+		color:#FFD800;
+	}
+	.header img, .navPanel img, .navSelect img{
+		vertical-align:middle;
+		margin:0px 5px 0px 0px;
+		border:none;
+	}
+	.subHeader{
+		background-image:url('../images/subheader_bg.png'); background-repeat:repeat-x;
+		height:27px;
+	}
+	.subHeader div{
+		padding:5px;
+		font-size:14px;
+		font-weight:bold;
+		color:#10428C;
+	}
+	.clear{
+		clear:both;
+		float:none;
+		height:0px;
+	}
+	.title{
+		font-size:18px;
+		font-weight:bold;
+		padding:0px 5px;
+	}
+	/* TOOLBAR */
+	.toolbar{
+		height:25px;
+		margin:0px 5px;
+		background-image:url('../images/toolbar_bg.png'); background-repeat:repeat-x;
+		float:left;
+	}
+	.toolbarLeft{
+		background-image:url('../images/toolbar_left.png'); background-repeat:no-repeat;
+		height:25px;
+		width:7px;
+		float:left;
+	}
+	.toolbarRight{
+		background-image:url('../images/toolbar_right.png'); background-repeat:no-repeat;
+		height:25px;
+		width:12px;	
+		float:left;
+	}
+	.toolbarContent{
+		padding:5px;
+		float:left;
+		height:25px;
+	}
+	.toolbarContent img{
+		vertical-align:top;
+		border:0px;
+		margin-right:5px;
+	}
+	.toolbarContent a,.toolbarContent a:visited{
+		padding:5px;
+		color:#000000;
+		text-decoration:none;
+	}
+	.toolbarContent a:hover{
+		text-decoration:underline;
+	}
+	/* NAVIGATION */
+	.navigation{
+		width:15%;		
+		height:80%;
+		margin: 5px 5px 0px 5px;
+		border:solid 1px #6394CE;
+		background-color:#ffffff;
+		float:left;
+		vertical-align:bottom;
+		position:relative;		
+	}
+	.navPanel{
+		padding:10px;
+		height:60%;
+	}
+	.navPanel a, .navPanel a:visited{
+		padding:5px 5px;
+		display:block;
+		color:#000000;
+		border:solid 1px #ffffff;
+		text-decoration:none;
+	}
+	.navPanel a:hover{
+		background-color:#FFE88C;
+		border:solid 1px #D69C00;
+	}
+	.navSeparator{
+		height:10px;
+		background-image:url('../images/nav_separator.png'); background-repeat:repeat-x; background-position:center;
+	}
+	.navSelect{
+		position:absolute;
+		bottom:0px;
+		width:100%;
+	}
+	.navSelect a{
+		height:22px;
+		display:block;
+		padding:5px;
+		background-image:url('../images/nav_link.png'); background-repeat:repeat-x;
+		font-weight:bold;
+		text-decoration:none;
+		color:#000000;
+	}
+	.navSelect a:hover{
+		background-image:url('../images/nav_link_hover.png'); background-repeat:repeat-x;
+	}
+	/* CONTENT */
+	.content
+	{
+	    width:350px;
+		margin:0px auto; /* Right and left margin widths set to "auto" */
+	    text-align:left; /* Counteract to IE5/Win Hack */
+	    padding:0px;
+        				
+		background-color:#ffffff;
+		border:solid 1px #6394CE;		                			
+
+        
+	}
+	.options
+	{
+	    text-align:right;
+	    margin-top:30px;
+	}
+	.content h2
+	{
+	    
+	    
+	    font-family: Tahoma, Arial, Helvetica, sans-serif;
+		
+	    background-image:url('../images/subheader_bg.png'); background-repeat:repeat-x;
+	    border-left:solid 1px #6394CE;
+	    border-bottom:solid 1px #6394CE;
+	    
+	    
+	    padding:2px;
+		
+		
+		
+		
+		font-size:12px;
+		font-weight:bold;
+		color:#10428C;
+	}
+	.contentPanel{
+		padding-left:30px;
+		padding-bottom:30px;
+		padding-right:30px;
+		padding-top:10px;
+		overflow:auto;
+	}
+	
+	
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+
+       
+        
+.field-validation-error {
+    color: #ff0000;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors {
+    /*font-weight: bold;*/
+    color: black;
+    background-color: #fdd;
+    border:1px solid #f00;
+    width: 400px;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, 
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.display-field, 
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+.text-box {
+    width: 30em;
+}
+
+.text-box.multi-line {
+    height: 6.5em;
+}
+
+.tri-state {
+    width: 6em;
+}	
+
+.center
+{
+    text-align:center;
+    width:100%;    
+}
+
+#loadingScreen {
+    background: url(../images/38.gif) no-repeat 5px 8px;
+    padding-left: 25px;
+}
+.loadingScreenWindow .ui-dialog-titlebar-close {
+    display: none;
+}
+
+.AnchoColumna60 
+{
+width:60px;
+    }
+.textfield_effect    {
+    /*we will first set the border styles.*/
+    border-width: 1px;
+    border-style: solid;
+    border-color: #999999;
+    padding:2px;
+    /*we are now going to add in the shadow image that we created earlier*/
+    background-color:White;
+    /*I am going to add some text formatting of my own*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #333333;    
+    height: 15px;
+    }
+    
+    
+    
+
+.username
+{
+    width:150px;
+}

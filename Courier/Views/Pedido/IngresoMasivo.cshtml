@@ -1,0 +1,198 @@
+﻿@model Courier.Models.IngresoMasivoModel
+
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/TableBlue.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.9.1.custom.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/excel-2007.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    function ChangeRutCliente(Rut) {
+        $("#divservicio").hide();
+        $("#imgCargandoServicio").show();
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#Servicio").load('@Url.Action("GetListaServicios", "Generico")?r=' + randomnumber + '&RutEmpresa=' + Rut + ' #Servicio option',
+                function (response, status, xhr) {
+                    $("#imgCargandoServicio").hide();
+                    $("#divservicio").show();
+                    if (status == 'error') {
+                        alert("No fue obtener los servicios del cliente");
+                    }
+                });
+    }
+    function CargarUltimoMovimientoUsuario() {
+        //waitingDialog({ title: "Buscando", message: "Buscando último movimiento...<br/>" });
+        $.ajax({
+            url: '@Url.Action("UltimoMovimientoUsuario", "Validation")',
+            type: "POST",
+            success: function (data) {
+                $("#RutCliente").val(data);
+                //callService(data);
+                //closeWaitingDialog();
+                ChangeRutCliente(data);
+            },
+            error: function () {
+                //closeWaitingDialog();
+            }
+        });
+    }
+
+
+    $(function () {
+        $(document).tooltip();    
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-message").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });   
+        $("#DescargaModelo").button()
+            .click(function () {
+                if ($("#Servicio").val() == "") {
+                    alert("Debe seleccionar un servicio.");
+                }
+                else {
+                    window.open('@Url.Action("GeneraExcelMasivo","Pedido")?Servicio=' + $("#Servicio").val());
+                }
+            });
+        $("#EnviarFormulario").button()
+            .click(
+            function () {
+                $.validator.unobtrusive.parse("#frmEnviar");
+                if ($("#frmEnviar").valid()) {
+                    $("#ServicioForValidation").val($("#Servicio").val());
+                    $("#frmEnviar").submit();
+                }
+            });
+    });
+</script>
+
+<div id="dialog-message" title="Carga">				              
+    <p>¿Esta Seguro(a) que desea Guardar la Información?</p>		
+</div>
+@if (Session["SucName"] == null || Session["Menu"] == null || Session["Menu"].ToString() == "" || Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+{
+    var oVC = new Courier.Controllers.ValidationController();
+    var oResult=oVC.Sucursal(User.Identity.Name.ToString());
+    Session["SucName"] = oResult.Nombre;
+    Session["SucId"] = oResult.id;
+    Session["SucName2"] = oResult.Nombre;
+    Session["RutEmpresa"] = "";
+    if (oResult.Tipo == 2)
+    {
+        Session["SucName"] = oResult.NombreEmpresa;
+        Session["RutEmpresa"] = oResult.idEmpresa + "-" + oResult.DvEmpresa;     
+    }    
+} 
+@using (Html.BeginForm("IngresoMasivoCarga", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data",id="frmEnviar" }))          
+{                                     
+  
+    <table>
+        <tr>
+            <td rowspan="2">
+               @*Inicio Control Busqueda Rut*@                             
+                @if (Session["RutEmpresa"] != string.Empty && Session["RutEmpresa"]!=null)
+                {
+                    @Html.HiddenFor(m => m.RutCliente)
+                }
+                <table cellspacing="1">
+                    <tr>  
+      
+                        @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+                        {
+                        <td>@Html.LabelFor(m => m.RutCliente)</td>
+        
+                        <td></td>
+                        }        
+                        <td>@Html.LabelFor(m => m.Servicio)</td>        
+                    </tr>
+                    <tr>       
+                         @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+                         {     
+                            <td>@Html.TextBoxFor(m => m.RutCliente, new { size = 10, maxlength = 10, onchange = "javascript:ChangeRutCliente(this.value);" })</td>                
+                            <td>
+                            <a href="#"><img alt="Buscar Cliente" title="Buscar Cliente" id="imgBuscarCliente" style="width:22px;height:22px" border="0"  src="@Url.Content("~/images/kghostview.png")"/></a></td>                 
+                         }
+                        <td>            
+                            <div id="divservicio">
+                                @Html.DropDownListFor(m => m.Servicio, Model.oListaServicios)
+                            </div>           
+                                <div id="imgCargandoServicio">
+                                <img alt="Cargando" src="@Url.Content("~/Images/38.gif")" border="0" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                @*Fin Control Busqueda Rut*@
+                
+            </td>
+            <td>Archivo</td>
+            <td></td>
+        </tr>
+        <tr>     
+                   
+            <td><input type="file" title="Seleccione un archivo, formato XLS (Excel 2003) o XLSX (Excel 2007-2010)" name="file1" id="file1" /></td>
+            <td>
+                <button id="EnviarFormulario">
+                    <div style="float:left;width:80px;">       
+                        <div style="float:left;"><img alt="Siguiente" src='@Url.Content("~/Images/gnome_go_next.png")' /></div>                 
+                        <div style="float:left;">&nbsp;Procesar</div>                        
+                    </div>                       
+                </button>
+            </td>
+        </tr>
+    </table>             
+    <br />
+    @Html.ValidationSummary()                    
+    @Html.TextBoxFor(m => m.Archivo, new { @style="visibility:hidden;height:0px;" })
+}                    
+<hr />
+<button id="DescargaModelo" title="* Columnas obligatorias marcadas con rojo.">
+    <div style="float:left;width:160;">       
+        <div style="float:left;"><img alt="Descargar" src='@Url.Content("~/Images/doc_excel_table.png")' /></div>                 
+        <div style="float:left;">&nbsp;Descargar Modelo</div>                        
+    </div>                       
+</button>
+
+
+<script type="text/javascript">
+    $('#file1').bind('change', function () {
+        $('#Archivo').val($('#file1').val());
+    });
+    
+</script>
+    
+
+@*Inicio Control Busqueda Rut*@
+<div id="CargaBusquedaGenerico"></div>
+<script type="text/javascript">
+    $(function () {
+        var randomnumber = Math.floor(Math.random() * 11111111);        
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $("#CargaBusquedaGenerico").load('@Url.Action("BuscarCliente", "Generico")?r=' + randomnumber + '&TextoFiltro=',
+        function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert("No fue posible actualizar la información");
+            }
+            else {
+                CargarUltimoMovimientoUsuario();
+                $("#imgCargandoServicio").hide();
+            }
+        });
+
+        $("#Servicio").change(function () {
+            $("#idFormulario").html("");
+        });
+
+    })
+</script>
+@*Fin Control Busqueda Rut*@

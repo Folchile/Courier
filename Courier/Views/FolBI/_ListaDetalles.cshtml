@@ -1,0 +1,62 @@
+﻿@model Courier.Models.FolBIModels      
+    
+@{
+    var grid = new WebGrid(Model.listaReporteGlobalDetalle, rowsPerPage: 15, ajaxUpdateContainerId: "myDetalles");
+}
+<script type="text/javascript">
+    $(function () {
+        $("#tabsMan").tabs();
+        $(".boton").button();
+    })
+
+
+
+</script>
+<div id="tabsMan">
+    <ul>
+        <li>Registros</li>
+    </ul>
+    
+    <div id="tabsMan-1">
+        @if (Model.listaReporteGlobalDetalle != null)
+        {
+            <div id="myDetalles">
+                <div>
+                    @grid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {         
+                        grid.Column("Ot","OT",@<text>
+                            <div style="width: 100px; text-align: center">      
+                                @item.Ot
+                            </div>
+                        </text>) ,    
+                        grid.Column("NombreConductor","Nombre Conductor"),  
+                        grid.Column("RutConductor","Rut Conductor"),
+                        grid.Column("EstadoNombre","Estado"),  
+                        grid.Column("Fecha","Fecha"),
+                        grid.Column("Ot","Opciones",@<text>
+                            <div style="width: 100%; text-align: center">      
+                                <a href="#" onclick="javascript:BuscarOt('@item.Ot')"><img border="0" title="Buscar OT" alt="Buscar OT" src="@Url.Content("~/Images/findClient.png")" /></a>                    
+                            </div>
+                        </text>) 
+                    })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div>
+                No existen registros.</div>
+        }
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model Courier.Models.ListaCoberturaModels
+@{
+var grid = new WebGrid(Model.ListaCobertura, rowsPerPage: 11, ajaxUpdateContainerId: Model.ContainerId);
+
+string[] imagen = new string[2];
+imagen[1] = "tick.png";
+imagen[0] = "cross.png";
+   
+} 
+
+<div id="@Model.ContainerId">                
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {      
+    grid.Column("Origen","Origen"), 
+    grid.Column("Destino","Destino"), 
+    grid.Column("Via","Vía"), 
+    grid.Column("Lunes","Lunes",format: 
+        @<text><img alt="Lunes" title="Lunes"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Lunes)])" /></text>),
+    grid.Column("Lunes","Martes",format: 
+        @<text><img alt="Martes" title="Martes"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Martes)])" /></text>),
+    grid.Column("Lunes","Miercoles",format: 
+        @<text><img alt="Miercoles" title="Miercoles"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Miercoles)])" /></text>),
+    grid.Column("Lunes","Jueves",format: 
+        @<text><img alt="Jueves" title="Jueves"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Jueves)])" /></text>),
+    grid.Column("Lunes","Viernes",format: 
+        @<text><img alt="Viernes" title="Viernes"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Viernes)])" /></text>),
+    grid.Column("Lunes","Sabado",format: 
+        @<text><img alt="Sabado" title="Sabado"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Sabado)])" /></text>),
+    grid.Column("Lunes","Domingo",format: 
+        @<text><img alt="Domingo" title="Domingo"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Domingo)])" /></text>),
+    grid.Column("TiempoEstimado","Tiempo Estimado   ",format:@<text>@item.TiempoEstimado <font>hrs.</font></text>), 
+                
+    })
+    Sucursales: @Model.ListaCobertura.Count()
+</div>

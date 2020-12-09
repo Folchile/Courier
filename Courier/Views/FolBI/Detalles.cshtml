@@ -1,0 +1,108 @@
+﻿@model Courier.Models.FolBIModels 
+           
+@{
+    ViewBag.Title = "Detalles";
+}
+
+
+<script type="text/javascript" >
+    var filtroEstado = "";
+    var filtroConductor = "";
+
+    function btnFiltrarClick() {
+        filtroCaja = $("#txtFiltro").val();
+        CargaInicioCargaDetalle();
+    }
+
+    function CargaInicioCargaDetalle(){
+        filtroConductor = '@Model.FiltroConductor';
+        if (filtroConductor == "") {
+            $("#dvConductores").html("Conductor: Todos");
+            $("#dvConductores").css('color', 'black');
+        } else {
+            $("#dvConductores").css('color', 'DarkBlue');
+            $("#dvConductores").html("Conductor: " + filtroConductor);
+        }
+
+        filtroEstado = '@Model.FiltroEstado';
+
+        if (filtroEstado == "") {
+            $("#dvTitulo").html("Estado: Todos");
+            $("#dvTitulo").css('color', 'black');
+        } else {
+            switch (filtroEstado) {
+                case "Entregado Ok":
+                    $("#dvTitulo").css('color', 'DarkGreen');
+                    break;
+                case "Rechazado":
+                    $("#dvTitulo").css('color', 'DarkRed');
+                    break;
+                case "Cliente no Encontrado":
+                    $("#dvTitulo").css('color', 'DarkOrange');
+                    break;
+                case "Pendiente":
+                    $("#dvTitulo").css('color', 'gray');
+                    break;
+                default:
+                    $("#dvTitulo").css('color', 'black');
+                    break;
+
+            }
+            $("#dvTitulo").html("Estado: " + filtroEstado);
+        }
+
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("ListaDetalles", "FolBi")',
+            data: { r: randomnumber},
+            success: function (data) {
+                 $("#grillaDetalles").html(data);
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function btnVolverClick() {
+        window.location = "/FolBI/Index";
+    }
+
+    function BuscarOt(ot) {
+        window.location.href = '@Url.Action("BuscarBultoFromDetalle", "Busqueda")?referencia=' + ot;
+    }
+</script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<div class="row" style="font-size:medium; font-weight:bold; padding-bottom:5px; margin-bottom:25px; border-style:groove; background-color:#BDDEFF">
+
+    <table border="0" style="width:100%;">
+        <tr>
+            <td style="text-align:center;margin-left:20px; margin-right: 20px">
+                <div id="dvTitulo">Estado: Todos</div>
+            </td>
+            <td style="text-align:center; margin-left:20px; margin-right: 20px"> 
+                <div id="dvConductores">Conductor: Todos</div>
+            </td>
+            <td>
+                <button id="btnVolver" class="button button5" onclick="btnVolverClick();">
+                    <img border="0" title="Volver" alt="Volver" src="@Url.Content("~/Images/back.png")" />
+                </button>
+                <button id="btnExcel" class="button button1" onclick="btnExcel();">
+                     <img border="0" title="Descargar Excel" alt="Descargar Excel" src="@Url.Content("~/Images/excel.png")" />
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="grillaDetalles">
+
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+        CargaInicioCargaDetalle();
+    });
+</script>

@@ -1,0 +1,145 @@
+@model Courier.Models.FolTrackModels         
+
+@{
+
+    Html.EnableUnobtrusiveJavaScript();
+    var chart = Html.DevExpress().Chart(settings =>
+    {
+
+        Palette myPalette = new Palette("palleteEstados");
+        myPalette.Add(new PaletteEntry(System.Drawing.Color.Gray));
+        settings.PaletteRepository.Add("palleteEstados", myPalette);
+        settings.PaletteName = "palleteEstados";
+   
+        settings.CustomDrawSeries = (sender, e) =>
+        {
+            MVCxChartControl Details = sender as MVCxChartControl;
+            if (Details != null)
+            {
+                Details.DataBind();
+
+                int i = Details.Series.Count;
+                for (int j = 0; j < i; j++)
+                {
+                    if (Details.Series[j].Name == "Rechazado")
+                    {
+                        Details.Series[j].View.Color = System.Drawing.Color.Red;
+                    }
+                    if (Details.Series[j].Name == "Gestionado")
+                    {
+                        Details.Series[j].View.Color = System.Drawing.Color.CadetBlue;
+                    }
+                    if (Details.Series[j].Name == "Recepcionado OK")
+                    {
+                        Details.Series[j].View.Color = System.Drawing.Color.Green;
+                    }
+                    if (Details.Series[j].Name == "Cliente No Encontrado")
+                    {
+                        Details.Series[j].View.Color = System.Drawing.Color.Yellow;
+                    }
+                    if (Details.Series[j].Name == "En Ruta")
+                    {
+                        Details.Series[j].View.Color = System.Drawing.Color.White;
+
+                    }
+
+                }
+            }
+        };
+        settings.Name = "Chart" + Model.RutConductor;
+
+        settings.Height = 200;
+        settings.Width = 1024;
+        settings.BorderOptions.Visibility = DefaultBoolean.True;
+        settings.CrosshairEnabled = DefaultBoolean.True;
+        settings.CrosshairOptions.GroupHeaderPattern = "{A:HH:mm}";
+        settings.CrosshairOptions.CrosshairLabelMode = CrosshairLabelMode.ShowForEachSeries;
+
+        settings.CrosshairOptions.ShowArgumentLine = true;
+        settings.CrosshairOptions.HighlightPoints = true;
+        settings.CrosshairOptions.ShowCrosshairLabels = true;
+        settings.ToolTipEnabled = DefaultBoolean.True;
+
+        settings.Legend.Margins.All = 0;
+        settings.Legends.Add(leg =>
+        {
+
+            leg.AlignmentHorizontal = LegendAlignmentHorizontal.Left;
+            leg.AlignmentVertical = LegendAlignmentVertical.TopOutside;
+            leg.Direction = LegendDirection.BottomToTop;
+            leg.CustomItems.Add(cL =>
+            {
+                cL.Text = "Patente " + Model.Patente + " \nConductor:" + Model.Conductor + " \nFecha: " + Model.FechaConsulta.ToString("yyyy-MM-dd");
+                cL.MarkerColor = System.Drawing.Color.White;
+            });
+        });
+        settings.Series.Template(t =>
+        {
+            t.ArgumentDataMember = "X";
+            t.ValueDataMembers[0] = "Y";
+            t.LabelsVisibility = DefaultBoolean.False;
+            t.Label.TextPattern = "{S} {A:HH:mm} ";
+            t.ToolTipEnabled = DefaultBoolean.True;
+            t.ToolTipPointPattern = "{S} {A:HH:mm} <br/> {HINT}";
+            t.ToolTipHintDataMember = "ToolTip";
+            t.ToolTipSeriesPattern = "{V}";
+
+            t.Views().PointSeriesView(V =>
+            {
+                V.PointMarkerOptions.Size = 12;
+                V.PointMarkerOptions.Kind = MarkerKind.Circle;
+                V.PointMarkerOptions.BorderColor = System.Drawing.Color.Black;
+
+                if (V.PointMarkerOptions.Kind == MarkerKind.Star)
+                    V.PointMarkerOptions.StarPointCount = 8;
+                V.SeriesLabel(L =>
+                {
+                    L.Angle = 45;
+                    L.Position = PointLabelPosition.Outside;
+                    L.ResolveOverlappingMode = ResolveOverlappingMode.Default;
+                });
+            });
+        });
+
+        settings.XYDiagram(d =>
+        {
+            d.AxisX.DateTimeScaleOptions.MeasureUnit = DateTimeMeasureUnit.Minute;
+
+            d.AxisY.WholeRange.AlwaysShowZeroLevel = false;
+            d.AxisY.CustomLabels.Add(l =>
+            {
+                l.AxisValue = 1;
+                l.TextColor = System.Drawing.Color.DarkSlateBlue;
+                l.Name = "Gestionado";
+
+            });
+            d.AxisY.CustomLabels.Add(l =>
+            {
+                l.AxisValue = 2;
+                l.TextColor = System.Drawing.Color.DarkSlateBlue;
+                l.FillStyle.FillMode = FillMode.Hatch;
+                l.Name = "Recepcionado";
+
+            });
+            d.AxisY.CustomLabels.Add(l =>
+            {
+                l.AxisValue = 3;
+                l.TextColor = System.Drawing.Color.DarkSlateBlue;
+                l.Name = "Rechazado";
+
+
+            });
+            d.AxisY.CustomLabels.Add(l =>
+            {
+                l.AxisValue = 4;
+                l.TextColor = System.Drawing.Color.DarkSlateBlue;
+                l.Name = "No Encontrado";
+
+
+            });
+        });
+
+    });
+    }
+  
+ @chart.Bind(Model.ListaManifiestos, "Z").GetHtml()

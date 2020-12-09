@@ -1,0 +1,202 @@
+﻿@model MvcReporteViajes.Models.ConductoresModels
+@{
+    var grid = new WebGrid(Model.ListaTransportes, rowsPerPage: 17, ajaxUpdateContainerId: "gridAsignarTransp");
+}
+
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+//    $(function () {
+//        $("#btasigtrans").button()
+//        .click(function () {
+//            //            AgregarConductor();
+//        });
+//    });
+
+    //    //    alert($("#NOMAUX").val());
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data3) {
+        if (data3.Ok == true) {
+            $("#dialog-resulasig").html(data3.Mensaje);
+            $("#dialog-resulasig").dialog("open");
+            AsigTransp('');
+          }
+        else {
+            alert(data3.Mensaje);
+
+        }
+
+    }
+
+
+    $(function () {
+        $("#dialog-resulasig").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-agregaasociacion").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmagregaTrans").submit();
+                    $(this).dialog("close");
+                    AsignaTransporte($("#RUTAUX").val(), $("#NOMAUX").val())
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+
+
+    $(function () {
+        $("#todospat").button()
+        .click(function () {
+            AsigTransp('');
+            //            cargaConductores('');
+        });
+    })
+
+
+    function AsignaTrans(id_d, pte) {
+        $("#dialog-agregaasociacion").dialog("open");
+        $("#id_astr").val(id_d);
+        $("#rtax").val($("#RUTAUX").val());
+        $("#dialog-agregaasociacion").html("<p>¿Está seguro(a) que desea Asociar la Patente <strong>" + pte + " </strong> ? </p>");
+    }
+
+
+
+
+
+
+</script>
+
+
+<div id="dialog-agregaasociacion" title="Asociar"></div>
+<div id="dialog-resulasig" title="Resultado"></div>
+
+@using (Ajax.BeginForm("AgregarTransporte", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmagregaTrans" }))
+{
+    <input type="hidden" name="id_astr" id="id_astr" />
+    <input type="hidden" name="rtax" id="rtax" />
+   @*@Html.TextBoxFor(m => m.IDPATENTE)*@
+   @Html.HiddenFor(m => m.RUTAUX)
+}
+
+
+
+@*<div>*@
+   @*@Html.HiddenFor(m => m.RUTAUX)*@
+  @* @Html.HiddenFor(m => m.BUSCARPAT)*@
+ @*</div>*@
+
+
+@using (Ajax.BeginForm("VerS", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinVer(data)", OnFailure = "Javascript:Fin()" }, new { id = "frmAscond" }))
+{
+    <table>
+    <div id="Fol">
+         <tr>
+           <td><strong> @Html.LabelFor(m => m.BUSCARPAT)</strong></td>
+           <td>@Html.TextBoxFor(m => m.BUSCARPAT, new { @style = "width:80px;font-size: 14px;text-align:right" })
+          @* <td><input type="button" id="buscacond"  name="buscamat" value="Buscar" style="width:80px;height:25px; font-size:10pt" src="@Url.Content("~/Images/find.png")"/></td>*@
+           <a href="#"><img alt="Buscar Patente" title="Buscar Patente" id="imgbuscapat" style="width:22px;height:22px;margin-top:4px" border="0"  src="@Url.Content("~/images/kghostview.png")"/></a></td>
+           <td><input type="button" id="todospat"  name="todospat" value="Ver Todos" style="width:100px;height:25px; font-size:10pt" src="@Url.Content("~/Images/menu.png")"/></td>
+          
+        </tr>
+        <tr>
+        <td></td>
+           <td colspan="2">@Html.ValidationMessageFor(m => m.BUSCARPAT)</td>
+       </tr>
+</div> 
+    </table>
+}
+
+
+<div id="CargaBusquedaPtete"></div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#imgbuscapat")
+        .click(function () {
+            
+
+            //            $("#cabeceraRecepcion").html('<img src="@Url.Content("~/images/8.gif")">');
+            //                      var randomnumber = Math.floor(Math.random() * 11111111);
+            var randomnumber = Math.floor(Math.random() * 11111111);
+            waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+            $("#CargaBusquedaPtete").load('@Url.Action("BuscarPtte", "Generico")?r=' + randomnumber + '&TextoFiltro=',
+
+        function (response, status, xhr) {
+            if (status == 'error') {
+                closeWaitingDialog();
+                alert("No fue posible actualizar la información");
+
+            }
+        });
+        });
+    })
+</script>
+
+
+
+<div id="gridAsignarTransp">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("id","ID"),
+       grid.Column("patente","PATENTE"),
+       grid.Column("marca","MARCA"),
+       grid.Column("modelo","MODELO"),
+       grid.Column("capm3","CAP-M3"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                        <a href="#" onclick="javascript:AsignaTrans('@item.id','@item.patente')"><img border="0" src='@Url.Content("~/Images/car_plus.png")' alt="Asignar @item.patente" title="Asignar @item.patente"/></a>
+                                    </text>)
+ })
+</div>
+

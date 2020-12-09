@@ -1,0 +1,64 @@
+﻿@model Courier.Models.RecepcionOKManualModels
+@{
+ 
+    string ParametroMinDate = @Model.CantidadDias.ToString() + "d";
+}
+<script type="text/javascript">
+    $(function () {
+        $(".tipofecha").datepicker({ maxDate: 0, minDate: "-@ParametroMinDate", dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });        
+    })    
+</script>
+
+@using (Ajax.BeginForm("GuardaCambioDireccion", "Administracion", new AjaxOptions { OnBegin = "javascript:I01Begin()", OnSuccess = "javascript:I01Success(data)", OnComplete = "javascript:I01Complete()", OnFailure="javascript:I01Failure()" }, htmlAttributes: new { id = "frmGuardarRecep" }))
+{
+    @Html.HiddenFor(m => m.FOTP)    
+    @Html.HiddenFor(m => m.FOTD)
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.Estado)</td>
+            <td>@Html.DropDownListFor(m => m.Estado, Model.ListaEstado, "--Seleccione el Estado --", new { @onchange = "javascript:CargaListaObservaciones(this.value);" })</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>@Html.ValidationMessageFor(m => m.Estado)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Observacion)</td>
+            <td><div id="DivEstado"></div>@Html.DropDownListFor(m => m.Observacion, Model.ListaObservaciones, "--Seleccione Observación --")</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>@Html.ValidationMessageFor(m => m.Observacion)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.FechaRecepcionOK)</td>
+            <td>@Html.TextBoxFor(m => m.FechaRecepcionOK, new { @class = "tipofecha", @readonly = "readonly" })</td>       
+        </tr>
+        <tr>            
+            <td colspan="2">@Html.ValidationMessageFor(m => m.FechaRecepcionOK)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.HoraRecepcion)</td>
+            <td>@Html.DropDownListFor(m => m.HoraRecepcion,Model.ListaHora,"HH"):@Html.DropDownListFor(m => m.MinutoRecepcion,Model.ListaMinuto,"MM")</td>
+        </tr>
+        <tr>                        
+            <td colspan="3">@Html.ValidationMessageFor(m => m.HoraRecepcion)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Rut)</td>
+            <td>@Html.TextBoxFor(m => m.Rut)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>@Html.ValidationMessageFor(m => m.Rut)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Nombre)</td>
+            <td>@Html.TextBoxFor(m => m.Nombre)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>@Html.ValidationMessageFor(m => m.Nombre)</td>
+        </tr>
+    </table>
+}

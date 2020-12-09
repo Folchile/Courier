@@ -1,0 +1,208 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    var grid = new WebGrid(Model.DetalleCombustible, rowsPerPage: 7, ajaxUpdateContainerId: "gridDetalleCombustible"); 
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#agregacomb").button()
+        .click(function () {
+            CargaDetalleCombustible();
+        });
+        $("#cdetalle2").dialog({ autoOpen: false, title: "Ingreso Detalle", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+            buttons: {
+                Grabar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmEnviarCombustible");
+                    if ($("#frmEnviarCombustible").valid() == true) {
+                        $("#frmEnviarCombustible").submit();
+                        $(this).dialog("close");
+//                        CargaControlCombustible();
+                        
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editardetallecomb").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmActualizaCombustible");
+                    if ($("#frmActualizaCombustible").valid() == true) {
+                        $("#frmActualizaCombustible").submit();
+                        $(this).dialog("close");
+                        CargaControlCombustible();
+
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-eliminardetallecomb").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmeliminardetallecomb").submit();
+                    CargaControlCombustible();
+                    $(this).dialog("close");
+                    $("#dialog-resultado").dialog("open");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+    $(function () {
+        $("#dialog-result").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+    function CargaDetalleCombustible() {
+       $("#cdetalle2").dialog("open");
+       $("#cdetalle2").load('@Url.Action("DetalleCombustibles","Ingresos")', function (response, status, xhr) {
+         borrar_contenido();
+      });
+
+  }
+
+  function EliminardetCombustible(id_detgastos) {
+      var opTabs = $("#tabs").tabs('option', 'selected');
+      $("#dialog-resultado").html("");
+      $("#dialog-eliminardetallecomb").dialog("open");
+      $("#id_detgastos").val(id_detgastos);
+      $("#dialog-eliminardetallecomb").html("<p>¿Está seguro(a) que desea eliminar el Item <strong>" + id_detgastos + " </strong> ? </p>");
+  }
+
+  function EditarDetCombustible(id_detgastos) {
+
+//      var infocomb = id_detgastos;
+//      $("#IDCOMB").val(infocomb);
+
+//      $("#dialog-editardetallegastos").html('<img src="@Url.Content("~/images/38.gif")">');
+      $("#Detallecomb_edit_id").val(id_detgastos);
+       $("#dialog-resultado").html("");
+
+      $("#frmeditardetcombustible").submit();
+      $("#dialog-editardetallecomb").dialog("open");
+  }
+
+ 
+
+</script>
+
+
+@{
+    
+    var Texto = "";
+    if ((Model.MMOUSUARIO!=1) || (Model.CONUSUARIO==0))
+    {
+        Texto = "disabled='disabled'";
+    }
+    }
+
+
+
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-eliminardetallecomb" title="Eliminar Detalle"></div> 
+<div id="dialog-editardetallecomb" title="Mantención"></div> 
+
+
+ @using (Ajax.BeginForm("EliminarDetalleComb", "Ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmeliminardetallecomb" }))
+ {
+    <input type="hidden" name="id_detgastos" id="id_detgastos" />
+  }
+
+ 
+ @using (Ajax.BeginForm("EditarDetalleCombustible", "ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editardetallecomb" }, new { id = "frmeditardetcombustible" }))
+ {
+    <input type="hidden" name="Detallecomb_edit_id" id="Detallecomb_edit_id" />   
+ }
+
+
+
+<table style="width:100%;"><tr><td style="width:100%; text-align:right;">
+  <input type="button" @Texto id="agregacomb" name="agregacomb" value="Agrega Detalle Combustible" style="width:180px;height:25px; font-size:8pt" /></td></tr>
+</table>
+
+
+<div id="gridDetalleCombustible">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle:"mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("DCid","ID"),
+       grid.Column("DCfecha","FECHA",format:@<text>
+       @item.DCfecha.ToShortDateString() 
+       </text>), 
+       grid.Column("DCNum","NUMERO"),
+       grid.Column("DCLitros","LITROS"),
+       grid.Column("DCValor","VALOR"),
+       grid.Column("DCObservacion","OBSERVACIÓN"),
+       
+       
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                          @if (Model.MMOUSUARIO==1)
+                                          {
+                                          <a href="#" onclick="javascript:EditarDetCombustible('@item.DCid')"><img border="0" src='@Url.Content("~/Images/24.png")' alt="Editar @item.DCid" title="Editar @item.DCid"/></a>
+                                         <a href="#" onclick="javascript:EliminardetCombustible('@item.DCid')"><img border="0" src='@Url.Content("~/Images/deletered.png")' alt="Eliminar @item.DCid" title="Eliminar @item.DCid"/></a>
+                                          }
+                                    </text>) 
+   
+  
+ })
+</div>
+
+ <div id="cdetalle2">
+
+</div>

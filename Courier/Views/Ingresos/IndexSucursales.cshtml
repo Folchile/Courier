@@ -1,0 +1,196 @@
+﻿@model MvcReporteViajes.Models.VehiculosModels
+
+<script type="text/javascript">
+    $(function () {
+        $(".boton").button();
+        $("#btnBuscarMovil").button();
+        $(document).ready(function () {
+            $("#tabss1").tabs();
+            $("#tabss2").tabs();
+            CargaListadoSucursales();
+            CargaSucNoAsignadas();
+        });
+    });
+
+
+    function fnEliminarSucursal(Isuc) {
+        $("#IdSuc").val(Isuc);
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Asignando Sucursal", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("fnDesasignaSucursal", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                IdVehic: $("#IdVehic").val(),
+                IdSuc: $("#IdSuc").val()
+            }
+        })
+        .done(function (data) {
+            if (data.Ok == true) {
+                alert(data.Mensaje);
+                CargaListadoSucursales();
+                CargaSucNoAsignadas();
+            }
+            else {
+                alert(data.Mensaje);
+            }
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la lista de sucursales</p>");
+            $("#dialog-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+
+
+
+    function fnAsignaSucursal(Isuc) {
+        $("#IdSuc").val(Isuc);
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Asignando Sucursal", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("AsignaSucursal", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                IdVehic: $("#IdVehic").val(),
+                IdSuc: $("#IdSuc").val()
+            }
+        })
+        .done(function (data) {
+            if (data.Ok == true) {
+                alert(data.Mensaje);
+                CargaListadoSucursales();
+                CargaSucNoAsignadas();
+            }
+            else {
+                alert(data.Mensaje);
+            }
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la lista de sucursales</p>");
+            $("#dialog-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+
+
+
+    function CargaListadoSucursales() {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $("#LstSucAsignadas").html('<img src="@Url.Content("~/images/8.gif")">');
+        $.ajax({
+            url: '@Url.Action("LstSucAsociadas", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                IdVehic: $("#IdVehic").val()
+               
+            }
+        })
+        .done(function (data) {
+            $("#LstSucAsignadas").html(data);
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la información</p>");
+            $("#dialog-gral").dialog("open");
+        });
+    }
+
+
+    function CargaSucNoAsignadas() {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $("#ListadoSucursales").html('<img src="@Url.Content("~/images/8.gif")">');
+        $.ajax({
+            url: '@Url.Action("LstSucNoAsociadas", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                IdVehic: $("#IdVehic").val(),
+                BuscarSucursal: $("#BuscarSucursal").val()
+            }
+        })
+        .done(function (data) {
+            $("#ListadoSucursales").html(data);
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la información</p>");
+            $("#dialog-gral").dialog("open");
+        });
+    }
+
+
+    function teclaEnterSuc(e) {
+        var esIE = (document.all);
+        tecla = (esIE) ? event.keyCode : e.which;
+        if (tecla == 13) {
+            CargaSucNoAsignadas();
+        }
+    }
+
+
+    function mantienepag2() {
+        $(".boton").button();
+    }
+
+</script>
+
+
+<table>
+     <tr>
+        <td><strong>@Html.LabelFor(m => m.PatenteAux):</strong>
+        @*</td>*@
+    @*</tr>
+     <tr>*@
+        @Html.TextBoxFor(m => m.PatenteAux, new { size = 20, @disabled = "disabled" })
+        
+   </td>
+    </tr>
+</table>
+
+@Html.HiddenFor(m => m.IdVehic)
+@Html.HiddenFor(m => m.IdSuc)
+<div>
+    
+    <div  style="float:left;width:50%;height:150%;"> 
+        <div id="tabss1">
+            <ul>
+               <li><a href="#tabss1-1">SUCURSALES</a></li>            
+            </ul>
+            <div id="tabss1-1">
+                     <table>
+                            <tr>            
+                                <td>@Html.LabelFor(m => m.BuscarSucursal)</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.BuscarSucursal, new { @style = "width:100px;font-size: 12px;text-align:right", @onkeypress = "javascript:teclaEnterSuc(event);" })
+                                </td>
+                                <td valign="top">
+                                    <button class="boton" id="btnBuscarMovil" onclick="javascript:CargaSucNoAsignadas();">
+                                        <div style="float:left;height:21px;">       
+                                            <div style="float:left;"><img alt="Buscar" src="@Url.Content("~/Images/magnifier.png")"/></div>                 
+                                            <div style="float:left;margin-top:2px;">&nbsp;Buscar</div>                        
+                                        </div>                       
+                                    </button>
+                              </td>
+                              </tr>
+                      </table>
+                     <div id="ListadoSucursales" style="margin-top:0px;"></div>
+            </div>
+          </div>       
+        </div>
+    </div>    
+    <div style="float:right;width:49%;height:100%;">
+        <div id="tabss2" style="height:100%;">
+	        <ul>
+		        <li><a href="#tabss2-1">SUCURSALES ASIGNADAS</a></li>                     
+	        </ul>
+            
+	        <div id="tabss2-1">             
+                <div id="LstSucAsignadas" style="margin-top:0px;"></div>
+            </div>    
+        </div>
+    </div>
+</div>

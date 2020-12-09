@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BD_FOL_FOLCOURIER" Class="Linq_SPDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=192.168.33.4;Initial Catalog=BD_FOL_FOLCOURIER;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BD_FOL_FOLCOURIERConnectionString1" Provider="System.Data.SqlClient" />
+  <Function Name="dbo.PR_FOL_INFORME_TRANSPORTE" Method="PR_FOL_INFORME_TRANSPORTE">
+    <Parameter Name="FECHA_INI" Parameter="fECHA_INI" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="FECHA_FIN" Parameter="fECHA_FIN" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="ID_SUC" Parameter="iD_SUC" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_FOL_INFORME_TRANSPORTEResult">
+      <Column Name="OT" Type="System.String" DbType="VarChar(61)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_REFERENCIA1" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_FOL_CANT_DOCTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_FOL_OTP_FECHA_CREACION" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_FECHA_ESTIMADA" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FECHA_ENTREGA_REAL" Type="System.String" DbType="VarChar(61)" CanBeNull="true" />
+      <Column Name="FL_SUCURSAL_ESTADO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_FOL_EST_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FECHA_ESTADO" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_BULTO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_PESO" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="PESO_VOLUMETRICO" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_FACTOR_VOLUMETRICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PESO_FACTURADO" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE_ORG" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_FANTASIA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_DESTINATARIO_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_DESTINATARIO_RUT" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_DESTINATARIO_DIRECCION" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_DESTINATARIO_NUMERO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_COM_NOMBRE" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="FL_PAR_COM_CODIGO" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_TELEFONO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_CON_NOMBRE_T" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_MODELO_T" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_PATENTE_T" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FL_PAR_CON_NOMBRE_S" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_MODELO_S" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_PATENTE_S" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FL_FOL_ENT_RECIBE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_FOL_ENT_RUT" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="FL_FOL_OTD_REFERENCIA2" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="TIPO_DES_DEV" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_FOL_EDO_NOMBRE" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="FL_FOL_RDO_FECHA" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Fe_Gd_Estimada" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_FOL_PRIMERA_VISITA" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FL_PAR_VIA_NOMBRE" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="OTPadre" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_FOL_DOA_CONTRAPAGO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_FOL_TOB_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FECHA_ULTIMO_ESTADO" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="OBS_ULTIMO_ESTADO" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_FOL_OCA_OBSERVACION" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_FOL_GRA_OTS_GRAL_DIA" Method="PR_FOL_GRA_OTS_GRAL_DIA">
+    <ElementType Name="PR_FOL_GRA_OTS_GRAL_DIAResult">
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(12) NOT NULL" CanBeNull="false" />
+      <Column Name="CANTIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_FOL_GRA_OTS_GRAL_DIA_DETALLE" Method="PR_FOL_GRA_OTS_GRAL_DIA_DETALLE">
+    <ElementType Name="PR_FOL_GRA_OTS_GRAL_DIA_DETALLEResult">
+      <Column Name="ESTADO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OT" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="CLIENTE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="CIUDAD" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="ESTADO_OT" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_FOL_GRA_OTS_GRAL_SERVICIO" Method="PR_FOL_GRA_OTS_GRAL_SERVICIO">
+    <ElementType Name="PR_FOL_GRA_OTS_GRAL_SERVICIOResult">
+      <Column Name="ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="ESTADO" Type="System.String" DbType="VarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="SERVICIO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CANTIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

@@ -1,0 +1,127 @@
+﻿@model MvcReporteViajes.Models.IngresoFoliosModels
+@{
+    ViewBag.Title = "Ingreso Folios";
+}
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+    $(function () {
+        cargaDetalleFolios();
+
+    });
+
+    $(function () {
+        $("#tabs").tabs();
+        $("#btnAgregaFolio").button()
+          .click(function () {
+              borrar_contenido();
+              $.validator.unobtrusive.parse("#frmEnviarNvoFolio");
+              if ($("#frmEnviarNvoFolio").valid() == true) {
+                  $("#frmEnviarNvoFolio").submit();
+              }
+              //              else {
+              //                  alert("Error");
+              //              }
+
+          }); //click function
+
+    });
+    
+
+
+       
+ function cargaDetalleFolios() {
+     $("#verDetalle").load('@Url.Action("DetalleFolios","Ingresos")', function (response, status, xhr) {
+
+         if (status == 'error')
+             alert("No fue posible cargar la información");
+     });
+ }
+
+
+
+ function Inicio() {
+
+     //waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+     //                alert("hola");
+ }
+
+
+ function Fin() {
+     //closeWaitingDialog();
+ }
+
+ function FinSuccess(data) {
+     $(".validation-summary-errors").hide();
+     $("#idFormulario2").html(data);
+//     cargaDetalleFolios();
+     if (data.Ok == true) {
+         alert(data.Mensaje);
+         cargaDetalleFolios();
+         $("#DESDE").val(0);
+         $("#HASTA").val(0);
+     }
+
+     //closeWaitingDialog();
+ }   
+
+
+</script>
+
+
+
+
+    
+@using (Ajax.BeginForm("AsigFolios", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmEnviarNvoFolio" }))
+{
+
+    <table class="">
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.VEHICULO)</strong><p style = "font-size: 5pt"></p></td>
+            <td>@Html.DropDownListFor(m => m.VEHICULO, Model.ListaVehiculos, "--Selección--", new { @style = "width:130px;font-size: 10px" })</td>            
+            <td>@Html.ValidationMessageFor(m => m.VEHICULO)</td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.DESDE)</strong></td>
+            <td>@Html.TextBoxFor(m => m.DESDE, new { @style = "width:60px;font-size: 10px" })</td>            
+            <td>@Html.ValidationMessageFor(m => m.DESDE)</td>
+        </tr>
+        <tr>
+            <td><strong>@Html.LabelFor(m => m.HASTA)</strong></td>
+            <td>@Html.TextBoxFor(m => m.HASTA, new { @style = "width:60px;font-size: 10px" })</td>            
+            <td>@Html.ValidationMessageFor(m => m.HASTA)</td>
+        </tr>
+        <tr>
+            <td colspan="3"><input type="button" id="btnAgregaFolio" name="btnAgregaFolio" value="Agregar Folio" style="height:25px; font-size:8pt" /></td>
+        </tr>
+           
+    </table>
+   
+}
+
+
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Detalle</a></li>		        
+	</ul>	
+	<div id="tabs-1">		
+        <div id="verDetalle">
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

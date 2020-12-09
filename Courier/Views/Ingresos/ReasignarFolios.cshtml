@@ -1,0 +1,153 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    ViewBag.Title = "Reasignar Folios";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#Patte").hide();
+        $("#Fol2").hide();
+        $("#Verfolpat").hide();
+        $("#Verpatfolios").hide();
+    });
+
+
+    $(function () {
+        $("#btnprocpptes").button()
+        .click(function () {
+            $("#Verpatfolios").hide();
+            $("#Verfolpat").show();
+            CargaRangos();
+        });
+    });
+
+
+
+    $(function () {
+        $("#btnbuscafol2").button()
+        .click(function () {
+            var randomnumber = Math.floor(Math.random() * 1111111)
+            $.ajax({
+                url: '@Url.Action("RetornoValidarFolio", "Ingresos")',
+                data: {
+                    FOLIO: $("#FOLIOABUSCAR").val(),
+                    _r: randomnumber
+                }
+            })
+            .done(function (data) {
+                var randomnumber = Math.floor(Math.random() * 11111111);
+                if (data.ExisteFolio == true) {
+                    $("#Verpatfolios").show();
+                    $("#Verfolpat").hide();
+                    CargaFolioReasig();
+                }
+                else {
+                    //                    $("#Verpatfolios").hide();
+                    Msjefolnoexiste2();
+                }
+            });
+        });
+    });
+
+
+
+    function CargaRangos() {
+        $("#Verfolpat").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#Verfolpat").load('@Url.Action("drangoPatentes", "Ingresos")?VEHICULO=' + $("#VEHICULO").val());
+    }
+
+
+    function CargaFolioReasig() {
+        $("#Verpatfolios").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#Verpatfolios").load('@Url.Action("dReasignarFolio", "Ingresos")?FOLIOABUSCAR=' + $("#FOLIOABUSCAR").val());
+    }
+
+
+    function CargaBusquedaReasignar(opR) {
+        if (opR == "1") {
+            $("#Patte").hide();
+            $("#Verfolpat").hide();
+            $("#Verpatfolios").hide();
+            $("#Fol2").show();
+            $("#FOLIOABUSCAR").val("");
+            $("#FOLIOABUSCAR").focus();
+        } else if (opR == "2") {
+            $("#Patte").show();
+            $("#Fol2").hide();
+            $("#Verpatfolios").hide();
+        }
+    }
+
+
+
+    $(function () {
+        $("#dialog-res2").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+
+
+
+    function Msjefolnoexiste2() {
+        $("#dialog-res2").dialog("open");
+        $("#dialog-res2").html("Folio Ingresado no Existe");
+    }
+
+</script> 
+
+
+<div id="dialog-res2" title="Atención"></div>
+
+
+
+
+@using (Ajax.BeginForm("VerR", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinVer(data)", OnFailure = "Javascript:Fin()" }, new { id = "frmpat" }))
+{
+    
+   <table>
+        <tr>
+           <td>@Html.DropDownListFor(m => m.BUSQUEDA, Model.ListaOpReasignaFolios, new { @style = "width:180px;font-size: 15px", @onchange = "javascript:CargaBusquedaReasignar(this.value);" })</td>
+        </tr>
+   </table>
+   <div id="Patte">
+        @Html.DropDownListFor(m => m.VEHICULO, Model.ListaVehiculos2, new { @style = "width:180px;font-size: 15px" })
+        <td><input type="button" id="btnprocpptes"  name="btnprocpptes" value="Procesar" style="width:80px;height:25px; font-size:10pt"/></td>
+   </div>
+    
+   <div id="Fol2">
+        <tr>
+           <td><strong> @Html.LabelFor(m => m.FOLIOABUSCAR)</strong></td>
+           <td>@Html.TextBoxFor(m => m.FOLIOABUSCAR, new { @style = "width:60px;font-size: 14px;text-align:right" })</td>
+           <td><input type="button" id="btnbuscafol2"  name="btnbuscafol2" value="Buscar" style="width:80px;height:25px; font-size:10pt"/></td>
+        </tr>
+        <tr>
+           <td></td>
+           <td colspan="2">@Html.ValidationMessageFor(m => m.FOLIOABUSCAR)</td>
+        </tr>
+  </div>  
+    
+}
+
+
+<div id="Verfolpat">
+</div>
+
+<div id="Verpatfolios">
+</div>

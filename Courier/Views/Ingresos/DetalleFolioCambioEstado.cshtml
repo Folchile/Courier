@@ -1,0 +1,217 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    var grid = new WebGrid(Model.DetalleFoliocambEst, rowsPerPage: 1, ajaxUpdateContainerId: "gridFolioscamest"); 
+}
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-resuld").html(data.Mensaje);
+            $("#dialog-resuld").dialog("open");
+            CargaDetalleFoliocamest();
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-anularfoliod").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmanularfolio2").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-cerrarfoliod").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmcerrarfolio2").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-activarfoliod").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmactivarfolio").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+    $(function () {
+        $("#dialog-resuld").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+    function CerrarFoliod(id_folCD) {
+        $("#dialog-cerrarfoliod").dialog("open");
+        $("#id_folCD").val(id_folCD);
+        $("#dialog-cerrarfoliod").html("<p>¿Está seguro(a) que desea Cerrar el Folio <strong>" + id_folCD + " </strong> ? </p>");
+    }
+
+
+
+    function AnularFoliod(id_folAD) {
+        $("#dialog-anularfoliod").dialog("open");
+        $("#id_folAD").val(id_folAD);
+        $("#dialog-anularfoliod").html("<p>¿Está seguro(a) que desea Anular el Folio <strong>" + id_folAD + " </strong> ? </p>");
+    }
+
+
+    function ActivarFoliod(id_folCV) {
+        $("#dialog-activarfoliod").dialog("open");
+        $("#id_folCV").val(id_folCV);
+        $("#dialog-activarfoliod").html("<p>¿Está seguro(a) que desea Activar el Folio <strong>" + id_folCV + " </strong> ? </p>");
+    }
+
+
+</script>
+
+
+<div id="dialog-resuld" title="Resultado"></div>
+<div id="dialog-anularfoliod" title="Anular Folio"></div> 
+<div id="dialog-cerrarfoliod" title="Cerrar Folio"></div>
+<div id="dialog-activarfoliod" title="Activar Folio"></div>
+
+@using (Ajax.BeginForm("AnularFoliodetalle", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmanularfolio2" }))
+{
+    <input type="hidden" name="id_folAD" id="id_folAD" />
+}
+
+
+@using (Ajax.BeginForm("CerrarFoliodetalle", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmcerrarfolio2" }))
+{
+    <input type="hidden" name="id_folCD" id="id_folCD" />
+}
+
+
+@using (Ajax.BeginForm("ActivarFoliodetalle", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmactivarfolio" }))
+{
+    <input type="hidden" name="id_folCV" id="id_folCV" />
+}
+
+
+
+
+<div id="gridFolioscamest">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Fact","FOLIO"),
+       grid.Column("Fpatente","PATENTE"),
+       grid.Column("Frampla","RAMPLA"),
+       grid.Column("Festado","ESTADO"),
+       grid.Column("Fsucursal","SUCURSAL"),
+       grid.Column("Fusuario","USUARIO"),
+       grid.Column("Fconductor","CONDUCTOR"),
+       grid.Column("Fktransp","KG-TRANSP"),
+       grid.Column("Fbtransp","BLTOS-TRANSP"),
+       grid.Column("Fnumest","N-EST"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+
+                                     @if(item.Fnumest != 3)
+                                     {
+                                        <a href="#" title="Anular Folio @item.Fact" onclick="AnularFoliod('@item.Fact')">Anular</a>
+                                     }
+                                     else
+                                     {
+                                         <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                     }     
+                                        
+                                     @if(item.Fnumest != 2)
+                                     {   
+                                        <a href="#" title="Cerrar Folio @item.Fact" onclick="CerrarFoliod('@item.Fact')">Cerrar</a>
+                                     }
+                                     else
+                                     {
+                                         <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                     }      
+                                     
+                                     @if(item.Fnumest != 1)
+                                     { 
+                                        <a href="#" title="Activar Folio @item.Fact" onclick="ActivarFoliod('@item.Fact')">Activar</a>
+                                     }
+                                     else
+                                     {
+                                         <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                     }       
+                                    </text>)
+ })
+</div>
+

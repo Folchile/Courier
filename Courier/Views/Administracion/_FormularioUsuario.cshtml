@@ -1,0 +1,105 @@
+﻿@model Courier.Models.AdministracionUsuario
+           
+
+
+@using (Ajax.BeginForm("Register", "Account", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, OnSuccess="javascript:finOperacionSuccess(data)", OnComplete = "javascript:finOperacion();", OnBegin = "javascript:inicioOperacion()" }, new { id = "frmRegistroUsuario" }))
+{    
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.tipoUsuario)</td>
+        </tr>
+        <tr>
+            <td>@Html.DropDownListFor(m => m.tipoUsuario, Model.ListaTipoUsuario, "-- Seleccione --", new { onchange = "javascript:UpdListaSucursal(this.value,$('#Empresa').val())" })</td>
+        </tr>
+    </table>
+    <table id="tblEmpresa">
+        <tr>
+            <td>@Html.LabelFor(m=>m.Empresa)</td>
+            <td>@Html.LabelFor(m=>m.SucursalEmpresa)</td>
+        </tr>
+        <tr>
+            <td>@Html.DropDownListFor(m => m.Empresa, Model.ListaEmpresa, "Seleccione Empresa", new { onchange = "javascript:UpdListaSucursal($('#tipoUsuario').val(),this.value)" })</td>
+            <td>@Html.DropDownListFor(m=>m.SucursalEmpresa, Model.ListaSucursalEmpresa, "Seleccione Sucursal Empresa")</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.UserName)</td>
+            <td>@Html.LabelFor(m => m.Nombres)</td>
+            <td>@Html.LabelFor(m => m.Apellidos)</td>
+        </tr>
+        <tr>
+            <td>@Html.TextBoxFor(m => m.UserName, new { size = 15, length = 10 })</td>
+            <td>@Html.TextBoxFor(m => m.Nombres, new { size = 30, length = 100 })</td>  
+            <td>@Html.TextBoxFor(m => m.Apellidos, new { size = 30, length = 100 })</td>   
+        </tr>           
+   </table>
+    <table>               
+        <tr>
+                                
+            <td colspan="4">@Html.LabelFor(m => m.Email)</td>
+        </tr>
+        <tr>
+                             
+            <td colspan="4">@Html.TextBoxFor(m => m.Email, new { size = 40, length = 256 })</td>
+        </tr>                                                       
+        <tr>
+            <td>@Html.LabelFor(m => m.Password)</td>
+            <td>@Html.LabelFor(m => m.ConfirmPassword)</td>                    
+        </tr>
+        <tr>
+            <td>@Html.PasswordFor(m => m.Password, new { size = 30, length = 30 })</td>  
+            <td>@Html.PasswordFor(m => m.ConfirmPassword, new { size = 30, length = 30 })</td>                    
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Sucursal)</td>
+        </tr><tr>
+            <td><div id="imgSucursal"><img alt="Cargando..." src='@Url.Content("~/Images/38.gif")' border='0' /></div>@Html.DropDownListFor(m => m.Sucursal, Model.oListaSucursal, "-- Seleccione --")</td>         
+        </tr>        
+        <tr>            
+            <td colspan="4">            
+            <fieldset><legend>Roles</legend>
+            @{
+                int oCont = 0;
+                HtmlString Texto = new HtmlString("</tr><tr>");
+            }
+            <table><tr>
+            @foreach (var oItem in Model.Roles)
+            {
+                
+                <td>@Html.CheckBox(oItem.Text,oItem.Value)@oItem.DisplayName</td>
+                if (oCont == 2)
+                {
+                    oCont = 0;
+                    @Texto;
+                }
+                else
+                { oCont++; }
+
+
+            }      
+            </tr>
+            </table>   
+            </fieldset>   
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">@Html.ValidationSummary()</td>
+        </tr>             
+    </table>    
+}
+<script type="text/javascript">
+    $(function () {
+
+        $("#Empresa").change(function () {
+            CargaListaSucursalEmpresa($(this).val());
+        });
+
+        $("#tipoUsuario").change(function () {
+            VerDatosEmpresa($(this).val());
+        });
+    })
+</script>
+<script type="text/javascript">
+    $("#imgSucursal").hide();    
+</script>

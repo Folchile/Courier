@@ -1,0 +1,192 @@
+﻿@model Courier.Models.PreparacionModels
+<script type="text/javascript">
+    $(function () {
+        $("#dialog-CargarFomrulario").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Guardar: function (event) {
+                    event.preventDefault();
+                    GuardarFormularioPesoBulto();
+                },
+                Cancelar: function () {
+                    FinGuardar();
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-MensajePeso").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {               
+                "Modificar Peso": function () {                    
+                    $(this).dialog("close");
+                },
+                "Sí, Continuar": function () {        
+                    $("#frmGuardarBulto").submit();
+                    $("#dialog-CargarFomrulario").dialog("close");            
+                    $(this).dialog("close");
+                }
+            }
+        });
+        
+    });
+    function GuardarFormularioPesoBulto() {
+        //PRE        
+        borrar_contenido();
+        $.validator.unobtrusive.parse("#frmGuardarBulto");
+        if ($("#frmGuardarBulto").valid() == true) {
+            var randomnumber = Math.floor(Math.random() * 1111111);
+            waitingDialog({ title: "Validando Peso", message: "Validando...<br/>" });
+            $.ajax({
+                url: '@Url.Action("ValidaPesoBulto", "Preparacion")',
+                data: {
+                    _r: randomnumber,
+                    OTP: $("#ingOTP").val(),
+                    OTD: $("#ingOTD").val(),
+                    Peso: $("#ingPeso").val()
+                },
+                success: function (data) {
+                    if (data.Ok == true) {
+                        $("#dialog-MensajePeso").html("<p>El peso ingresado supera el límite</p><p>¿Esta seguro(a) que el peso del bulto es " + data.PesoMaximo + "?</p>");
+                        $("#dialog-MensajePeso").dialog("open");
+                    }
+                    else {
+                        $("#frmGuardarBulto").submit();
+                        $("#dialog-CargarFomrulario").dialog("close");
+                    }
+                    closeWaitingDialog();
+                    borrar_contenido();
+                },
+                error: function () {
+                    alert("No fue posible validar la información");
+                    closeWaitingDialog();
+                    borrar_contenido();
+                }
+            })            
+        }
+    }
+    function GuardaBultoInicio() {              
+        waitingDialog({ title: "Guardando", message: "Guardando Información...<br/>" });
+    }
+    function GuardaBultoSuccess(data) {
+        //$("#CuadroImpresion").html("");        
+        if (data.Ok == true) {
+            if ($("#EditarBultoValue").val() == "Nuevo" && data.Impresion.Cantidad > 0 && data.Impresion.TipoEtiqueta == 2) {
+                $("#CuadroImpresion").html("");
+                $("#CustomEtiqueta").val(data.Impresion.TipoEtiqueta);
+                $("#CustomCantidad").val(data.Impresion.Cantidad);
+                $("#CustomBulto1").val(data.Impresion.Bulto1);
+                $("#CustomBulto2").val(data.Impresion.Bulto2);
+                $("#CustomBulto3").val(data.Impresion.Bulto3);
+                $("#CustomBulto4").val(data.Impresion.Bulto4);
+                $("#frmCustomImpresion").submit();
+                $("#EditarBultoValue").val("Nuevo");               
+                ValidaBultoSiguiente();
+            }
+            else if ($("#EditarBultoValue").val() == "Nuevo" && data.Impresion.Cantidad > 0 && data.Impresion.TipoEtiqueta == 1) {
+                $("#CuadroImpresion").html("");
+                $("#vConf").val("5");
+                $("#vIdBulto").val(data.Impresion.Bulto1);
+                $("#frmImpresionBultosOTD").submit();
+                ValidaBultoSiguiente();
+            }
+            else if ($("#EditarBultoValue").val() != "Nuevo") {
+                $("#CuadroImpresion").html("");
+                $("#vConf").val("5");
+                $("#vIdBulto").val(data.Bulto);
+                $("#frmImpresionBultosOTD").submit();
+            }
+            else {
+                ValidaBultoSiguiente();
+            }
+            ActualizaListaBultoPreparacion();
+        }
+        else {
+            alert(data.Mensaje);
+        }
+        closeWaitingDialog();
+    }
+    function GuardaBultoError() {
+        alert("No fue posible guardar la información");
+        closeWaitingDialog();
+    }
+</script>
+<script type="text/javascript">
+    function EnterPeso(e) {
+        if (e.keyCode == '13' && $("#OTGuardada_FL_PAR_SER_TRABAJA_PESO_VOL").val() == "False") {
+            e.preventDefault();
+            GuardarFormularioPesoBulto();
+        }
+        else if (e.keyCode == '13') {
+            $("#ingLargo").focus();
+        }
+    }    
+    function EnteringLargo(e) {
+        if (e.keyCode == '13') {
+            $("#ingAlto").focus();
+        }
+    }
+    function EnteringAlto(e) {
+        if (e.keyCode == '13') {
+            $("#ingAncho").focus();
+        }
+    }
+    function EnteringAncho(e) {
+        if (e.keyCode == '13') {
+            GuardarFormularioPesoBulto();
+        }
+    }
+</script>
+<div id="dialog-MensajePeso" title="Alerta"></div>
+<div id="dialog-CargarFomrulario" title="Ingresar Datos">
+@using (Ajax.BeginForm("GuardarBulto", "Preparacion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:GuardaBultoInicio();", OnFailure = "javascript:GuardaBultoError();", OnSuccess = "javascript:GuardaBultoSuccess(data);" }, new { id = "frmGuardarBulto" }))
+{
+    @Html.HiddenFor(m => m.ingOTP)
+    @Html.HiddenFor(m => m.ingOTD) 
+    <div id="TituloForm"><p>OT: <strong>@Model.ingOTP</strong>-<strong>@Model.ingOTD</strong></p></div>
+    <div id="dialog-ingresobultos" title="Ingreso Bulto">
+        <div class="editor-label">
+            @Html.LabelFor(m => m.ingIdBulto)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.ingIdBulto, new { @readonly="readonly" })            
+            @Html.ValidationMessageFor(m => m.ingIdBulto)
+        </div>      
+            <div id="PESO_KG">        
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.ingPeso)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.ingPeso, new { @style = "text-align:right;",@onkeypress="javascript:EnterPeso(event)" })
+                    @Html.ValidationMessageFor(m => m.ingPeso)
+                </div>    
+            </div>
+            <div id="PESO_VOL">
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.ingLargo)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.ingLargo, new { @style = "text-align:right;", @onkeypress = "javascript:EnteringLargo(event)" })
+                    @Html.ValidationMessageFor(m => m.ingLargo)
+                </div>          
+                    <div class="editor-label">
+                    @Html.LabelFor(m => m.ingAlto)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.ingAlto, new { @style = "text-align:right;", @onkeypress = "javascript:EnteringAlto(event)" })
+                    @Html.ValidationMessageFor(m => m.ingAlto)
+                </div>          
+                    <div class="editor-label">
+                    @Html.LabelFor(m => m.ingAncho)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(m => m.ingAncho, new { @style = "text-align:right;", @onkeypress = "javascript:EnteringAncho(event)" })
+                    @Html.ValidationMessageFor(m => m.ingAncho)
+                </div> 
+            </div>         
+        
+    </div>
+}
+</div>
+

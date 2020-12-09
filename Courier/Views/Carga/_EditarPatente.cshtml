@@ -1,0 +1,53 @@
+﻿@model Courier.Models.CargaModels
+           
+ 
+<table width="100%" border="0">
+    <tr>
+        <td>@Html.LabelFor(m => m.NumeroManifiesto)
+        </td>
+        <td>@Model.NumeroManifiesto
+        </td>
+    </tr>
+    @if (Model.Proveedor != "")
+                    {
+        <tr>
+            <td>@Html.LabelFor(m => m.Proveedor)
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.Proveedor, Model.oListaProveedores, "-- Seleccione Courier --", new { style = "height:21px; width: 200px", onchange = "javascript:ChangeProveedor($(this).val());" })
+            </td>
+        </tr> 
+                }
+    <tr>    
+        <td>@Html.LabelFor(m => m.Patente)
+        </td>
+        <td>
+            <div id="divPatente">
+            </div>
+            @Html.DropDownListFor(m => m.Patente, Model.oListaPatentes, new { style = "height:21px; width: 200px", onchange = "javascript:ChangePatente($(this).val());" })
+        </td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(m => m.Conductor)
+        </td>
+        <td>
+            <div id="divConductor">
+            </div>
+            @Html.DropDownListFor(m => m.Conductor, Model.oListaConductores, new { style = "height:21px; width: 200px" })
+        </td>
+        <td>
+            <button id="GuardarCabecera" onclick="GuardaDatosCabecera(@Model.NumeroManifiesto);">
+                <div style="float: right; width: 150px;">
+                    <div style="float: left;">
+                        <img alt="Guardar Cabecera" src="@Url.Content("~/Images/document_letter_forward.png")" /></div>
+                    <div style="float: left;">
+                        &nbsp;Guardar</div>
+                </div>
+            </button>
+        </td>
+    </tr>
+</table>
+    @using (Ajax.BeginForm("CerrarManCarga", "Proveedor", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinCerrarMan(data)", OnFailure = "Javascript:FinCerrarMan()" }, new { id = "frmCerrarManCarga" }))
+    {
+        @Html.HiddenFor(m => m.NumeroManifiesto)
+    }

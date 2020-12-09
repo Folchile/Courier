@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Graficos";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#verGrafico").button()
+        $("#listadoOT").button()
+    });
+
+    
+    
+</script>
+
+
+@*<a href='@Url.Action("_ListaOT", "Graficos")' target="_blank" onclick="window.open(this.href, this.target, 'width=300,height=400'); 
+return false;">Listado OT</a>
+*@
+@*<a href='@Url.Action("Grafico", "Graficos")' target="_blank" onclick="window.open(this.href, this.target, 'width=300,height=400'); 
+return false;">Ver Grafico</a>*@
+
+@*<div style="float:left; margin-bottom:1px;"> 
+                 <button id="verGrafico">                
+                      <table border="0" cellpadding="0" cellspacing="2">*@
+                           @*<tr valign="middle"><td><a href='@Url.Action("Grafico", "Graficos")' target="_blank" onclick="window.open(this.href, this.target, 'width=300,height=400'); 
+                           return false;"/></td><td>&nbsp;Ver Grafico</td></tr>*@
+                           @*<tr valign="middle"><td><a target="_blank" onclick="javascript:VolverPrincipal();"
+                           /></td><td>&nbsp;Ver Grafico</td></tr>
+                      </table>                                
+                 </button>
+</div>*@
+
+@*<input type="button" id="verGrafico" onclick="javascript:VolverPrincipal();" target="_blank" value="Ver Grafico"/>   *@ 
+<div style="float:left; margin-bottom:1px;">
+    <a href='@Url.Action("Grafico", "Graficos")' target="_blank" onclick="window.open(this.href, this.target, 'width=600,height=600'); return false;">
+    <input id="verGrafico" value="Ver Grafico"/></a>        
+</div>
+<div style="float:left; margin-bottom:1px;">
+    <a href='@Url.Action("ContenedorOT", "Graficos")' target="_blank" onclick="window.open(this.href, this.target, 'width=780,height=600'); return false;">
+    <input id="listadoOT" value="Listado OT"/></a>        
+</div>
+

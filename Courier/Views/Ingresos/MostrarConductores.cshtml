@@ -1,0 +1,442 @@
+﻿@model MvcReporteViajes.Models.ConductoresModels
+@{
+    var grid = new WebGrid(Model.VerConductoresdet, rowsPerPage: 14, ajaxUpdateContainerId: "gridConductores");
+}
+
+
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccessCond(data) {
+        if (data.Ok == true) {
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+//            alert('Mostrar Conductores');
+            //            cargaAsistentes();
+            cargaConductores();
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+    $(function () {
+//        $("#agregacond").button()
+//        .click(function () {
+//            AgregarConductor();
+        //        });
+//        $("#asigtrans").dialog("option", "title", 'Nombre | : @Model.NOMBRECONDUCTOR |Apellido | : |');
+        $("#agrecond").dialog({ autoOpen: false, title: "Ingreso Datos", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+            buttons: {
+                Grabar: function () {
+//                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmAgregaConductor");
+                    if ($("#frmAgregaConductor").valid() == true) {
+                        $(this).dialog("close");
+                        var randomnumber = Math.floor(Math.random() * 1111111)
+                        $.ajax({
+                            url: '@Url.Action("RetornoValidaConductor", "Ingresos")',
+                            data: {
+                                Rut: $("#Rut").val(),
+                                CODIGO: $("#CODIGO").val(),
+                                _r: randomnumber
+                            }
+                        })
+                       .done(function (data) {
+                           var randomnumber = Math.floor(Math.random() * 11111111);
+                           if (data.ExisteCodigo == true) {
+                               MsjeValidation("Error - Codigo Ingresado Ya Existe - Favor Revisar")
+                           }
+                           else if (data.ExisteRut == true) {
+                               MsjeValidation("Error - Rut Ingresado Ya Existe - Favor Revisar")
+                           }
+                           else {
+                               $("#frmAgregaConductor").submit();
+                             
+
+                           }
+                       })
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-indextransportes").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Transportes Asignados', modal: true,
+            buttons: {
+                Aceptar: function () {
+                   $(this).dialog("close");
+                }
+                , Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#asigtrans").dialog({ title: '|  Asignación Móviles  |',
+            autoOpen: false, position: { my: 'center top', at: 'center top' }, minWidth: 1200, modal: true,
+            buttons: {
+                Cerrar: function () {
+                    $(this).dialog("close");
+
+                }
+            }
+        });
+    });
+
+        
+    $(function () {
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+    $(function () {
+        $("#dialog-msjes").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editarconductor").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmeditaConductor");
+                    if ($("#frmeditaConductor").valid() == true) {
+                        $("#frmeditaConductor").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+//    $(function () {
+//        $("#asigtrans").dialog({ title: 'Rut | : @Model.NOMBRECONDUCTOR |Apellido | :    |',
+//            autoOpen: false, position: { my: 'center top', at: 'center top' }, minWidth: 1200, modal: true,
+//            buttons: {
+//                Cerrar: function () {
+//                    $(this).dialog("close");
+
+//                }
+//            }
+//        });
+//    })
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-inactivarconductor").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmInactivarConductor").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-activarconductor").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmActivarConductor").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+    function EditarConductor(rut_cond) {
+        $("#rut_cond").val(rut_cond);
+        $("#dialog-resultado").html("");
+        $("#frmeditcond").submit();
+        $("#dialog-editarconductor").dialog("open");
+        $("#dialog-editarconductor").html('<img src="@Url.Content("~/images/38.gif")">');
+    }
+
+    function AgregarConductor() {
+        $("#agrecond").dialog("open");
+        $("#agrecond").load('@Url.Action("AgregaConductor","Ingresos")', function (response, status, xhr) {
+            borrar_contenido();
+        });
+    }
+
+    function FormAsigTransp(rtaux, naux) {
+        //        $("#SUC_USU").val(tSuc);
+        alert(rtaux);
+        alert(naux);
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Cargando Datos", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("IndexTransp", "Ingresos")',
+            data: {
+                _r: randomnumber
+                //                ,
+                //                USU_RUT: $("#USU_RUT").val(),
+                //                SUC_USU: $("#SUC_USU").val()
+            }
+        })
+        .done(function (data) {
+            alert('index');
+            if (data.Ok == true) {
+                alert('ok');
+                $("#dialog-indextransportes").html("<p>Sucursal Asociada!</p>");
+                $("#dialog-indextransportes").dialog("open");
+                //                CargaListadoSucursales();
+                //                CargaListadoSucAsignadas();
+            }
+            else {
+                $("#dialog-gral").html("<p>" + data.Mensaje + "</p>");
+                $("#dialog-gral").dialog("open");
+            }
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la lista de sucursales</p>");
+            $("#dialog-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+
+//    function AsignaTransporte(rtaux, naux) {
+//        $("#RUTAUX").val(rtaux);
+//        $("#NOMBRECONDUCTOR").val(naux);
+//        $("#asigtrans").load('@Url.Action("IndexTransp","ingresos")?RUTAUX=' + $("#RUTAUX").val() + '&NOMBRECONDUCTOR=' + $("#NOMBRECONDUCTOR").val(), function (response, status, xhr) {
+//        $("#asigtrans").dialog("open");
+//        $("#asigtrans").html(response);
+//        });
+
+//    }
+
+
+    function AsignaTransporte(rtaux, naux) {
+        $("#RUTAUX").val(rtaux);
+        $("#NOMBRECONDUCTOR").val(naux);
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Cargando Datos", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("IndexTransp", "Ingresos")',
+            data: {
+                _r: randomnumber,
+                RUTAUX: $("#RUTAUX").val(),
+                NOMBRECONDUCTOR: $("#NOMBRECONDUCTOR").val()
+            }
+        })
+        .done(function (data) {
+                $("#asigtrans").html(data);
+                $("#asigtrans").dialog("open");
+        })
+        .error(function () {
+            $("#dialog-gral").html("<p>No fue posible cargar la lista de Vehiculos</p>");
+            $("#dialog-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+
+
+
+    function InactivarConductor(rtcond, nomcond) {
+        $("#dialog-inactivarconductor").dialog("open");
+        $("#irutcond").val(rtcond);
+        $("#dialog-inactivarconductor").html("<p>¿Está seguro(a) que desea Inactivar el Conductor <strong>" + nomcond + " </strong> ? </p>");
+    }
+
+
+    function ActivarConductor(rtconda, nomcond) {
+        $("#dialog-activarconductor").dialog("open");
+        $("#irutconda").val(rtconda);
+        $("#dialog-activarconductor").html("<p>¿Está seguro(a) que desea Activar el Conductor <strong>" + nomcond + " </strong> ? </p>");
+    }
+
+
+    function MsjeValidation(mensaje) {
+        $("#dialog-msjes").dialog("open");
+        $("#dialog-msjes").html(mensaje);
+    }
+
+    
+
+</script>
+
+<div id="dialog-activarconductor" title="Activar Conductor"></div>
+<div id="dialog-inactivarconductor" title="Inactivar Conductor"></div>
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-editarconductor" title="Mantención"></div>
+<div id="dialog-msjes" title="Atención"></div>
+<div id="dialog-vehiculosasig" title="Mantención"></div>
+
+@*<div style="float:right; margin-bottom:5px;"> 
+        <button id="agregacond">                
+               <table border="0" cellpadding="0" cellspacing="2">
+                     <tr valign="middle"><td><img alt="Agrega Conductor" src="@Url.Content("~/Images/user_blue_add2.png")" /></td><td>&nbsp;Agrega Conductor</td></tr>
+               </table>                                
+        </button>
+ </div>*@
+
+
+ @using (Ajax.BeginForm("InactivarConductor", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccessCond(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmInactivarConductor" }))
+{
+    <input type="hidden" name="irutcond" id="irutcond" />
+}
+
+ @using (Ajax.BeginForm("ActivarConductor", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccessCond(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmActivarConductor" }))
+{
+    <input type="hidden" name="irutconda" id="irutconda" />
+}
+
+@using (Ajax.BeginForm("EditarDetalleConductor", "ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editarconductor" }, new { id = "frmeditcond" }))
+{
+    <input type="hidden" name="rut_cond" id="rut_cond" />
+}
+
+
+@*@using (Ajax.BeginForm("VehiculosAsignados", "ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-vehiculosasig" }, new { id = "frmVehAsig" }))
+{
+    <input type="hidden" name="rut_asig" id="rut_asig" />
+}*@
+
+<div>
+   @Html.HiddenFor(m => m.RUTAUX)
+   @Html.HiddenFor(m => m.NOMBRECONDUCTOR)
+ </div>
+ 
+
+<div id="gridConductores">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Crut","RUT"),
+       grid.Column("Cdig","DV"),
+       grid.Column("Cnombres","NOMBRE"),
+       grid.Column("Ccodigo","CODIGO"),
+       grid.Column("Cestado","ESTADO",@<text>
+        @if (item.Cestado == 1)
+        {
+            <span>Activo</span>
+        }
+        else
+        {
+            <span>Inactivo</span>
+        }
+       </text>),
+       grid.Column("Csucursal","SUCURSAL"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                        @*<a href="#" title="Editar Rut @item.Crut" onclick="EditarConductor('@item.Crut')">Editar</a>*@
+                                        <a href="#" onclick="javascript:EditarConductor('@item.Crut')"><img border="0" src='@Url.Content("~/Images/pencil_edit.png")' alt="Editar @item.Cnombres" title="Editar @item.Cnombres"/></a>
+                                         <a href="#" onclick="javascript:AsignaTransporte('@item.Crut','@item.Cnombres')"><img border="0" src='@Url.Content("~/Images/lorrygreen2.png")' alt="Asignar Transporte @item.Cnombres" title="Asignar Transporte a @item.Cnombres"/></a>
+                                         @if (item.Cestado == 1)
+                                             {
+                                               <a href="#" title="Inactivar Conductor @item.Cnombres" onclick="InactivarConductor('@item.Crut','@item.Cnombres')">Inactivar</a>
+                                             }
+                                             else
+                                             {
+                                              <a href="#" title="Activar Conductor @item.Cnombres" onclick="ActivarConductor('@item.Crut','@item.Cnombres')">Activar</a>
+                                             }
+                                    </text>)
+ })
+</div>
+
+
+<div id="agrecond">
+
+</div>
+
+<div id="asigtrans">
+
+</div>
+
+<div id="dialog-indextransportes"></div>

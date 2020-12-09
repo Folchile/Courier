@@ -1,0 +1,168 @@
+﻿@model Courier.Models.DocumentoModels
+
+@{
+    ViewBag.Title = "Salida de documentos";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');
+    }
+    $(function () {
+        $("#tabs").tabs();
+        $("#NumeroDocumento").focus();
+        $("#btnAgregarBulto").button()
+        .click(function (event) {
+
+            $("#ValidationNumeroDocumentoSalida").removeData("previousValue");
+            $("#ValidationNumeroDocumentoSalida").val($("#NumeroDocumento").val());
+
+            event.preventDefault();
+            borrar_contenido();
+            $.validator.unobtrusive.parse("#frmAgregar");
+
+
+            if ($("#frmAgregar").valid() == true) {
+
+                $("#frmAgregar").submit();
+            }
+
+            $("#NumeroDocumento").focus();
+            setTimeout(function () { ActualizaClase(); }, 200);
+            $(".validation-summary-errors").show();
+        });
+
+        $("#dialog-formagregar").dialog({ autoOpen: false, title: "Documentos Asociados", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    waitingDialog({ title: "Cargando", message: "Actualizando Tabla..." });
+                    var randomnumber = Math.floor(Math.random() * 1111111)
+                    $.ajax({
+                        url: '@Url.Action("SalidaGuardar", "Documento")',
+                        data: {
+                            NumeroDocumento: $("#NumeroDocumento").val(),
+                            _r: randomnumber
+                        }
+                    })
+                    .always(function () {
+                        closeWaitingDialog();
+                        $("#dialog-formagregar").dialog("close");
+                    })
+                    .done(function (data) {
+                        if (data == "True") {
+                            ActualizaListaRecepcionHoy();
+                            $("#NumeroDocumento").val("");
+                            $("#NumeroDocumento").focus();
+                        }
+                        else {
+                            alert("No fue posible guardar la información");
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus) {
+                        alert("Request failed: " + textStatus);
+                    });
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+    })
+
+    function ActualizaClase() {
+        if ($("#ValidationNumeroDocumentoSalida").attr("class") == "input-validation-error") {
+            $("#NumeroDocumento").attr('class', $("#ValidationNumeroDocumentoSalida").attr("class"));
+        }
+    }
+    function Inicio() {
+        waitingDialog({ title: "Guardando", message: "Guardando...<br/>" });
+    }
+    function FinAgregar(data) {
+        $(".validation-summary-errors").hide();
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            waitingDialog({ title: "Buscando", message: "Buscando Documentos Asociados...<br/>" });
+            var randomnumber = Math.floor(Math.random() * 1111111)
+            $("#dialog-formagregar").load('@Url.Action("FormRecepcionDocumento","Documento")?NumeroDocumento=' + $("#NumeroDocumento").val() + '&r=' + randomnumber, function (response, status, xhr) {
+                closeWaitingDialog();
+                if (status == 'error') {
+                    alert('Error al cargar la información');
+                }
+                else {
+                    $("#dialog-formagregar").dialog("open");
+                    borrar_contenido();
+                }
+            });
+        }
+        else {
+            alert(data.Mensaje);
+            $("#NumeroDocumento").focus();
+        }
+    }
+    function FinError() {
+        $(".validation-summary-errors").hide();
+        alert("No fue posible agregar la información");
+        closeWaitingDialog();
+    }
+    function checkEnter(e) {
+        e = e || event;
+        return (e.keyCode || event.which || event.charCode || 0) !== 13;
+    }
+    function ActualizaListaRecepcionHoy() {
+
+        waitingDialog({ title: "Actualizando", message: "Actualizando Lista...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 1111111)
+        $("#IdListaRecepcion").load('@Url.Action("ListaSalidaHoy","Documento")?r=' + randomnumber, function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+</script>
+<div id="dialog-formagregar"></div>
+
+@using (Ajax.BeginForm("AgregarDocumento", "Documento", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinAgregar(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmAgregar" }))
+{
+    @Html.TextBoxFor(m => m.ValidationNumeroDocumentoSalida, new { style = "visibility:hidden;float:right" })
+    //, new { style = "visibility:hidden;float:right" }
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.NumeroDocumento)</td>
+            <td>@Html.TextBoxFor(m => m.NumeroDocumento)</td>
+            <td>
+                <button id="btnAgregarBulto">
+                    <div style="float:left;width:80px;"> 
+                    <div style="float:left;"><img alt="Agregar Bulto" src='@Url.Content("~/Images/gnome_go_next.png")' /></div>
+                    <div style="float:left;">&nbsp;Agregar</div>                        
+                    </div>                       
+                </button>  
+            </td>
+        </tr>
+    </table>  
+    @Html.ValidationSummary()
+}
+<div id="ioWi"></div>
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1"> Salida Hoy</a></li>		    
+    </ul>        
+    <div id="tabs-1">   
+        <div id="IdListaRecepcion">
+            @*@Html.Partial("_ListaRecepcionHoy", Model)*@
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        ActualizaListaRecepcionHoy();
+    }); 
+</script>

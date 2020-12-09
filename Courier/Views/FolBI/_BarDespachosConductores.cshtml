@@ -1,0 +1,58 @@
+﻿@model Courier.Models.FolBIModels 
+
+
+@using (Html.BeginForm()) {
+
+    @Html.DevExpress().Chart(settings => {
+        settings.Name = "BarchartConductores";
+        settings.Width = 600;
+        settings.Height = 500;
+        settings.BorderOptions.Visibility = DefaultBoolean.False;
+        settings.CrosshairEnabled = DefaultBoolean.True;
+
+        settings.Legends.Default(l => {
+            //l.AlignmentHorizontal = LegendAlignmentHorizontal.RightOutside;
+            l.Visibility = DefaultBoolean.False;
+        });
+        settings.ClientSideEvents.ObjectSelected = "conductoresClick";
+        settings.Series.Template(t => {
+            t.Views().SideBySideBarSeriesView(v => {
+                v.BarWidth = 3;
+                v.SeriesLabel(l => {
+                    l.ResolveOverlappingMode = ResolveOverlappingMode.Default;
+                    l.TextPattern = "{V}";
+                    l.Font = new System.Drawing.Font("Tahoma", 8, System.Drawing.FontStyle.Bold);
+                    l.Position = BarSeriesLabelPosition.Center;
+                    
+                });
+            });
+            t.SetDataMembers("ConductorNombre", "Cantidad");
+            t.LabelsVisibility = DefaultBoolean.False;
+        });
+        
+        Palette myPalette = new Palette("MyPalette");
+        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkSlateBlue));
+
+        //myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkSlateBlue));
+        settings.PaletteRepository.Add("MyPalette", myPalette);
+        settings.PaletteName = "MyPalette";
+        settings.XYDiagram(d => {
+            d.Rotated = true;
+            d.AxisY.Interlaced = true;
+            d.AxisY.Title.Text = "Despachos";
+            d.AxisY.GridLines.MinorVisible = true;
+            d.AxisY.Title.Visibility = DefaultBoolean.True;
+            d.AxisY.Label.TextPattern = "{V}";
+            
+        });
+
+        settings.Titles.Add(new ChartTitle() {
+            Font = new System.Drawing.Font("Tahoma", 18),
+            Text = "N° Despachos por Conductor"
+        });
+
+    }).Bind(Model.listaReporteConductores.ToList(), seriesDataMember: "Cantidad").GetHtml();
+                                                     
+                                                     
+}
+

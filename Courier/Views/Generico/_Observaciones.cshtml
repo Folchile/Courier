@@ -1,0 +1,98 @@
+﻿@model Courier.Models.ObservacionesModels
+@{
+var grid = new WebGrid(Model.ListaObservaciones, rowsPerPage: 10, ajaxUpdateContainerId: "gridObservaciones");    
+} 
+<script type="text/javascript">
+    function CargaFormularioObservaciones() {
+        waitingDialog({ title: "Cargando Formulario", message: "Buscando...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11)
+        $("#gridObservaciones").load('@Url.Content("~/Generico/Observaciones")?OTP=' + $("#OTP").val() + '&OTD=' + $("#OTD").val() + '&r=' + randomnumber + ' #gridObservaciones', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+            else {
+                $("#dialog-observaciones").dialog("open");
+            }
+        });
+    }
+    $(function () {
+        $("#btnAgregarObs").button()
+        .click(function (event) {
+            event.preventDefault();
+            borrar_contenido();
+            $.validator.unobtrusive.parse("#frmAgregarObservacion");
+            if ($("#frmAgregarObservacion").valid() == true) {
+                $("#frmAgregarObservacion").submit();
+                $(this).dialog("close");
+            }
+        });
+        borrar_contenido();
+    })
+    function InicioAO() {
+        waitingDialog({ title: "Guardando Observación", message: "Guardando...<br/>" });
+    }
+    function FinAO(data) {
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            CargaFormularioObservaciones();
+        }
+        else {
+            alert(data.Mensaje);
+        }        
+    }
+    function FinErrorAO() {
+        alert("Ha ocurrido un error al intentar cargar la información");
+        closeWaitingDialog();
+    }
+</script>
+<div>
+@if (Model.Habilitado == true)
+{
+    using (Ajax.BeginForm("AgregarObservacion", "Generico", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:InicioAO()", OnSuccess = "Javascript:FinAO(data)", OnFailure = "Javascript:FinErrorAO()" }, new { id = "frmAgregarObservacion" }))
+    {
+        @Html.HiddenFor(m => m.OTD_Obs)
+        @Html.HiddenFor(m => m.OTP_Obs)
+        <table>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.TipoObservacion, Model.ListaTipoObs, " -- Seleccione Observación -- ")</td>
+                <td>
+                    <button id="btnAgregarObs">
+                        <div style="float:left;width:80px;">       
+                        <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/add.png")" /></div>                 
+                        <div style="float:left;">&nbsp;Agregar</div>                        
+                        </div>                       
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @Html.ValidationMessageFor(m => m.TipoObservacion)
+                </td>
+            </tr>
+        </table>
+    }
+}
+</div>
+<div id="gridObservaciones">                
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {      
+    grid.Column("FL_FOL_OBS_FECHA","Fecha"), 
+    grid.Column("FL_FOL_TOB_NOMBRE","Observación"),  
+    grid.Column("FL_PAR_SUC_NOMBRE","Sucursal"),           
+    grid.Column("FL_PAR_USU_NOMBRES","Creado Por",@<text>
+    <span>@item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS</span>
+    </text>)   
+    })    
+</div>

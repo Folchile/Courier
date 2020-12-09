@@ -1,0 +1,44 @@
+﻿@model Courier.Models.DespachoProveedorModels
+@{
+    var grid = new WebGrid(Model.oListaDespachoOt, rowsPerPage: 8, ajaxUpdateContainerId: "myGridDespacho");    
+} 
+
+@if (Model.oListaDespachoOt != null)
+{
+    <div  id="myGridDespacho" style="min-width:600px;">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,                      
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {                
+                
+                grid.Column("OT","OT"),
+                grid.Column("Guia","GUIA"), 
+                grid.Column("Bultos","Bultos"), 
+                grid.Column("Region","Región"), 
+                grid.Column("Comuna","Comuna"),    
+                grid.Column("OT","Opciones", format:@<text>
+                <div style="width:100%;text-align:center;">
+                    @if (Model.EstadoManifiesto=="Abierto")
+                    {
+                            <a href="#" onclick="javascript:DesasociarOT(@item.OTP, @item.OTD, @item.NumeroManifiesto);"><img src='@Url.Content("~/Images/list_delete2.png")' alt="Desasociar OT" title="Desasociar OT" border="0" /></a>
+                    }
+                </div>
+                </text>)                            
+            })
+        </div>
+    </div>
+}
+else
+{
+    <div>No Se han ingresado Bultos</div>
+}

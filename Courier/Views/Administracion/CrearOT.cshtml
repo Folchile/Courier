@@ -1,0 +1,128 @@
+﻿@model Courier.Models.CrearOTManualModels
+@{
+    ViewBag.Title = "Crear OT Manual";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnGuardar").button()
+        .click(function (event) {
+            event.preventDefault();
+            borrar_contenido();
+            $.validator.unobtrusive.parse("#F01frmGuardarIngreso");
+            if ($("#F01frmGuardarIngreso").valid() == true) {
+                $("#dialog-confirmar").html("<p>¿Está seguro(a) que desea crear <strong>" + $("#Cantidad").val() + "</strong> OT Manual?</p>");
+                $("#dialog-confirmar").dialog("open");
+            }
+        });
+        $("#tabs").tabs();
+        $("#dialog-confirmar").dialog({ autoOpen: false, title: "Verificación", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#F01frmGuardarIngreso").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#F02dialog-ok").dialog({ autoOpen: false, title: "Resultado", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+               }
+            }
+        });
+    })
+    function F01Inicio() {
+        waitingDialog({ title: "Guardando", message: "Creando OT Manual...<br/>" });
+    }
+    function F01FinAgregar(data) {
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            F02CargaListaCreado();
+            $("#F02dialog-ok").html("<p>Información guardada exitosamente!</p>")
+            $("#F02dialog-ok").dialog("open");
+        }
+        else {
+            alert(data.Mensaje);
+        }
+    }
+    function F01FinError() {
+        alert("No fue posible crear las OT");
+        closeWaitingDialog();
+    }
+    function F02CargaListaCreado() {
+        waitingDialog({ title: "Buscando", message: "Buscando Lista Tipo...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $("#tabs-1").load('@Url.Action("CrearOT","Administracion")?r=' + randomnumber + ' #tabs-1', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+</script>
+
+<div id="F02dialog-ok"></div>
+@using (Ajax.BeginForm("GuardarIngreso", "Administracion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:F01Inicio()", OnSuccess = "Javascript:F01FinAgregar(data)", OnFailure = "Javascript:F01FinError()" }, new { id = "F01frmGuardarIngreso" }))
+{ 
+    <fieldset><legend>Ingreso</legend> 
+        <table>
+            <tr>
+                <td>@Html.DropDownListFor(m => m.Cantidad, Model.ListaCantidad, "-- Seleccione Cantidad OT --")</td>
+                <td>            
+                    <button id="btnGuardar">
+                        <div style="float:left;width:80px;">       
+                        <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/45.png")" /></div>                 
+                        <div style="float:left;">&nbsp;Guardar</div>                        
+                        </div>                       
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"> @Html.ValidationMessageFor(m=>m.Cantidad)</td>
+            </tr>
+        </table>
+    </fieldset>
+}
+<div id="dialog-confirmar"></div>
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Historial Ingresos</a></li>		    
+    </ul>        
+    <div id="tabs-1">           
+        @{
+            var grid = new WebGrid(Model.ListaOMA,rowsPerPage:15,ajaxUpdateContainerId:"myGrid2");    
+        } 
+        @grid.GetHtml(
+        fillEmptyRows: true,
+        alternatingRowStyle: "fila-alternativa",
+        headerStyle: "encabezado-grid",
+        tableStyle:"mGrid",
+        footerStyle: "pie-grid",
+        mode: WebGridPagerModes.All,
+        firstText: "<< Primera",
+        previousText: "< Anterior",
+        nextText: "Siguiente >",
+        lastText: "Última >>",
+        columns: new[]
+        {
+            grid.Column("PK_FOL_OMA_ID","Id"),     
+            grid.Column("PK_PAR_USU_RUT","Rut"), 
+            grid.Column("FL_OMA_FECHA_CREACION","Fecha"),  
+            grid.Column("FL_OMA_CANTIDAD","Cantidad"),      
+            grid.Column("MINIMO","Primer OT",@<text>
+                @item.MINIMO-1
+            </text>),      
+            grid.Column("MAXIMO","Último OT",@<text>
+                @item.MAXIMO-1
+            </text>)
+        })
+
+    </div>
+</div>

@@ -1,0 +1,615 @@
+﻿ @model Courier.Models.AdministracionUsuario
+@{
+    ViewBag.Title = "Usuario";
+}
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />
+
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var UserNameG;
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+    function ActualizaGrilla() {
+        waitingDialog({ title: "Cargando Contenido", message: "Buscando Lista Usuarios...<br/>" });
+        $("#myGrid1").load('@Url.Action("ActualizaUsuario","Administracion") #myGrid1', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    function ActualizaGrillaConFiltro(Filtro) {
+        waitingDialog({ title: "Cargando Contenido", message: "Buscando Lista Usuarios...<br/>" });
+        $("#myGrid1").load('@Url.Action("ActualizaUsuario","Administracion")?filtro=' + Filtro  + ' #myGrid1', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    function UplCliente(Tipo) {
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $("#imgCliente").show();
+        $("#Cliente").hide()      
+        //waitingDialog({ title: "Cargando Cliente", message: "Buscando Lista Cliente...<br/>" });
+        $("#Cliente").load('@Url.Action("UpdListaCliente","Administracion")?r=' + randomnumber + '&TipoSucursal=' + Tipo + ' #Cliente option', function (response, status, xhr) {
+            //closeWaitingDialog();
+            $("#imgCliente").hide();
+            $("#Cliente").show()    
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    function EditUplCliente(Tipo) {
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $("#EditimgCliente").show();
+        $("#EditCliente").hide()
+        //waitingDialog({ title: "Cargando Cliente", message: "Buscando Lista Cliente...<br/>" });
+        $("#EditCliente").load('@Url.Action("UpdListaCliente","Administracion")?r=' + randomnumber + '&TipoSucursal=' + Tipo + ' #Cliente option', function (response, status, xhr) {
+            //closeWaitingDialog();
+            $("#EditimgCliente").hide();
+            $("#EditCliente").show()
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    function UpdListaSucursal(Tipo, Cliente) {
+        var randomnumber = Math.floor(Math.random() * 11111111)        
+        if (Tipo == 1)
+            Cliente = 0;
+        if (Cliente == "")
+            Cliente = 0;
+        //waitingDialog({ title: "Cargando Cliente", message: "Buscando Lista Cliente...<br/>" });
+        $("#imgSucursal").show();
+        $("#Sucursal").hide()
+        $("#Sucursal").load('@Url.Action("UpdListaSucursal","Administracion")?r=' + randomnumber + '&TipoSucursal=' + Tipo + '&Cliente=' + Cliente + ' #Sucursal option', function (response, status, xhr) {
+            //closeWaitingDialog();
+            $("#imgSucursal").hide()
+            $("#Sucursal").show()
+            if (status == 'error') {                
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    function EditUpdListaSucursal(Tipo, Cliente) {
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        if (Tipo == 1)
+            Cliente = 0;
+        if (Cliente == "")
+            Cliente = 0;
+        //waitingDialog({ title: "Cargando Cliente", message: "Buscando Lista Cliente...<br/>" });
+        $("#EditimgSucursal").show();
+        $("#EditSucursal").hide()
+        $("#EditSucursal").load('@Url.Action("UpdListaSucursal","Administracion")?r=' + randomnumber + '&TipoSucursal=' + Tipo + '&Cliente=' + Cliente + ' #Sucursal option', function (response, status, xhr) {
+            //closeWaitingDialog();
+            $("#EditimgSucursal").hide()
+            $("#EditSucursal").show()
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    $(function () {
+        $("#BuscarUsuario").button().click(function () {
+            $("#formulario-buscar").dialog("open");
+        });
+        $("#tabs").tabs();
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#formulario-buscar").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    ActualizaGrillaConFiltro($("#BuscarUser").val());
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-agregarusuario").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $.validator.unobtrusive.parse("#frmRegistroUsuario");
+                    if ($("#frmRegistroUsuario").valid()) {
+                        $("#frmRegistroUsuario").submit();
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#resultado-actualiza").dialog({ autoOpen: false, height: 'auto', width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).html("");
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-EliminarUsuario").dialog({ autoOpen: false, height: 'auto', width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    inicioOperacion();
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("EliminarUsuario", "Account")?UserName=' + UserNameG,
+                        success: function (data) {
+                            closeWaitingDialog();
+                            $("#dialog-result").html(data.Mensaje);
+                            $("#dialog-result").dialog("open");
+                            ActualizaGrilla();
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+
+        $("#dialog-sucursales-usuario").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+            buttons: {
+                Cerrar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-correo-usuario").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+            buttons: {
+                Cerrar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-result").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $(function () {
+            $("#agregarusuario")
+            .button()
+            .click(function () {
+                waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+                $.ajax({
+                    url: '@Url.Action("FormularioUsuario", "Administracion")?UserName=',
+                    success: function (data) {
+                        closeWaitingDialog();
+                        $("#frmUsuario").html(data);
+                        $("#dialog-agregarusuario").dialog("open");
+                        $("#tblEmpresa").hide();
+                    }
+                });
+
+                borrar_contenido();
+            });
+        });
+
+        $(function () {
+            $("#registrar").button();
+            $("#cerrarventana")
+                .button()
+                .click(function () { $("#dialog-agregarusuario").dialog("close") });
+        });
+    });
+    function EditarUsuario(UserName) {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $.ajax({
+            url: '@Url.Action("FormularioUsuario", "Administracion")?UserName=' + UserName,
+            success: function (data) {
+                closeWaitingDialog();
+                $("#frmUsuario").html(data);
+                $("#dialog-agregarusuario").dialog("open");
+            }
+        });
+    }
+
+    
+    function EditarClave(UserName)
+    {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $.ajax({
+            url: '@Url.Action("EditarClave", "Account")?UserName=' + UserName,
+            success: function (data) {
+                closeWaitingDialog();
+                $("#frmUsuario").html(data);
+                $("#dialog-agregarusuario").dialog("open");
+            }
+        });
+    }
+    function inicioOperacion() {
+        waitingDialog({ title: "Espere", message: "Guardando/Actualizando...<br/>" });
+    }
+    function finOperacion() {
+                       
+    }
+    function finOperacionSuccess(data)
+    {
+        closeWaitingDialog();
+        if (data.Ok==true)
+        {
+            $("#dialog-agregarusuario").dialog("close");             
+            $("#resultado-actualiza").html(data.Mensaje);
+            $.ajax({
+            type: "POST",
+            url: '@Url.Action("ActualizaUsuario", "Administracion")',
+            success: function (data) 
+                {                    
+                    $("#myGrid1").html(data);
+                    if ($("#resultado-actualiza").html() != "") 
+                    {
+                            $("#resultado-actualiza").dialog("open");
+                    }
+                }
+                });             
+        }
+        else{
+            alert(data.Mensaje);
+        }
+    }
+    function EliminarUsuario(UserName) {
+        UserNameG = UserName;   
+        $("#dialog-EliminarUsuario").html("<p>¿Esta seguro(a) que desea eliminar el usuario <strong>" + UserNameG + "</strong>?</p>");
+        $("#dialog-EliminarUsuario").dialog("open");
+    }
+    function SucursalesUsuario(UserName) {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $.ajax({
+            url: '@Url.Action("SucursalesUsuario", "Administracion")',
+            data: {
+                UserName:UserName,
+                r:randomnumber
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                $("#dialog-sucursales-usuario").html(data);                
+                $("#dialog-sucursales-usuario").dialog("open");
+            },
+            error: function () {
+                closeWaitingDialog();
+                alert("no fue posible cargar el formulario");
+            }
+        });
+    }
+    function CorreoUsuario(Rut) {        
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $.ajax({
+            url: '@Url.Action("FormularioCorreo", "Administracion")',
+            data: {
+                Rut: Rut,
+                r: randomnumber
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                $("#dialog-correo-usuario").html(data);
+                $("#dialog-correo-usuario").dialog("open");
+            },
+            error: function () {
+                closeWaitingDialog();
+                alert("no fue posible cargar el formulario");
+            }
+        });
+    }
+    function GuardaUsuarioInsert() {
+        waitingDialog({ title: "Guardando", message: "Guardando Datos...<br/>" });
+        $.ajax({
+            url: '@Url.Action("GuardaIngresoSucursal", "Administracion")',
+            data: {
+                RutVE: $("#RutVE").val(),
+                Sucursal: $("#Sucursal").val()
+            },
+            success: function (data) {
+                if (data.Ok == true) {                    
+                    $("#dialog-sucursales-usuario").dialog("close");
+                    SucursalesUsuario($("#RutVE").val() + '-1');
+                }
+                else {
+                    alert(data.Mensaje);
+                }
+            },
+            complete: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function EditGuardaUsuarioInsert() {
+        waitingDialog({ title: "Guardando", message: "Guardando Datos...<br/>" });
+        $.ajax({
+            url: '@Url.Action("GuardaIngresoSucursal", "Administracion")',
+            data: {
+                RutVE: $("#RutVE").val(),
+                Sucursal: $("#EditSucursal").val()
+            },
+            success: function (data) {
+                if (data.Ok == true) {
+                    $("#dialog-sucursales-usuario").dialog("close");
+                    SucursalesUsuario($("#RutVE").val() + '-1');
+                }
+                else {
+                    alert(data.Mensaje);
+                }
+            },
+            complete: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function EliminarSucUsuario(Rut,Sucursal) {
+        waitingDialog({ title: "Eliminando", message: "Eliminando Datos...<br/>" });
+        $.ajax({
+            url: '@Url.Action("EliminaSucursalUsuario", "Administracion")',
+            data: {
+                Rut: Rut,
+                Sucursal: Sucursal
+            },
+            success: function (data) {
+                if (data.Ok == true) {
+                    $("#dialog-sucursales-usuario").dialog("close");
+                    SucursalesUsuario(Rut + '-1');
+                }
+                else {
+                    alert(data.Mensaje);
+                }
+            },
+            complete: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+
+
+    function CargaListaSucursalEmpresa(Empresa) {
+        waitingDialog({ title: "Buscando", message: "Buscando Lista Sucursales...<br/>" });
+        $("#SucursalEmpresa").load('@Url.Action("DropDownListaSucursalEmpresa","Administracion")?Empresa=' + Empresa + ' #SucursalEmpresa option', function (response, status, xhr) {            
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+       
+    function VerDatosEmpresa(Tipo)
+    {
+        //1:Interno
+
+        if (Tipo==2)
+        {
+            $("#tblEmpresa").show();
+        }
+        else
+        {
+            $("#tblEmpresa").hide();
+        }
+    }
+    function EnterBuscarUser(event,valor) {
+        if (event.keyCode == 13) {
+            ActualizaGrillaConFiltro(valor);
+            $("#formulario-buscar").dialog("close");
+        }
+
+    }
+    function fnBloquea() {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Actualizando Usuario", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("fnBloquea", "Administracion")',
+            data: {
+                _r: randomnumber,
+                USU_RUT: $("#tRut").val(),
+                BLOQUEA: $("#tBloquea").val()
+            }
+        })
+        .done(function (data) {
+            if (data.Ok == true) {
+                $("#dialogm-gral").html("<p>Usuario Actualizado!</p>");
+                $("#dialogm-gral").dialog("open");
+                ActualizaGrilla();
+            }
+            else {
+            }
+        })
+        .error(function () {
+            $("#dialogm-gral").html("<p>No fue posible bloquear al usuario</p>");
+            $("#dialogm-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+    function CargaFormularioRestricciones(Rut) {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Cargando formulario", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("_FormularioRestricciones", "Administracion")',
+            data: {
+                _r: randomnumber,
+                USU_RUT: Rut
+            }
+        })
+        .done(function (data) {
+            $("#dialog-restriccion").html(data);
+            $("#dialog-restriccion").dialog("open");
+        })
+        .error(function () {
+            $("#dialogm-gral").html("<p>No fue posible cargar el formulario</p>");
+            $("#dialogm-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+    function CargaListaRoles(Sistema) {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $("#myGrid2").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $.ajax({
+            url: '@Url.Action("_ListaRoles", "Administracion")',
+            data: {
+                _r: randomnumber,
+                Sistema: Sistema
+            }
+        })
+        .done(function (data) {
+            $("#myGrid2").html(data);            
+        })
+        .error(function () {
+            $("#myGrid2").html("")
+            $("#dialogm-gral").html("<p>No fue posible cargar lista de roles</p>");
+            $("#dialogm-gral").dialog("open");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();
+        });
+    }
+    function AbrirConsulta01(Rut, Bloquear) {
+        if (Bloquear == "True") {
+            Bloquear = false;
+            $("#tMensaje").val("Desbloquear");
+        }
+        else {
+            Bloquear = true;
+            $("#tMensaje").val("Bloquear");
+        }
+
+        $("#tRut").val(Rut);
+        $("#tBloquea").val(Bloquear);
+
+        $("#dialog-usuario-01").html("<p>¿Esta seguro(a) que desea " + $("#tMensaje").val() + " el usuario?</p>");
+        $("#dialog-usuario-01").dialog("open");
+    }
+    $(function () {
+        $("#dialog-usuario-01").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Consulta', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    fnBloquea()
+                    $(this).dialog("close");
+                }
+                , Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-restriccion").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Restricciones Usuario', modal: true,
+            buttons: {
+                Cerrar: function () {                    
+                    $(this).dialog("close");
+                }
+                
+            }
+        });
+        $("#dialogm-gral").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Mensaje', modal: true,
+            buttons: {
+                Aceptar: function () {                  
+                    $(this).dialog("close");
+                }                
+            }
+        });
+    })
+    
+    $(document).ready(function () {
+        ActualizaGrilla();
+        CargaListaRoles("");
+    }
+    )
+</script>
+
+<input type="hidden" id="tRut" />
+<input type="hidden" id="tBloquea" />
+<input type="hidden" id="tMensaje" />
+<div id="dialog-usuario-01"></div>
+<div id="dialogm-gral" title="Resultado"></div>
+<div id="dialog-correo-usuario" title="Envío de Correos"></div>
+<div id="dialog-sucursales-usuario" title="Edición sucursales usuario"></div>
+<div id="resultado-actualiza" title="Actualización"></div>
+<div id="dialog-restriccion"></div>
+<div id="formulario-buscar" title="Buscar Usuario">
+    <p>Ingrese un Valor:<input type="text" id="BuscarUser" onkeydown="EnterBuscarUser(event,this.value);"/></p>
+</div>
+<div id="dialog-EliminarUsuario" title="Eliminar Usuario"></div>
+<div id="dialog-agregarusuario" title="Usuario">
+    <div id="frmUsuario"></div>
+</div>
+ <div id="tabs" style="">
+	<ul>
+		<li><a href="#tabs-1">Usuario</a></li>
+		<li><a href="#tabs-2">Rol</a></li>
+        @*<li><a href="#tabs-3">Funciones</a></li>*@
+	</ul>
+	<div id="tabs-1">
+        <div style="float:right;">            
+            <button id="BuscarUsuario">                
+                <table border="0" cellpadding="0" cellspacing="2">
+                    <tr valign="middle"><td><img alt="Buscar Usuario" src="@Url.Content("~/Images/magnifier.png")" /></td><td>&nbsp;Buscar</td></tr>
+                </table>                                
+            </button>     
+            <button id="agregarusuario">                
+                <table border="0" cellpadding="0" cellspacing="2">
+                    <tr valign="middle"><td><img alt="Agregar Usuario" src="@Url.Content("~/Images/user_blue_add2.png")" /></td><td>&nbsp;Agregar Usuario</td></tr>
+                </table>                                
+            </button>
+            @*<input type="button" id="agregarusuario" value="+ Agregar Usuario" />*@
+        </div>		
+        <div id="myGrid1" style="margin-top:50px;"> </div>
+	</div>
+	<div id="tabs-2">
+        <div style="width:100%;text-align:right;">
+            @Html.DropDownListFor(m => m.Sistema, Model.oListaSistema, "-- SELECCIONE SISTEMA --", new { onchange = "javascript:CargaListaRoles(this.value);" })
+        </div>        
+		<div id="myGrid2"> 
+            @*@Html.Partial("_ListaRoles",Model)*@
+        </div>
+	</div>
+   @* <div id="tabs-3">
+		<div id="myGrid3"> @Html.Partial("_ListaFunciones",Model)</div>
+	</div>	*@
+</div>

@@ -1,0 +1,282 @@
+﻿@model Courier.Models.AdministracionExcel
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $.fn.clearForm = function () {
+        return this.each(function () {
+            var type = this.type, tag = this.tagName.toLowerCase();
+            if (tag == 'form')
+                return $(':input', this).clearForm();
+            if (type == 'text' || type == 'password' || tag == 'textarea')
+                this.value = '';
+            else if (type == 'checkbox' || type == 'radio')
+                this.checked = false;
+            else if (tag == 'select')
+                this.selectedIndex = 0;
+        });
+    };
+    $(function () {
+        $("#tabs").tabs();
+        $("#idAgregarColumna").button()
+            .click(function () {
+                $("#frmagregarelemento").clearForm();
+                $("#ServicioRequerido").val($("#Servicio").val());
+                borrar_contenido();
+                //$("#dialog-agregarcolumna").dialog("open");
+                fCargaLetra($("#Servicio").val());
+            });
+
+    });
+    $(function () {
+        //$("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-agregarcolumna").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    $.validator.unobtrusive.parse("#frmagregarelemento");
+                    if ($("#frmagregarelemento").valid()) {
+                        $("#frmagregarelemento").submit();
+                        $(this).dialog("close");
+                        $("#dialog-resultado").dialog("open");
+                    }
+                },
+                Cancelar: function () {                    
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    //$("#frmActualiza").submit();
+                            waitingDialog({title: "Cargando", message: "Actualizando Tabla..."});
+                            $.ajax({
+                                url: '@Url.Action("UpdateAfterSave", "Administracion")?idServicioVigente=' + $("#Servicio").val(),
+                            success: function(data){
+                                $('#idCuerpo').html(data);
+                                closeWaitingDialog();
+                            }
+                        });
+
+//                    $("#idCuerpo").html('<br/><br/><img src="@Url.Content("~/Images/8.gif")" />');
+//                    $("#idCuerpo").load("/Administracion/UpdateAfterSave?idServicioVigente=" + $("#Servicio").val());
+                }
+            }
+        });
+    });
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+    function SubirElemento(id) {
+        $("#idFilaModificar").val(id);
+        $("#idTipo").val("sube");
+        $("#idServicioMover").val($("#Servicio").val());
+        $("#frmMueve").submit();
+        $("#dialog-resultado").dialog("open");
+    }
+    function BajarElemento(id) {
+        $("#idFilaModificar").val(id);
+        $("#idTipo").val("baja");
+        $("#idServicioMover").val($("#Servicio").val());
+        $("#frmMueve").submit();
+        $("#dialog-resultado").dialog("open");
+    }
+    function EliminarElemento(id) {        
+        $("#idFilaBorrar").val(id);
+        $("#dialog-Eliminar").dialog("open");
+    }
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-Eliminar").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    $("#frmElimina").submit();
+                    $("#dialog-resultado").dialog("open");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+    function fCargaLetra(Servicio) {
+        waitingDialog({ title: "Buscando", message: "Buscando Letras Libres...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111)
+        $("#Letra").load('@Url.Action("CargaLetraServicio","Administracion")?Servicio=' + Servicio + '&random=' + randomnumber + ' #Letra option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+            else {
+                fCargaColumna(Servicio);
+            }
+        })
+    }
+    function fCargaColumna(Servicio) {
+        waitingDialog({ title: "Buscando", message: "Buscando Letras Libres...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111)
+        $("#Columna").load('@Url.Action("CargaColumnaServicio","Administracion")?Servicio=' + Servicio + '&random=' + randomnumber + ' #Columna option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+            else {
+                $("#dialog-agregarcolumna").dialog("open");
+            }
+        })
+    }
+</script>
+
+
+
+
+<div id="dialog-Eliminar" title="Eliminar">
+    <p>¿Está seguro(a) que desea eliminar el elemento?</p>
+</div>
+ @using (Ajax.BeginForm("MueveColumnaExcel", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmMueve" }))
+ {
+    <input type="hidden" value="0" name="idFilaModificar" id="idFilaModificar" />
+    <input type="hidden" value="0" name="idTipo" id="idTipo" />
+    <input type="hidden" value="0" name="idServicioMover" id="idServicioMover" />
+ }
+ @using (Ajax.BeginForm("EliminarColumnaExcel", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmElimina" }))
+ {
+    <input type="hidden" value="0" name="idFilaBorrar" id="idFilaBorrar" />    
+ }
+@* @using (Ajax.BeginForm("UpdateAfterSave", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "idCuerpo" }, new { id = "frmActualiza" }))
+ {
+    <input type="hidden" value="@Model.Servicio" name="idServicioVigente" id="idServicioVigente" />    
+ }*@
+<div id="dialog-agregarcolumna" title="Agregar Columna Servicio">
+    @using (Ajax.BeginForm("AgregarColumnaServicio", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmagregarelemento" }))
+    {                
+            <fieldset>
+                          
+                <input type="hidden" value="0" id="ServicioRequerido" name="ServicioRequerido" />
+                <legend>Información</legend>                                                   
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Letra)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(m => m.Letra, Model.oListaLetra, "--Seleccione--")
+                    @Html.ValidationMessageFor(m => m.Letra)
+                </div>    
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Columna)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(m => m.Columna, Model.oListaColumnasforDD, "--Seleccione--")
+                    @Html.ValidationMessageFor(m => m.Columna)
+                </div>    
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Obligatoria)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(m => m.Obligatoria, Model.oListaObligatorioforDD, "--Seleccione--")
+                    @Html.ValidationMessageFor(m => m.Obligatoria)
+                </div>                            
+            </fieldset>
+       
+    }
+ </div>
+
+<div id="tabs">    
+	<ul>
+		<li><a href="#tabs-1">Lista Columnas</a></li>
+	</ul>
+	<div id="tabs-1">
+        @if (Model.Servicio != 0)
+        {
+            <div style="float:right">            
+                <input type="button" id="idAgregarColumna" value="+ Agregar Columna" />
+            </div>
+        }
+		<div id="myGrid1">
+            @if (Model.oListaSerCol != null && Model.Servicio != 0)
+            {
+
+                var grid = new WebGrid(Model.oListaSerCol, rowsPerPage: 15, ajaxUpdateContainerId: "myGrid1");    
+     
+                @grid.GetHtml(
+                fillEmptyRows: true,
+                alternatingRowStyle: "fila-alternativa",
+                headerStyle: "encabezado-grid",
+                tableStyle: "mGrid",
+                footerStyle: "pie-grid",
+                mode: WebGridPagerModes.All,
+                firstText: "<< Primera",
+                previousText: "< Anterior",
+                nextText: "Siguiente >",
+                lastText: "Última >>",
+                columns: new[]
+                {                    
+                    grid.Column("Letra","Letra",canSort:false),     
+                    grid.Column("Nombre","Columna",canSort:false), 
+                    grid.Column("Descripcion","Descripción",canSort:false),  
+                    grid.Column("Obligatoria","Obligatoria",canSort:false),
+                    grid.Column("",header:"Acciones",format:@<text>
+                    
+                                    @if(item.Letra!="A")
+                                    {
+                                        <a href="#" onclick="javascript:SubirElemento(@item.Id)"><img style="border-width:0px;" alt="Subir" src='@Url.Content("~/Images/up.png")' title="Subir" /></a>
+                                    }   
+                                    else
+                                    {
+                                        <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                    }  
+                   
+                                    @if (grid.TotalRowCount!=item.Indice)
+                                    {
+                                        <a href="#"  onclick="javascript:BajarElemento(@item.Id)"><img style="border-width:0px;" alt="Bajar" src='@Url.Content("~/Images/down.png")' title="Bajar" /></a>
+                                    }
+                                    else
+                                    {
+                                        <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                    }
+                   
+                                    <a href="#"  onclick="javascript:EliminarElemento(@item.Id)"><img style="border-width:0px;" alt="Borrar" src='@Url.Content("~/Images/delete16.png")' title="Borrar"/></a>
+                   
+                                </text>,style:"AnchoColumna60")
+                })
+            }
+            else if (Model.Servicio == 0)
+            {
+                <br />
+                <br />    
+                <p>Debe seleccionar un Servicio</p>    
+            }
+            else
+            {
+                <br />
+                <br />    
+                <p>No Existen columnas relacionadas</p>    
+            }            
+        </div>
+	</div>	
+</div>
+
+
+
+

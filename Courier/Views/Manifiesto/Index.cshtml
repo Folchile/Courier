@@ -1,0 +1,184 @@
+﻿@model Courier.Models.ManifiestoModels
+@{
+    ViewBag.Title = "Despacho Sucursales";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function ImprimirManifiesto(NumeroManifiesto) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        window.open('@Url.Action("Index","Reporte")?MAN_ID=' + NumeroManifiesto + '&r=' + randomnumber, '_blank');
+    }
+    function ImprimirPreManifiesto(SUC_ID) {        
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        window.open('@Url.Action("GeneraExcelPreManifiesto","Reportes")?SUC_ID=' + SUC_ID + '&r=' + randomnumber, '_blank');
+    }
+    function ImprimirManifiestoPadre(NumeroMAP) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        window.open('@Url.Action("Map","Reporte")?MAP_ID=' + NumeroMAP + '&r=' + randomnumber, '_blank');
+    }
+    function CargaListaSucursales(Transporte) {
+        CargaListaConductores(Transporte);  
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#ListContent").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#ListContent").load('@Url.Action("ListaDestino","Manifiesto")?r=' + randomnumber + '&Transporte=' + Transporte);
+    }
+    function CargaListaTransporte() {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#Transporte").hide();
+        $("#TransporteLoad").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#Transporte").load('@Url.Action("Index","Manifiesto")?r=' + randomnumber + ' #Transporte option', function (response, status, xhr) {
+            $("#TransporteLoad").html("");
+            $("#Transporte").show();
+        });
+    }
+    function CargaListaManifiesto() {        
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#ResultadoBuscar001").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#ResultadoBuscar001").load('@Url.Action("BuscarManifiesto","Manifiesto")?r=' + randomnumber + '&ManifiestoPadre=' + $("#ManifiestoPadre").val());
+    }
+    function CargaListaConductores(Transporte) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#CargandoConductor").html('<img src="@Url.Content("~/Images/38.gif")" />');
+        $("#Conductor").hide();
+        $("#Conductor").load('@Url.Action("DropDownConductor","Preparacion")?r=' + randomnumber + '&idPatente=' + Transporte + ' #Conductor option', function (response, status, xhr) {
+            if (status == 'success') {
+            }
+            $("#CargandoConductor").html("");
+            $("#Conductor").show();
+        });        
+    }
+    $(function () {
+        $("#Buscar001").button()
+        .click(function () {
+            if ($("#ManifiestoPadre").val() != "") {
+                CargaListaManifiesto()
+            }
+            else {
+                $("#ManifiestoPadre").focus();
+            }
+        });
+        $("#Guardar001").button()
+        .click(function (event) {
+            event.preventDefault();
+            $("#Mensaje001").html("<p>¿Está seguro(a) que desea <strong>cerrar</strong> el manifiesto?</p>");
+            $("#Mensaje001").dialog("open");
+        });
+        CargaListaSucursales(0);
+        $("#tabs").tabs();
+        $("#Mensaje001").dialog({ autoOpen: false, title: "Cerrar Manifiesto", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $.validator.unobtrusive.parse("#frm001");
+                    if ($("#frm001").valid() == true) {
+                        $("#frm001").submit();
+                    }
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#Mensaje002").dialog({ autoOpen: false, title: "Manifiesto", width: 'auto', modal: true,
+            buttons: {
+                'Ver Manifiesto': function () {
+                    $("#tabs").tabs("select", "#tabs-2");
+                    CargaListaManifiesto();
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+    function mover() {
+        
+        $("#Mensaje002").show();
+    }
+    function Inicio001() {
+        waitingDialog({ title: "Guardando", message: "Guardando Despacho...<br/>" });
+    }
+    function FinSuccess001(data) {
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            CargaListaSucursales(0);
+            CargaListaTransporte();
+            $("#ManifiestoPadre").val(data.OTP);
+            $("#Transporte").val("");
+            $("#Conductor").val("");
+            $("#Mensaje002").html("<p>Se ha generado Exitosamente, Manifiesto Padre N° " + data.OTP + '</p>')
+            $("#Mensaje002").dialog("open");           
+        }
+        else {
+            alert(data.Mensaje);
+        }
+    }
+    function FinError001() {
+        closeWaitingDialog();
+        alert("No fue posible guardar la información");
+    }
+    function EnterPadre(e) {
+        if (e.keyCode == '13') {
+            e.preventDefault();
+            CargaListaManifiesto();
+        }
+    }
+</script>
+
+<div id="Mensaje001"></div>
+<div id="Mensaje002"></div>
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Manifiesto</a></li>
+        <li><a href="#tabs-2">Ver Generados</a></li>
+	</ul>
+	<div id="tabs-1">   
+        @using (Ajax.BeginForm("GuardaManifiestoPadre", "Manifiesto", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio001()", OnSuccess = "Javascript:FinSuccess001(data)", OnFailure = "Javascript:FinError001()" }, new { id = "frm001" }))
+        {
+            <table>
+                <tr>
+                    <td>Transporte</td>
+                    <td>Conductor</td>
+                </tr>
+                <tr>
+                    <td><div id="TransporteLoad"></div>@Html.DropDownListFor(m => m.Transporte, Model.oListaTransporte, "-- Seleccione Transporte --", new { @onchange = "javascript:CargaListaSucursales(this.value)" }) </td>
+                    <td><div id="CargandoConductor"></div>@Html.DropDownListFor(m => m.Conductor, Model.oListaConductor, "-- Seleccione Conductor --", new { @onchange = "" }) </td>
+                    <td>
+                        <button id="Guardar001"> 
+                            <div style="float:left;width:150px;">       
+                            <div style="float:left;"><img alt="Cambiar Manifiesto" src='@Url.Content("~/Images/document_letter_forward.png")' /></div>                 
+                            <div style="float:left;">&nbsp;Cerrar Manifiestos</div>                        
+                            </div>                       
+                        </button>
+                    </td>
+                </tr>
+            </table>                 
+            <div id="ListContent"></div>
+        }
+        
+    </div>
+    <div id="tabs-2">
+        <table>
+            <tr>
+                <td>N° Manifiesto Padre</td>
+            </tr>
+            <tr>
+                <td>@Html.TextBoxFor(m => m.ManifiestoPadre, new { @onkeypress = "javascript:EnterPadre(event);" })</td>
+                <td>
+                    <button id="Buscar001"> 
+                        <div style="float:left;width:80px;">       
+                        <div style="float:left;"><img alt="Cambiar Manifiesto" src='@Url.Content("~/Images/magnifier.png")' /></div>                 
+                        <div style="float:left;">&nbsp;Buscar</div>                        
+                        </div>                       
+                    </button>
+                </td>
+            </tr>            
+        </table>
+        <div id = "ResultadoBuscar001">
+        
+        </div>
+    </div>
+</div>

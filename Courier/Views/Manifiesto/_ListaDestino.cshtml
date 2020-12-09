@@ -1,0 +1,79 @@
+﻿@model Courier.Models.ManifiestoModels
+@{
+    var grid = new WebGrid(Model.oListaDestino, rowsPerPage: 20, ajaxUpdateContainerId: "myGridDestino001");    
+    string Aerea="checked='checked'";
+    string Letra = "";
+} 
+<script type="text/javascript">
+    $(function () {
+        $(".boton").button();
+    })
+</script>
+
+
+<div  id="myGridDestino001" style="min-width:600px;">
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {                                
+        grid.Column("Sucursal_Destino","",@<text>
+            <div style="width:100%;text-align:center">
+                @if (Model.Transporte!="0" && Model.Transporte!="" && Model.Transporte!=null)
+                {
+                    if (item.Via_ID==1)
+                    {
+                        Aerea = "checked='checked'";
+                        Letra = "T";
+                    }
+                    else                        
+                    {
+                        Aerea = "checked='checked'";
+                        Letra = "A";
+                    }
+                    
+                    <input type="checkbox" value='@Letra@item.Sucursal_Bultos_ID' @Aerea id="@item.Sucursal_Bultos_ID" name="CheckDestino" />            
+                    
+                }
+            </div>
+        </text>),       
+        grid.Column("Via_Nombre","Vía") ,                   
+        grid.Column("Sucursal_Destino","Sucursal_Transito",@<text>
+        @if (item.Via_ID==1)
+        {
+            @item.Sucursal_Destino
+        }        
+        </text>),        
+        grid.Column("Sucursal_Bultos","Sucursal_Destino"),
+        grid.Column("Cantidad_OT","Cantidad_OT"),
+        grid.Column("Cantidad_Bultos","Cantidad_Bultos"),
+        grid.Column("Peso_total","Peso_total",format:@<text>
+        <div style="float:right">
+            @if (item.Peso_total!=null)
+            {
+            @String.Format("{0:0.00}", item.Peso_total)
+            }
+        </div>
+        </text>),
+        grid.Column("Peso_total","Opciones",format:@<text>
+        <div style="text-align:center">
+            <div style="width:100%;text-align:center" >                        
+                <button class="boton" onclick="javascript:ImprimirPreManifiesto(@item.Sucursal_Bultos_ID)">
+                    <div style="float:left;">       
+                        <div style="float:left;"><img alt="Crear Manifiesto" src="@Url.Content("~/Images/doc_excel_table.png")" /></div>                 
+                        <div style="float:left;">&nbsp;Ver en Excel</div>                        
+                    </div>                       
+                </button>                                
+            </div>
+        </div>
+        </text>)                                                       
+    })        
+</div>

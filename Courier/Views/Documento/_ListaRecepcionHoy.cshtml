@@ -1,0 +1,40 @@
+﻿@model Courier.Models.DocumentoModels
+@{
+    var grid = new WebGrid(Model.ListaHoy, rowsPerPage: 15, ajaxUpdateContainerId: "myGrid");    
+} 
+@if (Model.ListaHoy != null)
+{
+
+    <div  id="myGrid">        
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {   
+                grid.Column("OTD","OT",format:@<text>
+                    @item.OTP-@item.OTD                
+                </text>),                                             
+                grid.Column("EMP_NOMBRE","Empresa"),
+                grid.Column("TDO_NOMBRE","Tipo"),
+                grid.Column("DOA_NUMERO","N°"),
+                grid.Column("RDO_FECHA","Fecha"),                
+                grid.Column("EDO_NOMBRE","Estado"),
+                grid.Column("SUC_NOMBRE","Sucursal"),
+                grid.Column("USU_NOMBRE","Usuario")                
+            })
+        </div>        
+    </div>
+}
+else
+{
+    <div>Lista Vacia</div>
+}

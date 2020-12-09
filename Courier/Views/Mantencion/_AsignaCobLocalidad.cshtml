@@ -1,0 +1,248 @@
+﻿@model Courier.Models.ListaCoberturaModels
+@{
+    ViewBag.Title = "ASIGNA LOCALIDAD";
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+            $("#SucursalComuna").load("@Url.Action("CoberturaConComuna", "Mantencion")?idSucursal=" + $("#Sucursal").val() + " #SucursalComuna",
+            function(response, status, xhr) {          
+              if (status!="success")          
+              {            
+                $("#tabs-1").html("No fue posible cargar la información");
+              }
+              else
+              {
+                var $response=$(response);
+                var Comuna = $response.find('#SucursalComuna').html();
+                var Localidad = $response.find('#SucursalLocalidad').html();
+                $("#SucursalComuna").html(Comuna);
+                $("#SucursalLocalidad").html(Localidad);
+              }
+        });
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    } 
+
+
+    $(function () {
+        $("#ComunaLoc").change(function () {
+            if ($(this).val() == "") {
+                Limpia();
+                CargarLoc(0);
+            }
+            else {
+                Limpia();
+                CargarLoc($(this).val());
+            }
+        })
+    });
+
+    function Limpia() {
+     $("#LunesLoc").attr('checked', false);
+     $("#MartesLoc").attr('checked', false);
+     $("#MiercolesLoc").attr('checked', false);
+     $("#JuevesLoc").attr('checked', false);
+     $("#ViernesLoc").attr('checked', false);
+     $("#SabadoLoc").attr('checked', false);
+     $("#DomingoLoc").attr('checked', false);
+     $("#TiempoEstimadoLoc").val("");
+     $("#ClasificacionLoc").val("");
+     $("#ViaLoc").val("");
+     $("#SucursalActualLoc").val("");
+    }
+
+
+    function CargarLoc(ComunaLoc) {
+        waitingDialog({ title: "Buscando", message: "Buscando Localidades...<br/>" });
+        $("#Localidad").load('@Url.Action("CargaLocalidades","Mantencion")?ComunaLoc=' + $("#ComunaLoc").val() + '&Sucursal=' + $("#Sucursal").val(), function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+
+        })
+    }
+
+
+
+    $(function () {
+        $("#Localidad").change(function () {
+           $.ajax({
+                url: '@Url.Action("RescataDatosLocalidad","Mantencion")?ComunaLoc=' + $("#ComunaLoc").val() + '&Sucursal=' + $("#Sucursal").val() + '&Localidad=' + $("#Localidad").val(),
+                success: function (data) {
+                    $("#ClasificacionLoc").val(data.clasif);
+                    if (data.Lun == true) {
+                        $("#LunesLoc").attr('checked', true);
+                    }
+                    else {
+                        $("#LunesLoc").attr('checked', false);
+                    }
+                    if (data.Mar == true) {
+                        $("#MartesLoc").attr('checked', true);
+                    }
+                    else {
+                        $("#MartesLoc").attr('checked', false);
+                    }
+                    if (data.Mie == true) {
+                        $("#MiercolesLoc").attr('checked', true);
+                    }
+                    else {
+                        $("#MiercolesLoc").attr('checked', false);
+                    }
+                    if (data.Jue == true) {
+                        $("#JuevesLoc").attr('checked', true);
+                    }
+                    else {
+                        $("#JuevesLoc").attr('checked', false);
+                    }
+                    if (data.Vie == true) {
+                        $("#ViernesLoc").attr('checked', true);
+                    }
+                    else {
+                        $("#ViernesLoc").attr('checked', false);
+                    }
+                    if (data.Sab == true) {
+                        $("#SabadoLoc").attr('checked', true);
+                    }
+                    else {
+                        $("#SabadoLoc").attr('checked', false);
+                    }
+                    if (data.Dom == true) {
+                        $("#DomingoLoc").attr('checked', true);
+                    }
+                    else {
+                        $("#DomingoLoc").attr('checked', false);
+                    }
+                    $("#SucursalActualLoc").val(data.sucact);
+                    $("#TiempoEstimadoLoc").val(data.TmpoEstimado);
+                    $("#ViaLoc").val(data.Va);
+                    $("#SUCDESTINO").val(data.sucdest);
+//                    alert($("#SucursalActual").val());
+                }
+            });
+        });
+    })
+
+
+    $(function () {
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+</script>
+
+<div id="dialog-resultado" title="Resultado"></div>
+
+
+@using (Ajax.BeginForm("AsignLocalidad", "Mantencion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmAsigLocCob" }))
+{
+    @Html.HiddenFor(m => m.IDCOM)
+    @Html.HiddenFor(m => m.IDSUC) 
+    @Html.HiddenFor(m => m.SUCDESTINO)
+    @Html.HiddenFor(m => m.Sucursal)
+    <table>
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.ComunaLoc)</strong></td>
+            <td>@Html.DropDownListFor(m => m.ComunaLoc, Model.ListaComunas, "--Seleccione Comuna--", new { @style = "width:160px;font-size: 10px" })</td>
+          </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.ComunaLoc)</td>
+            </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.Localidad)</strong></td>
+            <td>@Html.DropDownListFor(m => m.Localidad, Model.ListaLocalidadesCob, "--Seleccione Localidad--", new { @style = "width:160px;font-size: 10px" })</td>
+         </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.Localidad)</td>
+            </tr>
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.SucursalActualLoc)</strong></td>
+            <td>@Html.TextBoxFor(m => m.SucursalActualLoc, new { @style = "width:90px;font-size: 10px;text-align:left", @readonly = "readonly" })</td>
+         </tr>
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.ClasificacionLoc)</strong></td>
+            <td>@Html.TextBoxFor(m => m.ClasificacionLoc, new { @style = "width:90px;font-size: 10px;text-align:left", @readonly = "readonly" })</td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.ViaLoc)</strong></td>
+            <td>@Html.DropDownListFor(m => m.ViaLoc, Model.ListaVias, "--Seleccione Via--", new { @style = "width:160px;font-size: 10px" })</td>
+         </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.ViaLoc)</td>
+            </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.TiempoEstimadoLoc)</strong></td>
+            <td>@Html.TextBoxFor(m => m.TiempoEstimadoLoc, new { @style = "width:30px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.TiempoEstimadoLoc)</td>
+            </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.LunesLoc)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.LunesLoc, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.MartesLoc)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.MartesLoc, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.MiercolesLoc)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.MiercolesLoc, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.JuevesLoc)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.JuevesLoc, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.ViernesLoc)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.ViernesLoc, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.SabadoLoc)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.SabadoLoc, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.DomingoLoc)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.DomingoLoc, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+   </table>
+    
+        
+}

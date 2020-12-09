@@ -1,0 +1,52 @@
+﻿@model Courier.Models.InformeCelsouthModels
+
+@{
+    ViewBag.Title = "Informe Celsouth";
+}
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".tipofecha").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+        $("#btnDescargar").button();
+    })
+    function EnviarFormulario() {        
+        event.preventDefault();
+        $.validator.unobtrusive.parse("#frmInforme");
+        if ($("#frmInforme").valid() == true) {
+            window.open('@Url.Action("GeneraExcelCelsouth", "Reportes")?FECINI=' + $("#FechaInicio").val() + '&FECTER=' + $("#FechaTermino").val());
+        }
+    }
+</script>
+
+@using (Html.BeginForm("", "", FormMethod.Get, new {@id="frmInforme"}))
+{
+<table>
+    <tr>
+        <td>@Html.LabelFor(m => m.FechaInicio)</td>
+        <td>@Html.TextBoxFor(m => m.FechaInicio, new { @class = "tipofecha", @readonly = "readonly" })</td>       
+        <td colspan="2">@Html.ValidationMessageFor(m=>m.FechaInicio)</td>
+    </tr>    
+    <tr>
+        <td>@Html.LabelFor(m => m.FechaTermino)</td>
+        <td>@Html.TextBoxFor(m => m.FechaTermino, new { @class = "tipofecha", @readonly = "readonly" })</td>
+        <td colspan="2">@Html.ValidationMessageFor(m=>m.FechaTermino)</td>
+    </tr>
+    
+</table>
+}
+
+<button id="btnDescargar" onclick="javascript:EnviarFormulario();">
+    <div style="float:left;width:80px;">       
+        <table>
+            <tr>
+                <td>
+                    <img alt="Descargar Informe" src="@Url.Content("~/Images/doc_excel_table.png")" />
+                </td>
+            </tr>
+            <tr><td>Descargar Informe</td></tr>
+        </table>         
+    </div>                       
+</button>

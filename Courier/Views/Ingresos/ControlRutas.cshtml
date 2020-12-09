@@ -1,0 +1,237 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    var grid = new WebGrid(Model.DetalleRutas, rowsPerPage: 7, ajaxUpdateContainerId: "gridDetalleRuta",ajaxUpdateCallback:"botonazo");
+}
+
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+
+
+<script type="text/javascript">
+    function botonazo() {
+        $(".boton").button();
+    }
+    
+    $(function () {
+        $("#btnEditaDetRuta").button();
+        $(".boton").button();
+        $("#btnAgregaNroPed").button();
+        $("#btnAgregaNroTrans").button();
+        $("#btnEliminaDetRuta").button();
+        $("#agregaruta").button()
+            .click(function () {
+                borrar_contenido();
+                CargaDetalleRutas($("#FOLIO").val());
+            });
+        $("#detalleRtas").dialog({ autoOpen: false, title: "Ingreso Detalle", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+            buttons: {
+                Grabar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmEnviarRuta");
+                    if ($("#frmEnviarRuta").valid() == true) {
+                        $("#frmEnviarRuta").submit();
+//                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editardetallerta").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmActualizaRutas");
+                    if ($("#frmActualizaRutas").valid() == true) {
+                        $("#frmActualizaRutas").submit();
+                        $(this).dialog("close");
+                        CargaControlRutas();
+
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-eliminardetallerutas").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmeliminardetallerutas").submit();
+                    $(this).dialog("close");
+                    CargaControlRutas();
+                    alert("Registro Eliminado Satisfactoriamente");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+       
+
+        function CargaDetalleRutas(detFol) {
+            $("#detFol").val(detFol);
+            $("#detalleRtas").dialog("open");
+            $("span.ui-dialog-title").text('Ingreso Detalle'); 
+            $("#FECHA").datepicker("hide");
+            $("#detalleRtas").load('@Url.Action("DetalleRutas","Ingresos")?detFol=' + $("#detFol").val(), function (response, status, xhr) {                
+                borrar_contenido();
+            });
+        }
+
+        function OcultaCalendario() {
+            $("#FECHA").datepicker("hide");
+        }
+
+
+    function EliminarDetRuta(id_ruta) {
+        $("#dialog-resultado").html("");
+        $("#dialog-eliminardetallerutas").dialog("open");
+        $("#id_ruta").val(id_ruta);
+        $("span.ui-dialog-title").text('Confirmación'); 
+        $("#dialog-eliminardetallerutas").html("<p>¿Está seguro(a) que desea eliminar el Item <strong>" + id_ruta + " </strong> ? </p>");
+    }
+
+    function EditarDetRutas(id_ruta) {
+        $("#Detalleruta_edit_id").val(id_ruta);
+        $("#dialog-resultado").html("");
+        $("span.ui-dialog-title").text('N° ID: ' + $("#Detalleruta_edit_id").val()); 
+        $("#frmeditardetrutas").submit();
+        $("#dialog-editardetallerta").dialog("open");
+    }
+
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+
+</script>
+
+@{
+    var Texto = "";
+    if ((Model.MMOUSUARIO != 1) || (Model.CONUSUARIO == 0))
+    {
+        Texto = "disabled='disabled'";
+    }
+    }
+
+
+
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-eliminardetallerutas" title="Eliminar Detalle"></div> 
+<div id="dialog-editardetallerta" ></div> 
+
+
+@using (Ajax.BeginForm("EliminarDetalleRutas", "Ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmeliminardetallerutas" }))
+{
+    <input type="hidden" name="id_ruta" id="id_ruta" />
+}
+
+ @using (Ajax.BeginForm("EditarDetalleRutas", "ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editardetallerta", OnComplete = "javascript:OcultaCalendario()" }, new { id = "frmeditardetrutas" }))
+ {
+     <input type="hidden" name="Detalleruta_edit_id" id="Detalleruta_edit_id" />   
+ }
+
+
+
+<table style="width:100%;"><tr><td style="width:100%; text-align:right;">
+  <input type="button" @Texto id="agregaruta" name="agregaruta" value="Agrega Detalle Ruta" style="width:180px;height:25px; font-size:8pt" /></td></tr>
+</table>
+
+<div id="gridDetalleRuta">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("DRID","ID"),
+       grid.Column("DRFECHA","FECHA",format:@<text>
+       @item.DRFECHA.ToShortDateString() 
+       </text>), 
+       grid.Column("DRRORIGEN","REG-ORIGEN"),
+       grid.Column("DRCOMORIGEN","COM-ORIGEN"),
+       grid.Column("DRKMINICIAL","KM-INI"),
+       grid.Column("DRREGDESTINO","REG-DESTNO"),
+       grid.Column("DRCOMDESTINO","COM-DESTNO"),
+       grid.Column("DRKMFINAL","KM-FIN"),
+       grid.Column("DRKMRECORIDOS","KM-RECORR"),
+       grid.Column("NZONA","ZONA"),
+       grid.Column("NPEDIDO","LT-TRANSP"),
+       grid.Column("NTRANSPORTE","TRANSPORTE"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                          
+                                          @*<a href="#" onclick="javascript:EditarDetRutas('@item.DRid')"><img border="0" src='@Url.Content("~/Images/24.png")' alt="Editar @item.DRid" title="Editar @item.DRid"/></a>*@
+                                         @* @if (Model.MMOUSUARIO==1)
+                                          {
+                                            <a href="#" onclick="javascript:EliminarDetRuta('@item.DRid')"><img border="0" src='@Url.Content("~/Images/deletered.png")' alt="Eliminar @item.DRid" title="Eliminar @item.DRid"/></a>
+                                          }*@
+                                          
+       <div style="text-align:center;">
+            
+            @*<button class="boton" onclick="javascript:AgregaNroPedido(@item.DRID);" id="btnAgregaNroPed" style="height:25px;">
+                 <div style="float:left;">       
+                     <div style="float:left;"><img alt="Agrega Nro Pedido" src="@Url.Content("~/Images/edit_add.png")" /></div>                 
+                     <div style="float:left;margin-top:2px;">&nbsp;Pedido</div>                        
+                  </div>                       
+            </button>
+            <button class="boton" onclick="javascript:AgregaNroTransporte(@item.DRID);" id="btnAgregaNroTrans" style="height:25px;">
+                 <div style="float:left;">       
+                     <div style="float:left;"><img alt="Agrega Nro Transporte" src="@Url.Content("~/Images/edit_add.png")" /></div>                 
+                     <div style="float:left;margin-top:2px;">&nbsp;Transporte</div>                        
+                 </div>                       
+            </button>*@
+            <button class="boton" onclick="javascript:EliminarDetRuta(@item.DRID);" id="btnEliminaDetRuta" style="height:25px;">
+                 <div style="float:left;">       
+                     <div style="float:left;"><img alt="Eliminar" src="@Url.Content("~/Images/deletered.png")" /></div>                 
+                     @*<div style="float:left;margin-top:2px;">&nbsp;Eliminar</div> *@                       
+                  </div>                       
+            </button>
+            <button class="boton" onclick="javascript:EditarDetRutas(@item.DRID);" id="btnEditaDetRuta" style="height:25px;">
+                 <div style="float:left;">       
+                     <div style="float:left;"><img alt="Editar" src="@Url.Content("~/Images/pencil_edit.png")" /></div>                 
+                    @* <div style="float:left;margin-top:2px;">&nbsp;Editar</div> *@                       
+                  </div>                       
+            </button>
+        </div> 
+         </text>) 
+       
+        
+ })
+</div>
+
+<div id="detalleRtas">
+
+</div>
+
+<div id="detFol">
+
+</div>

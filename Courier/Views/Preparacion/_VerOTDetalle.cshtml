@@ -1,0 +1,925 @@
+﻿@model Courier.Models.PreparacionModels   
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" >
+    function ValidarCodigoBultoEnOT(Editar) {        
+        waitingDialog({ title: "Verificando", message: "Verificando Código...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $.ajax({
+            url: '@Url.Action("vjSonValidarIdBultoenOTD","Validation")',
+            data: {
+                ingIdBulto: $("#CodigoBulto").val(),
+                ingOTP: $("#OTP").val(),
+                ingOTD: $("#OTD").val(),
+                Edit:Editar,
+                r: randomnumber
+            },
+            type: "POST",
+            success: function (data) {
+                if (data == true) {
+                    FormBultosOpen();
+                }
+                else {
+                    $("#dialog-ErrorValidarOT").html('<p>' + data + '</p>');
+                    $("#dialog-ErrorValidarOT").dialog("open");
+                }
+
+            },
+            error: function () {
+                $("#dialog-ErrorValidarOT").html("<p>No fue posible validar el código</p>");
+                $("#dialog-ErrorValidarOT").dialog("open");
+            },
+            complete: function () {
+                $("#EditarBultoAgain").dialog("close");
+                closeWaitingDialog();
+            }
+        });
+    
+    }
+</script><!--ValidarCodigoBultoEnOT-->
+<script type="text/javascript">
+function ValidaBultoSiguiente() {
+    waitingDialog({ title: "Buscando", message: "Buscando siguiente bulto...<br/>" });
+    var randomnumber = Math.floor(Math.random() * 11111111)
+    $.ajax({
+        url: '@Url.Action("ValidaBultoSiguiente","Validation")',
+        data: {
+            OTP: $("#OTP").val(),
+            OTD: $("#OTD").val(),
+            r: randomnumber
+        },
+        type: "POST",
+        success: function (data) {
+            if (data.Ok == true) {
+                $("#CodigoBulto").val('B' + data.Bulto);
+                FormBultosOpen();
+            }
+            else {                
+                $("#dialog-ErrorValidarOT").html("<p>" + data.Mensaje + "</p>");
+                $("#dialog-ErrorValidarOT").dialog("open");
+            }
+
+        },
+        error: function () {
+            $("#dialog-ErrorValidarOT").html("<p>No fue posible buscar el código del bulto</p>");
+            $("#dialog-ErrorValidarOT").dialog("open");
+        },
+        complete: function () {            
+            closeWaitingDialog();
+        }
+    });
+
+}
+</script><!--ValidaBultoSiguiente-->
+<script type="text/javascript">
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+</script><!--borrar_contenido-->
+<script type="text/javascript">
+function ActualizaListaBultoPreparacion()
+{    
+    $("#VerListaBultos").html("<img src='@Url.Content("~/images/8.gif")' border='0'>");
+    var randomnumber = Math.floor(Math.random() * 111111111);
+    $.ajax({
+        url: '@Url.Action("ActualizaListaBultoPreparacion", "Preparacion")?OTP=' + $("#OTP").val() + '&OTD=' + $("#OTD").val() + '&r=' + randomnumber,
+        type: "POST",
+        success: function (data) {
+            $("#VerListaBultos").html(data);
+            closeWaitingDialog();
+        },
+        error: function () {
+            alert("Ocurrio un error mientras se ejecutaba la consulta");
+            closeWaitingDialog();
+        }
+    });
+        
+}
+</script><!--ActualizaListaBultoPreparacion-->
+<script type="text/javascript">
+    $(function () {
+        $("#EditarBultoAgain").dialog({ autoOpen: false, title: "Editar Bulto", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    ValidarCodigoBultoEnOT(1);
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-documentos").dialog({ autoOpen: false, title: "Documentos Asociados", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-HistorialOT").dialog({ autoOpen: false, title: "Historial", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-ErrorValidarOT").dialog({ autoOpen: false, title: "Error", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#CodigoBulto").val("");
+                    $("#CodigoBulto").focus();
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-FinPrep").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#formContent").html("");
+                    $("#Referencia").val("");
+                    $("#Referencia").focus();
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog-mensajes").dialog({
+            autoOpen: false,
+            modal: true,
+            title: "Preparación Masiva",
+            buttons: {
+                Aceptar: function () {
+                    var randomnumber = Math.floor(Math.random() * 111111111);
+                    $("#F01B2").html('<br/><br/><img src="@Url.Content("~/Images/8.gif")" />');
+                    $("#F01B2").load("/Preparacion/PrepararPorOTP?OTP=" + $("#OTP").val() + "&OTD=" + $("#OTP").val() + '&r=' + randomnumber);
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog-EliminarBulto").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Eliminar: function (event) {
+                    event.preventDefault();
+                    $("#frmEliminarBulto").submit();
+                    $(this).dialog("close");
+
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-ImprimirPorOTP").dialog({
+            autoOpen: false,
+            title: 'Confirmación',
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#CuadroImpresion").html("");
+                    ImprimePorOTP();
+                    $(this).dialog("close");
+
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-Ok").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    var randomnumber = Math.floor(Math.random() * 111111111);
+                    waitingDialog({ title: "Cargando", message: "Validando Preparación...<br/>" });
+                    $.ajax({
+                        url: '@Url.Action("FinalizarPreparacion", "Preparacion")?OTP=' + $("#OTP").val() + '&OTD=' + $("#OTD").val() + '&r=' + randomnumber,
+                        type: "POST",
+                        success: function (data) {
+                            if (data.Ok == true) {
+
+                                //                                llamar direccion gogle
+                                if (data.OTD == 0) {
+                                    $("#dialog-FinPrep").html("<p>Se ha finalizado la Preparación</p><p>" + data.Mensaje + "</p>");
+                                } else {
+                                    $("#dialog-FinPrep").html("<p>Se ha finalizado la Preparación</p>");
+                                }
+                                
+                                $("#dialog-FinPrep").dialog("open");
+                                $("#formContent").html("");
+                                $("#Referencia").val("");
+                            }
+                            else {
+                                $("#dialog-FinPrep").html("<p>No fue posible finalizar la Preparación</p>");
+                                $("#dialog-FinPrep").dialog("open");
+                            }
+                            closeWaitingDialog();
+
+                        },
+                        error: function () {
+                            alert("Ocurrio un error mientras se ejecutaba la consulta");
+                            closeWaitingDialog();
+                        }
+                    });
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-impresion").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Imprimir: function (event) {
+                    $("#CuadroImpresion").html("");
+                    $("#vIdBulto").val("0");
+                    event.preventDefault();
+                    $("#frmImpresionBultosOTD").submit();
+                    $(this).dialog("close");
+                    $("#CodigoBulto").focus();
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                    $("#CodigoBulto").focus();
+                }
+
+            }
+        });
+        $("#dialog-agregarmasbultos").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Guardar: function (event) {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmAgregarBulto");
+                    if ($("#frmAgregarBulto").valid() == true) {
+                        event.preventDefault();
+                        $("#frmAgregarBulto").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-PreparacionFalta").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog-impresionGuia").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Imprimir: function (event) {
+                    $("#CuadroImpresion").html("");
+                    $("#vConf").val("4");
+                    $("#vIdBulto").val("0");
+                    event.preventDefault();
+                    $("#frmImpresionBultosOTD").submit();
+                    $(this).dialog("close");
+                    BultoFocus();
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+
+                    BultoFocus();
+                }
+
+            }
+        });
+        $("#dialog-impresionBulto").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Imprimir: function (event) {
+                    $("#CuadroImpresion").html("");
+                    $("#vConf").val("5");
+                    event.preventDefault();
+                    $("#frmImpresionBultosOTD").submit();
+                    $("#CodigoBulto").focus();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+        $("#dialog-cambiovia").dialog({
+            autoOpen: false,
+            title: "Cambio de Vía",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    var valor = "T";
+                    if ($("#OTGuardada_VIA").val() == "T") {
+                        valor = "A";
+                    }
+                    $("#dialog-cambiovia").dialog("close");
+                    waitingDialog({ title: "Cargando", message: "Validando Preparación...<br/>" });
+                    var randomnumber = Math.floor(Math.random() * 111111111);
+                    $.ajax({
+                        url: '@Url.Action("CambiarVia","Preparacion")?OTP=' + $("#OTP").val() + '&OTD=' + $("#OTD").val() + '&Via=' + valor + '&r=' + randomnumber,
+                        type: "POST",
+                        success: function (data) {
+                            if (data == "True") {
+                                $("#dialog-PreparacionFalta").html("<p>Vía Actualizada</p>");
+                                $("#dialog-PreparacionFalta").dialog("open");
+                                if ($("#OTGuardada_VIA").val() == "T") {
+                                    $("#OTGuardada_VIA").val("A");
+                                }
+                                else {
+                                    $("#OTGuardada_VIA").val("T");
+                                }
+                            }
+                            else {
+                                $("#dialog-PreparacionFalta").html("<p>No fue posible Actualizar la Vía</p>");
+                                $("#dialog-PreparacionFalta").dialog("open");
+                            }
+                            closeWaitingDialog();
+
+                        },
+                        error: function () {
+                            alert("Ocurrio un error mientras se ejecutaba la consulta");
+                            closeWaitingDialog();
+                        }
+                    });
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+</script><!--Dialogs -->
+
+<script type="text/javascript">
+    function VerDocumentosAsociados(OTP, OTD) {
+        $("#dialog-documentos").dialog("open");
+         var randomnumber=Math.floor(Math.random()*111111111);
+        $("#dialog-documentos").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-documentos").load("@Url.Content("~/Preparacion/ListaDocumentos")?OTP=" + OTP + "&OTD=" + OTD + '&r=' + randomnumber);
+    }
+    $(function () {    
+        $("#IngresarBulto").button()
+                .click(
+                    function(){
+                        $("#EditarBultoValue").val("Nuevo");
+                        ValidaBultoSiguiente();
+                    });
+        $("#EditarBulto").button()
+                .click(
+                    function(){
+                        $("#CodigoBulto").val("");
+                        $("#EditarBultoValue").val("Editar");
+                        $("#EditarBultoAgain").dialog("open");
+                    });
+        $("#btnVerDocumentosAsociados").button()
+        .click(function () {
+            VerDocumentosAsociados($("#OTP").val(), $("#OTD").val());
+        });
+        $("#btnVerHistorialOT").button()
+        .click(function () {
+            CargaHistorialOT($("#OTP").val(), $("#OTD").val(), 0);
+        });         
+        $("#tabs").tabs();
+        $("#PrepararPorOTP").button()
+                            .click(function () {
+                                $("#dialog-mensajes").html("<p>Esta acción creara los bultos automáticamente con los datos del OT</p><p>¿Está seguro(a) que desea continuar?</p>");
+                                $("#dialog-mensajes").dialog("open");
+                            });
+
+        $("#ImprimirGuia").button()
+        .click(function () {
+            $("#CuadroImpresion").html("");
+            ImprimirEtiquetaGuia();
+        });
+
+
+        $("#imprimirporotp").button()
+        .click(function () {
+            $("#CuadroImpresion").html("");
+            $("#dialog-ImprimirPorOTP").dialog("open");            
+        });
+        $("#finPreparacion").button()
+        .click(function () {
+            ValidarTodoPreparado();
+        });
+        $("#AgregarMasBultos").button()
+        .click(function () {
+            $("#eOTP").val($("#OTP").val());
+            $("#eOTD").val($("#OTD").val());
+            $("#dialog-agregarmasbultos").dialog("open");
+        });
+      
+        $("#CambiarTotal").button()
+        .click(function () {
+            $("#dialog-ingresobultos").dialog("open");
+        });
+        $("#dialog:ui-dialog").dialog("destroy");
+        
+        $("#dialog-impresionGuia").dialog("open");
+        $("#vConf").val("1");
+        $("#dialog-impresionGuia").html("<p>¿Desea Imprimir las Etiquetas Guía?</p>");
+    });
+    function ImprimirEtiquetaGuia() {
+        $("#CuadroImpresion").html("");
+        $("#dialog-impresionGuia").html("<p>¿Desea Imprimir las Etiquetas Guía?</p>");        
+        $("#dialog-impresionGuia").dialog("open");
+    }
+    function ImprimirEtiquetaBulto(idBulto) {                
+        $("#CuadroImpresion").html("");
+        $("#vIdBulto").val(idBulto);        
+        $("#dialog-impresionBulto").html("<p>¿Esta seguro(a) que desea imprimir la Etiqueta?</p>");
+        $("#dialog-impresionBulto").dialog("open");
+    }
+    function EliminarBulto(idBulto) {
+        $("#delOTP").val($("#OTP").val());
+        $("#delOTD").val($("#OTD").val());
+        $("#delIdBulto").val(idBulto); 
+        $("#dialog-EliminarBulto").html("<p>¿Esta seguro(a) que desea Eliminar el Bulto: " + idBulto + "?</p>");
+        $("#dialog-EliminarBulto").dialog("open");
+    }
+    
+    function ValidarTodoPreparado() {
+        waitingDialog({ title: "Cargando", message: "Validando Preparación...<br/>" });
+         var randomnumber=Math.floor(Math.random()*111111111);
+        $.ajax({
+            url: '@Url.Action("ValidarTodoPreparado", "Preparacion")?OTP=' + $("#OTP").val() + '&OTD=' + $("#OTD").val() + '&r=' + randomnumber,
+            type: "POST",
+            success: function (data) {
+                if (data == "True") {
+                    $("#dialog-Ok").html("<p>Ha completado la preparación de todos los bultos</p><p>¿Desea finalizar la preparación de esta OT?</p>");
+                    $("#dialog-Ok").dialog("open");
+                }
+                else {
+                    $("#dialog-PreparacionFalta").html("<p>Debe preparar todos los bultos antes de finalizar</p>");
+                    $("#dialog-PreparacionFalta").dialog("open");
+                }
+                closeWaitingDialog();
+
+
+            },
+            error: function () {
+                alert("Ocurrio un error mientras se ejecutaba la consulta");
+                closeWaitingDialog();
+            }
+        });
+    }
+    
+</script>
+<script src="/Silverlight.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function onSilverlightError(sender, args) {
+        var appSource = "";
+        if (sender != null && sender != 0) {
+            appSource = sender.getHost().Source;
+        }
+
+        var errorType = args.ErrorType;
+        var iErrorCode = args.ErrorCode;
+
+        if (errorType == "ImageError" || errorType == "MediaError") {
+            return;
+        }
+
+        var errMsg = "Error no controlado en la aplicación de Silverlight " + appSource + "\n";
+
+        errMsg += "Código: " + iErrorCode + "    \n";
+        errMsg += "Categoría: " + errorType + "       \n";
+        errMsg += "Mensaje: " + args.ErrorMessage + "     \n";
+
+        if (errorType == "ParserError") {
+            errMsg += "Archivo: " + args.xamlFile + "     \n";
+            errMsg += "Línea: " + args.lineNumber + "     \n";
+            errMsg += "Posición: " + args.charPosition + "     \n";
+        }
+        else if (errorType == "RuntimeError") {
+            if (args.lineNumber != 0) {
+                errMsg += "Línea: " + args.lineNumber + "     \n";
+                errMsg += "Posición: " + args.charPosition + "     \n";
+            }
+            errMsg += "Nombre de método: " + args.methodName + "     \n";
+        }
+
+        throw new Error(errMsg);
+    }
+    function FinCarga() {
+        closeWaitingDialog();        
+        $("#dialog-CargarFomrulario").dialog("open");       
+        $("#ingPeso").focus();
+
+    }
+    function FinGuardar() {
+        closeWaitingDialog();
+        $("#CodigoBulto").val("");
+        $("#CodigoBulto").focus();
+    }
+    function FinAgregarBulto() {
+        closeWaitingDialog();
+        $("#txtAgregarBulto").val("0");
+    }
+    function FormBultosOpen() {    
+        $("#TituloForm").html("<p>OT: <strong>" + $("#OTP").val() + "</strong>-<strong>" + $("#OTD").val() + "</strong></p>");
+        
+        $("#ingIdBulto").val($("#CodigoBulto").val());
+        $("#ingOTP").val($("#OTP").val());
+        $("#ingOTD").val($("#OTD").val());                
+        
+        //ACA
+
+        Bulto=$("#CodigoBulto").val();
+
+        if (Bulto=="")
+            Bulto=0;
+        
+        waitingDialog({ title: "Cargando", message: "Cargando...<br/>" });
+        alto="";
+        ancho="";
+        largo="";
+        peso="";
+        var randomnumber=Math.floor(Math.random()*111111111);
+        $.ajax({
+            url: '@Url.Action("CargarDatosBulto","Preparacion")?idBulto=' + $("#CodigoBulto").val() + '&r='+randomnumber,
+            cache:'false',
+            type: "POST",
+            success: function (data) {                                            
+                var valor=data.split("_");
+                for(var n=0; n<valor.length; n++){
+                    if(n==0)//alto,ancho,largo,peso
+                        alto=valor[n];
+                    else if (n==1)
+                        ancho=valor[n];
+                    else if (n==2)
+                        largo=valor[n];
+                    else
+                        peso=valor[n];
+                }
+                closeWaitingDialog();    
+                $("#dialog-CargarFomrulario").dialog("open");
+                $("#ingPeso").val(peso);
+                $("#ingAlto").val(alto);
+                $("#ingLargo").val(largo);
+                $("#ingAncho").val(ancho);     
+                if ($("#OTGuardada_FL_PAR_SER_TRABAJA_PESO_VOL").val() == "True") {
+                $("#PESO_VOL").show();
+                $("#ingLargo").focus();                      
+                }
+                else {            
+                    $("#PESO_VOL").hide();
+                }
+                if ($("#OTGuardada_FL_PAR_SER_TRABAJA_PESO_KG").val() == "True") {
+                    $("#PESO_KG").show();
+                    $("#ingPeso").focus();
+                }
+                else {
+                    $("#PESO_KG").hide();
+                }
+                borrar_contenido();                   
+            },
+            error: function () {
+                closeWaitingDialog();
+                alert("Ocurrio un error mientras se ejecutaba la consulta");                
+            }
+        });     
+    }
+    function ImprimeGuiaUnica(OTP, OTD) {        
+        $("#vOTP").val(OTP);
+        $("#vOTD").val(OTD);
+        $("#vConf").val("4");
+        $("#vIdBulto").val("0");
+        $("#frmImpresionBultosOTD").submit();
+    }
+    function ImprimeGuiaMasiva() {        
+        $("#vOTP").val($("#OTP").val());
+        $("#vOTD").val("0");
+        $("#vConf").val("6");
+        $("#vIdBulto").val("0");
+        $("#frmImpresionBultosOTD").submit();
+    }
+    
+    function ImprimePorOTP() {        
+        $("#POTP").val($("#OTP").val());        
+        $("#vConf").val("88");        
+        $("#frmImpresionBultosOTP").submit();
+    }
+    function CargaHistorialOT(OTP,OTD,IdBulto) {
+         var randomnumber=Math.floor(Math.random()*111111111);
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load("@Url.Content("~/Preparacion/VerHistorialOT")?OTP=" + OTP + "&OTD=" + OTD + "&IdBulto=" + IdBulto + "&iOTP=0&iOTD=1&iBulto=0&r=" + randomnumber);
+    }
+    function CambiaVia(valor) {
+        if (valor == "T") {
+            $("#OTGuardada_VIA").val("A");
+        }
+        else {
+            $("#OTGuardada_VIA").val("T");
+        }
+
+
+        if (valor == "T") {
+            $("#dialog-cambiovia").html("<p>¿Está seguro que desea cambiar la vía de Aérea a Terrestre?</p>");            
+        }
+        else {
+            $("#dialog-cambiovia").html("<p>¿Está seguro que desea cambiar la vía de Terrestre a Aérea?</p>");
+        }
+        $("#dialog-cambiovia").dialog("open");
+    }
+
+    function BultoFocus()
+    {
+        setTimeout(function () { $('#CodigoBulto').focus(); }, 100);
+        
+    }
+</script>
+<script type="text/javascript">    
+    function EnterCodigoBulto(e) {
+        if (e.keyCode == '13') {
+            e.preventDefault();            
+            ValidarCodigoBultoEnOT(1);
+        }
+    }
+</script><!-- Evento 13 -->
+<table><tr><td>
+<div id="CuadroImpresion" style="background-color:Gray;width:0px;height:00px"></div>
+</td><td><div id="ImpresionEtiqueta" style="background-color:Green;visibility:hidden"></div>
+</td></tr></table>
+<input type="hidden" id="EditarBultoValue" name="EditarBultoValue" />
+<div id="dialog-fincambiovia"></div>
+<div id="dialog-cambiovia"></div>
+<div id="dialog-documentos"></div>
+<div id="dialog-HistorialOT" style="min-height:300px;min-width:500px;"></div>
+<div id="dialog-mensajes"></div>
+@Html.HiddenFor(m=>m.OTGuardada.FL_PAR_SER_TRABAJA_PESO_KG)
+@Html.HiddenFor(m => m.OTGuardada.FL_PAR_SER_TRABAJA_PESO_VOL)
+
+@Html.Partial("_FormularioPesoBulto",Model)
+<div id="dialog-agregarmasbultos" title="Añadir Bultos">
+@using (Ajax.BeginForm("AgregarTotalBultos", "Preparacion", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinAgregarBulto()", OnFailure = "Javascript:FinAgregarBulto()", UpdateTargetId = "formContent" }, new { id = "frmAgregarBulto" }))
+{
+    <input type="hidden" id="eOTD" name="eOTD" value="@Model.OTD" />
+    <input type="hidden" id="eOTP" name="eOTP" value="@Model.OTP" />
+    <div class="editor-label">
+        @Html.LabelFor(m => m.txtAgregarBulto)
+    </div>
+    <div class="editor-field">
+            @Html.TextBoxFor(m => m.txtAgregarBulto)
+            @Html.ValidationMessageFor(m => m.txtAgregarBulto)
+    </div>           
+}
+</div>
+
+<div id="dialog-ImprimirPorOTP"><p>¿Esta seguro(a) que desea imprimir por por OT Padre?</p></div>
+@using (Ajax.BeginForm("EliminarBulto", "Preparacion", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinAgregarBulto()", OnFailure = "Javascript:FinAgregarBulto()", UpdateTargetId = "formContent" }, new { id = "frmEliminarBulto" }))
+{
+    <input type="hidden" id="delOTD" name="delOTD" value="@Model.OTD" />
+    <input type="hidden" id="delOTP" name="delOTP" value="@Model.OTP" />
+    <input type="hidden" id="delIdBulto" name="delIdBulto" value="" />     
+}
+
+@using (Ajax.BeginForm("ImpresionBultosOTD", "Preparacion", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:Fin()", OnFailure = "Javascript:Fin()", UpdateTargetId = "CuadroImpresion" }, new { id = "frmImpresionBultosOTD" }))
+{
+    <input type="hidden" id="vOTD" name="vOTD" value="@Model.OTD" />
+    <input type="hidden" id="vOTP" name="vOTP" value="@Model.OTP" />
+    <input type="hidden" id="vConf" name="vConf" value="" />    
+    <input type="hidden" id="vIdBulto" name="vIdBulto" value="" />
+}
+@using (Ajax.BeginForm("ImpresionBultosOTP", "Preparacion", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:Fin()", OnFailure = "Javascript:Fin()", UpdateTargetId = "CuadroImpresion" }, new { id = "frmImpresionBultosOTP" }))
+{    
+    <input type="hidden" id="POTP" name="POTP" value="@Model.OTP" />
+    <input type="hidden" id="PConf" name="PConf" value="" />        
+}
+@using (Ajax.BeginForm("CustomImpresion", "Preparacion", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:Fin()", OnFailure = "Javascript:Fin()", UpdateTargetId = "CuadroImpresion" }, new { id = "frmCustomImpresion" }))
+{
+    <input type="hidden" id="CustomOTD" name="CustomOTD" value="@Model.OTD" />
+    <input type="hidden" id="CustomOTP" name="CustomOTP" value="@Model.OTP" />
+    <input type="hidden" id="CustomEtiqueta" name="CustomEtiqueta" value="" />    
+    <input type="hidden" id="CustomCantidad" name="CustomCantidad" value="" />    
+    <input type="hidden" id="CustomBulto1" name="CustomBulto1" value="" />
+    <input type="hidden" id="CustomBulto2" name="CustomBulto2" value="" />
+    <input type="hidden" id="CustomBulto3" name="CustomBulto3" value="" />    
+    <input type="hidden" id="CustomBulto4" name="CustomBulto4" value="" />
+}
+<div id="dialog-impresion" title="Impresión de Etiquetas"></div>
+<div id="dialog-impresionGuia" title="Impresión de Guía"></div>
+<div id="dialog-impresionBulto" title="Impresión de Bulto"></div>
+<div id="dialog-EliminarBulto" title="Eliminar Bulto"></div>
+<div id="dialog-Ok" title="Preparación"></div>
+<div id="dialog-PreparacionFalta" title="Preparación"></div>
+<div id="dialog-FinPrep" title="Preparación"></div>
+
+
+<div id="GuardarBultoResult"></div>
+
+@using (Ajax.BeginForm("ImprimirEtiquetaM1", "Preparacion", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "ImpresionEtiqueta", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:Fin();" }, new { id = "frmImprimir" }))
+{
+    <input type="hidden" name="OTP" id="OTP" value="@Model.OTGuardada.OTP_ID" />
+    <input type="hidden" name="OTD" id="OTD" value="@Model.OTGuardada.OTD_ID" />
+    <input type="hidden" name="REF1" id="REF1" value="@Model.OTGuardada.REFERENCIA1" />
+    <input type="hidden" name="REF2"id="REF2" value="@Model.OTGuardada.REFERENCIA2" />
+    <input type="hidden" name="idBulto" id="idBulto" value="1234" />
+}
+<div id="EditarBultoAgain">
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.CodigoBulto)</td>
+            <td>@Html.TextBoxFor(m => m.CodigoBulto, new { @onkeypress = "javascript:EnterCodigoBulto(event);" })</td>
+        </tr>
+    </table>           
+</div>
+@{
+    var a = 1;//Opción preparar por ot padre eliminada del sistema
+    }
+ @if (Model.ValidaOTPadreNHijos1Bulto() == true && a == 2)
+ { 
+       <div style="float:right">
+           <button id="PrepararPorOTP">
+                <div style="float:left;width:170px;">       
+                    <div style="float:left;"><img alt="Agregar" src="@Url.Content("~/Images/shipping_box_tokyo.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Preparar por OT Padre</div>
+                </div>                       
+            </button> 
+        </div>
+ }
+@if (Model.OTGuardada.OTD_ID != null)
+{
+    DateTime FechaEstimada = Convert.ToDateTime(Model.OTGuardada.FECHA_ESTIMADA);             
+       
+    <div id="F01B2">
+    <fieldset>            
+     <table>
+            <tr>
+                <td>OT</td>
+                <td>Cliente</td>
+                <td>Servicio</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="textfield_effect">                        
+                        <strong>@Model.OTGuardada.OTP_ID-@Model.OTGuardada.OTD_ID</strong>
+                        &nbsp;
+                        &nbsp;
+                    </div>
+                </td>                            
+                <td>
+                    <div class="textfield_effect">
+                        &nbsp;@Model.OTGuardada.RAZON_SOCIAL&nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div class="textfield_effect">
+                        &nbsp;@Model.OTGuardada.SER_NOMBRE&nbsp;
+                    </div>
+                </td>                       
+                <td>
+                    <button id="btnVerHistorialOT">
+                        <div style="float:left;width:130px;">       
+                        <div style="float:left;"><img src="@Url.Content("~/Images/file_temporary.png")?" /></div>                 
+                        <div style="float:left;">&nbsp;Ver Historial OT</div>                        
+                        </div>                       
+                    </button>
+                </td>
+                <td>
+                    <button id="btnVerDocumentosAsociados">
+                        <div style="float:left;width:130px;">       
+                        <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/folder_explore.png")" /></div>                 
+                        <div style="float:left;">&nbsp;Doc. Asociados</div>                        
+                        </div>                       
+                    </button>
+                </td>
+            </tr>
+        </table>   
+     </fieldset>
+     <div id="tabs">
+	    <ul>		    
+            <li><a href="#tabs-1" onclick="javascript:BultoFocus();">Ingreso Bultos</a></li>            
+            <li><a href="#tabs-2">Datos Entrega</a></li>            
+	    </ul>        
+	    <div id="tabs-1">   
+            <div>
+                <table>
+                    <tr>                                            
+                        <td>
+                            <button id="IngresarBulto"><div style="float:left;width:130px;"><div style="float:left;"><img src="@Url.Content("~/Images/right.png")" /></div><div style="float:left;">&nbsp;Ingresar Bulto</div></div></button>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td>
+                            <button id="EditarBulto"><div style="float:left;width:110px;"><div style="float:left;"><img src="@Url.Content("~/Images/28.png")" /></div><div style="float:left;">&nbsp;Editar Bulto</div></div></button>
+                        </td>
+                        <td>
+                            <button id="ImprimirGuia"><div style="float:left;width:110px;"><div style="float:left;"><img src="@Url.Content("~/Images/agt_print16.png")" /></div><div style="float:left;">&nbsp;Imprimir Guía</div></div></button>
+                        </td>
+                        <td>    
+                            <button id="AgregarMasBultos"><div style="float:left;width:110px;"><div style="float:left;"><img src="@Url.Content("~/Images/edit_add.png")" /></div><div style="float:left;">&nbsp;Añadir Bultos</div></div></button>                            
+                         </td>
+                         <td>    
+                            <button id="finPreparacion"><div style="float:left;width:120px;"><div style="float:left;"><img src="@Url.Content("~/Images/document_letter_forward.png")" /></div><div style="float:left;">&nbsp;Preparación OK</div></div></button>                            
+                         </td>
+                         @*<td>
+                            <button id="imprimirporotp"><div style="float:left;width:150px;"><div style="float:left;"><img src="@Url.Content("~/Images/agt_print16.png")" /></div><div style="float:left;">&nbsp;Impresión Por OTP</div></div></button>                            
+                         </td>*@
+                    </tr>
+                </table>            
+            </div>             
+            <div id="VerListaBultos">
+                @*@Html.Partial("_VerListaBultos", Model)*@
+            </div>
+        </div>
+        <div id="tabs-2">                        
+            <table>
+                <tr>
+                    <td>Región</td>
+                    <td>Comuna</td>
+                    @if (@Model.OTGuardada.LOC_NOMBRE != "" && @Model.OTGuardada.LOC_NOMBRE != null)
+                    {
+                        <td>Localidad</td>
+                    }                              
+                </tr>
+                <tr>
+                    <td><div class="textfield_effect">@Model.OTGuardada.REG_NOMBRE &nbsp;                                                  
+                    </div></td>
+                    <td><div class="textfield_effect">@Model.OTGuardada.COM_NOMBRE &nbsp;
+                     @if (@Model.OTGuardada.COM_CODIGO != "" && @Model.OTGuardada.COM_CODIGO != null)
+                     {
+                            <label>(</label>@Model.OTGuardada.COM_CODIGO<label>)</label>
+                     }                 
+                    </div></td>
+                    @if (@Model.OTGuardada.LOC_NOMBRE != "" && @Model.OTGuardada.LOC_NOMBRE != null)
+                    {
+                        <td><div class="textfield_effect">@Model.OTGuardada.LOC_NOMBRE &nbsp;
+                        @if (@Model.OTGuardada.LOC_CODIGO != "" && @Model.OTGuardada.LOC_CODIGO != null)
+                        {
+                                <label>(</label>@Model.OTGuardada.LOC_CODIGO<label>)</label>
+                        }                 
+                        </div></td>    
+                    }           
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>Dirección</td>
+                    <td>N°</td>
+                    <td>Sucursal / CD</td>
+                    <td>Vía</td>           
+                    <td>Cantidad de Bultos&nbsp;&nbsp;&nbsp;</td>                        
+                    <td>Fecha Estimada Entrega</td>                
+                </tr>
+                <tr>
+                    <td><div class="textfield_effect">@Model.OTGuardada.DESTINATARIO_DIRECCION&nbsp;</div></td>
+                    <td><div class="textfield_effect">@Model.OTGuardada.DESTINATARIO_NUMERO&nbsp;</div></td>
+                    <td><div class="textfield_effect">@Model.OTGuardada.SUC_NOMBRE&nbsp;</div></td>
+                    <td>@Html.DropDownListFor(m => m.OTGuardada.VIA, Model.ListaVia, new { style = "height:21px", onchange = "javascript:CambiaVia(this.value);" }) </td>                   
+                    <td><div style="width:50px;" class="textfield_effect">@Model.OTGuardada.BULTO</div></td>
+                    <td><div style="width:80px;" class="textfield_effect">@FechaEstimada.ToShortDateString()</div></td>                                
+                </tr>
+            </table>        
+        
+        
+        </div>
+       
+    </div>        
+    </div>
+}
+else
+{
+    <p>Referencia no existe</p>
+}
+
+
+<div id="dialog-ErrorValidarOT"></div>
+<script type="text/javascript">
+    BultoFocus();
+    ActualizaListaBultoPreparacion();
+</script>

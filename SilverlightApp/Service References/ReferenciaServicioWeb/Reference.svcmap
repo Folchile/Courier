@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6347fcb2-a753-4fef-84cb-b35ba5621a08" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ServicioSilverlight.wsdl" MetadataType="Wsdl" ID="67036bc9-9740-4b7d-ad5e-33b2ac4f0d44" SourceId="1" SourceUrl="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ServicioSilverlight.xsd" MetadataType="Schema" ID="89071dd3-4d5d-49d1-b564-05fc6f8796bb" SourceId="1" SourceUrl="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServicioSilverlight1.xsd" MetadataType="Schema" ID="acc02423-a135-4a70-adf7-f7ba0bd60a87" SourceId="1" SourceUrl="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc?xsd=xsd0" />
+    <MetadataFile FileName="ServicioSilverlight1.wsdl" MetadataType="Wsdl" ID="8b3bc69f-ed33-40b2-ae64-10c95b142e39" SourceId="1" SourceUrl="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc?wsdl" />
+    <MetadataFile FileName="ServicioSilverlight2.xsd" MetadataType="Schema" ID="03410608-c6a3-4bfd-a4d0-37041aadf5aa" SourceId="1" SourceUrl="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServicioSilverlight.disco" MetadataType="Disco" ID="653cb222-72ce-47d8-b63c-ea849933594c" SourceId="1" SourceUrl="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

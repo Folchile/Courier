@@ -1,0 +1,25 @@
+﻿@model Courier.Models.LocalidadModels
+
+@{
+    var grid = new WebGrid(Model.ListaLocalidades, rowsPerPage: 8, ajaxUpdateContainerId: "gridLocalidades");    
+}
+<div id="gridLocalidades">    
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle:"mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {                          
+        grid.Column("Id","Id"),                                          
+        grid.Column("nombre","Localidad")
+    })
+</div>
+Cantidad Localidades : <strong>@Model.ListaLocalidades.Count().ToString("#0,0")</strong>
+    

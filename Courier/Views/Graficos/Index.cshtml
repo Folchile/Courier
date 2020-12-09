@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Entregas Samsung";
+}
+
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var jsonData = $.ajax({
+            url: "@Url.Action("jSONDatosPieChart","graficos")",
+            dataType: "json",
+            async: false
+        }).responseText;
+        
+        // Create our data table out of JSON data loaded from server.
+        var data = new google.visualization.DataTable(jsonData);
+        
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        
+        var options = {
+            title: '',
+            is3D: true,
+            width: 600,
+            height: 440,
+            pieSliceText: 'percentage',          
+            colors: ['#016900', '#ED6F13', '#024AE1', '#CC0805', '#f6c7b6'],
+            slices: {  3: {offset: 0.2}},
+            legend:{position: 'right', textStyle: {color: 'black', fontSize: 12}}
+        };
+
+        chart.draw(data,options);
+        actualizaGraficos();
+    }
+
+
+//     $(function(){
+//         $("#tabs").tabs();
+
+
+
+//     });
+
+
+    function actualizaGraficos() {
+       setTimeout(function() {
+          drawChart();
+//           CargaListaDevoluciones();
+       }, 30000);
+        return false;
+    }
+    
+//    $(document).ready(function(){
+//        CargaListaDevoluciones();
+//    })
+//    function CargaListaDevoluciones(empresa,servicio,tipo,otp,otd) {
+//        var randomnumber = Math.floor(Math.random() * 1111111);
+//        $("#ListaOTpp").html("<div style='text-align:center;'><img src='@Url.Content("~/Images/8.gif")'></div>");  
+//        $.ajax({
+//            url: '@Url.Action("_ListaOT", "Graficos")',
+//            data: {
+//                _r: randomnumber              
+//            }
+//        })
+//        .done(function (data) {
+//            $("#ListaOTpp").html(data);                
+//        })
+//        .error(function () {
+//            $("#ListaOTpp").html("");
+//            alert("No fue posible cargar la lista");            
+//        })
+//        .complete(function () {
+//            borrar_contenido();                        
+//        });
+//    } 
+    
+    
+</script>
+
+
+@*<div id="tabs">
+
+<ul>
+		<li><a href="#tabs-1">Graficos</a></li>
+        <li><a href="#tabs-2">Detalle OT</a></li>
+        
+  	</ul>	
+	<div id="tabs-1">	
+         <div id="piechart" style="width: 100%; height: 450px;"></div>
+	</div>
+    <div id="tabs-2">	
+         <div id="ListaOTpp">
+
+        </div>
+	</div>
+      
+</div>*@
+
+
+<table>
+    <tr valign="top">
+        <td style="width:60%"><div id="piechart" style="width: 100%; height: 450px;"></div></td>
+       @* <td style="width:40%"> <div id="ListaOTpp"></div></td>*@
+    </tr>
+    
+</table>
+  
+
+ 
+   
+
+    

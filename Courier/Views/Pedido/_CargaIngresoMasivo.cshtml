@@ -1,0 +1,256 @@
+﻿@using Courier.Helpers
+@model Courier.Models.IngresoMasivoModel
+           
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+
+    function CargarDireccion(Lat, Lon) {
+        $("#map_canvas").dialog("open");     
+        var latlng = new google.maps.LatLng(Lat,Lon);
+        var myOptions = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title: "Destino",
+            iconName: "post_office"
+            //icon: "../../Images/home.png"
+        });       
+    }
+
+
+//    var directionDisplay;
+//    var directionsService = new google.maps.DirectionsService();
+//    var map;
+//    function initialize() {
+//        directionsDisplay = new google.maps.DirectionsRenderer();
+//        var lugar = new google.maps.LatLng($("#cOrigen_Latitud").val().replace(",", "."), $("#cOrigen_Longitud").val().replace(",", ".") );
+//        var myOptions = {
+//            zoom: 7,
+//            mapTypeId: google.maps.MapTypeId.ROADMAP,
+//            center: lugar
+//        }
+//        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+//        directionsDisplay.setMap(map);
+//        Segundo();
+//    }
+//    function Segundo() {
+//        var origen = new google.maps.LatLng($("#cOrigen_Latitud").val().replace(",", "."), $("#cOrigen_Longitud").val().replace(",", "."));
+//        var destino = new google.maps.LatLng($("#cDestino_Latitud").val().replace(",", "."), $("#cDestino_Longitud").val().replace(",", "."));
+//        var request = {
+//            origin: origen,
+//            destination: destino,
+//            travelMode: google.maps.TravelMode.DRIVING
+//        };
+//        directionsService.route(request, function (result, status) {
+//            if (status == google.maps.DirectionsStatus.OK) {
+//                directionsDisplay.setDirections(result);
+//            }
+//        });
+//    }
+//    function CargarMapa2(Origen, Destino) {//codigo de comunas
+//        waitingDialog({ title: "Cargando", message: "Cargando Mapa...<br/>" });
+//        $.ajax({
+//            url: "/Pedido/vucGoogleMaps?Origen=" + Origen + "&Destino=" + Destino,
+//            success: function (data) {
+//                $("#idCuerpo").html(data);
+//                closeWaitingDialog();
+//                if (asuma == 0)
+//                    initialize();
+//                else
+//                    Segundo();
+
+//                asuma++;
+
+
+//                $("#map_canvas").dialog("open");
+//            }
+//        });
+//    }
+//    var asuma = 0;    
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#idCuerpo").dialog({                        
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+    });
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#map_canvas").dialog({
+            autoOpen: false,
+            modal: true,
+            autoResize: true,
+            width: 800,
+            height:500,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                },               
+            }
+        });
+    });    
+</script>
+@*<input type="button" id="cargar" onclick="javascript:CargarMapa2(13101,13119);" />
+<input type="button" id="cargar2" onclick="javascript:CargarMapa2(13101,13603);" />*@
+<div id="map_canvas"></div>
+<div id="idCuerpo" title="Información">
+</div>
+@{
+    var grid = new WebGrid(Model.Lista, rowsPerPage: 10, ajaxUpdateContainerId: "contenedor-grid");  
+    //ViewBag.Title = "_CargaIngresoMasivo";
+    //Layout = "~/Views/Shared/_Layout.cshtml"; 
+    ViewBag.isAdmin = false;
+    var gridColumns = new List<WebGridColumn>();
+
+    
+    var iCount = 0;
+    
+    if (Model.oColumnas[1] == 1)
+    { gridColumns.Add(grid.Column("Id", "N° " + Model.NombreRef1)); iCount++; }
+    if (Model.oColumnas[2] == 1)
+    { gridColumns.Add(grid.Column("Referencia", "N° " + Model.NombreRef2)); iCount++; }
+    if (Model.oColumnas[3] == 1)
+    {
+        gridColumns.Add(grid.Column("Destinatario", "Destinatario", format: @<text>@if (item.Destinatario.Length > 15)
+                                                                               {<span title="@item.Destinatario">@item.Destinatario.Substring(0, 15)...</span> }
+                                                                               else
+                                                                               {@item.Destinatario}</text>)); iCount++;
+    }
+    if (Model.oColumnas[4] == 1)
+    { gridColumns.Add(grid.Column("Rut", "Rut")); iCount++; }
+    if (Model.oColumnas[5] == 1)
+    { gridColumns.Add(grid.Column("ContactoEntrega", "Contacto Entrega")); iCount++; }
+    if (Model.oColumnas[6] == 1)
+    {
+        gridColumns.Add(grid.Column("Direccion", "Dirección", format: @<text>@if (item.Direccion.Length > 15)
+                                                                         {<span title="@item.Direccion">@item.Direccion.Substring(0, 15)...</span> }
+                                                                         else
+                                                                         {@item.Direccion}</text>)); iCount++;
+    }
+    if (Model.oColumnas[11] == 1)
+    { gridColumns.Add(grid.Column("DireccionNumero", "N°")); iCount++; }
+    if (Model.oColumnas[7] == 1)
+    { gridColumns.Add(grid.Column("Comuna", "Comuna")); iCount++; }
+    if (Model.oColumnas[12] == 1)
+    { gridColumns.Add(grid.Column("Localidad", "Localidad")); iCount++; }
+    if (Model.oColumnas[8] == 1)
+    {
+        gridColumns.Add(grid.Column("Bulto", "Bulto", format: @<text>
+    <div style="float:right">
+        @item.Bulto
+    </div>
+    </text>)); iCount++;
+    }
+    if (Model.oColumnas[9] == 1)
+    {
+        gridColumns.Add(grid.Column("Peso", "Peso", format: @<text>
+    <div style="float:right">
+        @item.Peso
+    </div>
+    </text>)); iCount++;
+    }
+    if (Model.oColumnas[15] == 1)
+    {
+        gridColumns.Add(grid.Column("Largo", "Largo", format: @<text>
+    <div style="float:right">
+        @item.Largo
+    </div>
+    </text>)); iCount++;
+    }
+    if (Model.oColumnas[16] == 1)
+    {
+        gridColumns.Add(grid.Column("Alto", "Alto", format: @<text>
+    <div style="float:right">
+        @item.Alto
+    </div>
+    </text>)); iCount++;
+    }
+    if (Model.oColumnas[17] == 1)
+    {
+        gridColumns.Add(grid.Column("Ancho", "Ancho", format: @<text>
+    <div style="float:right">
+        @item.Ancho
+    </div>
+    </text>
+            )); iCount++;
+    }
+    if (Model.oColumnas[10] == 1)
+    { gridColumns.Add(grid.Column("Telefono", "Fono")); iCount++; }
+    if (Model.oColumnas[13] == 1)
+    { gridColumns.Add(grid.Column("Via", "Vía")); iCount++; }
+    if (Model.oColumnas[14] == 1)
+    { gridColumns.Add(grid.Column("CodigoPostal", "Código Postal")); iCount++; }
+
+    gridColumns.Add(grid.Column("FechaEstimada", "F. Estimada", format: @<text>
+        <div style="float:right">
+            @item.FechaEstimada.ToString("dd/MM/yyyy")
+        </div>
+        </text>));
+    iCount++;
+
+                //gridColumns.Add(grid.Column("Latitud", "Lat")); 
+                //gridColumns.Add(grid.Column("Longitud", "Lon")); 
+
+
+    @*gridColumns.Add(grid.Column("Longitud", "Acciones",format: 
+        @<text>
+            @if (item.Longitud!=0)
+            {
+                <a href="#" onclick="javascript:CargarDireccion(@item.Latitud.ToString().Replace(",", "."),@item.Longitud.ToString().Replace(",", "."))"><img alt="Ver Mapa" title="Ver Mapa" border="0" src="../../Images/map.png" /></a>
+            }            
+        </text>));*@
+}
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Datos Cargados</a></li>
+	</ul>
+    <div id="tabs-1">                
+        <div id="contenedor-grid">     
+            @{                  
+                if (iCount > 0)
+                {
+                    @grid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                             tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: grid.Columns(gridColumns.ToArray())
+                    );
+                }
+                else
+                {
+                    <p>No se ha definido un Archivo de Carga para este Servicio.</p>
+                }
+            }
+        </div>
+        @if (iCount > 0)
+        {
+            <p>Filas Cargadas: @Model.Lista.Count()</p>
+        }
+    </div>
+</div>

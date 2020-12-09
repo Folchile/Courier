@@ -1,0 +1,52 @@
+﻿@model Courier.Models.DevolucionModels
+@{
+    ViewBag.Title = "_ListaDevoluciones";
+}
+@{
+    var grid = new WebGrid(Model.List_OTD_DATOS, rowsPerPage: 15, ajaxUpdateContainerId: "myGrid");    
+} 
+@if (Model.List_OTD_DATOS != null)
+{    
+    <div id="myGrid">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {   
+                grid.Column("PK_FOL_OTP_ID","OT",@<text>
+                @item.PK_FOL_OTP_ID-@item.PK_FOL_OTD_ID
+                </text>),                
+                grid.Column("FL_FOL_OTD_REFERENCIA1","Ref.1"),
+                grid.Column("FL_FOL_OTD_REFERENCIA2","Ref.2"),
+                grid.Column("FL_CLI_EMP_RAZON_SOCIAL","Empresa"),
+                grid.Column("FL_PAR_SER_NOMBRE","Servicio"),
+                grid.Column("FL_FOL_EST_NOMBRE","Estado_Actual"),
+                grid.Column("FL_FOL_EST_NOMBRE","Opciones",@<text>
+                                
+                @if (item.PK_FOL_TDE_ID==1)
+                {
+                   <img alt="OK" src="@Url.Content("~/Images/attention16.png")" border="0" /> <a href="#" onclick="javascript:CargaFormularioIngreso(@item.PK_FOL_OTP_ID, @item.PK_FOL_OTD_ID)">[Ingresar Dir. Devolución]</a>
+                }
+                else
+                {
+                   <img alt="OK" src="@Url.Content("~/Images/tick.png")" border="0" /> <a href="#" onclick="javascript:CargaFormularioIngreso(@item.PK_FOL_OTP_ID, @item.PK_FOL_OTD_ID)">[Ingresar Otra Dir. Devolución]</a>
+                }
+                </text>)
+            
+            })
+        </div>        
+    </div>
+}
+else
+{
+    <div>Sin OT</div>
+}

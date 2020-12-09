@@ -1,0 +1,14 @@
+﻿@model Courier.Models.AdministracionCarpeta
+@using (Ajax.BeginForm("UpdateRolFuncion", "Administracion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "frmResultRol", OnComplete = "javascript:finOperacion();", OnBegin = "javascript:inicioOperacion()" }, new { id = "frmactualizarroles" }))
+{
+    @Html.HiddenFor(m => m.IdItem)            
+    <fieldset><legend>Roles</legend>
+    @foreach (var oItem in Model.Roles)
+    {
+                
+        @Html.CheckBox(oItem.Text, oItem.Value)@oItem.DisplayName<br />
+                
+
+    }         
+    </fieldset>   
+}

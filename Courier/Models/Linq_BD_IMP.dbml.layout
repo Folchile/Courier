@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Linq_BD_IMP">
+  <DataContextMoniker Name="/Linq_BD_IMPDataContext" />
+  <nestedChildShapes>
+    <classShape Id="6535180a-106f-4c69-ab17-df24f950b635" absoluteBounds="1, 0.5, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/Linq_BD_IMPDataContext/IMPORT_MOVISTAR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6833acba-9305-42a4-9faf-fe6d19a5f913" absoluteBounds="1.0149999999999997, 0.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

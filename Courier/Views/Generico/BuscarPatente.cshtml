@@ -1,0 +1,85 @@
+﻿@model Courier.Models.GenericPteModels
+           
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet"type="text/css" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#dialog-buscarpatente").dialog({ autoOpen: false, title: 'Buscar Patente', modal: true, width: 300, buttons: {
+            Cancelar: function () {
+                $(this).dialog("close");
+            }
+        }
+        });
+
+    })
+
+    function ActualizaListaPtte(TextoFiltro) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#myGridBusquedaPatte").html('<img src="@Url.Content("~/Images/8.gif")" border="0">');
+
+        $("#myGridBusquedaPatte").load('@Url.Action("BuscarPtte", "Generico")?r=' + randomnumber + '&TextoFiltro=' + TextoFiltro + ' #myGridBusquedaPatte',
+            function (response, status, xhr) {
+                if (status == 'error') {
+                    $("#myGridBusquedaPatte").html("No fue posible actualizar la información");
+                }
+            });
+    }
+    function BuscarPatte(pt) {
+        $("#BUSCARPAT").val(pt);
+        //        alert($("#BUSCARRUT").val());
+        AsigTransp(pt);
+        $("#dialog-buscarpatente").dialog("close");
+        //        ChangeCodigoSap(CodSap);
+    }
+
+    $(document).ready(function () {
+        $("#dialog-buscarpatente").dialog("open");
+        closeWaitingDialog();
+    })
+</script>
+
+
+<div id="dialog-buscarpatente">
+   <div class="editor-label">
+        @Html.LabelFor(m => m.StringBusquedaPtte)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(m => m.StringBusquedaPtte, new { size = 20, maxlength = 20 })
+        @Html.ValidationMessageFor(m => m.StringBusquedaPtte)
+    </div>    
+    @{
+        var grid = new WebGrid(Model.ListaBuscarPtte, rowsPerPage: 15, ajaxUpdateContainerId: "myGridBusquedaPatte");    
+    } 
+    <div  id="myGridBusquedaPatte">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {                
+                grid.Column("ptte","PATENTE",@<text>
+                <a href="#" onclick="javascript:BuscarPatte('@item.ptte');">
+                    @item.ptte
+                </a>
+                </text>)                      
+            })
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#StringBusquedaPtte").keyup(function () {
+            ActualizaListaPtte($(this).val());
+        });
+    })
+</script>
+
+

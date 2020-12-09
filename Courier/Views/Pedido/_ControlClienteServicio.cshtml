@@ -1,0 +1,144 @@
+﻿@model Courier.Models.IngresoMasivoModel
+<script type="text/javascript">
+    function callService(rut) {
+        $("#divservicio").html('<img src="@Url.Content("~/Images/38.gif")" />');
+        $("#divservicio").load("@Url.Content("~/pedido/vucServicio")?rut=" + rut);
+        //$("#Cliente_Servicio").val(servicio);
+        borrar_contenido();
+        $("#idFormulario").html("");
+
+    }
+    function AssignServicio(servicio) {
+        $("#Cliente_Servicio").val(servicio);
+        $("#idFormulario").html("");
+    }
+    (function ($) {
+        jQuery.expr[':'].Contains = function (a, i, m) {
+            return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+        function filterList(header, list) {
+            var form = $("<form>").attr({ "class": "filterform", "action": "#" }),
+            input = $("<input>").attr({ "class": "filterinput", "type": "text" });
+            $(form).append(input).appendTo(header);
+
+            $(input)
+          .change(function () {
+              var filter = $(this).val();
+              if (filter) {
+
+                  $matches = $(list).find('a:Contains(' + filter + ')').parent();
+                  $('li', list).not($matches).slideUp();
+                  $matches.slideDown();
+
+              } else {
+                  $(list).find("li").slideDown();
+              }
+              return false;
+          })
+        .keyup(function () {
+            $(this).change();
+        });
+        }
+
+        $(function () {
+            filterList($("#form"), $("#list"));
+        });
+    } (jQuery));
+
+    //Funcionales JS anteriores a este son de prototipo
+    $(function () {
+        $("#imgBuscarCliente")
+              
+                .click(function () {
+                    $("#dialog-ControlClienteServicio").dialog("open");
+                    $("#idFormulario").html("");
+                });
+
+    });
+    function ClienteInyectarRut(Rut) {
+        $("#RutCliente").val(Rut);
+        $("#dialog-ControlClienteServicio").dialog("close");
+        callService(Rut);
+        $("#idFormulario").html("");       
+    }
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-ControlClienteServicio").dialog({
+            autoOpen: false,
+            width:'auto',
+            modal: true,
+            buttons: {
+                Cerrar: function () { $(this).dialog("close"); }
+            }
+        });
+    });
+
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+        $("#idFormulario").html("");            
+    }
+
+    function llamar(rut) {        
+        $("#divservicio").html('<img src="@Url.Content("~/Images/38.gif")" />');
+        $("#divservicio").load("@Url.Content("~/Pedido/vucServicio")?rut=" + rut);
+        $("#Cliente_Servicio").val(servicio);
+        borrar_contenido();
+        $("#idFormulario").html("");        
+    }
+</script>
+<div id="dialog-ControlClienteServicio" title="Buscar Cliente" style="max-height:200px;">
+    <div id="wrap">
+        <div class="product-head">
+            Buscar
+            <div id="form"></div>
+            <div class="clear"></div>
+        </div>
+        <ul id="list">
+            @{if(Model.oItems!=null)
+              {
+            foreach (var oItem in Model.oItems)
+            {
+                <li><a href="#"><span onclick="javascript:ClienteInyectarRut('@oItem.PK_CLI_EMP_RUT-@oItem.FL_CLI_EMP_DV');">@oItem.PK_CLI_EMP_RUT-@oItem.FL_CLI_EMP_DV @oItem.FL_CLI_EMP_RAZON_SOCIAL @oItem.FL_CLI_EMP_FANTASIA</span></a></li>
+            }}}
+        </ul>    
+    </div>
+</div>
+
+@if (Session["RutEmpresa"] != string.Empty)
+{
+    @Html.HiddenFor(m => m.RutCliente)
+}
+<table cellspacing="1">
+    <tr>        
+        @if (Session["RutEmpresa"] ==string.Empty)
+        {
+        <td>@Html.LabelFor(m => m.RutCliente)</td>
+        
+        <td></td>
+        }
+        <td>@Html.LabelFor(m => m.Servicio)</td>        
+    </tr>
+    <tr>       
+         @if (Session["RutEmpresa"] == string.Empty)
+         {     
+            <td>@Html.TextBoxFor(m => m.RutCliente, new { size = 10, maxlength = 10, onchange = "javascript:llamar(this.value);" })</td>                
+            <td><a href="#"><img alt="Buscar Cliente" border="0" title="Buscar Cliente" id="imgBuscarCliente" style="width:22px;height:22px"  src="../images/findClient.png" /></a></td>                 
+         }
+        <td>            
+            <div id="divservicio">
+                @Html.DropDownListFor(m => m.Servicio, Model.oListaServicios)
+            </div>
+                       
+        </td>
+    </tr>
+</table>
+
+

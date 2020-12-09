@@ -1,0 +1,53 @@
+﻿@model Courier.Models.GenericManHistorico
+@{
+var grid = new WebGrid(Model.ListaHistoria, rowsPerPage: 10, ajaxUpdateContainerId: "gridManHis");    
+} 
+<div id="gridManHis">                
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {      
+    grid.Column("PK_FOL_MAN_ID","N°"), 
+    grid.Column("FL_FOL_MAE_NOMBRE","Estado"),  
+    grid.Column("FL_FOL_MAE_NOMBRE","Trans.",@<text>
+        @if (item.MAN_DESTINO!=null)
+        {
+            <img src='@Url.Content("~/Images/flag_red.png")' title='Transferido a Manifiesto N° @item.MAN_DESTINO' border="0" />@item.MAN_DESTINO
+        }
+
+    </text>),  
+    grid.Column("FL_FOL_MAN_FECHA_CREACION","Fecha"),           
+    grid.Column("FL_PAR_SUC_NOMBRE","Sucursal"),      
+    grid.Column("FL_PAR_USU_NOMBRES","Creado Por",@<text>
+    <span>@item.FL_PAR_USU_NOMBRES @item.FL_PAR_USU_APELLIDOS</span>
+    </text>),  
+    grid.Column("FL_PAR_CON_NOMBRE","Conductor"),  
+    grid.Column("FL_PAR_TRA_PATENTE","Patente"),
+    grid.Column("PK_FOL_MAN_ID","Manifiesto",@<text>
+    <div style="width:100%;text-align:center;">
+    <a href="#" onclick="Javascript:DescargaPDF(@item.PK_FOL_MAN_ID)"><img title="Descargar Manifiestro" alt="Descargar PDF" src='@Url.Content("~/Images/doc_pdf.png")' border="0" /></a>
+    </div>
+    </text>),
+    grid.Column("PK_FOL_MAP_ID","Man. Padre",@<text>
+    @if (item.PK_FOL_MAP_ID != null)
+    {
+        <div style="width:100%;text-align:center;">
+        <a href="#" onclick="javascript:ImprimirManifiestoPadre(@item.PK_FOL_MAP_ID)"><img title="Descargar Manifiesto Padre" alt="Descargar PDF" src='@Url.Content("~/Images/doc_pdf.png")' border="0" /></a>
+        </div>
+    }
+    </text>)         
+    })
+</div>
+@if (Model.ListaHistoria.Where(m => m.MAN_DESTINO != null).Count() > 0)
+{
+    <img src='@Url.Content("~/Images/flag_red.png")' border="0" /><label>&nbsp;&nbsp;Transferencia</label>
+}

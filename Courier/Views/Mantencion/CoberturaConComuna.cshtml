@@ -1,0 +1,52 @@
+﻿@model Courier.Models.ListaCoberturaModels
+@{
+    ViewBag.Title = "Comuna / Localidad";
+}
+
+
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script type="text/jscript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+    
+</script>
+
+<div class="editor-field">
+    Filtro:@Html.DropDownListFor(m=>m.Sucursal,Model.ListaSucursal,"-- Seleccione --")
+</div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Comunas</a></li>
+        <li><a href="#tabs-2">Localidades</a></li>
+	</ul>
+	<div id="tabs-1">                
+         @Html.Partial("_ListaSucursalComuna",Model)                       
+    </div>
+    <div id="tabs-2">
+         @Html.Partial("_ListaSucursalLocalidad",Model)    
+    </div>
+    <img alt="Con Cobertura" title="Con Cobertura" style="border:0;" src="@Url.Content("~/Images/tick.png")" /> Con Cobertura 
+    <img alt="Sin Cobertura" title="Sin Cobertura" style="border:0;" src="@Url.Content("~/Images/cross.png")" /> Sin Cobertura
+</div>
+<script type="text/jscript">
+    $("#Sucursal").change(function () {        
+        $("#SucursalComuna").html("<img border='0' src='@Url.Content("~/Images/8.gif")' />");
+        $("#SucursalLocalidad").html("<img border='0' src='@Url.Content("~/Images/8.gif")' />");
+        $("#SucursalComuna").load("@Url.Action("CoberturaConComuna", "Mantencion")?idSucursal=" + $("#Sucursal").val() + " #SucursalComuna",
+        function(response, status, xhr) {          
+          if (status!="success")          
+          {            
+            $("#tabs-1").html("No fue posible cargar la información");
+          }
+          else
+          {
+            var $response=$(response);
+            var Comuna = $response.find('#SucursalComuna').html();
+            var Localidad = $response.find('#SucursalLocalidad').html();
+            $("#SucursalComuna").html(Comuna);
+            $("#SucursalLocalidad").html(Localidad);
+          }
+        });        
+    });
+</script>

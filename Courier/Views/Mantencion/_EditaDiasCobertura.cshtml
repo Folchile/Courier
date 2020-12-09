@@ -1,0 +1,175 @@
+﻿@model Courier.Models.ListaCoberturaModels
+@{
+    ViewBag.Title = "EDITAR COBERTURAS";
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+            $("#SucursalComuna").load("@Url.Action("CoberturaConComuna", "Mantencion")?idSucursal=" + $("#Sucursal").val() + " #SucursalComuna",
+            function(response, status, xhr) {          
+              if (status!="success")          
+              {            
+                $("#tabs-1").html("No fue posible cargar la información");
+              }
+              else
+              {
+                var $response=$(response);
+                var Comuna = $response.find('#SucursalComuna').html();
+                var Localidad = $response.find('#SucursalLocalidad').html();
+                $("#SucursalComuna").html(Comuna);
+                $("#SucursalLocalidad").html(Localidad);
+              }
+        });    
+
+
+        }
+        else {
+
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+
+        }
+
+    }
+
+
+    $(function () {
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+</script>
+
+
+<div id="dialog-resultado" title="Resultado"></div>
+
+
+@using (Ajax.BeginForm("ActualizaCobertura", "Mantencion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmUpdCobertura" }))
+{
+    @Html.HiddenFor(m => m.IDCOM)
+    @Html.HiddenFor(m => m.IDSUC)
+      
+    <table>
+        
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.Comna)</strong></td>
+            <td>@Html.TextBoxFor(m => m.Comna, new { @style = "width:100px;font-size: 10px;text-align:left", @readonly = "readonly" })</td>
+         </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.Comna)</td>
+            </tr>
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.Clasificacion)</strong></td>
+            <td>@Html.TextBoxFor(m => m.Clasificacion, new { @style = "width:70px;font-size: 10px;text-align:left", @readonly = "readonly" })</td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.Via)</strong></td>
+            <td>@Html.DropDownListFor(m => m.Via, Model.ListaVias, "--Seleccione Origen--", new { @style = "width:100px;font-size: 10px" })</td>
+         </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.Via)</td>
+            </tr>
+         <tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.TiempoEstimado)</strong></td>
+            <td>@Html.TextBoxFor(m => m.TiempoEstimado, new { @style = "width:30px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.TiempoEstimado)</td>
+            </tr>
+         <tr>
+
+        
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.Lunes)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.Lunes, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.Lunes)</td>
+            </tr>
+         <tr>
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.Martes)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.Martes, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td></td>
+               <td colspan="2">@Html.ValidationMessageFor(m => m.Martes)</td>
+            </tr>
+         <tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.Miercoles)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.Miercoles, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td></td>
+                <td colspan="2">@Html.ValidationMessageFor(m => m.Miercoles)</td>
+            </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.Jueves)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.Jueves, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+         <tr>
+            <td></td>
+                <td colspan="2">@Html.ValidationMessageFor(m => m.Jueves)</td>
+            </tr>
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.Viernes)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.Viernes, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+          <tr>
+            <td></td>
+                <td colspan="2">@Html.ValidationMessageFor(m => m.Viernes)</td>
+            </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.Sabado)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.Sabado, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+          <tr>
+            <td></td>
+                <td colspan="2">@Html.ValidationMessageFor(m => m.Sabado)</td>
+            </tr>
+           <tr>
+            <td><strong> @Html.LabelFor(m => m.Domingo)</strong></td>
+            <td>@Html.CheckBoxFor(m => m.Domingo, new { @style = "width:40px;font-size: 10px;text-align:right" })</td>
+         </tr>
+          <tr>
+            <td></td>
+                <td colspan="2">@Html.ValidationMessageFor(m => m.Domingo)</td>
+            </tr>
+   </table>
+    
+        
+}

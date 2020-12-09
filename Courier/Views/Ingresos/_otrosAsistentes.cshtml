@@ -1,0 +1,52 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    ViewBag.Title = "_otrosAsistentes";
+}
+
+
+<script type="text/javascript">
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            CargaAsistentes();
+//            CargaDetalleAsistentes();
+            $("#dialog-result").html(data.Mensaje);
+            $("#dialog-result").dialog("open");
+            
+
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+</script>
+
+
+
+
+<div>
+@using (Ajax.BeginForm("AgregaAsistentes", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmAgregaAsistente" }))
+{
+   @Html.HiddenFor(m => m.FOLIO)
+    <table class="mGridFija">
+   <tr>
+
+      <td><strong>@Html.LabelFor(m => m.ASISTENTE)</strong></td>
+      <td>@Html.DropDownListFor(m => m.ASISTENTE, Model.ListaAsistentes, "--Selección--", new { @style = "width:240px;font-size: 10px" })</td>
+   </tr>
+   </table>
+    
+}
+</div>
+

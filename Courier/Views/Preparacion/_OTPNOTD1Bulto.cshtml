@@ -1,0 +1,86 @@
+﻿@model Courier.Models.PreparacionModels
+<script type="text/javascript">
+    $(function () {
+        $("#tabs2").tabs();
+        $("#ImprimirGuiaMasivo").button()
+        .click(function () {
+            ImprimeGuiaMasiva();
+        });
+        $("#finPreparacionMasivo").button()
+        .click(function () {
+            $("#dialog-Ok-Masivo").html("<p>¿Esta Seguro(a) que desea Finalizar la OT Padre?</p>");
+            $("#dialog-Ok-Masivo").dialog("open");
+        });
+    });
+
+    $("#dialog-Ok-Masivo").dialog({
+        autoOpen: false,
+        modal: true,
+        title:"Preparación Finalizada",
+        buttons: {
+            Aceptar: function () {
+                $(this).dialog("close");
+                waitingDialog({ title: "Cargando", message: "Finalizando OT...<br/>" });
+                $.ajax({
+                    url: "@Url.Action("FinalizarPreparacionMasiva", "Preparacion")?OTP=" + $("#OTP").val(),
+                    type: "POST",
+                    success: function (data) {
+                        if (data == "True") {
+                            $("#dialog-FinPrep").html("<p>Se ha finalizado la Preparación Exitosamente</p>");
+                            $("#dialog-FinPrep").dialog("open");
+                        }
+                        else {
+                            $("#dialog-FinPrep").html("<p>No fue posible finalizar la Preparación</p>");
+                            $("#dialog-FinPrep").dialog("open");
+                        }
+                        closeWaitingDialog();
+
+                    },
+                    error: function () {
+                        alert("Ocurrio un error mientras se ejecutaba la consulta");
+                        closeWaitingDialog();
+                    }
+                });
+            },
+            Cancelar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+</script>
+<div id="dialog-Ok-Masivo"></div>
+<div id="tabs2">
+	    <ul>		    
+            <li><a href="#tabs2-1">Preparación Masiva</a></li>		    
+	    </ul>        
+	    <div id="tabs2-1">   
+            <div>
+                <table>
+                    <tr>                        
+                        <td>    
+                            <button id="ImprimirGuiaMasivo">
+                                    <div style="float:left;width:160px;">       
+                                <div style="float:left;"><img src="@Url.Content("~/Images/agt_print16.png")" /></div>                 
+                                <div style="float:left;">&nbsp;Imprimir Guía Masiva</div>                        
+                                </div>                       
+                            </button>
+                         </td><td>    
+                            <button id="finPreparacionMasivo">
+                                    <div style="float:left;width:170px;">       
+                                <div style="float:left;"><img src="@Url.Content("~/Images/document_letter_forward.png")" /></div>                 
+                                <div style="float:left;">&nbsp;Preparación Masiva OK</div>                        
+                                </div>                       
+                            </button>
+                            
+                        </td>
+                    </tr>
+                </table>            
+            </div>             
+            <div id="VerListaBultos">
+               
+                @Html.Partial("_ListaOTDBulto", Model)
+                
+                
+            </div>
+        </div>
+    </div>

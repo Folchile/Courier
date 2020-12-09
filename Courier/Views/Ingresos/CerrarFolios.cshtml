@@ -1,0 +1,151 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    ViewBag.Title = "Estado Folios";
+}
+
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#Sucu").hide();
+        $("#Fol").hide();
+        $("#Verfolsucact").hide();
+        $("#Verestadofolios").hide();
+    });
+
+
+    $(function () {
+        $("#btnprocfolios").button()
+        .click(function () {
+            $("#Verestadofolios").hide();
+            $("#Verfolsucact").show();
+             CargaFoliosActivosSucursal();
+        });
+    });
+
+    $(function () {
+        $("#btnbuscafol").button()
+        .click(function () {
+            var randomnumber = Math.floor(Math.random() * 1111111)
+            $.ajax({
+                url: '@Url.Action("RetornoValidarFolio", "Ingresos")',
+                data: {
+                    FOLIO: $("#FOLIOABUSCAR").val(),
+                    _r: randomnumber
+                }
+            })
+            .done(function (data) {
+                var randomnumber = Math.floor(Math.random() * 11111111);
+                if (data.ExisteFolio == true) {
+                    $("#Verfolsucact").hide();
+                    $("#Verestadofolios").show();
+                    CargaDetalleFoliocamest();
+                }
+                else {
+                    $("#Verestadofolios").hide();
+                    Msjefolnoexiste();
+                }
+            });
+        });
+    });
+
+
+
+    function CargaBusqueda(op) {
+       if (op == "1") {
+          $("#Sucu").hide();
+          $("#Verfolsucact").hide();
+          $("#Fol").show();
+          $("#FOLIOABUSCAR").val("");
+          $("#FOLIOABUSCAR").focus();
+       } else if (op == "2") {
+          $("#Sucu").show();
+          $("#Fol").hide();
+          $("#Verestadofolios").hide();
+      }
+    }
+
+
+    function CargaFoliosActivosSucursal() {
+        $("#Verfolsucact").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#Verfolsucact").load('@Url.Action("dfoliosActivos", "Ingresos")?SUCURSAL=' + $("#SUCURSAL").val());
+    }
+
+
+    function CargaDetalleFoliocamest() {
+        $("#Verestadofolios").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#Verestadofolios").load('@Url.Action("dcamestadofolio", "Ingresos")?FOLIOABUSCAR=' + $("#FOLIOABUSCAR").val());
+    }
+
+
+    $(function () {
+        $("#dialog-res").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+    function Msjefolnoexiste() {
+        $("#dialog-res").dialog("open");
+        $("#dialog-res").html("Folio Ingresado no Existe");
+    }
+
+
+</script>   
+
+
+<div id="dialog-res" title="Atención"></div>
+
+
+
+
+
+@using (Ajax.BeginForm("VerS", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinVer(data)", OnFailure = "Javascript:Fin()" }, new { id = "frmSucurs" }))
+{
+    <table>
+        <tr>
+        <td>@Html.DropDownListFor(m => m.BUSQUEDA, Model.ListaOpBusquedaFolios, new { @style = "width:220px;font-size: 15px", @onchange = "javascript:CargaBusqueda(this.value);" })</td>
+       </tr>
+   </table>
+   
+ <div id="Sucu">
+     @Html.DropDownListFor(m => m.SUCURSAL, Model.ListaSUCURSALES, new { @style = "width:220px;font-size: 15px" })
+     <td><input type="button" id="btnprocfolios"  name="btnprocfolios" value="Procesar" style="width:80px;height:25px; font-size:10pt"/></td>
+</div>
+
+<div id="Fol">
+   <tr>
+     <td><strong> @Html.LabelFor(m => m.FOLIOABUSCAR)</strong></td>
+     <td>@Html.TextBoxFor(m => m.FOLIOABUSCAR, new { @style = "width:60px;font-size: 14px;text-align:right" })</td>
+     <td><input type="button" id="btnbuscafol"  name="btnbuscafol" value="Buscar" style="width:80px;height:25px; font-size:10pt"/></td>
+   </tr>
+   <tr>
+      <td></td>
+      <td colspan="2">@Html.ValidationMessageFor(m => m.FOLIOABUSCAR)</td>
+   </tr>
+</div> 
+    
+}
+
+
+
+<div id="Verfolsucact">
+</div>
+
+<div id="Verestadofolios">
+</div>
+
+
+

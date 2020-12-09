@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BD_CLI_CLIENTES" Class="LinqCLIDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=BD_CLI_CLIENTES;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BD_CLI_CLIENTESConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TB_CLI_CEM_CTT_EMP" Member="TB_CLI_CEM_CTT_EMP">
+    <Type Name="TB_CLI_CEM_CTT_EMP">
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_CLI_CTT_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_CLI_CTT_CONTACTOS_TB_CLI_CEM_CTT_EMP" Member="TB_CLI_CTT_CONTACTOS" ThisKey="PK_CLI_CTT_RUT" OtherKey="PK_CLI_CTT_RUT" Type="TB_CLI_CTT_CONTACTOS" IsForeignKey="true" />
+      <Association Name="TB_CLI_EMP_EMPRESAS_TB_CLI_CEM_CTT_EMP" Member="TB_CLI_EMP_EMPRESAS" ThisKey="PK_CLI_EMP_RUT" OtherKey="PK_CLI_EMP_RUT" Type="TB_CLI_EMP_EMPRESAS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_CLI_TPD_TIPO_DIRECCIONES" Member="TB_CLI_TPD_TIPO_DIRECCIONES">
+    <Type Name="TB_CLI_TPD_TIPO_DIRECCIONES">
+      <Column Name="PK_CLI_TPD_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_CLI_TPD_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_CLI_TPD_TIPO_DIRECCIONES_TB_CLI_DIR_DIRECCIONES" Member="TB_CLI_DIR_DIRECCIONES" ThisKey="PK_CLI_TPD_ID" OtherKey="PK_CLI_TPD_ID" Type="TB_CLI_DIR_DIRECCIONES" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_CLI_CTT_CONTACTOS" Member="TB_CLI_CTT_CONTACTOS">
+    <Type Name="TB_CLI_CTT_CONTACTOS">
+      <Column Name="PK_CLI_CTT_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_CLI_CTT_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_CLI_CTT_NOMBRES" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_CLI_CTT_PATERNO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_CLI_CTT_MATERNO" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_CLI_CTT_FONO1" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FL_CLI_CTT_FONO2" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="FL_CLI_CTT_EMAIL" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_CLI_TCT_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_CLI_DIR_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_CLI_CTT_CONTACTOS_TB_CLI_CEM_CTT_EMP" Member="TB_CLI_CEM_CTT_EMP" ThisKey="PK_CLI_CTT_RUT" OtherKey="PK_CLI_CTT_RUT" Type="TB_CLI_CEM_CTT_EMP" />
+      <Association Name="TB_CLI_DIR_DIRECCIONES_TB_CLI_CTT_CONTACTOS" Member="TB_CLI_DIR_DIRECCIONES" ThisKey="PK_CLI_DIR_ID" OtherKey="PK_CLI_DIR_ID" Type="TB_CLI_DIR_DIRECCIONES" IsForeignKey="true" />
+      <Association Name="TB_CLI_TCT_TIPO_CONTACTO_TB_CLI_CTT_CONTACTOS" Member="TB_CLI_TCT_TIPO_CONTACTO" ThisKey="PK_CLI_TCT_ID" OtherKey="PK_CLI_TCT_ID" Type="TB_CLI_TCT_TIPO_CONTACTO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_CLI_DEM_DIR_EMP" Member="TB_CLI_DEM_DIR_EMP">
+    <Type Name="TB_CLI_DEM_DIR_EMP">
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_CLI_DIR_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_CLI_DIR_DIRECCIONES_TB_CLI_DEM_DIR_EMP" Member="TB_CLI_DIR_DIRECCIONES" ThisKey="PK_CLI_DIR_ID" OtherKey="PK_CLI_DIR_ID" Type="TB_CLI_DIR_DIRECCIONES" IsForeignKey="true" />
+      <Association Name="TB_CLI_EMP_EMPRESAS_TB_CLI_DEM_DIR_EMP" Member="TB_CLI_EMP_EMPRESAS" ThisKey="PK_CLI_EMP_RUT" OtherKey="PK_CLI_EMP_RUT" Type="TB_CLI_EMP_EMPRESAS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_CLI_DIR_DIRECCIONES" Member="TB_CLI_DIR_DIRECCIONES">
+    <Type Name="TB_CLI_DIR_DIRECCIONES">
+      <Column Name="PK_CLI_DIR_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PK_CLI_TPD_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_CLI_DIR_DIRECCION" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_CLI_DIR_DIRECCIONES_TB_CLI_CTT_CONTACTOS" Member="TB_CLI_CTT_CONTACTOS" ThisKey="PK_CLI_DIR_ID" OtherKey="PK_CLI_DIR_ID" Type="TB_CLI_CTT_CONTACTOS" />
+      <Association Name="TB_CLI_DIR_DIRECCIONES_TB_CLI_DEM_DIR_EMP" Member="TB_CLI_DEM_DIR_EMP" ThisKey="PK_CLI_DIR_ID" OtherKey="PK_CLI_DIR_ID" Type="TB_CLI_DEM_DIR_EMP" />
+      <Association Name="TB_CLI_DIR_DIRECCIONES_TB_CLI_EMP_EMPRESAS" Member="TB_CLI_EMP_EMPRESAS" ThisKey="PK_CLI_DIR_ID" OtherKey="PK_CLI_DIR_ID" Type="TB_CLI_EMP_EMPRESAS" />
+      <Association Name="TB_CLI_DIR_DIRECCIONES_TB_CLI_SUC_SUCURSAL" Member="TB_CLI_SUC_SUCURSAL" ThisKey="PK_CLI_DIR_ID" OtherKey="PK_CLI_DIR_ID" Type="TB_CLI_SUC_SUCURSAL" />
+      <Association Name="TB_CLI_TPD_TIPO_DIRECCIONES_TB_CLI_DIR_DIRECCIONES" Member="TB_CLI_TPD_TIPO_DIRECCIONES" ThisKey="PK_CLI_TPD_ID" OtherKey="PK_CLI_TPD_ID" Type="TB_CLI_TPD_TIPO_DIRECCIONES" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_CLI_EMP_EMPRESAS" Member="TB_CLI_EMP_EMPRESAS">
+    <Type Name="TB_CLI_EMP_EMPRESAS">
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_CLI_EMP_DV" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_RAZON_SOCIAL" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_FANTASIA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_GIRO_COMERCIAL" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_ACTIVO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_CLI_DIR_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_CODIGO_POSTAL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_FECHA_INGRESO" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="TB_CLI_EMP_EMPRESAS_TB_CLI_CEM_CTT_EMP" Member="TB_CLI_CEM_CTT_EMP" ThisKey="PK_CLI_EMP_RUT" OtherKey="PK_CLI_EMP_RUT" Type="TB_CLI_CEM_CTT_EMP" />
+      <Association Name="TB_CLI_EMP_EMPRESAS_TB_CLI_DEM_DIR_EMP" Member="TB_CLI_DEM_DIR_EMP" ThisKey="PK_CLI_EMP_RUT" OtherKey="PK_CLI_EMP_RUT" Type="TB_CLI_DEM_DIR_EMP" />
+      <Association Name="TB_CLI_EMP_EMPRESAS_TB_CLI_SUC_SUCURSAL" Member="TB_CLI_SUC_SUCURSAL" ThisKey="PK_CLI_EMP_RUT" OtherKey="PK_CLI_EMP_RUT" Type="TB_CLI_SUC_SUCURSAL" />
+      <Association Name="TB_CLI_DIR_DIRECCIONES_TB_CLI_EMP_EMPRESAS" Member="TB_CLI_DIR_DIRECCIONES" ThisKey="PK_CLI_DIR_ID" OtherKey="PK_CLI_DIR_ID" Type="TB_CLI_DIR_DIRECCIONES" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_CLI_REC_REL_EMP_CTT" Member="TB_CLI_REC_REL_EMP_CTT">
+    <Type Name="TB_CLI_REC_REL_EMP_CTT">
+      <Column Name="PK_CLI_CTT_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_CLI_TCT_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_CLI_DIR_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_CLI_TCT_TIPO_CONTACTO" Member="TB_CLI_TCT_TIPO_CONTACTO">
+    <Type Name="TB_CLI_TCT_TIPO_CONTACTO">
+      <Column Name="PK_CLI_TCT_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_CLI_TCT_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_CLI_TCT_TIPO_CONTACTO_TB_CLI_CTT_CONTACTOS" Member="TB_CLI_CTT_CONTACTOS" ThisKey="PK_CLI_TCT_ID" OtherKey="PK_CLI_TCT_ID" Type="TB_CLI_CTT_CONTACTOS" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_CLI_SUC_SUCURSAL" Member="TB_CLI_SUC_SUCURSAL">
+    <Type Name="TB_CLI_SUC_SUCURSAL">
+      <Column Name="PK_CLI_SUC_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_CLI_DIR_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_CLI_SUC_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_CLI_DIR_DIRECCIONES_TB_CLI_SUC_SUCURSAL" Member="TB_CLI_DIR_DIRECCIONES" ThisKey="PK_CLI_DIR_ID" OtherKey="PK_CLI_DIR_ID" Type="TB_CLI_DIR_DIRECCIONES" IsForeignKey="true" />
+      <Association Name="TB_CLI_EMP_EMPRESAS_TB_CLI_SUC_SUCURSAL" Member="TB_CLI_EMP_EMPRESAS" ThisKey="PK_CLI_EMP_RUT" OtherKey="PK_CLI_EMP_RUT" Type="TB_CLI_EMP_EMPRESAS" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

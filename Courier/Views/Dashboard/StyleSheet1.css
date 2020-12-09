@@ -1,0 +1,4 @@
+﻿.someClass {font-family:arial;}
+@media print {
+    .noPrint { display: none; }
+}

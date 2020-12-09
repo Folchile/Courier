@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.75, 10.75" name="LinqCLI">
+  <DataContextMoniker Name="/LinqCLIDataContext" />
+  <nestedChildShapes>
+    <classShape Id="3dc7b53a-870a-42c4-a064-3e4e408a3309" absoluteBounds="9.5, 3.5, 2, 1.1939925130208331">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_CEM_CTT_EMP" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6467e822-d709-4614-9b61-c2384dff377e" absoluteBounds="9.515, 3.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0c827bab-719d-471a-a856-668304944540" absoluteBounds="0.75, 4.625, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_TPD_TIPO_DIRECCIONES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="06a1eb62-70b9-43d3-b674-49d525af057d" absoluteBounds="0.765, 5.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="deab3f5b-8dad-4d1f-a878-d94096c9240f" absoluteBounds="6.25, 1, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_CTT_CONTACTOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f9f4e137-a25e-465a-ac28-35b19558570c" absoluteBounds="6.265, 1.46, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6799439f-d804-498d-83bf-c5ad1ba03be9" absoluteBounds="4.75, 6.5, 2, 1.1939925130208327">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_DEM_DIR_EMP" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6d68ce6c-7036-4da6-9ed9-e2a283d4b62e" absoluteBounds="4.7650000000000006, 6.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="199b2ad0-5969-4db5-beae-a3f4d1e2c060" absoluteBounds="3.5, 4.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_DIR_DIRECCIONES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e7d2544f-3e1d-4fb8-b2b0-90b4a4b583c3" absoluteBounds="3.515, 4.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d5705e05-f4d4-4c83-be89-43e52393b481" absoluteBounds="7.375, 5.625, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_EMP_EMPRESAS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d3e473db-107a-4ecb-9a34-4913413a9b29" absoluteBounds="7.39, 6.085, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1641e986-abdf-4715-a9f8-116b2cbb3b5d" absoluteBounds="0.75, 6.75, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_REC_REL_EMP_CTT" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b94ebd26-4236-4c24-849f-b6a89df0f002" absoluteBounds="0.765, 7.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="81af4d6c-8bfc-47d6-be7b-3c894aa9c0c3" absoluteBounds="1.625, 1.5, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_TCT_TIPO_CONTACTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="02a67a64-f7e8-498a-95d8-f12616c7d51e" absoluteBounds="1.6400000000000001, 1.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.25 : 2.2499995); (10.5 : 2.2499995); (10.5 : 3.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_CTT_CONTACTOS/TB_CLI_CTT_CONTACTOS_TB_CLI_CEM_CTT_EMP" />
+      <nodes>
+        <classShapeMoniker Id="deab3f5b-8dad-4d1f-a878-d94096c9240f" />
+        <classShapeMoniker Id="3dc7b53a-870a-42c4-a064-3e4e408a3309" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.59375 : 4.375); (4.59375 : 3.2444482421875); (6.25 : 3.2444482421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_DIR_DIRECCIONES/TB_CLI_DIR_DIRECCIONES_TB_CLI_CTT_CONTACTOS" />
+      <nodes>
+        <classShapeMoniker Id="199b2ad0-5969-4db5-beae-a3f4d1e2c060" />
+        <classShapeMoniker Id="deab3f5b-8dad-4d1f-a878-d94096c9240f" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.125 : 5.95359537760417); (5.125 : 6.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_DIR_DIRECCIONES/TB_CLI_DIR_DIRECCIONES_TB_CLI_DEM_DIR_EMP" />
+      <nodes>
+        <classShapeMoniker Id="199b2ad0-5969-4db5-beae-a3f4d1e2c060" />
+        <classShapeMoniker Id="6799439f-d804-498d-83bf-c5ad1ba03be9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 5.22199625651042); (3.5 : 5.22199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_TPD_TIPO_DIRECCIONES/TB_CLI_TPD_TIPO_DIRECCIONES_TB_CLI_DIR_DIRECCIONES" />
+      <nodes>
+        <classShapeMoniker Id="0c827bab-719d-471a-a856-668304944540" />
+        <classShapeMoniker Id="199b2ad0-5969-4db5-beae-a3f4d1e2c060" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.84375 : 5.625); (8.84375 : 4.2444482421875); (9.5 : 4.2444482421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_EMP_EMPRESAS/TB_CLI_EMP_EMPRESAS_TB_CLI_CEM_CTT_EMP" />
+      <nodes>
+        <classShapeMoniker Id="d5705e05-f4d4-4c83-be89-43e52393b481" />
+        <classShapeMoniker Id="3dc7b53a-870a-42c4-a064-3e4e408a3309" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.375 : 7.09699625651042); (6.75 : 7.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_EMP_EMPRESAS/TB_CLI_EMP_EMPRESAS_TB_CLI_DEM_DIR_EMP" />
+      <nodes>
+        <classShapeMoniker Id="d5705e05-f4d4-4c83-be89-43e52393b481" />
+        <classShapeMoniker Id="6799439f-d804-498d-83bf-c5ad1ba03be9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 4.9687475); (8.0781225 : 4.9687475); (8.0781225 : 5.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_DIR_DIRECCIONES/TB_CLI_DIR_DIRECCIONES_TB_CLI_EMP_EMPRESAS" />
+      <nodes>
+        <classShapeMoniker Id="199b2ad0-5969-4db5-beae-a3f4d1e2c060" />
+        <classShapeMoniker Id="d5705e05-f4d4-4c83-be89-43e52393b481" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.625 : 2.09699625651042); (6.25 : 2.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_TCT_TIPO_CONTACTO/TB_CLI_TCT_TIPO_CONTACTO_TB_CLI_CTT_CONTACTOS" />
+      <nodes>
+        <classShapeMoniker Id="81af4d6c-8bfc-47d6-be7b-3c894aa9c0c3" />
+        <classShapeMoniker Id="deab3f5b-8dad-4d1f-a878-d94096c9240f" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="f7b173cb-503c-4a1a-8d89-115d31d729fa" absoluteBounds="6.125, 8.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqCLIDataContext/TB_CLI_SUC_SUCURSAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a5a95ed6-42f2-463f-bfbd-cbb2e4971377" absoluteBounds="6.14, 9.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.09375 : 5.95359537760417); (4.09375 : 9.66429768880208); (6.125 : 9.66429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_DIR_DIRECCIONES/TB_CLI_DIR_DIRECCIONES_TB_CLI_SUC_SUCURSAL" />
+      <nodes>
+        <classShapeMoniker Id="199b2ad0-5969-4db5-beae-a3f4d1e2c060" />
+        <classShapeMoniker Id="f7b173cb-503c-4a1a-8d89-115d31d729fa" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.75 : 8.1651025390625); (7.75 : 8.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqCLIDataContext/TB_CLI_EMP_EMPRESAS/TB_CLI_EMP_EMPRESAS_TB_CLI_SUC_SUCURSAL" />
+      <nodes>
+        <classShapeMoniker Id="d5705e05-f4d4-4c83-be89-43e52393b481" />
+        <classShapeMoniker Id="f7b173cb-503c-4a1a-8d89-115d31d729fa" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

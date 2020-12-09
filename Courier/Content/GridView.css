@@ -1,0 +1,92 @@
+﻿.mGrid {   
+    width: 100%;   
+    background-color: #fff;   
+    margin: 5px 0 10px 0;   
+    border: solid 1px #6394CE;   
+    border-collapse:collapse;   
+}  
+.mGrid td {   
+    padding: 2px;   
+    border: solid 1px #c1c1c1;   
+    color: #717171;   
+}  
+.mGrid th {   
+    padding: 4px 2px;   
+    color: #000;   
+    background: #424242 url(../images/toolbar_bg.png) repeat-x top;   
+    border-left: solid 1px #6394CE;   
+    font-size: 0.9em;   
+}  
+.mGrid .alt { background: #fcfcfc url(grd_alt.png) repeat-x top; }  
+.mGrid .pgr { background: #424242 url(grd_pgr.png) repeat-x top; }  
+.mGrid .pgr table { margin: 5px 0; }  
+.mGrid .pgr td {   
+    border-width: 0;   
+    padding: 0 6px;   
+    border-left: solid 1px #666;   
+    font-weight: bold;   
+    color: #fff;   
+    line-height: 12px;   
+ }     
+.mGrid .pgr a { color: #666; text-decoration: none; }  
+.mGrid .pgr a:hover { color: #000; text-decoration: none; }  
+.fila-alternativa 
+{
+    background-color:#fafafa;
+}
+
+.mGrid tr:hover
+{
+    background-color:#FFF5E0;        
+}
+.mGrid tr a:hover
+{
+    color:Red;        
+}
+
+
+
+
+
+.mGridFija {   
+    width: 100%;   
+    background-color: #fff;   
+    margin: 5px 0 10px 0;   
+    border: solid 1px #6394CE;   
+    border-collapse:collapse;   
+}  
+.mGridFija td {   
+    padding: 2px;   
+    border: solid 1px #c1c1c1;   
+    color: #717171;   
+}  
+.mGridFija th {   
+    padding: 4px 2px;   
+    color: #000;   
+    background: #424242 url(../images/toolbar_bg.png) repeat-x top;   
+    border-left: solid 1px #6394CE;   
+    font-size: 0.9em;   
+}  
+.mGridFija .alt { background: #fcfcfc url(grd_alt.png) repeat-x top; }  
+.mGridFija .pgr { background: #424242 url(grd_pgr.png) repeat-x top; }  
+.mGridFija .pgr table { margin: 5px 0; }  
+.mGridFija .pgr td {   
+    border-width: 0;   
+    padding: 0 6px;   
+    border-left: solid 1px #666;   
+    font-weight: bold;   
+    color: #fff;   
+    line-height: 12px;   
+ }     
+.mGridFija .pgr a { color: #666; text-decoration: none; }  
+.mGridFija .pgr a:hover { color: #000; text-decoration: none; }  
+.fila-alternativa 
+{
+    background-color:#fafafa;
+}
+
+
+.mGridFija tr a:hover
+{
+    color:Red;        
+}

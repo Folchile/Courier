@@ -1,0 +1,52 @@
+﻿@model Courier.Models.MantencionModels
+@{
+    var grid = new WebGrid(Model.oServicio, rowsPerPage: 15, ajaxUpdateContainerId: "mgrid1");    
+} 
+<div id="mgrid1">
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+tableStyle:"mGrid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("PK_PAR_SER_ID","Id"),     
+    grid.Column("FL_PAR_SER_NOMBRE","Nombre"),     
+    grid.Column("Referencia1","Referencia1"),
+    grid.Column("Referencia2","Referencia2"),
+    grid.Column("FL_PAR_SER_FACTOR_VOLUMETRICO","Factor Volumetrico"),     
+    grid.Column("FL_PAR_SER_TRABAJA_PESO_KG","Pide KG",@<text>
+        @if (item.FL_PAR_SER_TRABAJA_PESO_KG==true)
+        {
+            <span>Sí</span>
+        }
+        else
+        {
+            <span>No</span>
+        }
+    
+    </text>),     
+    grid.Column("FL_PAR_SER_TRABAJA_PESO_VOL","Pide Dimensiones",@<text>
+        @if (item.FL_PAR_SER_TRABAJA_PESO_VOL == true)
+        {
+            <span>Sí</span>
+        }
+        else
+        {
+            <span>No</span>
+        }
+    
+    </text>),
+    grid.Column("FL_PAR_TSE_NOMBRE","Tipo Servicio"), 
+    grid.Column("FL_PAR_SER_CANTIDAD_VISITAS","Cantidad Visitas"),              
+    grid.Column("",header:"Acciones",format:@<text>
+        <a href="#" onclick="javascript:CargaEditarServicio(@item.PK_PAR_SER_ID)">Editar</a>
+    </text>)
+})
+</div>

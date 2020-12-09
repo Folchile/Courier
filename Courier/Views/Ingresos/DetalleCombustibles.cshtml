@@ -1,0 +1,100 @@
+﻿@model MvcReporteViajes.Models.DetalleCombustibleModels
+@{
+    ViewBag.Title = "DetalleCombustibles";
+}
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#FECHADETCOMB").datepicker({ dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+    });
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            CargaControlCombustible();
+            $("#dialog-result").html(data.Mensaje);
+            $("#dialog-result").dialog("open");
+            
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }  
+
+   
+
+    var infocomb = $("#FOLIO").val();
+    $("#FOLCOMB").val(infocomb);
+
+    $("#NUMERO").focus();
+
+
+    function teclaEnter(e, idElemento) {
+        var esIE = (document.all);
+        tecla = (esIE) ? event.keyCode : e.which;
+        if (tecla == 13) {
+            $("#" + idElemento).focus();
+        }
+    }
+
+
+</script>
+
+
+
+
+@{
+    Model.FECHADETCOMB = DateTime.Today;
+}
+
+
+
+@using (Ajax.BeginForm("CargaFomularioDetalleCombustible", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmEnviarCombustible" }))
+{
+    
+    @Html.HiddenFor(m=>m.FOLCOMB) 
+    <table>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.FECHADETCOMB)</strong></td>
+            <td>@Html.TextBoxFor(m => m.FECHADETCOMB, new { @style = "width:70px;font-size: 10px" })</td>
+         </tr>
+         <tr>
+            <td></td>
+            <td colspan="2">@Html.ValidationMessageFor(m => m.FECHADETCOMB)</td>
+        </tr>
+        
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.NUMERO)</strong></td>
+            <td>@Html.TextBoxFor(m => m.NUMERO, new { @style = "width:80px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'LITROS');" })
+             @Html.ValidationMessageFor(m => m.NUMERO)
+            </td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.LITROS)</strong></td>
+            <td>@Html.TextBoxFor(m => m.LITROS, new { @style = "width:60px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'VALOR');" })
+             @Html.ValidationMessageFor(m => m.LITROS)
+            </td>
+         </tr>
+         <tr>
+            <td><strong> @Html.LabelFor(m => m.VALOR)</strong></td>
+            <td>@Html.TextBoxFor(m => m.VALOR, new { @style = "width:60px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'OBSERVACIONCOMB');" })
+             @Html.ValidationMessageFor(m => m.VALOR)
+            </td>
+         </tr>    
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.OBSERVACIONCOMB)</strong></td>
+            <td>@Html.TextBoxFor(m => m.OBSERVACIONCOMB, new { @style = "width:220px;font-size: 10px" })</td>
+         </tr> 
+         
+    
+    
+    </table>
+}
+

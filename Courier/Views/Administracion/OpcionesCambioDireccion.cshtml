@@ -1,0 +1,106 @@
+﻿@model Courier.Models.RecepcionOKManualModels
+@{
+    ViewBag.Title = "OpcionesCambioDireccion";
+}
+<script type="text/javascript">
+    $(function () {
+        $("#btnEditarDireccion").button();
+        $("#btnSiniestrar").button();
+        $("#btnRecepcionOK").button();
+        $("#btnCambiarServicio").button();
+        $("#btnCambiarObservacion").button();
+        $("#btnRectificaUbicacion").button();        
+    })
+</script>
+@if (Model.PuedeModificarDireccion == true)
+{
+<button id="btnEditarDireccion" onclick="javascript:CargaFormularioEditarDireccion();">
+    <div style="float:left;width:80px;">       
+        <table>
+            <tr>
+                <td>
+                    <img alt="Editar Dirección" src="@Url.Content("~/Images/pencil_edit.png")" />
+                </td>
+            </tr>
+            <tr><td>Editar Dirección</td></tr>
+        </table>         
+    </div>                       
+</button>
+}
+@if (Model.PuedeSiniestrarOT == true)
+{
+<button id="btnSiniestrar" onclick="javascript:CargaConsultaSiniestrar();">
+    <div style="float:left;width:80px;">       
+        <table>
+            <tr>
+                <td>
+                    <img alt="Editar Dirección" src="@Url.Content("~/Images/attention16.png")" />
+                </td>
+            </tr>
+            <tr><td>Siniestrar OT</td></tr>
+        </table>         
+    </div>                       
+</button>
+}
+@if (Model.PuedeRecibirRechazarManual == true)
+{
+<button id="btnRecepcionOK" onclick="javascript:CargaFormularioRecepcion();">
+    <div style="float:left;width:80px;">       
+        <table>
+            <tr>
+                <td>
+                    <img alt="Recepcion OK" src="@Url.Content("~/Images/tick.png")" />
+                    <img alt="Recepcion OK" src="@Url.Content("~/Images/delete16.png")" />                    
+                </td>
+            </tr>
+            <tr><td>Recepción OK/Rechaza</td></tr>
+        </table>         
+    </div>                       
+</button>
+}
+@if (Model.PuedeCambiarServicio == true)
+{
+<button id="btnCambiarServicio" onclick="javascript:CargaFormularioCS();">
+    <div style="float:left;width:80px;">       
+        <table>
+            <tr>
+                <td>
+                    <img alt="Recepcion OK" src="@Url.Content("~/Images/network_service_client.png")" />                    
+                </td>
+            </tr>
+            <tr><td>Cambiar Servicio</td></tr>
+        </table>         
+    </div>                       
+</button>
+}
+@if (Model.PuedeModificarObservacion == true)
+{
+<button id="btnCambiarObservacion" onclick="javascript:CargaFormularioOBS();">
+    <div style="float:left;width:80px;">       
+        <table>
+            <tr>
+                <td>
+                    <img alt="Recepcion OK" src="@Url.Content("~/Images/pencil_edit.png")" />                    
+                </td>
+            </tr>
+            <tr><td>Modificar Observación</td></tr>
+        </table>         
+    </div>                       
+</button>
+}
+
+@*@if (Model.PuedeModificarObservacion == true)
+{
+<button id="btnRectificaUbicacion" onclick="javascript:RectificarDirecciones();">
+    <div style="float:left;width:80px;">       
+        <table>
+            <tr>
+                <td>
+                    <img alt="Rectificar Ubicaciones" src="@Url.Content("~/Images/localizacion_16.png")" />                    
+                </td>
+            </tr>
+            <tr><td>Rectificar Ubicaciones</td></tr>
+        </table>         
+    </div>                       
+</button>
+}*@

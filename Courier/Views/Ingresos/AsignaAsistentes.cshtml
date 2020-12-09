@@ -1,0 +1,146 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    var grid = new WebGrid(Model.DetalleAsistentes, rowsPerPage: 7, ajaxUpdateContainerId: "gridDetalleAsistentes"); 
+}
+
+
+<script type="text/javascript">
+
+    $(function () {
+        borrar_contenido();
+        $("#btnagregaAsis").button()
+       .click(function () {
+           CargaDetalleAsistentes();
+       });
+       $("#detAsistentes").dialog({ autoOpen: false, title: "Ingreso Asistentes", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+           buttons: {
+              Grabar: function () {
+              borrar_contenido();
+              $.validator.unobtrusive.parse("#frmAgregaAsistente");
+              if ($("#frmAgregaAsistente").valid() == true) {
+                   $("#frmAgregaAsistente").submit();
+                    $(this).dialog("close");
+                  }
+               },
+               Cancelar: function () {
+                         $(this).dialog("close");
+                         }
+
+                }
+        });
+
+     
+    });
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-eliminardetalleAsistentes").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmeliminardetalleasis").submit();
+                    CargaAsistentes();
+                    //                         CargaDetalleAsistentes();
+                    //                         CargaControlGastos();
+                    $(this).dialog("close");
+                    $("#dialog-resultado").dialog("open");
+                    alert("Registro Eliminado Satisfactoriamente");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+
+
+
+//    function CargFondos() {
+//    $("#detFondos").dialog("open");
+//    $("#detFondos").load('@Url.Action("MostrarDatosFondos","Ingresos")?FOLIO=' + $("#FOLIO").val());
+//    borrar_contenido();
+//    }
+
+
+         function CargaDetalleAsistentes() {
+         $("#detAsistentes").dialog("open");
+         $("#detAsistentes").load('@Url.Action("DetalleAsistentes","Ingresos")?FOLIO=' + $("#FOLIO").val());
+         borrar_contenido();
+         }
+
+
+         function EliminardetAsistentes(id_asis) {
+         var opTabs = $("#tabs").tabs('option', 'selected');
+         $("#dialog-resultado").html("");
+         $("#dialog-eliminardetalleAsistentes").dialog("open");
+         $("#id_asis").val(id_asis);
+         $("#dialog-eliminardetalleAsistentes").html("<p>¿Está seguro(a) que desea eliminar el Item <strong>" + id_asis + " </strong> ? </p>");
+         }
+
+
+
+</script>
+
+
+@{
+    var Texto = "";
+    if (Model.MMOUSUARIO!=1) 
+    {
+        Texto = "disabled='disabled'";
+    }
+    }
+
+
+
+
+<div id="dialog-eliminardetalleAsistentes" title="Eliminar Detalle"></div> 
+
+@using (Ajax.BeginForm("EliminardetalleAsistente", "Ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-resultado" }, new { id = "frmeliminardetalleasis" }))
+{
+    <input type="hidden" name="id_asis" id="id_asis" />
+}
+
+
+<input type="button" id="btnagregaAsis" @Texto name="btnagregaAsis" value="Agregar Asistente" style="height:25px; font-size:8pt"/>
+
+
+
+<div id="gridDetalleAsistentes">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle:"mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("DAid","Id"),
+       grid.Column("DAcodigo","Codigo"),
+       grid.Column("DAnombres","Nombre"),
+       
+       
+        grid.Column("",header:"ACCION",format:@<text>
+                                       @if (Model.MMOUSUARIO==1)
+                                       {
+                                         <a href="#" onclick="javascript:EliminardetAsistentes('@item.DAid')"><img border="0" src='@Url.Content("~/Images/deletered.png")' alt="Eliminar @item.DAid" title="Eliminar @item.DAid"/></a>
+                                           }
+                                    </text>) 
+ })
+</div>
+
+
+<div id="detAsistentes">
+
+</div>

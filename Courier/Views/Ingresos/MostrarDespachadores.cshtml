@@ -1,0 +1,207 @@
+﻿@model MvcReporteViajes.Models.DespachadorModels
+@{
+    var grid = new WebGrid(Model.VerDespachadoresd, rowsPerPage: 14, ajaxUpdateContainerId: "gridDespachadores"); 
+}
+
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+            cargaDespachadores();
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editardespachador").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmEditarDespachador");
+                    if ($("#frmEditarDespachador").valid() == true) {
+                        $("#frmEditarDespachador").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-inactivardespachador").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmInactivarDespachador").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-activardespachador").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmActivarDespachador").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+    $(function () {
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+    
+    function EditarDespachador(rut_desp) {
+        $("#rut_desp").val(rut_desp);
+        $("#dialog-resultado").html("");
+        $("#frmeditdesp").submit();
+        $("#dialog-editardespachador").dialog("open");
+        $("#dialog-editardespachador").html('<img src="@Url.Content("~/images/38.gif")">');
+    }
+
+
+    function InactivarDesp(rut_inacdesp) {
+        $("#dialog-inactivardespachador").dialog("open");
+        $("#rut_inacdesp").val(rut_inacdesp);
+        $("#dialog-inactivardespachador").html("<p>¿Está seguro(a) que desea Inactivar el Despachador <strong>" + rut_inacdesp + " </strong> ? </p>");
+    }
+
+
+    function ActivarDesp(rut_acdesp) {
+        $("#dialog-activardespachador").dialog("open");
+        $("#rut_acdesp").val(rut_acdesp);
+        $("#dialog-activardespachador").html("<p>¿Está seguro(a) que desea Activar el Despachador <strong>" + rut_acdesp + " </strong> ? </p>");
+    }
+
+
+</script>
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-editardespachador" title="Mantención"></div>
+<div id="dialog-inactivardespachador" title="Inactivar Despachador"></div>
+<div id="dialog-activardespachador" title="Activar Despachador"></div>
+
+@using (Ajax.BeginForm("EditarDetalleDespachador", "ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editardespachador" }, new { id = "frmeditdesp" }))
+{
+    <input type="hidden" name="rut_desp" id="rut_desp" />
+}
+
+@using (Ajax.BeginForm("InactivarDespachador", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmInactivarDespachador" }))
+{
+    <input type="hidden" name="rut_inacdesp" id="rut_inacdesp" />
+}
+
+@using (Ajax.BeginForm("ActivarDespachador", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmActivarDespachador" }))
+{
+    <input type="hidden" name="rut_acdesp" id="rut_acdesp" />
+}
+
+
+
+
+<div id="gridDespachadores">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       
+       
+       grid.Column("Drut","RUT"),
+       grid.Column("Ddig","DV"),
+       grid.Column("Dnombres","NOMBRE"),
+       grid.Column("Dapellidos","APELLIDO"),
+       grid.Column("Destado","ESTADO"),
+       grid.Column("Dsucursal","SUCURSAL"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                        <a href="#" title="Editar @item.Dnombres @item.Dapellidos" onclick="EditarDespachador('@item.Drut')">Editar</a>
+                                        
+                                        @if (item.Destado == "INACTIVO")
+                                        {
+                                            <a href="#" title="Activar @item.Dnombres @item.Dapellidos" onclick="ActivarDesp('@item.Drut')">Activar</a>
+                                        }
+                                        else
+                                        {
+                                            <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                        } 
+                                         @if (item.Destado == "ACTIVO")
+                                        {
+                                            <a href="#" title="Inactivar @item.Dnombres @item.Dapellidos" onclick="InactivarDesp('@item.Drut')">Inactivar</a>
+                                        }
+                                        else
+                                        {
+                                            <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                        } 
+
+                                    </text>)
+ })
+</div>

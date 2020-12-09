@@ -1,0 +1,140 @@
+﻿
+table.cliente {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	color:#333333;
+	border-width: 0px;
+	border-color: #666666;
+	border-collapse: collapse;	
+	width:10%;
+}
+
+table.cliente td {
+	border-width: 0px;
+	padding: 1px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+	width:10px;
+}
+
+.textolargorut
+{
+    width:100px;
+    color:black;
+}
+
+
+.textolargo2
+{
+    width:450px;
+}
+
+.textolargofantasia
+{
+    width:240px;
+}
+
+.textolargonombre
+{
+    width:336px;
+}
+
+.textolargoapellido
+{
+    width:193px;
+}
+
+.textolargogirocomercial
+{
+    width:590px;
+}
+
+.textolargodireccion
+{
+    width:410px;
+}
+
+.textolargoregion
+{
+    width:208px;
+    color:black;
+}
+
+.textolargoemail
+{
+    width:290px;
+    color:black;
+}
+
+
+table.direccion {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;	
+	width:125%;
+}
+
+table.direccion td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+	width:100px;
+}
+
+anchofijo
+{
+    width:100px;
+}
+
+	.subHeader div{
+		padding:5px;
+		font-size:14px;
+		font-weight:bold;
+		color:#10428C;
+	}
+
+
+ #pestanas {
+    float:left;
+    width:100%;
+    line-height:normal;
+    font-size: 16px;
+    font-weight: bold;
+ }
+ #pestanas ul {
+    margin:0;
+    padding:0;
+    list-style:none;
+ }
+ #pestanas li {
+    float:left;
+    margin:0 0 0 3px;
+    padding:0;
+    background:url("../images/p-der.gif") no-repeat right top;
+ }
+ #pestanas a {
+    display:block;
+    background:url("../images/p-izq.gif") no-repeat left top;
+ padding:3px 10px 3px 10px;
+    color: #fff;
+    text-decoration: none;
+ }
+ #pestanas .activa a{
+    background-image:url("../images/p-izq-activo.gif");
+ }
+ #pestanas .activa{
+    background-image:url("../images/p-der-activo.gif");
+ }
+
+
+#hijo{ visibility: hidden;}
+ 
+#padre:hover #hijo{ visibility: visible;}

@@ -1,0 +1,26 @@
+﻿ @model Courier.Models.AdministracionPagina
+@{
+    ViewBag.Title = "Usuario";
+}
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+
+ <div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Controlador</a></li>
+		<li><a href="#tabs-2">Acción</a></li>
+	</ul>
+	<div id="tabs-1">
+		<div id="myGrid1"> @Html.Partial("_ListaController",Model)</div>
+	</div>
+	<div id="tabs-2">
+		<div id="myGrid2"> @Html.Partial("_ListaActions",Model)</div>
+	</div>	
+</div>

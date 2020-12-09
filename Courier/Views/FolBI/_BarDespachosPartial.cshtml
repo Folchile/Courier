@@ -1,0 +1,103 @@
+﻿@model Courier.Models.FolBIModels   
+
+
+@using (Html.BeginForm()) {
+    var aux = "";
+    @Html.DevExpress().Chart(settings => {
+        settings.Name = "BarchartMensual";
+        settings.Width = 1000;
+        settings.Height = 450;
+        settings.BorderOptions.Visibility = DefaultBoolean.False;
+        settings.CrosshairEnabled = DefaultBoolean.True;
+
+        settings.Legends.Default(l => {
+            l.AlignmentHorizontal = LegendAlignmentHorizontal.RightOutside;
+        });
+
+        settings.Series.Template(t => {
+            t.Views().StackedBarSeriesView(v => {
+                v.SeriesLabel(l => {
+                    l.ResolveOverlappingMode = ResolveOverlappingMode.Default;
+                    l.TextPattern = "{V}";
+                    l.Font = new System.Drawing.Font("Tahoma", 8, System.Drawing.FontStyle.Bold);
+                    l.Position = BarSeriesLabelPosition.Center;
+                    //l.TextOrientation = (TextOrientation)Enum.Parse(typeof(TextOrientation), options.TextOrientationString);
+                   // l.Indent = options.LabelIndent;
+                });
+            });
+            t.SetDataMembers("Fecha", "Cantidad");
+            t.LabelsVisibility = DefaultBoolean.False;
+        });
+
+        Palette myPalette = new Palette("MyPalette");
+        if (Model.listaReportesDiaMes.Count() > 0)
+        {
+            if (Model.FiltroEstado != null && Model.FiltroEstado != "")
+            {
+                switch (Model.listaReportesDiaMes.First().EstadoNombre)
+                {
+                    case "Rechazado":
+                        aux = " Rechazado";
+                        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkRed));
+                        break;
+                    case "Cliente no Encontrado":
+                        aux = " Cliente no Encontrado";
+                        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkOrange));
+                        break;
+                    case "Entregado Ok":
+                        aux = " Entregado Ok";
+                        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkGreen));
+                        break;
+                    case "Pendiente":
+                        aux = " Pendiente";
+                        myPalette.Add(new PaletteEntry(System.Drawing.Color.Gray));
+                        break;
+                    default:
+                        aux = "";
+                        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkGreen));
+                        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkRed));
+                        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkOrange));  
+                        myPalette.Add(new PaletteEntry(System.Drawing.Color.Gray));    
+                        
+                        break;
+                }        
+            }
+            else {
+                aux = "";
+                myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkGreen));
+                myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkRed));
+                myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkOrange));
+                myPalette.Add(new PaletteEntry(System.Drawing.Color.Gray));   
+            }          
+        }
+        else
+        {
+            aux = "";
+            myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkGreen));
+            myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkRed));
+            myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkOrange));
+            myPalette.Add(new PaletteEntry(System.Drawing.Color.Gray));   
+        }
+        
+        settings.PaletteRepository.Add("MyPalette", myPalette);
+        settings.PaletteName = "MyPalette";
+    
+        settings.XYDiagram(d => {
+            d.Rotated = false;
+            d.AxisY.Interlaced = true;
+            d.AxisY.Title.Text = "Despachos";
+            d.AxisY.GridLines.MinorVisible = true;
+            d.AxisY.Title.Visibility = DefaultBoolean.True;
+            d.AxisY.Label.TextPattern = "{V}";
+            d.AxisX.Label.Angle = 90;
+        });
+
+        settings.Titles.Add(new ChartTitle() {
+            Font = new System.Drawing.Font("Tahoma", 18),
+            Text = "Despachos por Estado" + aux + " y Día del Mes"
+        });
+
+    }).Bind(Model.listaReportesDiaMes.ToList(), seriesDataMember: "EstadoNombre").GetHtml();
+                                                     
+                                                     
+}

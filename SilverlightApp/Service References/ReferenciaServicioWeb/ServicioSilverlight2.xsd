@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Courier.WebService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Courier.WebService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ServicioSilverlight.wsEncabezado">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CantidadBultos" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Cliente" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Comuna" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Direccion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ListaDetalle" nillable="true" type="tns:ArrayOfServicioSilverlight.wsDetalleNormal" />
+      <xs:element minOccurs="0" name="Localidad" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OTD" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OTP" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Pallet" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Referencia1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Referencia2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Servicio" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SucursalDestino" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telefono" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Via" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServicioSilverlight.wsEncabezado" nillable="true" type="tns:ServicioSilverlight.wsEncabezado" />
+  <xs:complexType name="ArrayOfServicioSilverlight.wsDetalleNormal">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServicioSilverlight.wsDetalleNormal" nillable="true" type="tns:ServicioSilverlight.wsDetalleNormal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServicioSilverlight.wsDetalleNormal" nillable="true" type="tns:ArrayOfServicioSilverlight.wsDetalleNormal" />
+  <xs:complexType name="ServicioSilverlight.wsDetalleNormal">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NumeroBulto" type="xs:int" />
+      <xs:element minOccurs="0" name="Peso" nillable="true" type="xs:float" />
+      <xs:element minOccurs="0" name="TipoEtiqueta" type="xs:int" />
+      <xs:element minOccurs="0" name="idBulto" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServicioSilverlight.wsDetalleNormal" nillable="true" type="tns:ServicioSilverlight.wsDetalleNormal" />
+  <xs:complexType name="ArrayOfServicioSilverlight.wsEncabezado">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServicioSilverlight.wsEncabezado" nillable="true" type="tns:ServicioSilverlight.wsEncabezado" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServicioSilverlight.wsEncabezado" nillable="true" type="tns:ArrayOfServicioSilverlight.wsEncabezado" />
+  <xs:complexType name="ArrayOfServicioSilverlight.classImpresionGuia">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServicioSilverlight.classImpresionGuia" nillable="true" type="tns:ServicioSilverlight.classImpresionGuia" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServicioSilverlight.classImpresionGuia" nillable="true" type="tns:ArrayOfServicioSilverlight.classImpresionGuia" />
+  <xs:complexType name="ServicioSilverlight.classImpresionGuia">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OTD" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OTP" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Referencia1" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServicioSilverlight.classImpresionGuia" nillable="true" type="tns:ServicioSilverlight.classImpresionGuia" />
+</xs:schema>

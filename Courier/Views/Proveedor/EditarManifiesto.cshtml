@@ -1,0 +1,702 @@
+﻿<!@model Courier.Models.DespachoProveedorModels
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    function borrar_contenido() {
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+</script><!--borrar_contenido-->
+<script type="text/javascript">
+    function ValidaCerrarManifiesto() {
+        borrar_contenido();
+        if ($("#Proveedor").val() == "" || $("#Patente").val() == "" || $("#Conductor").val() == "") {
+            alert('Complete los datos para guardar el manifiesto.');
+        } else {
+            $("#frmCerrarManCarga").removeData("validator");
+            $("#frmCerrarManCarga").removeData("unobtrusiveValidation");
+
+            $.validator.unobtrusive.parse("#frmCerrarManCarga");
+            if ($("#frmCerrarManCarga").valid() == true) {
+                waitingDialog({ title: "Cargando", message: "Verificando Manifiesto...<br/>" });
+                $.ajax({
+                    url: '@Url.Action("ValidaCerrarManifiesto", "Proveedor")',
+                    data: { MAN_ID: $("#NumeroManifiesto").val() },
+                    success: function (data) {
+                        if (data != "OK") {
+                            $("#dialog-cerrarmanifiestoError").html("<p>" + data + "</p>");
+                            $("#dialog-cerrarmanifiestoError").dialog("open");
+                            closeWaitingDialog();
+                        }
+                        else {
+                            $("#frmCerrarManCarga").submit();
+                        }
+                    },
+                    error: function () {
+                        closeWaitingDialog();
+                    }
+                });
+            }
+            else {
+                $("#dialog-cerrarmanifiestoError").html("<p>Falta información en el formulario, debe ingresar el Proveedor, la Patente y el Conductor</p>");
+                $("#dialog-cerrarmanifiestoError").dialog("open");
+            }
+        }
+    }
+</script><!--ValidaCerrarManifiesto-->
+<script type="text/javascript">
+    function fnVerHistorial(OTP, OTD, IdBulto) {
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load("@Url.Content("~/Proveedor/VerHistorialOT")?OTP=" + OTP + "&OTD=" + OTD + "&IdBulto=" + IdBulto + "&iOTP=0&iOTD=1&iBulto=1");
+    }
+</script><!--fnVerHistorial-->
+<script type="text/javascript">
+    function fnVerHistorial2(OTP, OTD, IdBulto) {
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load("@Url.Content("~/Proveedor/VerHistorialOT")?OTP=" + OTP + "&OTD=" + OTD + "&IdBulto=" + IdBulto + "&iOTP=0&iOTD=1&iBulto=0");
+    }
+</script><!--fnVerHistorial2-->
+<script type="text/javascript">
+    function EnviarOT() {
+        borrar_contenido();
+        event.preventDefault();
+        $.validator.unobtrusive.parse("#frmAgregarOT");
+        if ($("#frmAgregarOT").valid() == true) {
+            $("#frmAgregarOT").submit();
+        }
+    }
+    $(function () {
+        $("#AgregarOTManifiesto").button()
+        .click(function () {
+            EnviarOT();
+        });
+        $("#CambiarDatosPrevios").button()
+        .click(function () {
+            waitingDialog({ title: "Buscando Formulario", message: "Buscando...<br/>" });
+            var randomnumber = Math.floor(Math.random() * 11111111);
+            $("#dialog-CambiaDatos").load('@Url.Action("DatosPreviosManifiesto", "Proveedor")?r=' + randomnumber + '&idManifiesto=' + $("#NumeroManifiesto").val(), function (response, status, xhr) {
+                closeWaitingDialog();
+                if (status == 'error') {
+                    alert('Error al cargar la información');
+                }
+                else {
+                    borrar_contenido();
+                    $("#dialog-CambiaDatos").dialog("open");
+                    $("#RespuestaValidaciones").hide();
+                }
+            });
+
+        });
+        $(".validation-summary-errors").hide();
+        $("#dialog-EditarManifiesto").dialog("close");
+        $("#DocAsociados").button();
+        $("#DocAsociados").click(function () { });
+        $("#CerrarManifiesto").button()
+        .click(function () {
+            $("#dialog-antcerrman").html("<p>¿Está seguro(a) que desea cerrar el manifiesto?</p>");
+            $("#dialog-antcerrman").dialog("open");
+        });
+
+        $("#ClearNumero").button()
+            .click(function () {
+                $("#idBulto").val("");
+                $("#idBulto").focus();
+                borrar_contenido();
+            });
+
+        $("#tabs").tabs();
+        $("#tabs2").tabs();
+        $("#idBulto").focus();
+        $("#AgregarBultoMan").button()
+        .click(function (event) {
+            event.preventDefault();
+            AgregarBultoMan();
+        });
+        $("#dialog-HistorialOT").dialog({
+            autoOpen: false, title: "Historial", position: 'left+5% top+5%', width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-mensajest").dialog({
+            autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#idBulto").val("");
+                    $("#idBulto").focus();
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+
+        $("#dialog-antcerrman").dialog({
+            autoOpen: false, title: "Cerrar Manifiesto", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    ValidaCerrarManifiesto();
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+
+        $("#dialog-documentos").dialog({
+            autoOpen: false, title: "Documentos Asociados", position: 'left+5% top+5%', width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog-cerrarmanifiesto").dialog({
+            autoOpen: false, title: "Cerrar Manifiesto", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    window.open('@Url.Action("Index","Reporte")?MAN_ID=' + $("#NumeroManifiesto").val(), '_blank');
+                    $("#formContent").html("");
+                    CargaInicioDespacho();
+                    $(this).dialog("close");
+
+                },
+                Cancelar: function () {
+                    $("#formContent").html("");
+                    CargaInicioDespacho()
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-CambiaDatos").dialog({
+            autoOpen: false, title: "Editar Manifiesto", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $.validator.unobtrusive.parse("#frmprevioMan");
+                    if ($("#frmprevioMan").valid() == true) {
+                        $("#frmprevioMan").submit();
+                        borrar_contenido();
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close")
+                }
+            }
+        })
+        $("#dialog-cerrarmanifiestoError").dialog({
+            autoOpen: false, title: "Cerrar Manifiesto", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-desasociar").dialog({
+            autoOpen: false, title: "Desasociar OT", position: 'left+5% top+5%', width: 'auto', minWidth: 600, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    waitingDialog({ title: "Desasociando OT", message: "Aplicando Cambios...<br/>" });
+                    $.ajax({
+                        url: '@Url.Content("~/Proveedor/DesasociarOTCompleted")?OTP=' + $("#delOTP").val() + '&OTD=' + $("#delOTD").val() + '&NumeroManifiesto=' + $("#delNum").val(),
+                        success: function (data) {
+                            if (data != "0") {
+                                ActualizaListados();
+                            }
+                            closeWaitingDialog();
+                        },
+                        error: function () {
+                            alert("Error al intentar desasociar la OT");
+                            closeWaitingDialog();
+                        }
+                    });
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-VerOk").dialog({ autoOpen: false, title: "Mensaje", width: 'auto', modal: true });
+        $("#ImprimirManifiesto123").button()
+            .click(function () {
+                window.open('@Url.Action("Index","Reporte")?MAN_ID=' + $("#NumeroManifiesto").val(), '_blank');
+            });
+    });
+    function CreaDestinoManifiesto() {
+        waitingDialog({ title: "Cargando", message: "Verificando Manifiesto...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("CreaDestinoManifiesto", "Proveedor")',
+            data: {
+                r: randomnumber,
+                MAN_ID: $("#NumeroManifiesto").val(),
+                idBulto: $("#idBulto").val(),
+                Patente: $("#Patente").val()
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == true) {
+                    $("#frmAgregarBultoMan").submit();
+                }
+                else {
+                    $("#dialog-mensajest").html("<p>" + data.Mensaje + "</p>");
+                    $("#dialog-mensajest").dialog("open");
+                }
+            },
+            error: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function ValidarContenidoVisible() {
+        waitingDialog({ title: "Cargando", message: "Buscando Información Manifiesto...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("ValidarContenidoVisible", "Proveedor")',
+            data: {
+                r: randomnumber,
+                MAN_ID: $("#NumeroManifiesto").val()
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data == 2) {
+                    var randomnumber = Math.floor(Math.random() * 11111111);
+                    $("#random").val(randomnumber);
+                    ActualizaListados();
+                    //$("#frmEditarManifiesto").submit();
+                }
+            },
+            error: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function GuardarPatenteManifiesto(Patente) {
+        waitingDialog({ title: "Cargando", message: "Guardando Patente...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("GuardarPatenteManifiesto", "Proveedor")',
+            data: {
+                r: randomnumber,
+                MAN_ID: $("#NumeroManifiesto").val(),
+                Patente: Patente
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data == true) {
+                    ActualizaListados()
+                }
+            },
+            error: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function AgregarBultoMan() {
+
+        $("#idBultoVal").removeData("previousValue");
+        $("#idBultoVal").val($("#idBulto").val());
+
+        borrar_contenido();
+        $("#frmAgregarBultoMan").removeData("validator");
+        $("#frmAgregarBultoMan").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("#frmAgregarBultoMan");
+        if ($("#frmAgregarBultoMan").valid() == true) {
+            //$("#frmAgregarBultoMan").submit();
+            CreaDestinoManifiesto();
+            borrar_contenido();
+        }
+        setTimeout(function () { ActualizaClase(); }, 200);
+
+        //$("#idBulto").attr('class', $("#idBultoVal").attr("class"));
+    }
+    function VerIngresoOK() {
+        $("#dialog-VerOk").dialog("open");
+        $("#dialog-VerOk").html("<p align='center'><img src='@Url.Content("~/Images/dialog_apply.png")' border='0'></p>");
+        setTimeout(function () { $("#dialog-VerOk").dialog("close"); }, 500);
+        $("#idBulto").focus();
+    }
+    function VerIngresoOKOT() {
+        $("#dialog-VerOk").dialog("open");
+        $("#dialog-VerOk").html("<p align='center'><img src='@Url.Content("~/Images/dialog_apply.png")' border='0'></p>");
+        setTimeout(function () { $("#dialog-VerOk").dialog("close"); }, 500);
+        $("#AgregaOT").focus();
+    }
+    function VerIngresoError() {
+        $("#dialog-VerOk").dialog("open");
+        $("#dialog-VerOk").html("<p align='center'><img src='@Url.Content("~/Images/dialog_warning.png")' border='0'></p>");
+        setTimeout(function () { $("#dialog-VerOk").dialog("close"); }, 500);
+        $("#idBulto").focus();
+    }
+    function Fin2(data) {
+        if (data == "True") {
+            $("#idBulto").val("");
+            $("#idBulto").focus();
+            $("#idBultoVal").val("");
+            VerIngresoOK();
+            ActualizaListados();
+            $("#idBulto").val("");
+            $("#idBulto").focus();
+            borrar_contenido();
+        }
+        else {
+            VerIngresoError();
+        }
+        closeWaitingDialog();
+    }
+    function FinCerrarMan(data) {
+        if (data.Ok == true) {
+            $("#dialog-cerrarmanifiesto").html("<p>Manifiesto cerrado exitosamente</p><p>¿Desea guardar el manifiesto como PDF?</p>");
+            $("#dialog-cerrarmanifiesto").dialog("open");
+        }
+        else {
+            $("#dialog-cerrarmanifiestoError").html(data.Mensaje);
+            $("#dialog-cerrarmanifiestoError").dialog("open");
+        }
+
+        closeWaitingDialog();
+    }
+    function ActualizaListaDespacho(Orden) {
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $("#myGridDespacho").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#myGridDespacho").load('@Url.Content("~/Proveedor/ListaDespachoMan")?NumeroManifiesto=' + $("#NumeroManifiesto").val() + '&Orden=' + Orden + '&r=' + randomnumber, function (response, status, xhr) {
+            if (status == 'success') {
+                $("#idBulto").val("");
+                borrar_contenido();
+                $("#idBulto").focus();
+            }
+        });
+    }
+    function VerDocumentosAsociados(OTP, OTD) {
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $("#dialog-documentos").dialog("open");
+        $("#dialog-documentos").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-documentos").load('@Url.Content("~/Proveedor/ListaDocumentos")?OTP=' + OTP + '&OTD=' + OTD + '&r=' + randomnumber, function (response, status, xhr) {
+            if (status == 'success') {
+                $("#idBulto").val("");
+                borrar_contenido();
+                $("#idBulto").focus()
+            }
+        });
+    }
+    function ActualizaClase() {
+        if ($("#idBultoVal").attr("class") == "input-validation-error") {
+            $("#idBulto").attr('class', $("#idBultoVal").attr("class"));
+        }
+    }
+
+    function ActualizaListados() {
+        Orden = $("#OpcionOrden").val();
+        ActualizaListaDespacho(Orden);
+        GetInformacionDatosPrevios();
+        borrar_contenido();
+        $("#idBulto").val("");
+        $("#idBulto").focus();
+
+    }
+    function VerEstadoFoco() {
+        if ($("#idBulto").is(":focus")) {
+        }
+        else {
+            if ($("#NumeroBusquedaManifiesto").is(":focus")) {
+            }
+            else {
+                $("#idBulto").focus();
+            }
+        }
+    }
+    VerEstadoFoco();
+    function DesasociarOT(OTP, OTD, NumeroManifiesto) {
+        $("#delOTP").val(OTP);
+        $("#delOTD").val(OTD);
+        $("#delNum").val(NumeroManifiesto);
+        $("#dialog-desasociar").dialog("open");
+        $("#dialog-desasociar").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-desasociar").load('@Url.Content("~/Proveedor/DesasociarOT")?OTP=' + OTP + '&OTD=' + OTD + '&NumeroManifiesto=' + NumeroManifiesto, function (response, status, xhr) {
+            if (status == 'success') {
+                $("#idBulto").val("");
+                borrar_contenido();
+                $("#idBulto").focus()
+            }
+        });
+    }
+
+
+    function GetInformacionDatosPrevios() {
+        var Manifiesto = "0";
+        Manifiesto = $("#NumeroBusquedaManifiesto").val();
+        if (Manifiesto == "") {
+            Manifiesto = $("#NumeroManifiesto").val();
+
+        }
+        waitingDialog({ title: "Cargando", message: "Recopilando información...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("GetDatosTipoManifiesto", "Proveedor")',
+            data: {
+                r: randomnumber,
+                NumeroManifiesto: Manifiesto
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                $("#m1c").html('<strong>' + data.NombreTipoManifiesto + '</strong>');
+                $("#m2c").html('<strong>' + data.NombreSucursalDestino + '</strong>');
+                if (data.NombreTipoManifiesto == "Ruta Cliente") {
+                    $("#m3c").html('');
+                }
+                else {
+                    $("#m3c").html('<strong>' + data.SucursalMenor + '</strong>');
+                }
+            },
+            error: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+
+    function ChangeProveedor(valorProveedor) {
+        $("#Patente").hide();
+        $("#divPatente").html('<img src="@Url.Content("~/Images/38.gif")" />');
+        $("#Patente").load('@Url.Content("~/Proveedor/DropDownPatente")?idProveedor=' + valorProveedor + '#Patente option', function (response, status, xhr) {
+            if (status == 'success') {
+                $("#AgregaOT").val("");
+                $("#AgregaOT").focus()
+            }
+            $("#divPatente").html("");
+            $("#Patente").show();
+            ChangePatente($("#Patente").val());
+        });
+    }
+
+    function ChangePatente(valorPatente) {
+        $("#Conductor").hide();
+        $("#divConductor").html('<img src="@Url.Content("~/Images/38.gif")" />');
+        $("#Conductor").load('@Url.Content("~/Proveedor/DropDownConductor")?idPatente=' + valorPatente + '#Conductor option', function (response, status, xhr) {
+            if (status == 'success') {
+                $("#AgregaOT").val("");
+                $("#AgregaOT").focus()
+            }
+            $("#divConductor").html("");
+            $("#Conductor").show();
+        });
+
+    }
+
+    function GuardaCabecera() {
+
+        GuardaDatosCabecera();
+
+    }
+
+    function GuardaDatosCabecera() {
+
+        if ($("#Proveedor").val() == "" || $("#Patente").val() == "" || $("#Conductor").val() == "") {
+            alert('Complete los datos para guardar el manifiesto.');
+        } else {
+            waitingDialog({ title: "Procesando", message: "Actualizando Manifiesto...<br/>" });
+            //var randomnumber = Math.floor(Math.random() * 11111111);
+            $.ajax({
+                url: '@Url.Action("GuardarDatosCabecera", "Proveedor")',
+                data: {
+                    //r: randomnumber,
+                    provId: $("#Proveedor").val(),
+                    patId: $("#Patente").val(),
+                    condId: $("#Conductor").val(),
+                    MAN_ID: $("#NumeroManifiesto").val()
+
+                },
+                success: function (data) {
+                    closeWaitingDialog();
+                    if (data.Ok == true) {
+                        alert('Datos Actualizados!');
+                        
+                    }
+                    else {
+                        alert(data.message);
+
+                    }
+                },
+                error: function () {
+                    closeWaitingDialog();
+                }
+            });
+        }
+       
+    }
+
+</script>
+
+<div id="dialog-CambiaDatos"></div>
+<div id="dialog-antcerrman"></div>
+<div id="dialog-cerrarmanifiestoError"></div>
+<div id="dialog-cerrarmanifiesto"></div>
+<div id="dialog-documentos" style="min-height:300px;min-width:500px;"></div>
+<div id="dialog-desasociar"></div>
+<div id="dialog-VerOk"></div>
+<div id="dialog-HistorialOT" style="min-height:300px;min-width:500px;"></div>
+
+<input type="hidden" id="delOTP" />
+<input type="hidden" id="delOTD" />
+<input type="hidden" id="delNum" />
+@{
+    Model.NumeroManifiesto = Model.NumeroManifiesto;
+}
+
+<fieldset style="margin: 10px 0; width:98%;  border: #DDD 1px solid;">
+    <legend style="color: #999; font-style: normal;">Datos del Manifiesto</legend>
+
+   
+        
+        <table width="100%" border="0">
+            <tr>
+                <td>@Html.LabelFor(m => m.NumeroManifiesto)</td>
+                <td><div style="width:100px;text-align:right;" class="textfield_effect">@Model.NumeroManifiesto</div></td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Courier)</td>
+                <td>
+                    @if (Model.EstadoManifiesto == "Abierto")
+                    {
+                        @Html.DropDownListFor(m => m.Proveedor, Model.oListaProveedores, "-- Seleccione Courier --", new { style = "height:21px; width: 200px", onchange = "javascript:ChangeProveedor($(this).val());" })
+                    }
+                    else
+                    {
+                        <div class="textfield_effect">@Model.oDatosMan.FL_PAR_TRA_PATENTE&nbsp;</div>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Patente)</td>
+                <td>
+                    @if (Model.EstadoManifiesto == "Abierto")
+                    {
+                        <div id="divPatente">
+                        </div>
+                        @Html.DropDownListFor(m => m.Patente, Model.oListaPatentes, new { style = "height:21px; width: 200px", onchange = "javascript:GuardarPatenteManifiesto($(this).val());ChangePatente($(this).val());" })
+                    }
+                    else
+                    {
+                        <div class="textfield_effect">@Model.oDatosMan.FL_PAR_TRA_PATENTE&nbsp;</div>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Conductor)</td>
+                <td>
+                    @if (Model.EstadoManifiesto == "Abierto")
+                    {
+                        <div id="divConductor">
+                        </div>
+                        @Html.DropDownListFor(m => m.Conductor, Model.oListaConductores, new { style = "height:21px; width: 200px" })
+
+                    }
+                    else
+                    {
+                        <div class="textfield_effect">@Model.oDatosMan.FL_PAR_CON_NOMBRE&nbsp;</div>
+                    }
+                </td>
+                <td>
+                    @if (Model.EstadoManifiesto == "Abierto")
+                    {
+                        <button id="GuardarCabecera" onclick="GuardaCabecera();">
+                            <div style="float:right;width:150px;">
+                                <div style="float:left;"><img alt="Guardar Cabecera" src="@Url.Content("~/Images/document_letter_forward.png")" /></div>
+                                <div style="float:left;">&nbsp;Guardar Cabecera</div>
+                            </div>
+                        </button>
+                    }
+                </td>
+            </tr>
+        </table>
+    @using (Ajax.BeginForm("CerrarManCarga", "Proveedor", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinCerrarMan(data)", OnFailure = "Javascript:FinCerrarMan()" }, new { id = "frmCerrarManCarga" }))
+    {
+        @Html.HiddenFor(m => m.NumeroManifiesto)
+
+    }
+</fieldset>
+
+
+<div id="tabs2">
+    <ul>
+        <li onclick="javascript: $('#AgregaOT').focus();"><a href="#tabs2-1">Agregar OT</a></li>
+    </ul>
+
+    <div id="tabs2-2" style="padding-top:5px;">
+        @if (Model.EstadoManifiesto == "Abierto")
+        {
+            using (Ajax.BeginForm("VerificaAddOT", "Proveedor", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:InicioAgregarOT()", OnSuccess = "Javascript:FinAgregarOT(data)", OnFailure = "Javascript:FinErrorAgregarOT()" }, new { id = "frmAgregarOT" }))
+            {
+                @Html.HiddenFor(m => m.NumeroManifiesto)
+                @Html.HiddenFor(m => m.AgregaOTMAN)
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td>N° OT</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.AgregaOT)
+                            <div style="position:absolute;margin-top:3px;">@Html.ValidationMessageFor(m => m.AgregaOT)</div>
+                        </td>
+                        <td>
+                            <button id="AgregarOTManifiesto">
+                                <div style="float:left;">
+                                    <div style="float:left;"><img alt="Agregar OT" src="@Url.Content("~/Images/gnome_go_next.png")" /></div>
+                                    <div style="float:left;">&nbsp;Agregar OT</div>
+                                </div>
+                            </button>
+                        </td>
+                        <td>
+                            <button id="CerrarManifiesto">
+                                <div style="float:left;width:150px;">
+                                    <div style="float:left;"><img alt="Cerrar Manifiesto" src="@Url.Content("~/Images/document_letter_forward.png")" /></div>
+                                    <div style="float:left;">&nbsp;Cerrar Manifiesto</div>
+                                </div>
+                            </button>
+
+                        </td>
+                    </tr>
+                </table>
+            }
+        }
+        else
+        {
+            @Html.HiddenFor(m => m.NumeroManifiesto)
+        }
+    </div>
+
+    <div aria-labelledby="ui-id-8" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false" style="">
+        <div id="divListaDespacho">
+            <div style="width:100%">
+                <div style="float:right; display:none">
+                    Opción:
+                    @Html.DropDownListFor(m => m.OpcionOrden, Model.ListOpcionOrden)
+                </div>
+            </div>
+            @Html.Partial("_ListaDespacho", Model)
+        </div>
+    </div>
+    <div id="dialog-mensajest" title="Error"></div>
+    <script type="text/javascript">
+        $(function () {
+            $("#OpcionOrden").change(function () {
+                ActualizaListaDespacho($(this).val());
+            });
+            ActualizaListaDespacho($("#OpcionOrden").val());
+            $("#idBulto").focus();
+        });
+        $('input#idBulto').keypress(function (e) {
+            if (e.keyCode == '13') {
+                e.preventDefault();
+                AgregarBultoMan();
+            }
+        });
+        borrar_contenido(); //Elimina mensajes de validación
+    </script>

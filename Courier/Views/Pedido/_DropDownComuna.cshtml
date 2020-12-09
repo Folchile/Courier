@@ -1,0 +1,10 @@
+﻿@model Courier.Models.IngresoPedidoModel           
+@Html.DropDownListFor(m => m.lComuna, Model.oListaComuna, new { onchange = "javascript:CargarLocalidad(this.value)" })
+<script type="text/javascript">
+    $(function () {
+        $('#vComuna').empty();
+        $('#Comuna').empty();
+        $('#lComuna option').clone().appendTo('#vComuna');
+        $('#lComuna option').clone().appendTo('#Comuna');        
+    });
+</script>

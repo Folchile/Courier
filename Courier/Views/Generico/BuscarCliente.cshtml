@@ -1,0 +1,88 @@
+﻿@model Courier.Models.GenericoModels
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet"type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $("#dialog-buscarempresa").dialog({ autoOpen: false, title: 'Buscar Empresa', modal: true, width: 800, buttons: {
+            Cancelar: function () {
+                $(this).dialog("close");
+            }
+        }
+        });
+
+        $("#imgBuscarCliente").click(function () {
+            $("#dialog-buscarempresa").dialog("open");
+        });        
+        $("#imgCargandoServicio").hide();
+    })
+   
+        function ActualizaListaGeneric(TextoFiltro) {        
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#myGridBusquedaGeneric").html('<img src="@Url.Content("~/Images/8.gif")" border="0">');
+
+        $("#myGridBusquedaGeneric").load('@Url.Action("BuscarCliente", "Generico")?r=' + randomnumber + '&TextoFiltro=' + TextoFiltro + ' #myGridBusquedaGeneric',
+            function (response, status, xhr) {                
+                if (status == 'error') {
+                    $("#myGridBusqueda").html("No fue posible actualizar la información");
+                }
+            });
+        }
+        function ClienteInyectarRut(Rut) {            
+           $("#RutCliente").val(Rut);
+           $("#dialog-buscarempresa").dialog("close");
+           ChangeRutCliente(Rut); 
+       }
+           
+</script>
+
+<div id="dialog-buscarempresa">
+    <div class="editor-label">
+        @Html.LabelFor(m => m.StringBusqueda)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(m => m.StringBusqueda, new { size = 20, maxlength = 20 })
+        @Html.ValidationMessageFor(m => m.StringBusqueda)
+    </div>    
+    @{
+        var grid = new WebGrid(Model.ListaBusqueda, rowsPerPage: 10, ajaxUpdateContainerId: "myGridBusquedaGeneric");    
+    } 
+    <div  id="myGridBusquedaGeneric">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {                
+                grid.Column("Rut","Rut",@<text>
+                <a href="#" onclick="javascript:ClienteInyectarRut('@item.Rut-@item.Dv');">
+                    @item.Rut-@item.Dv
+                </a>
+                </text>), 
+                grid.Column("RazonSocial","Razón Social",@<text>
+                <a href="#" onclick="javascript:ClienteInyectarRut('@item.Rut-@item.Dv');">
+                     @item.RazonSocial
+                </a>
+                </text>),
+                grid.Column("Fantasia","Fantasía",@<text>
+                <a href="#" onclick="javascript:ClienteInyectarRut('@item.Rut-@item.Dv');">
+                     @item.Fantasia
+                </a>
+                </text>)                      
+            })
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#StringBusqueda").keyup(function () {            
+            ActualizaListaGeneric($(this).val());
+        });
+    })
+</script>

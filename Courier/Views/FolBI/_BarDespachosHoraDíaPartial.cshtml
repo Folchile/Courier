@@ -1,0 +1,63 @@
+﻿@model Courier.Models.FolBIModels   
+
+
+@using (Html.BeginForm()) {
+
+    @Html.DevExpress().Chart(settings => {
+        settings.Name = "BarchartDiaHora";
+        settings.Width = 600;
+        settings.Height = 450;
+        settings.BorderOptions.Visibility = DefaultBoolean.False;
+        settings.CrosshairEnabled = DefaultBoolean.True;
+
+        settings.Legends.Default(l => {
+            //l.AlignmentHorizontal = LegendAlignmentHorizontal.RightOutside;
+            l.Visibility = DefaultBoolean.False;
+        });
+
+        settings.Series.Template(t => {
+            t.Views().SideBySideBarSeriesView(v => {
+                v.BarWidth = 2;
+                v.SeriesLabel(l =>
+                {
+                    l.ResolveOverlappingMode = ResolveOverlappingMode.Default;
+                    l.TextPattern = "{V}";
+                    l.Font = new System.Drawing.Font("Tahoma", 8, System.Drawing.FontStyle.Bold);
+                    l.Position = BarSeriesLabelPosition.Center;
+                    //l.TextOrientation = (TextOrientation)Enum.Parse(typeof(TextOrientation), options.TextOrientationString);
+                    // l.Indent = options.LabelIndent;
+                });
+                //t.ToolTipSeriesPattern = "{V}" + "hrs";
+                //t.LegendTextPattern = "{V}" + "hrs";            
+            });
+            t.Label.TextPattern = "{V}";
+            t.SetDataMembers("Hora", "Cantidad");
+            t.LabelsVisibility = DefaultBoolean.False;
+            t.CrosshairLabelPattern = "{A}" + "hrs: {V}";
+        });
+
+        Palette myPalette = new Palette("MyPalette");
+        myPalette.Add(new PaletteEntry(System.Drawing.Color.DarkSlateBlue));
+        settings.PaletteRepository.Add("MyPalette", myPalette);
+        settings.PaletteName = "MyPalette";
+    
+        settings.XYDiagram(d => {
+            
+            d.Rotated = false;
+            d.AxisY.Interlaced = true;
+            d.AxisY.Title.Text = "Despachos";
+            d.AxisY.GridLines.MinorVisible = true;
+            d.AxisY.Title.Visibility = DefaultBoolean.True;
+            d.AxisY.Label.TextPattern = "{V}";
+            d.AxisX.Label.TextPattern = "{V}" + "hrs";
+        });
+
+        settings.Titles.Add(new ChartTitle() {
+            Font = new System.Drawing.Font("Tahoma", 18),
+            Text = "Despachos por Hora del Día"
+        });
+
+}).Bind(Model.listaReporteHora.ToList(), seriesDataMember: "Cantidad").GetHtml();
+                                                     
+                                                     
+}

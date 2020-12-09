@@ -1,0 +1,3 @@
+﻿@model Courier.Models.AdministracionCarpeta         
+@Html.DropDownListFor(m => m.idSubCarpeta, Model.oListaSubCarpetasDropdown, "--Seleccione una Carpeta--")
+@Html.ValidationMessageFor(m => m.idSubCarpeta)

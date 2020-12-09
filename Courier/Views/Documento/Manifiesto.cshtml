@@ -1,0 +1,149 @@
+﻿@model Courier.Models.ManifiestoDocumentoModels
+@{
+    ViewBag.Title = "Manifiesto";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnBuscarManifiesto").button().click(function () {
+            $("#Cuerpo-Manifiesto").html("");
+            $("#CodBuscarManifiesto").val("");
+            $("#dialog-editarmanifiesto").dialog("open");
+            $("#EditarManifiesto").focus();
+        });
+        $("#btnNuevoManifiesto")
+            .button()
+            .click(function () {
+                ValidaExisteManifiesto();
+            });
+        $("#dialog-estaseguro").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    CrearManifiesto();
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+        $("#dialog-manifiestovigente").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    CargarCuerpoManifiesto();
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+        $("#dialog-editarmanifiesto").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmBuscar");
+
+                    if ($("#frmBuscar").valid() == true) {
+                        $(this).dialog("close");
+                        CargarCuerpoManifiesto();
+                    }
+                },
+                Cancelar: function () { $(this).dialog("close"); }
+            }
+        });
+    })
+    function CrearManifiesto() {
+        waitingDialog({ title: "Cargando", message: "Creando Manifiesto...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("CrearManifiesto", "Documento")?r=' + randomnumber,
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == true) {                    
+                    $("#CodBuscarManifiesto").val(data.NumeroManifiesto);
+                    CargarCuerpoManifiesto();
+                }
+                else {
+                    alert(data.Mensaje);
+                }
+            },
+            error: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function ValidaExisteManifiesto() {
+        waitingDialog({ title: "Cargando", message: "Verificando Manifiesto...<br/>" });
+        var randomnumber=Math.floor(Math.random()*11111111);
+        $.ajax({
+            url: '@Url.Action("ExisteManifiesto", "Documento")?r=' + randomnumber,
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Existe == true) {
+                    $("#CodBuscarManifiesto").val(data.NumeroManifiesto);
+                    $("#dialog-manifiestovigente").html("<p/>Usted tiene un manifiesto abierto</p>¿Desea Editar el manifiesto abierto <strong>N°" + data.NumeroManifiesto + "</strong>?");
+                    $("#dialog-manifiestovigente").dialog("open");                    
+                }
+                else {
+                    $("#dialog-estaseguro").html("<p>¿Esta seguro(a) que desea crear un manifiesto de documentos?</p>");
+                    $("#dialog-estaseguro").dialog("open");
+                }
+            },
+            error: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function CargarCuerpoManifiesto() {
+        waitingDialog({ title: "Cargando", message: "Cargando Manifiesto...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $("#Cuerpo-Manifiesto").load('@Url.Action("CuerpoManifiesto", "Documento")?CodBuscarManifiesto=' + $("#CodBuscarManifiesto").val() + '&r=' + randomnumber, function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }           
+        }); 
+    }
+</script>
+
+<div style="float:right">
+<table>    
+    <tr>        
+        <td>
+            <button id="btnBuscarManifiesto">
+                <div style="float:left;width:210;">       
+                    <div style="float:left;"><img src="@Url.Content("~/Images/magnifier.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Buscar Manifiesto</div>                        
+                </div>                       
+            </button>                                                   
+        </td>    
+        <td>
+        <button id="btnNuevoManifiesto">
+                <div style="float:left;width:230px;">       
+                    <div style="float:left;"><img alt="Crear Manifiesto" src="@Url.Content("~/Images/gnome_document_new.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Nuevo Manifiesto Documentos</div>                        
+                </div>                       
+            </button>
+        </td>
+    </tr>
+</table>
+</div>
+<div id ="dialog-editarmanifiesto" title="Ingreso">
+@using (Ajax.BeginForm("ValidarManifiesto", "Documento", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinAgregar(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmBuscar" }))
+{
+    <table><tr><td>Ingrese N° Manifiesto @Html.TextBoxFor(m=>m.CodBuscarManifiesto)</td></tr>
+    <tr><td>@Html.ValidationMessageFor(m=>m.CodBuscarManifiesto)</td></tr>
+    </table>    
+}
+</div>
+
+<div id="dialog-estaseguro" title="Crear Manifiesto"></div>
+<div id="dialog-manifiestovigente" title="Manifiesto"></div>
+
+<div id="Cuerpo-Manifiesto" style="margin-top:40px"></div>
+<script type="text/javascript">
+    $(function () {
+        ValidaExisteManifiesto();
+    })
+</script>

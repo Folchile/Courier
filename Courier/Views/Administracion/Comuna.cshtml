@@ -1,0 +1,222 @@
+﻿@model Courier.Models.ComunaModels
+@{
+    ViewBag.Title = "Comunas";
+}
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+    var asuma = 0;  
+    function initialize(Lat,Lon) {    
+        var myLatlng = new google.maps.LatLng(Lat,Lon);    
+        var mapOptions = {
+            zoom: 9,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
+
+        var marker = new google.maps.Marker({
+              position: myLatlng, 
+              map: map,
+              icon:"http://www.google.com/mapfiles/arrow.png",
+              title:"Comuna"
+          });
+       // google.maps.event.addListener(marker, 'click', function() {map.setZoom(14);});
+
+    }
+    var cityCircle;
+    function CargarMapa(Lat,Lon)         
+    {
+        $("#map_canvas").dialog("open");
+        initialize(Lat,Lon);
+//        var Ubicacion=new google.maps.LatLng(Lat, Lon);
+//        var populationOptions = {
+//                          strokeColor: "#00FF00",
+//                          strokeOpacity: 0.5,
+//                          strokeWeight: 2,
+//                          fillColor: "#00FF00",
+//                          fillOpacity: 0.15,
+//                          map: map,
+//                          center: Ubicacion,
+//                          radius: 80000
+//                        };
+//         cityCircle = new google.maps.Circle(populationOptions);         
+//         
+         Ubicacion=new google.maps.LatLng(-22.33333333,-68.23333333);
+//         populationOptions = {
+//                strokeColor: "#ff0000",
+//                strokeOpacity: 0.5,
+//                strokeWeight: 2,
+//                fillColor: "#ff0000",
+//                fillOpacity: 0.15,
+//                map: map,
+//                center: Ubicacion,
+//                radius: 5000
+//            };
+//        var marker = new google.maps.Marker({
+//              position: Ubicacion, 
+//              map: map,
+//              title:"Caspana",
+//              icon:"../../Images/accesdenied.png"
+//          });
+//         cityCircle2 = new google.maps.Circle(populationOptions);        
+
+    }
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#map_canvas").dialog({
+            autoOpen: false,
+            modal: true,
+            autoResize: true,
+            width: 800,
+            height:500,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                },               
+            }
+        });
+    });
+     $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-localidades").dialog({
+            autoOpen: false,
+            modal: true,
+            autoResize: true,            
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                },               
+            }
+        });
+    });
+    function verLocalidades(idComuna,NombreComuna)
+    {
+        waitingDialog({ title: "Cargando", message: "Cargando Localidades...<br/>" });
+        $.ajax({
+            url: "@Url.Content("~/Administracion/ListaLocalidades")?idComuna=" + idComuna ,
+            success: function (data) {                
+                closeWaitingDialog(); 
+                $("#dialog-localidades").html(data);
+               
+                $("#dialog-localidades").dialog("open");
+
+
+                $("#dialog-localidades").dialog('option', 'title', 'Localidades ' + NombreComuna);
+
+            }
+        });
+        
+    }
+    function BuscarCoordenada (idComuna)
+    {//codigo de comunas        
+        waitingDialog({ title: "Cargando", message: "Cargando Coordenada...<br/>" });
+        $.ajax({
+            url: "@Url.Content("~/Administracion/BuscarPosicion")?ComunaId=" + idComuna ,
+            success: function (data) {
+                var datos = data.split("|");
+                closeWaitingDialog(); 
+                CargarMapa(datos[0],datos[1]);
+                               
+            }
+        });
+    }    
+</script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+@{
+    var grid = new WebGrid(Model.ListaComunas,rowsPerPage:15,ajaxUpdateContainerId:"myGrid");
+    var gridsc = new WebGrid(Model.ListaComunasSC, rowsPerPage: 15, ajaxUpdateContainerId: "sinclasificacion");    
+} 
+
+<div id="hola"></div>
+<div id="map_canvas"></div>
+<div id="idCuerpo" title="Información"></div>
+<div id="dialog-localidades" title="Localidades"></div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Lista Completa</a></li>		
+        <li><a href="#tabs-2">Sin Clasificación</a></li>		
+	</ul>
+	<div id="tabs-1">
+        <div id="myGrid">    
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle:"mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {      
+                grid.Column("comuna_region","Región"),    
+                grid.Column("comuna_provincia","Provincia"),    
+                grid.Column("comuna_id","Id"), 
+                grid.Column("comuna_nombre","Nombre Comuna"),    
+                //grid.Column("comuna_latitud","Latitud"),    
+                //grid.Column("comuna_longitud","Longitud"),        
+                grid.Column("clasificacion","Clasificación"),        
+                grid.Column("",header:"Acciones",format:
+
+                @<text>   
+                    @{
+                        string Lat = Convert.ToString(item.comuna_latitud);
+                        Lat = Lat.Replace(",", ".");
+                        string Lon = Convert.ToString(item.comuna_longitud);
+                        Lon = Lon.Replace(",", ".");
+                     }                                     
+                    @if (item.comuna_latitud!=0){
+                        <a href="#" onclick="javascript:CargarMapa(@Lat,@Lon)"><img border="0" alt="Buscar" title="Buscar" src='@Url.Content("~/Images/map.png")' /></a>
+                    }                    
+                    <a href="#" onclick="javascript:BuscarCoordenada(@item.comuna_id)"><img border="0" alt="Buscar @item.comuna_nombre en mapa" title="Buscar @item.comuna_nombre en mapa" src='@Url.Content("~/Images/map_magnify.png")' /></a>
+                    <a href="#" onclick="javascript:verLocalidades(@item.comuna_id,'@item.comuna_nombre.ToString().Replace("'", "´")')"><img border="0"  alt="Localidades @item.comuna_nombre" title="Localidades @item.comuna_nombre" src="@Url.Content("~/Images/folder_explore.png")" /></a>                                          
+                 </text>)
+            })
+        </div>
+    </div>
+    <div id="tabs-2">
+        <div id="sinclasificacion">    
+            @gridsc.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle:"mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {      
+                gridsc.Column("comuna_region","Región"),    
+                gridsc.Column("comuna_provincia","Provincia"),    
+                gridsc.Column("comuna_id","Id"), 
+                gridsc.Column("comuna_nombre","Nombre Comuna"),          
+                gridsc.Column("clasificacion","Clasificación"),        
+                gridsc.Column("",header:"Acciones",format:
+
+                @<text>   
+                    @{
+                        string Lat = Convert.ToString(item.comuna_latitud);
+                        Lat = Lat.Replace(",", ".");
+                        string Lon = Convert.ToString(item.comuna_longitud);
+                        Lon = Lon.Replace(",", ".");
+                     }                                     
+                    @if (item.comuna_latitud!=0){
+                        <a href="#" onclick="javascript:CargarMapa(@Lat,@Lon)"><img border="0" alt="Buscar" title="Buscar" src='@Url.Content("/Images/map.png")' /></a>
+                    }                    
+                    <a href="#" onclick="javascript:BuscarCoordenada(@item.comuna_id)"><img border="0" alt="Buscar @item.comuna_nombre en mapa" title="Buscar @item.comuna_nombre en mapa" src='@Url.Content("~/Images/map_magnify.png")' /></a>
+                    <a href="#" onclick="javascript:verLocalidades(@item.comuna_id,'@item.comuna_nombre.ToString().Replace("'", "´")')"><img border="0"  alt="Localidades @item.comuna_nombre" title="Localidades @item.comuna_nombre" src="@Url.Content("~/Images/folder_explore.png")" /></a>                                          
+                 </text>)
+            })
+        </div>
+    </div>
+</div>

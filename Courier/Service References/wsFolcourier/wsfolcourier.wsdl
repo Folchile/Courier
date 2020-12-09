@@ -1,0 +1,1143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="folweb" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s1="folweb/AbstractTypes" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="folweb" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="folweb">
+      <s:element name="wmManifiestoRutaCliente">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MAN_ID" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmManifiestoRutaClienteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmManifiestoRutaClienteResult" type="tns:ArrayOfPR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult" nillable="true" type="tns:PR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="OT" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FL_FOL_OTD_REFERENCIA1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FECHA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SER_NOMBRE" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FL_FOL_OTD_DESTINATARIO_NOMBRE" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BULTOS" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="PESO_FISICO" nillable="true" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="FL_FOL_OTD_TELEFONO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FL_FOL_OTD_DESTINATARIO_DIRECCION" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FL_FOL_OTD_DESTINATARIO_NUMERO" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="COMUNA" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmESE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmESEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmESEResult" type="tns:ArrayOfTB_FOL_ESE_ESTADO_ENTREGA" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTB_FOL_ESE_ESTADO_ENTREGA">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TB_FOL_ESE_ESTADO_ENTREGA" nillable="true" type="tns:TB_FOL_ESE_ESTADO_ENTREGA" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TB_FOL_ESE_ESTADO_ENTREGA">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PK_FOL_EST_ID" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmOES">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmOESResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmOESResult" type="tns:ArrayOfRetornoFOL_OES" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfRetornoFOL_OES">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RetornoFOL_OES" nillable="true" type="tns:RetornoFOL_OES" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RetornoFOL_OES">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PK_FOL_OES_ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="PK_FOL_EST_ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FL_FOL_OES_NOMBRE" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmEST">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmESTResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmESTResult" type="tns:ArrayOfRetornoFOL_EST" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfRetornoFOL_EST">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RetornoFOL_EST" nillable="true" type="tns:RetornoFOL_EST" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RetornoFOL_EST">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PK_FOL_EST_ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FL_FOL_EST_NOMBRE" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmConexion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmConexionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmConexionResult" type="tns:RetornoConexion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RetornoConexion">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Estado" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmGuardaEntrega">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="OTP" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="OTD" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="EST_ID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="OES_ID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ENT_RUT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ENT_RECIBE" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="USU_RUT" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Fecha" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="oAdjuntos" type="tns:ArrayOfDatosAdjuntos" />
+            <s:element minOccurs="0" maxOccurs="1" name="Latitud" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Longitud" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDatosAdjuntos">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DatosAdjuntos" nillable="true" type="tns:DatosAdjuntos" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DatosAdjuntos">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Archivo" type="s:base64Binary" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmGuardaEntregaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmGuardaEntregaResult" type="tns:RetornoGuardar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RetornoGuardar">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Estado" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mensaje" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmLoginUsuario">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Rut" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmLoginUsuarioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmLoginUsuarioResult" type="tns:RetornoLogin" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RetornoLogin">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Estado" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mensaje" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmValidarManifiesto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdMan" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmValidarManifiestoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmValidarManifiestoResult" type="tns:RetornoGuardar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmGuardaFoto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="OTP" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="OTD" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="oFoto" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmGuardaFotoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmGuardaFotoResult" type="tns:RetornoGuardar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmFechaActual">
+        <s:complexType />
+      </s:element>
+      <s:element name="wmFechaActualResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmFechaActualResult" type="tns:fecha" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="fecha">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="year" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="mes" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="dia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="hora" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="minutos" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="segundos" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmCreaOT">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="oDatosOT" type="tns:clsEntrada" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="clsEntrada">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RutUsuario" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstadoOT" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Rut" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Fono" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Direccion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comuna" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Peso" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="PesoVolumetrico" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="CantidadBultos" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Referencia1" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="Observacion1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Observacion2" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RutEmpresa" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Servicio" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Sucursal" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ListaDocumentos" type="tns:ArrayOfDocumentosAsociados" />
+          <s:element minOccurs="0" maxOccurs="1" name="ListaInformacionAdicional" type="tns:ArrayOfInformacionAdicional" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDocumentosAsociados">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DocumentosAsociados" nillable="true" type="tns:DocumentosAsociados" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DocumentosAsociados">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TipoDocumento" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="NumeroDocumento" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfInformacionAdicional">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="InformacionAdicional" nillable="true" type="tns:InformacionAdicional" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InformacionAdicional">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Descripcion" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Cantidad" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Codigo" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmCreaOTResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmCreaOTResult" type="tns:clsRetorno" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="clsRetorno">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Exitoso" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IdError" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MensajeError" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ConOT" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="OTP" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="OTD" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="wmLoginUsuarioEA">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Rut" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wmLoginUsuarioEAResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wmLoginUsuarioEAResult" type="tns:RetornoLoginEA" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RetornoLoginEA">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Estado" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mensaje" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="oDatosSucursal" type="tns:ArrayOfRetornoDatosSucursal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRetornoDatosSucursal">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RetornoDatosSucursal" nillable="true" type="tns:RetornoDatosSucursal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RetornoDatosSucursal">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Estado" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mensaje" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Sucursal" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstadoFinalOT" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Empresa" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Servicio" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="NombreServicio" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NombreImpresora" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfPR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult" nillable="true" type="tns:ArrayOfPR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult" />
+      <s:element name="ArrayOfTB_FOL_ESE_ESTADO_ENTREGA" nillable="true" type="tns:ArrayOfTB_FOL_ESE_ESTADO_ENTREGA" />
+      <s:element name="ArrayOfRetornoFOL_OES" nillable="true" type="tns:ArrayOfRetornoFOL_OES" />
+      <s:element name="ArrayOfRetornoFOL_EST" nillable="true" type="tns:ArrayOfRetornoFOL_EST" />
+      <s:element name="RetornoConexion" nillable="true" type="tns:RetornoConexion" />
+      <s:element name="RetornoLogin" nillable="true" type="tns:RetornoLogin" />
+      <s:element name="RetornoGuardar" nillable="true" type="tns:RetornoGuardar" />
+      <s:element name="fecha" nillable="true" type="tns:fecha" />
+      <s:element name="RetornoLoginEA" nillable="true" type="tns:RetornoLoginEA" />
+    </s:schema>
+    <s:schema targetNamespace="folweb/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="wmManifiestoRutaClienteSoapIn">
+    <wsdl:part name="parameters" element="tns:wmManifiestoRutaCliente" />
+  </wsdl:message>
+  <wsdl:message name="wmManifiestoRutaClienteSoapOut">
+    <wsdl:part name="parameters" element="tns:wmManifiestoRutaClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmESESoapIn">
+    <wsdl:part name="parameters" element="tns:wmESE" />
+  </wsdl:message>
+  <wsdl:message name="wmESESoapOut">
+    <wsdl:part name="parameters" element="tns:wmESEResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmOESSoapIn">
+    <wsdl:part name="parameters" element="tns:wmOES" />
+  </wsdl:message>
+  <wsdl:message name="wmOESSoapOut">
+    <wsdl:part name="parameters" element="tns:wmOESResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmESTSoapIn">
+    <wsdl:part name="parameters" element="tns:wmEST" />
+  </wsdl:message>
+  <wsdl:message name="wmESTSoapOut">
+    <wsdl:part name="parameters" element="tns:wmESTResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmConexionSoapIn">
+    <wsdl:part name="parameters" element="tns:wmConexion" />
+  </wsdl:message>
+  <wsdl:message name="wmConexionSoapOut">
+    <wsdl:part name="parameters" element="tns:wmConexionResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmGuardaEntregaSoapIn">
+    <wsdl:part name="parameters" element="tns:wmGuardaEntrega" />
+  </wsdl:message>
+  <wsdl:message name="wmGuardaEntregaSoapOut">
+    <wsdl:part name="parameters" element="tns:wmGuardaEntregaResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioSoapIn">
+    <wsdl:part name="parameters" element="tns:wmLoginUsuario" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioSoapOut">
+    <wsdl:part name="parameters" element="tns:wmLoginUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmValidarManifiestoSoapIn">
+    <wsdl:part name="parameters" element="tns:wmValidarManifiesto" />
+  </wsdl:message>
+  <wsdl:message name="wmValidarManifiestoSoapOut">
+    <wsdl:part name="parameters" element="tns:wmValidarManifiestoResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmGuardaFotoSoapIn">
+    <wsdl:part name="parameters" element="tns:wmGuardaFoto" />
+  </wsdl:message>
+  <wsdl:message name="wmGuardaFotoSoapOut">
+    <wsdl:part name="parameters" element="tns:wmGuardaFotoResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmFechaActualSoapIn">
+    <wsdl:part name="parameters" element="tns:wmFechaActual" />
+  </wsdl:message>
+  <wsdl:message name="wmFechaActualSoapOut">
+    <wsdl:part name="parameters" element="tns:wmFechaActualResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmCreaOTSoapIn">
+    <wsdl:part name="parameters" element="tns:wmCreaOT" />
+  </wsdl:message>
+  <wsdl:message name="wmCreaOTSoapOut">
+    <wsdl:part name="parameters" element="tns:wmCreaOTResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioEASoapIn">
+    <wsdl:part name="parameters" element="tns:wmLoginUsuarioEA" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioEASoapOut">
+    <wsdl:part name="parameters" element="tns:wmLoginUsuarioEAResponse" />
+  </wsdl:message>
+  <wsdl:message name="wmManifiestoRutaClienteHttpGetIn">
+    <wsdl:part name="MAN_ID" type="s:string" />
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmManifiestoRutaClienteHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfPR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult" />
+  </wsdl:message>
+  <wsdl:message name="wmESEHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmESEHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfTB_FOL_ESE_ESTADO_ENTREGA" />
+  </wsdl:message>
+  <wsdl:message name="wmOESHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmOESHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRetornoFOL_OES" />
+  </wsdl:message>
+  <wsdl:message name="wmESTHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmESTHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRetornoFOL_EST" />
+  </wsdl:message>
+  <wsdl:message name="wmConexionHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmConexionHttpGetOut">
+    <wsdl:part name="Body" element="tns:RetornoConexion" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Rut" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioHttpGetOut">
+    <wsdl:part name="Body" element="tns:RetornoLogin" />
+  </wsdl:message>
+  <wsdl:message name="wmValidarManifiestoHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="IdMan" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmValidarManifiestoHttpGetOut">
+    <wsdl:part name="Body" element="tns:RetornoGuardar" />
+  </wsdl:message>
+  <wsdl:message name="wmGuardaFotoHttpGetIn">
+    <wsdl:part name="OTP" type="s:string" />
+    <wsdl:part name="OTD" type="s:string" />
+    <wsdl:part name="oFoto" type="s1:StringArray" />
+    <wsdl:part name="Nombre" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmGuardaFotoHttpGetOut">
+    <wsdl:part name="Body" element="tns:RetornoGuardar" />
+  </wsdl:message>
+  <wsdl:message name="wmFechaActualHttpGetIn" />
+  <wsdl:message name="wmFechaActualHttpGetOut">
+    <wsdl:part name="Body" element="tns:fecha" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioEAHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Rut" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioEAHttpGetOut">
+    <wsdl:part name="Body" element="tns:RetornoLoginEA" />
+  </wsdl:message>
+  <wsdl:message name="wmManifiestoRutaClienteHttpPostIn">
+    <wsdl:part name="MAN_ID" type="s:string" />
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmManifiestoRutaClienteHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfPR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult" />
+  </wsdl:message>
+  <wsdl:message name="wmESEHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmESEHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfTB_FOL_ESE_ESTADO_ENTREGA" />
+  </wsdl:message>
+  <wsdl:message name="wmOESHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmOESHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRetornoFOL_OES" />
+  </wsdl:message>
+  <wsdl:message name="wmESTHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmESTHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRetornoFOL_EST" />
+  </wsdl:message>
+  <wsdl:message name="wmConexionHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmConexionHttpPostOut">
+    <wsdl:part name="Body" element="tns:RetornoConexion" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Rut" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioHttpPostOut">
+    <wsdl:part name="Body" element="tns:RetornoLogin" />
+  </wsdl:message>
+  <wsdl:message name="wmValidarManifiestoHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="IdMan" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmValidarManifiestoHttpPostOut">
+    <wsdl:part name="Body" element="tns:RetornoGuardar" />
+  </wsdl:message>
+  <wsdl:message name="wmGuardaFotoHttpPostIn">
+    <wsdl:part name="OTP" type="s:string" />
+    <wsdl:part name="OTD" type="s:string" />
+    <wsdl:part name="oFoto" type="s1:StringArray" />
+    <wsdl:part name="Nombre" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmGuardaFotoHttpPostOut">
+    <wsdl:part name="Body" element="tns:RetornoGuardar" />
+  </wsdl:message>
+  <wsdl:message name="wmFechaActualHttpPostIn" />
+  <wsdl:message name="wmFechaActualHttpPostOut">
+    <wsdl:part name="Body" element="tns:fecha" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioEAHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="Rut" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wmLoginUsuarioEAHttpPostOut">
+    <wsdl:part name="Body" element="tns:RetornoLoginEA" />
+  </wsdl:message>
+  <wsdl:portType name="wsFolCourierSoap">
+    <wsdl:operation name="wmManifiestoRutaCliente">
+      <wsdl:input message="tns:wmManifiestoRutaClienteSoapIn" />
+      <wsdl:output message="tns:wmManifiestoRutaClienteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmESE">
+      <wsdl:input message="tns:wmESESoapIn" />
+      <wsdl:output message="tns:wmESESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmOES">
+      <wsdl:input message="tns:wmOESSoapIn" />
+      <wsdl:output message="tns:wmOESSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmEST">
+      <wsdl:input message="tns:wmESTSoapIn" />
+      <wsdl:output message="tns:wmESTSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmConexion">
+      <wsdl:input message="tns:wmConexionSoapIn" />
+      <wsdl:output message="tns:wmConexionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaEntrega">
+      <wsdl:input message="tns:wmGuardaEntregaSoapIn" />
+      <wsdl:output message="tns:wmGuardaEntregaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuario">
+      <wsdl:input message="tns:wmLoginUsuarioSoapIn" />
+      <wsdl:output message="tns:wmLoginUsuarioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmValidarManifiesto">
+      <wsdl:input message="tns:wmValidarManifiestoSoapIn" />
+      <wsdl:output message="tns:wmValidarManifiestoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaFoto">
+      <wsdl:input message="tns:wmGuardaFotoSoapIn" />
+      <wsdl:output message="tns:wmGuardaFotoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmFechaActual">
+      <wsdl:input message="tns:wmFechaActualSoapIn" />
+      <wsdl:output message="tns:wmFechaActualSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmCreaOT">
+      <wsdl:input message="tns:wmCreaOTSoapIn" />
+      <wsdl:output message="tns:wmCreaOTSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuarioEA">
+      <wsdl:input message="tns:wmLoginUsuarioEASoapIn" />
+      <wsdl:output message="tns:wmLoginUsuarioEASoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsFolCourierHttpGet">
+    <wsdl:operation name="wmManifiestoRutaCliente">
+      <wsdl:input message="tns:wmManifiestoRutaClienteHttpGetIn" />
+      <wsdl:output message="tns:wmManifiestoRutaClienteHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmESE">
+      <wsdl:input message="tns:wmESEHttpGetIn" />
+      <wsdl:output message="tns:wmESEHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmOES">
+      <wsdl:input message="tns:wmOESHttpGetIn" />
+      <wsdl:output message="tns:wmOESHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmEST">
+      <wsdl:input message="tns:wmESTHttpGetIn" />
+      <wsdl:output message="tns:wmESTHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmConexion">
+      <wsdl:input message="tns:wmConexionHttpGetIn" />
+      <wsdl:output message="tns:wmConexionHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuario">
+      <wsdl:input message="tns:wmLoginUsuarioHttpGetIn" />
+      <wsdl:output message="tns:wmLoginUsuarioHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmValidarManifiesto">
+      <wsdl:input message="tns:wmValidarManifiestoHttpGetIn" />
+      <wsdl:output message="tns:wmValidarManifiestoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaFoto">
+      <wsdl:input message="tns:wmGuardaFotoHttpGetIn" />
+      <wsdl:output message="tns:wmGuardaFotoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmFechaActual">
+      <wsdl:input message="tns:wmFechaActualHttpGetIn" />
+      <wsdl:output message="tns:wmFechaActualHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuarioEA">
+      <wsdl:input message="tns:wmLoginUsuarioEAHttpGetIn" />
+      <wsdl:output message="tns:wmLoginUsuarioEAHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="wsFolCourierHttpPost">
+    <wsdl:operation name="wmManifiestoRutaCliente">
+      <wsdl:input message="tns:wmManifiestoRutaClienteHttpPostIn" />
+      <wsdl:output message="tns:wmManifiestoRutaClienteHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmESE">
+      <wsdl:input message="tns:wmESEHttpPostIn" />
+      <wsdl:output message="tns:wmESEHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmOES">
+      <wsdl:input message="tns:wmOESHttpPostIn" />
+      <wsdl:output message="tns:wmOESHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmEST">
+      <wsdl:input message="tns:wmESTHttpPostIn" />
+      <wsdl:output message="tns:wmESTHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmConexion">
+      <wsdl:input message="tns:wmConexionHttpPostIn" />
+      <wsdl:output message="tns:wmConexionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuario">
+      <wsdl:input message="tns:wmLoginUsuarioHttpPostIn" />
+      <wsdl:output message="tns:wmLoginUsuarioHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmValidarManifiesto">
+      <wsdl:input message="tns:wmValidarManifiestoHttpPostIn" />
+      <wsdl:output message="tns:wmValidarManifiestoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaFoto">
+      <wsdl:input message="tns:wmGuardaFotoHttpPostIn" />
+      <wsdl:output message="tns:wmGuardaFotoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmFechaActual">
+      <wsdl:input message="tns:wmFechaActualHttpPostIn" />
+      <wsdl:output message="tns:wmFechaActualHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuarioEA">
+      <wsdl:input message="tns:wmLoginUsuarioEAHttpPostIn" />
+      <wsdl:output message="tns:wmLoginUsuarioEAHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsFolCourierSoap" type="tns:wsFolCourierSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wmManifiestoRutaCliente">
+      <soap:operation soapAction="folweb/wmManifiestoRutaCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmESE">
+      <soap:operation soapAction="folweb/wmESE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmOES">
+      <soap:operation soapAction="folweb/wmOES" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmEST">
+      <soap:operation soapAction="folweb/wmEST" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmConexion">
+      <soap:operation soapAction="folweb/wmConexion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaEntrega">
+      <soap:operation soapAction="folweb/wmGuardaEntrega" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuario">
+      <soap:operation soapAction="folweb/wmLoginUsuario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmValidarManifiesto">
+      <soap:operation soapAction="folweb/wmValidarManifiesto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaFoto">
+      <soap:operation soapAction="folweb/wmGuardaFoto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmFechaActual">
+      <soap:operation soapAction="folweb/wmFechaActual" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmCreaOT">
+      <soap:operation soapAction="folweb/wmCreaOT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuarioEA">
+      <soap:operation soapAction="folweb/wmLoginUsuarioEA" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsFolCourierSoap12" type="tns:wsFolCourierSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wmManifiestoRutaCliente">
+      <soap12:operation soapAction="folweb/wmManifiestoRutaCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmESE">
+      <soap12:operation soapAction="folweb/wmESE" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmOES">
+      <soap12:operation soapAction="folweb/wmOES" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmEST">
+      <soap12:operation soapAction="folweb/wmEST" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmConexion">
+      <soap12:operation soapAction="folweb/wmConexion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaEntrega">
+      <soap12:operation soapAction="folweb/wmGuardaEntrega" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuario">
+      <soap12:operation soapAction="folweb/wmLoginUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmValidarManifiesto">
+      <soap12:operation soapAction="folweb/wmValidarManifiesto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaFoto">
+      <soap12:operation soapAction="folweb/wmGuardaFoto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmFechaActual">
+      <soap12:operation soapAction="folweb/wmFechaActual" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmCreaOT">
+      <soap12:operation soapAction="folweb/wmCreaOT" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuarioEA">
+      <soap12:operation soapAction="folweb/wmLoginUsuarioEA" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsFolCourierHttpGet" type="tns:wsFolCourierHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="wmManifiestoRutaCliente">
+      <http:operation location="/wmManifiestoRutaCliente" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmESE">
+      <http:operation location="/wmESE" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmOES">
+      <http:operation location="/wmOES" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmEST">
+      <http:operation location="/wmEST" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmConexion">
+      <http:operation location="/wmConexion" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuario">
+      <http:operation location="/wmLoginUsuario" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmValidarManifiesto">
+      <http:operation location="/wmValidarManifiesto" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaFoto">
+      <http:operation location="/wmGuardaFoto" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmFechaActual">
+      <http:operation location="/wmFechaActual" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuarioEA">
+      <http:operation location="/wmLoginUsuarioEA" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsFolCourierHttpPost" type="tns:wsFolCourierHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="wmManifiestoRutaCliente">
+      <http:operation location="/wmManifiestoRutaCliente" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmESE">
+      <http:operation location="/wmESE" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmOES">
+      <http:operation location="/wmOES" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmEST">
+      <http:operation location="/wmEST" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmConexion">
+      <http:operation location="/wmConexion" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuario">
+      <http:operation location="/wmLoginUsuario" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmValidarManifiesto">
+      <http:operation location="/wmValidarManifiesto" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmGuardaFoto">
+      <http:operation location="/wmGuardaFoto" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmFechaActual">
+      <http:operation location="/wmFechaActual" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="wmLoginUsuarioEA">
+      <http:operation location="/wmLoginUsuarioEA" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsFolCourier">
+    <wsdl:port name="wsFolCourierSoap" binding="tns:wsFolCourierSoap">
+      <soap:address location="http://webservice.fuex.cl/webservice/wsfolcourier.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsFolCourierSoap12" binding="tns:wsFolCourierSoap12">
+      <soap12:address location="http://webservice.fuex.cl/webservice/wsfolcourier.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsFolCourierHttpGet" binding="tns:wsFolCourierHttpGet">
+      <http:address location="http://webservice.fuex.cl/webservice/wsfolcourier.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsFolCourierHttpPost" binding="tns:wsFolCourierHttpPost">
+      <http:address location="http://webservice.fuex.cl/webservice/wsfolcourier.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

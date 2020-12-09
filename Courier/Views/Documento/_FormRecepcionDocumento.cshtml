@@ -1,0 +1,45 @@
+﻿@model Courier.Models.DocumentoModels
+@{
+    ViewBag.Title = "_FormRecepcionDocumento";
+}
+
+<div id="tabsDoc">
+    @if (Model.ListaDocumentos != null)
+    {
+        var grid = new WebGrid(Model.ListaDocumentos, rowsPerPage: 5, ajaxUpdateContainerId: "gridDocumentos");
+        <div id="tabsDoc-1">
+            @if (Model.ListaDocumentos.Count() == 0)
+            {
+                 <div id="gridDocumentos">
+                    <p>No se encontraron documentos asociados.</p>
+                 </div>
+            }
+            else
+            {
+            <div id="gridDocumentos">
+                @grid.GetHtml(
+                fillEmptyRows: true,
+                alternatingRowStyle: "fila-alternativa",
+                headerStyle: "encabezado-grid",
+                tableStyle: "mGrid",
+                footerStyle: "pie-grid",
+                mode: WebGridPagerModes.All,
+                firstText: "<< Primera",
+                previousText: "< Anterior",
+                nextText: "Siguiente >",
+                lastText: "Última >>",
+                columns: new[]
+                {                
+                    grid.Column("Fecha","Fecha Ingreso"), 
+                    grid.Column("Nombre","Tipo"), 
+                    grid.Column("Numero","N° Documento")
+                })
+            </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No existen documentos asociados.</p>
+    } 
+</div>

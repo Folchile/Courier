@@ -1,0 +1,92 @@
+﻿@model Courier.Models.SucursalIngresoModels
+@{
+    ViewBag.Title = "Inicio";
+}
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@if (Model.SeleccionSucursal == true && @Session["Entrar"]!="1")
+{
+    
+    <script type="text/javascript">
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+    $(function () {
+        $("#dialog-error").dialog({ autoOpen: false, title: "Error", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {                   
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-sucursal").dialog({ autoOpen: true,title:"Seleccione Sucursal", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    $.validator.unobtrusive.parse("#frmCambia");
+                    if ($("#frmCambia").valid() == true) {
+                        $("#frmCambia").submit();
+                        $(this).dialog("close");
+                        borrar_contenido();
+                    }                                    
+                },
+                Cancelar: function (event) {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+    function InicioCambia() {        
+        waitingDialog({ title: "Guardando", message: "Guardando Cambios...<br/>" });
+    }
+    function FinCambia(data) {
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            location.href = '@Url.Action("Index","Home")';
+        }
+        else {
+            $("#dialog-error").html(data.Mensaje);
+            $("#dialog-error").dialogs("open");
+        }        
+    }
+    function FinErrorCambia() {
+        closeWaitingDialog();
+        alert("No fue posible cambiar de sucursal")
+    }
+    </script>
+    <div id="dialog-error"></div>
+    <div id="dialog-sucursal">
+        <div class="info">
+            <p>Ahora se permite el ingreso a distintas bodegas, selecciona la bodega donde desea ingresar, y presiona aceptar.</p>
+            <p>Si seleccionas Cancelar, se utilizará la última bodega a la cual ingresaste.</p>
+            <p>En caso que desees cambiar de bodega, cierra sesión y vuelve a ingresar al sistema, así, este mensaje volverá a aparecer.</p>
+        </div>
+        <fieldset>
+        <legend>Ingreso Datos</legend>
+        @using (Ajax.BeginForm("CambiarSucursalUsuario", "Home", new AjaxOptions { HttpMethod = "Get", OnBegin = "javascript:InicioCambia()", OnSuccess = "Javascript:FinCambia(data)", OnFailure = "Javascript:FinErrorCambia()" }, new { id = "frmCambia" }))
+        { 
+            <table>
+                <tr>
+                    <td>Sucursal</td><td>@Html.DropDownListFor(m => m.Sucursal, Model.ListaSucursales, "-- Seleccione --")</td>
+                </tr>
+            </table>
+        }
+        </fieldset>
+    </div>
+}
+
+
+@{
+    Session["Entrar"]="1";
+}
+
+
+@*<div><input type="button" onclick="javascript:EtiquetaModelo1(123,'hola','ZDesigner GK420t (Copiar 1)')" value="apretame"/></div>*@

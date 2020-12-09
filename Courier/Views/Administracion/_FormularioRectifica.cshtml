@@ -1,0 +1,49 @@
+﻿@model Courier.Models.BuscarOTModels
+           
+@if (Model.ListaEntrega != null)
+{
+<div  id="myGridEntrega" style="min-width:600px;">                    
+    @{
+        var grid = new WebGrid(Model.ListaEntrega, rowsPerPage: 10, ajaxUpdateContainerId: "myGridEntrega");    
+    }
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {                                 
+        grid.Column("Fecha","Fecha"),  
+        grid.Column("Visita","Visita"),
+        grid.Column("Recibe","Recibe"), 
+        grid.Column("Rut","Rut"),
+        grid.Column("Estado","Estado"),
+        grid.Column("Observacion","Observación"),
+        grid.Column("Latitud","Latitud"),
+        grid.Column("Longitud","Longitud"),  
+        grid.Column("RegistroId","Opciones",@<text>
+            <div style="width: 100%; text-align: center">  
+                @if (@item.Latitud != null && @item.Latitud != "")
+                {
+                    <a href="#" onclick="javascript:BuscarEnMapa('@item.RegistroId')"><img border="0" title="Ver Mapa" alt="Ver Mapa" src="@Url.Content("~/Images/localizacion_s24.png")" /></a>                    
+                }
+                    <a href="#" onclick="javascript:EditarDireccion('@item.RegistroId')"><img border="0" title="Rectificar Ubicación de Entrega" alt="Rectificar Ubicación de Entrega" src="@Url.Content("~/Images/localizacion_24.png")" /></a>                    
+                
+            </div>
+        </text>)
+
+    })
+        
+</div>
+}
+else
+{
+    <div>
+        No existen registros.</div>
+}    

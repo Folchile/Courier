@@ -1,0 +1,11 @@
+﻿@model Courier.Models.IngresoMasivoModel
+
+    @Html.DropDownListFor(x => x.Servicio, Model.oListaServicios, null, new { onchange = "javascript:AssignServicio(this.value)" })
+
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#idFormulario").html("");    
+    });
+</script>

@@ -1,0 +1,23 @@
+﻿@model Courier.Models.CambiaEstadoBultoModels
+@{
+    ViewBag.Title = "_CambiaEstadoBulto";
+}
+
+@using (Ajax.BeginForm("GuardaCambiaBulto", "Administracion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:InicioCambiar()", OnSuccess = "Javascript:FinCambiar(data)", OnFailure = "Javascript:FinErrorCambiar()" }, new { id = "frmCambiarEstado" }))
+{
+    @Html.HiddenFor(m=>m.Bulto)
+    <table>
+        <tr>
+            <td>N° Bulto</td>
+            <td><div class="textfield_effect">@Model.Bulto</div></td>
+        </tr>
+        <tr>
+            <td>Nuevo Estado</td>   
+            <td>@Html.DropDownListFor(m => m.Estado, Model.ListaEstado, "-- Seleccione --")</td>    
+        </tr>
+        <tr>
+            <td>Sucursal Actual:</td>
+            <td>@Html.DropDownListFor(m=>m.Sucursal, Model.ListaSucursal,"-- Seleccione --")</td>
+        </tr>
+    </table>
+}

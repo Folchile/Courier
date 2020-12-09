@@ -1,0 +1,28 @@
+﻿@model Courier.Models.RestriccionesModels
+
+@{
+    var grid = new WebGrid(Model.ListaRestricciones, rowsPerPage: 8, ajaxUpdateContainerId: "gridRestricciones");    
+}
+<div id="gridRestricciones">    
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle:"mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {                          
+        grid.Column("FL_CLI_EMP_RAZON_SOCIAL","Empresa"),                                          
+        grid.Column("FL_PAR_SER_NOMBRE","Servicio"),
+        grid.Column("PK_PAR_SER_ID","",@<text>
+            <div style="text-align:center;">
+                <a href="#" onclick="javascript:EliminaRestriccion(@item.PK_PAR_SER_ID)"><img border="0" src='@Url.Content("~/Images/cross.png")' alt="Quitar" title="Quitar"/></a>
+            </div>
+        </text>)
+    })
+</div>

@@ -1,0 +1,33 @@
+﻿@model Courier.Models.PalletModels
+@{
+    ViewBag.Title = "Error Ingreso Documento";
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#dialog-error").dialog({ autoOpen: true, title: "ATENCIÓN", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    $(this).dialog("close");
+                    location.href = "Pallet";
+                }
+            }
+        });
+    })
+
+</script>
+
+
+<div id="dialog-error">
+   <div class="info">
+      <p>El servicio del Documento ingresado No tiene propiedad para ingreso de Pallet</p>
+      <p>Favor Revisar y Volver a Ingresar</p>
+   </div>
+</div>

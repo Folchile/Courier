@@ -1,0 +1,37 @@
+﻿@model Courier.Models.FormularioHUModels
+@{
+    ViewBag.Title = "_FormularioHU";
+}
+<link href='@Url.Content("~/Content/Mensajes.css")' rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    function huInicio() {
+        waitingDialog({ title: "Guardando HU", message: "Guardando...<br/>" });
+    }
+    function huSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-formularioHU").dialog("close");
+            CargarFormularioEnviado();
+        }
+        else {
+            $("#dialog-validaPreparacion").html("<p>" + data.Mensaje + "</p>");
+            $("#dialog-validaPreparacion").dialog("open");
+        }
+    }
+    function huFin() {
+        closeWaitingDialog();
+    }
+    function huError() {
+        alert("No fue posible guardar la información");
+    }
+</script>
+<div class="info">Antes de continuar, ingrese los siguientes datos obligatorios</div>
+@using (Ajax.BeginForm("GuardarHU", "Preparacion", new AjaxOptions { OnBegin = "javascript:huInicio()", OnSuccess = "Javascript:huSuccess(data)", OnComplete = "Javascript:huFin()", OnFailure = "Javascript:huError()" }, new { id = "frmHU" }))
+{
+    @Html.HiddenFor(m => m.huOTP)
+    @Html.HiddenFor(m => m.huOTD)
+    <table>
+        <tr><td>@Html.LabelFor(m => m.huHU)</td></tr>
+        <tr><td>@Html.TextBoxFor(m => m.huHU)</td></tr>    
+        <tr><td>@Html.ValidationMessageFor(m => m.huHU)</td></tr>    
+    </table>
+}

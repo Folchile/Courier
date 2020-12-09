@@ -1,0 +1,54 @@
+﻿@model Courier.Models.MantencionModels
+@{
+    ViewBag.Title = "Servicio";    
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#Buscar").button();
+        $("#agregarservicio")
+            .button()
+            .click(function () {
+                alert('no construido');
+            });
+    });
+        $(function () {
+            $("#tabs").tabs();
+        });
+</script>
+
+
+
+
+<table style="width:100%;"><tr><td style="width:100%; text-align:right;">
+    <input type="button" id="agregarservicio" name="agregarservicio" value="Agregar Servicio" /></td></tr>
+</table>
+
+
+<h2>Datos búsqueda</h2>
+
+
+<table>
+@using (Ajax.BeginForm(new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "myGrid" }))
+{
+        <tr><td>Servicio</td> <td rowspan="2"><input type="submit" value="Buscar" id="Buscar"/></td></tr>
+        <tr><td><input type="text" name="servicio" id="servicio" value="" /></td></tr>
+}
+</table>
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Lista Servicios</a></li>		
+	</ul>	
+	<div id="tabs-1">		
+        <div id="myGrid">
+              @Html.Partial("_ListadoServicio", Model)
+        </div>
+	</div>	
+</div>

@@ -1,0 +1,59 @@
+﻿@model Courier.Models.MapOtModels.RetornoDireccion
+
+@{
+    ViewBag.Title = "Editar Dirección";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnLocalizar").button();
+    })
+</script>
+<fieldset>
+    <legend>
+        Editar Dirección de OT
+    </legend>
+    <table class="">
+        <tr>
+            <td>
+                @Html.HiddenFor(m => m.OT)
+                @Html.HiddenFor(m => m.Comuna)
+                @Html.LabelFor(m => m.Direccion)
+            </td>
+            <td  colspan="2">
+                @Html.TextBoxFor(m => m.Direccion, new { size = 40, length = 50 })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.Numero)
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.Numero, new { size = 10, length = 9 })
+            </td>
+            <td>
+                <button id="btnLocalizar" onclick="javascript:BuscarDireccion();" title="Buscar Ubicación">
+                    <div style="width:50px;">       
+                        <img alt="Editar Dirección" src="@Url.Content("~/Images/localizacion_24.png")" />       
+                    </div>                       
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.Lat)
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.Lat, new { size = 15, length = 15 })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.Lng)
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.Lng, new { size = 15, length = 15 })
+            </td>
+        </tr>
+    </table>
+</fieldset>

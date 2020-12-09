@@ -1,0 +1,58 @@
+﻿@using Courier.Helpers
+@using Courier.Controllers
+@if (Session["SucName"] == null || Session["Menu"] == null || Session["Menu"].ToString() == "" || Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+{
+    var oVC = new ValidationController();
+    var oResult=oVC.Sucursal(User.Identity.Name.ToString());
+    Session["SucName"] = oResult.Nombre;
+    Session["SucId"] = oResult.id;    
+    Session["Menu"] = Html.ConsultaMenu(User.Identity.Name, Url);
+    Session["RutEmpresa"] = "";
+    if (oResult.Tipo == 2)
+    {
+        Session["SucName"] = oResult.NombreEmpresa;
+        Session["RutEmpresa"] = oResult.idEmpresa + "-" + oResult.DvEmpresa;     
+    }    
+}   
+<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link href="@Url.Content("~/Content/LogOn.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.9.1.custom.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/jquery.treeview.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.9.0.custom.js")")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.treeview.async.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.treeview.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.treeview.edit.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript")></script>
+<script type="text/javascript">
+    $(window).resize(function () {
+        $('#content').css({
+            position: 'absolute',
+            left: ($(window).width() - $('#content').outerWidth()) / 2,
+            top: ($(window).height() - $('#content').outerHeight()) / 2
+        });
+    });
+
+    // To initially run the function:
+    $(window).resize();
+</script>
+</head>
+<body>
+
+
+ <div class="content" id="content" @*style="width:98%;"*@>
+            <div class="subHeader">
+            	<div>@ViewBag.title</div>
+            </div>
+            <div class="contentPanel" id="contentPanel">                    
+				@RenderBody()
+			</div>
+        </div>                    
+
+</body>
+</html>

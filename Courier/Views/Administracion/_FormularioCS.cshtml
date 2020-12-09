@@ -1,0 +1,54 @@
+﻿@model Courier.Models.FormularioCSModels
+<script type="text/javascript">
+    function CSIFormDev() {
+        waitingDialog({ title: "Guardando", message: "Guardando Formulario...<br/>" });
+        $("#dialog-CS").dialog("close");
+    }
+    function CSIFormErr() {
+        closeWaitingDialog();
+        alert("No fue posible guardar la información")
+    }
+    function CSIFormSuc(data) {
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            CargarFormularioEnviado();
+            $("#dialog-CS").dialog("close");
+        }
+        else {
+            alert(data.Mensaje);
+        }
+    }
+    function CambiarComuna(valor) {        
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 111111111)
+        $("#Localidad").load('@Url.Action("DropDownLocalidad","Devolucion")?Comuna=' + valor+ '&r=' + randomnumber + ' #Localidad option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar las comunas');
+            }
+        });
+    }
+</script>
+@using (Ajax.BeginForm("GuardarCS", "Administracion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:CSIFormDev();", OnFailure = "javascript:CSIFormErr();", OnSuccess = "javascript:CSIFormSuc(data);" }, new { id = "frmCS" }))
+{    
+    @Html.HiddenFor(m=>m.csOTP)
+    <table>
+        <tr><td>@Html.LabelFor(m=>m.Servicio)</td><td>@Html.DropDownListFor(m=>m.Servicio,Model.oListaServicio,"-- Seleccione Servicio --")</td></tr>        
+    </table>    
+    @Html.ValidationMessageFor(m => m.Servicio)
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#Region").change(function () {
+            waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+            var randomnumber = Math.floor(Math.random() * 111111111)
+            $("#Comuna").load('@Url.Action("DropDownComuna","Devolucion")?Region=' + $(this).val() + '&r=' + randomnumber+ ' #Comuna option', function (response, status, xhr) {
+                closeWaitingDialog();
+                if (status == 'error') {
+                    alert('Error al cargar las comunas');
+                }                
+            });
+        });
+    })
+</script>

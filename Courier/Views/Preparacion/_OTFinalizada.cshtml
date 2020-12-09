@@ -1,0 +1,10 @@
+﻿@model Courier.Models.PreparacionModels  
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />           
+<div class="error">
+<ul>
+@foreach (var Datos in Model.ListaErrores)
+{
+    <li>@Datos</li>
+}
+</ul>
+</div>

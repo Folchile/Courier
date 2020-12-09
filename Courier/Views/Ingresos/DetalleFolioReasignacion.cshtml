@@ -1,0 +1,113 @@
+﻿@model MvcReporteViajes.Models.CabeceraFoliosModels
+@{
+    var grid = new WebGrid(Model.DetalleFoliocambEst, rowsPerPage: 1, ajaxUpdateContainerId: "gridReasignaPatente"); 
+}
+
+
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+
+
+
+<script type="text/javascript">
+
+
+   function ReasignarPatente() {
+        $("#dialog-detPatentes").dialog("open");
+        $("#dialog-detPatentes").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#dialog-detPatentes").load('@Url.Action("LstVehiculosReasignacion","Ingresos")?FOLIOABUSCAR=' + $("#FOLIOABUSCAR").val(), function (response, status, xhr) {
+            borrar_contenido();
+        });
+    }
+
+
+    $(function () {
+        $("#dialog-detPatentes").dialog({ autoOpen: false, title: "Reasignacion Patentes", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+           buttons: {
+                Grabar: function () {
+                    $.validator.unobtrusive.parse("#frmReasignaPatente");
+                    if ($("#frmReasignaPatente").valid() == true) {
+                        $("#frmReasignaPatente").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+
+    });
+
+
+
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+
+
+
+
+</script>
+
+
+<div id="dialog-detPatentes"></div>
+
+
+
+
+
+
+<div id="gridReasignaPatente">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Fact","FOLIO"),
+       grid.Column("Fpatente","PATENTE"),
+       grid.Column("Frampla","RAMPLA"),
+       grid.Column("Festado","ESTADO"),
+       grid.Column("Fsucursal","SUCURSAL"),
+       grid.Column("Fusuario","USUARIO"),
+       grid.Column("Fconductor","CONDUCTOR"),
+       grid.Column("Fktransp","KG-TRANSP"),
+       grid.Column("Fbtransp","BLTOS-TRANSP"),
+       grid.Column("",header:"ACCION",format:@<text>
+                                     @if (item.Fusuario==null)
+                                     {
+                                        <a href="#" title="Reasignar Folio @item.Fact" onclick="ReasignarPatente('@item.Fact')">Reasignar</a>
+                                     }
+                                     else
+                                     {
+                                        <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                     }
+
+                                    </text>)
+ })
+</div>
+
+
+@*<div id="detPatentes">
+
+</div>*@

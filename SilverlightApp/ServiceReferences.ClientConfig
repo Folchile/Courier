@@ -1,0 +1,17 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <customBinding>
+                <binding name="CustomBinding_ServicioSilverlight">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+            </customBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://folweb.fuex.cl/WebService/ServicioSilverlight.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_ServicioSilverlight"
+                contract="ReferenciaServicioWeb.ServicioSilverlight" name="CustomBinding_ServicioSilverlight" />
+        </client>
+    </system.serviceModel>
+</configuration>

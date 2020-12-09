@@ -1,0 +1,324 @@
+﻿@model Courier.Models.FolBIModels 
+
+@Html.DevExpress().GetScripts( 
+       
+    new Script { ExtensionSuite = ExtensionSuite.Chart }
+)
+
+@{
+    ViewBag.Title = "Reporte Despachos";
+}
+<script type="text/javascript" >
+
+    var filtroEstado = "";
+    var filtroConductor = "";
+    var fInicio;
+    var fTermino;
+
+    function btnFiltrarClick(){
+        CallbackPanel.PerformCallback();
+        CargaFitro();
+    }
+
+    function btnDetalleClick(){
+        window.location = "/FolBI/Detalles";
+    }
+
+    function chartClick(sender, args) {
+        
+        var aux = args.additionalHitObject; 
+        
+        if (aux != null && aux.argument != filtroEstado) {
+           
+            if (aux != null) {
+                filtroEstado = aux.argument;
+                CallbackPanel.PerformCallback();
+                CargaEstadoFiltro();
+            } else {
+                filtroEstado = "";
+                CallbackPanel.PerformCallback();
+                CargaEstadoFiltro();
+            }
+
+            if (filtroEstado == "") {
+                $("#dvTitulo").html("Todos");
+                $("#dvTitulo").css('color', 'black');
+            } else {
+                switch (filtroEstado) {
+                    case "Entregado Ok":
+                        $("#dvTitulo").css('color', 'DarkGreen');
+                        break;
+                    case "Rechazado":
+                        $("#dvTitulo").css('color', 'DarkRed');
+                        break;
+                    case "Cliente no Encontrado":
+                        $("#dvTitulo").css('color', 'DarkOrange');
+                        break;
+                    case "Pendiente":
+                        $("#dvTitulo").css('color', 'gray');
+                        break;
+                    default:
+                        $("#dvTitulo").css('color', 'black');
+                        break;
+
+                }
+                $("#dvTitulo").html("Estado: " + filtroEstado);
+            }
+        } else {
+            if (aux == null && filtroEstado != "") {
+                CallbackPanel.PerformCallback();
+                filtroEstado = "";
+                CargaEstadoFiltro();
+                $("#dvTitulo").html("Todos los Estados");
+                $("#dvTitulo").css('color', 'black');
+            }
+        }    
+    }
+
+    function conductoresClick(sender, args) {
+        
+        var aux = args.additionalHitObject;
+        if (aux != null && aux.argument != filtroConductor) {  
+            if (aux != null) {
+                
+                filtroConductor = aux.argument;
+                if (filtroConductor == undefined)
+                {
+                    filtroConductor = aux.text;
+                }
+                CallbackPanel.PerformCallback();
+                CargaEstadoFiltro();
+            } else {
+                CallbackPanel.PerformCallback();
+                filtroConductor = "";
+                CargaEstadoFiltro();
+            }
+
+            if (filtroConductor == "") {
+                $("#dvConductores").html("Todos");
+                $("#dvConductores").css('color', 'black');
+            } else {
+                $("#dvConductores").css('color', 'DarkBlue');
+                $("#dvConductores").html("Conductor: " + filtroConductor);
+            }
+        } else {
+            if (aux == null && filtroConductor != "") {
+                CallbackPanel.PerformCallback();
+                filtroConductor = "";
+                CargaEstadoFiltro();
+                $("#dvConductores").html("Conductor: Todos");
+                $("#dvConductores").css('color', 'black');
+            }
+        }    
+    }
+
+    function CargaInicioCarga() {
+        var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+        var firstDay = new Date(y, m, 1);
+        var lastDay = new Date(y, m + 1, 0);
+
+        var fInicio = $("#fInicio");
+        var fTermino = $("#fTermino");
+
+        var dateInicio = firstDay.toLocaleString().substring(0, firstDay.toLocaleString().indexOf(' '));
+        var dateTermino = lastDay.toLocaleString().substring(0, lastDay.toLocaleString().indexOf(' '));
+        fInicio.val(dateInicio);
+        fTermino.val(dateTermino);
+
+        CallbackPanel.PerformCallback();
+        filtroEstado = "";
+        filtroConductor = "";
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("DonutGlobalPartial", "FolBI")',
+            data: { r: randomnumber,
+                FechaPeriodo: dateInicio,
+                FechaPeriodoTermino: dateTermino,
+            },
+            success: function (data) {
+                $("#dvChartDonut").html(data);
+                CargaEstadoFiltro();
+            },
+            error: function () {
+            }
+        });
+
+    }
+
+    function CargaFitro() {
+
+        var dateInicio = $("#fInicio").val();
+        var dateTermino = $("#fTermino").val();
+
+        CallbackPanel.PerformCallback();
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("DonutGlobalPartial", "FolBI")',
+            data: { r: randomnumber,
+                FechaPeriodo: dateInicio,
+                FechaPeriodoTermino: dateTermino,
+            },
+            success: function (data) {
+                $("#dvChartDonut").html(data);
+                CargaEstadoFiltro();
+            },
+            error: function () {
+            }
+        });
+
+    }
+
+    function CargaEstadoFiltro() { 
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("BarDespachosPartial", "FolBI")',
+            data: { r: randomnumber,
+                    FiltroEstado: filtroEstado,
+                    FiltroConductor: filtroConductor
+            },
+            success: function (data) {
+                $("#dvChartBarDiaMes").html(data);
+            },
+            error: function () {
+            }
+        });
+
+         $.ajax({
+            url: '@Url.Action("BarDespachosDiaSemanaPartial", "FolBI")',
+            data: { r: randomnumber,
+                    FiltroEstado: filtroEstado,
+                    FiltroConductor: filtroConductor
+            },
+            success: function (data) {
+                $("#dvChartBarDiaSemana").html(data);
+            },
+            error: function () {
+            }
+        });
+
+        $.ajax({
+            url: '@Url.Action("BarDespachosHoraDíaPartial", "FolBI")',
+            data: { r: randomnumber,
+                    FiltroEstado: filtroEstado,
+                    FiltroConductor: filtroConductor
+            },
+            success: function (data) {
+                $("#dvChartBarHora").html(data);
+            },
+            error: function () {
+            }
+        }); 
+        
+        $.ajax({
+            url: '@Url.Action("BarDespachosConductores", "FolBI")',
+            data: { r: randomnumber,
+                FiltroEstado: filtroEstado
+            },
+            success: function (data) {
+                $("#dvChartBarConductores").html(data);
+            },
+            error: function () {
+            }
+        });
+    }
+
+</script>
+
+<div class="row" style="font-size:medium; font-weight:bold; padding-bottom:5px; margin-bottom:25px; border-style:groove; background-color:#BDDEFF">
+    @Html.Partial("_CallBackPartial")
+    <table border="0" style="width:100%;">
+        <tr>
+            <td>
+                Filtros:
+            </td>
+            <td style="margin-left:10px;width:180px">Inicio:
+                <input type="text" style="width:80px" maxlength="10" id="fInicio"/>
+            </td>
+            <td style="margin-left:20px;width:180px">Término:
+                <input type="text" style="width:80px" maxlength="10" id="fTermino" />
+            </td>
+            <td style="text-align:center;margin-left:20px; margin-right: 20px">
+                <div id="dvTitulo">Estado: Todos</div>
+            </td>
+            <td style="text-align:center; margin-left:20px; margin-right: 20px"> 
+                <div id="dvConductores">Conductor: Todos</div>
+            </td>
+            <td>
+                <button id="btnFiltrar" class="button button2" onclick="btnFiltrarClick();">
+                    <img border="0" title="Buscar OT" alt="Buscar OT" src="@Url.Content("~/Images/findClient.png")" />
+                </button>
+                <button id="btnDetalle" class="button button1" onclick="btnDetalleClick();">
+                    <img border="0" title="Ver Detalle" alt="Ver Detalle" src="@Url.Content("~/Images/detalle.png")" />
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+    <table>
+        <tr>
+            <td>
+                <div id="dvChartDonut">
+
+                </div>
+            </td>
+            <td>
+                <div id="dvChartBarConductores">
+
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+<br />
+<br />
+<br />
+<div id="dvChartBarDiaMes">
+
+</div>
+<br />
+<br />
+<br />
+
+<table>
+    <tr>
+        <td>
+            <div id="dvChartBarDiaSemana">
+
+            </div>
+        </td>
+        <td>
+            <div id="dvChartBarHora">
+
+            </div>
+        </td>
+    </tr>
+</table>
+
+<br />
+<br />
+<br />
+
+@Html.DevExpress().LoadingPanel(
+    settings => {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.Text = "";
+        settings.Style.Add("opacity", "1");
+        settings.Style.Add("margin-top", "40px");
+        settings.ContainerElementID = "";
+        settings.Images.LoadingPanel.Url = "~/Images/loader.gif";
+        settings.ImagePosition = ImagePosition.Bottom;
+        settings.Images.LoadingPanel.Width = Unit.Pixel(250);
+    }
+).GetHtml()
+
+
+<script type="text/javascript">
+
+    $(function () {
+        CargaInicioCarga();
+    });
+</script>
+

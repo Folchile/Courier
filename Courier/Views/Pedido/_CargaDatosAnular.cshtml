@@ -1,0 +1,243 @@
+﻿@model Courier.Models.AnularPedidoModels
+<script type="text/javascript">
+    $(function () {
+        $("#btnAnular").button()
+        .click(function () {
+            $("#dialog-Anular").html("<p>¿Está seguro(a) que desea Anular la OT?</p>");
+            $("#dialog-Anular").dialog("open");
+        });
+        $("#tabs").tabs();
+        $("#dialog-Anular").dialog({ autoOpen: false, title: "Anular Pedido", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+
+                    waitingDialog({ title: "Anular", message: "Anulando OT...<br/>" });
+                    $.ajax({
+                        url: "@Url.Content("~/Pedido/CompletarAnularOT")?OTP=" + $("#OTP").val() + "&OTD=" + $("#OTD").val(),
+                        type: "POST",
+                        success: function (data) {
+                            if (data == "True") {
+                                $("#formContent").html("");
+                                $("#OT").val("");
+                                $("#OT").focus();
+                                $("#dialog-FinPrep").html("<p>OT Anulada Exitosamente</p>");
+                                $("#dialog-FinPrep").dialog("open");                                
+                            }
+                            else {
+                                $("#dialog-FinPrep").html("<p>No fue posible Anualr la OT</p>");
+                                $("#dialog-FinPrep").dialog("open");
+                            }
+                            closeWaitingDialog();
+                        },
+                        error: function () {
+                            closeWaitingDialog();
+                            alert("Ocurrio un error mientras se ejecutaba la consulta");
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+
+    function CargaHistorialOT(OTP, OTD, IdBulto) {        
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load("@Url.Content("~/Preparacion/VerHistorialOT")?OTP=" + OTP + "&OTD=" + OTD + "&IdBulto=" + IdBulto + "&iOTP=0&iOTD=1&iBulto=0");
+    }
+    function CargaHistorialBulto(OTP, OTD, IdBulto) {
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load("@Url.Content("~/Preparacion/VerHistorialOT")?OTP=" + OTP + "&OTD=" + OTD + "&IdBulto=" + IdBulto + "&iOTP=0&iOTD=1&iBulto=1");
+    }
+    function VerDocumentosAsociados(OTP, OTD) {
+        $("#dialog-documentos").dialog("open");
+        $("#dialog-documentos").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-documentos").load("@Url.Content("~/Preparacion/ListaDocumentos")?OTP=" + OTP + "&OTD=" + OTD);
+    }
+    $(function () {
+        $("#btnVerDocumentosAsociados").button()
+        .click(function () {
+            VerDocumentosAsociados($("#OTP").val(), $("#OTD").val());
+        });
+
+        $("#btnVerHistorialOT").button()
+        .click(function () {
+            CargaHistorialOT($("#OTP").val(), $("#OTD").val(), 0);
+        });
+
+        $("#dialog-FinPrep").dialog({ autoOpen: false, title: "Resultado", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-HistorialOT").dialog({ autoOpen: false, title: "Historial", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-documentos").dialog({ autoOpen: false, title: "Documentos Asociados", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+</script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<div id="dialog-FinPrep"></div>
+<div id="dialog-documentos"></div>
+<div id="dialog-HistorialOT" style="min-height:300px;min-width:500px;"></div>
+<div id="dialog-Anular"></div>
+<input type="hidden" id="OTP" name="OTP" value="@Model.DatosAnular.PK_FOL_OTP_ID" />
+<input type="hidden" id="OTD" name="OTD" value="@Model.DatosAnular.PK_FOL_OTD_ID" />
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Datos del Pedido</a></li>		    
+    </ul>        
+    <div id="tabs-1">   
+        <table>
+            <tr>
+                <td>Cliente</td>
+                <td>Servicio</td>                
+                <td>Nombre Destinatario</td>
+                <td>Rut</td>
+                <td>Teléfono</td>
+            </tr>
+            <tr>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_CLI_EMP_RAZON_SOCIAL&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_PAR_SER_NOMBRE&nbsp;</div></td>                
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_DESTINATARIO_NOMBRE&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_DESTINATARIO_RUT&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_TELEFONO&nbsp;</div></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>Sucursal</td>
+                <td>Región</td>
+                <td>Comuna</td>
+                <td>Dirección</td>                
+            </tr>
+            <tr>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_PAR_SUC_NOMBRE&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_PAR_REG_NOMBRE&nbsp;</div></td>                
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_PAR_COM_NOMBRE (@Model.DatosAnular.FL_PAR_COM_CODIGO)&nbsp;</div></td>                
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_DESTINATARIO_DIRECCION&nbsp;@Model.DatosAnular.FL_FOL_OTD_DESTINATARIO_NUMERO&nbsp;</div></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>Fecha Estimada Entrega</td>
+                <td>Referencia</td>                
+            </tr>
+            <tr>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_FECHA_ESTIMADA&nbsp;</div></td>
+                <td><div class="textfield_effect">@Model.DatosAnular.FL_FOL_OTD_REFERENCIA1&nbsp;</div></td>    
+                <td>
+                <button id="btnVerHistorialOT">
+                    <div style="float:left;width:130px;">       
+                    <div style="float:left;"><img src="@Url.Content("~/Images/file_temporary.png")?" /></div>                 
+                    <div style="float:left;">&nbsp;Ver Historial OT</div>                        
+                    </div>                       
+                </button>
+            </td>
+            <td>
+                <button id="btnVerDocumentosAsociados">
+                    <div style="float:left;width:130px;">       
+                    <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/folder_explore.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Doc. Asociados</div>                        
+                    </div>                       
+                </button>
+            </td>
+            </tr>
+        </table>
+
+        @{
+            var grid = new WebGrid(Model.ListaBultos, rowsPerPage: 9, ajaxUpdateContainerId: "myGrid");    
+        } 
+        <div style="width:100%">
+            @if (Model.DatosAnular.PK_FOL_EST_ID != 13)
+            {
+                <button id="btnAnular" style="float:right">
+                    <div style="float:left;width:80px;">       
+                    <div style="float:left;"><img alt="Agregar Bulto" src="@Url.Content("~/Images/deletered.png")" /></div>                 
+                    <div style="float:left;">&nbsp;Anular</div>                        
+                    </div>                       
+                </button>   
+            }
+            else
+            {
+                <p style="float:right;color:Red;">OT ya se encuentra Anulada</p>
+            }
+        </div>
+        <div  id="myGrid" style="min-width:600px;">
+        <div>
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {                
+                    
+                grid.Column("PK_FOL_BLT_ID","Cod.Bulto"),     
+                grid.Column("FL_FOL_BLT_LARGO","Largo(CM)",format:@<text>
+                <div style="float:right">
+                    @if (item.FL_FOL_BLT_LARGO != null)
+                    {
+                    @String.Format("{0:0.000}", item.FL_FOL_BLT_LARGO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_ALTO","Alto(CM)",format:@<text>
+                <div style="float:right">    
+                @if (item.FL_FOL_BLT_ALTO != null)
+                    {            
+                @String.Format("{0:0.000}", item.FL_FOL_BLT_ALTO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_ANCHO","Ancho(CM)",format:@<text>
+                <div style="float:right">
+                @if (item.FL_FOL_BLT_ANCHO != null)
+                    {
+                    @String.Format("{0:0.000}", item.FL_FOL_BLT_ANCHO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_PESO","Peso(KG)",format:@<text>
+                <div style="float:right">
+                @if (item.FL_FOL_BLT_PESO != null)
+                    {
+                    @String.Format("{0:0.000}", item.FL_FOL_BLT_PESO)
+                    }
+                </div>
+                </text>),
+                grid.Column("FL_FOL_BLT_PESO_VOLUMETRICO","PesoVol.",format:@<text>
+                <div style="float:right">
+                @if (item.FL_FOL_BLT_PESO_VOLUMETRICO != null)
+                    {
+                    @String.Format("{0:0.000}", item.FL_FOL_BLT_PESO_VOLUMETRICO)
+                    }
+                </div>
+                </text>)                          
+            })
+        </div>
+    </div>
+    </div>
+</div>

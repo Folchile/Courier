@@ -1,0 +1,325 @@
+﻿@model Courier.Models.ManifiestoDocumentoModels
+<script type="text/javascript">
+    $(function () {
+        $("#01tabs").tabs();
+        $("#btnCerrarManifiesto").button().click(function () {
+            $("#dialog-consulta-man").html("<p>¿Esta seguro(a) que desea cerrar el manifiesto?</p>");
+            $("#dialog-consulta-man").dialog("open");
+        });
+        $("#dialog-error").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    $("#NumeroDocumento").val("");
+                    $("#NumeroDocumento").focus();
+                }
+            }
+        });
+        $("#dialog-consulta-man").dialog({ autoOpen: false, width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    ValidaCerrarManifiesto();
+                    $(this).dialog("close");
+
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#downloadManifiesto").button().click(function () {
+            DescargarPdf();
+        });
+    })
+    function ChangeRutCliente(Rut) {
+        waitingDialog({ title: "Cargando", message: "Modificando Manifiesto...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);        
+
+        $.ajax({
+            url: '@Url.Action("GuardarRutCliente", "Documento")',
+            data:
+            {
+                r: randomnumber,
+                RutCliente: Rut.substring(0, Rut.length - 2),                
+                CodBuscarManifiesto: $("#CodBuscarManifiesto").val()
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == true) {
+                    CargarCuerpoManifiesto(); //función de Manifiesto.cshtml
+                }
+                else {
+                    $("#dialog-error").html(data.Mensaje);
+                    $("#dialog-error").dialog("open");
+                }
+            },
+            error: function () {
+                closeWaitingDialog();
+            }
+        });
+    }
+    function ValidaCerrarManifiesto() {
+        waitingDialog({ title: "Cargando", message: "Modificando Manifiesto...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("ValidaCerrarManifiesto", "Documento")',
+            data:
+            {
+                r: randomnumber,
+                CodBuscarManifiesto: $("#CodBuscarManifiesto").val()
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == true) {
+                    CerrarManifiestoDoc();
+                }
+                else {
+                    $("#dialog-error").html(data.Mensaje);
+                    $("#dialog-error").dialog("open");
+                }
+            },
+            error: function () {
+                alert("No fue posible cerrar el manifiesto");
+                closeWaitingDialog();
+            }
+        });
+    }
+    function CerrarManifiestoDoc() {
+        waitingDialog({ title: "Cargando", message: "Cerrando Manifiesto...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("CerrarManifiestoDoc", "Documento")',
+            data:
+            {
+                r: randomnumber,
+                CodBuscarManifiesto: $("#CodBuscarManifiesto").val()
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == true) {
+                    CargarCuerpoManifiesto(); //función de Manifiesto.cshtml
+                }
+                else {
+                    $("#dialog-error").html(data.Mensaje);
+                    $("#dialog-error").dialog("open");
+                }
+            },
+            error: function () {
+                alert("No fue posible cerrar el manifiesto");
+                closeWaitingDialog();
+            }
+        });
+    }
+    function ValidaDocumento(Valor) {
+        if ($("#RutCliente").val() == "") {
+            $("#dialog-error").html('<p>' + 'Debe seleccionar un cliente para el manifiesto' + '</p>');
+            $("#dialog-error").dialog("open");
+        }
+        else {
+            waitingDialog({ title: "Cargando", message: "Verificando Estado Documento...<br/>" });
+            var randomnumber = Math.floor(Math.random() * 11111111);
+            var Rut = $("#RutCliente").val();
+            $.ajax({
+                url: '@Url.Action("VerificarEstadoDocumento", "Documento")',
+                data:
+            {
+                r: randomnumber,
+                NumeroDocumento: Valor,
+                RutCliente: Rut
+            },
+                success: function (data) {
+                    closeWaitingDialog();
+                    if (data.Ok == false) {
+                        $("#dialog-error").html('<p>' + data.Mensaje + '</p>');
+                        $("#dialog-error").dialog("open");
+                    }
+                    else {
+                        GuardarDocumento();
+                    }
+                },
+                error: function () {
+                    alert("No fue posible Verificar la información");
+                    closeWaitingDialog();
+                }
+            });
+        }
+    }
+    function GuardarDocumento() {
+        waitingDialog({ title: "Cargando", message: "Guardando Documento...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("AsociarDocumentoManifiesto", "Documento")',
+            data:
+            {
+                r: randomnumber,
+                NumeroDocumento: $("#NumeroDocumento").val(),
+                CodBuscarManifiesto: $("#CodBuscarManifiesto").val()
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == true) {
+                    CargarCuerpoManifiesto(); //función de Manifiesto.cshtml
+                } else {
+                    $("#dialog-error").html(data.Mensaje);
+                    $("#dialog-error").dialog("open");
+                    $("#NumeroDocumento").val("");                    
+                }
+            },
+            error: function () {
+                alert("No fue posible guardar la información");
+                closeWaitingDialog();
+            }
+        });
+    }
+    function EliminarItem(DOA_NUMERO, TDO_ID, MDO_ID) {
+        waitingDialog({ title: "Procesando", message: "Quitando Documento del Manifiesto...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        $.ajax({
+            url: '@Url.Action("EliminarRelacionManifiestoDoc", "Documento")',
+            data:
+            {
+                r: randomnumber,
+                DOA_NUMERO: DOA_NUMERO,
+                TDO_ID: TDO_ID,
+                CodBuscarManifiesto: MDO_ID,
+                RutCliente: $("#RutCliente").val()
+            },
+            success: function (data) {
+                closeWaitingDialog();
+                if (data.Ok == true) {
+                    CargarCuerpoManifiesto();
+                } else {
+                    $("#dialog-error").html(data.Mensaje);
+                    $("#dialog-error").dialog("open");
+                }
+            },
+            error: function () {
+                closeWaitingDialog();                
+                $("#dialog-error").html("<p>No fue posible eliminar la información</p>");
+                $("#dialog-error").dialog("open");
+                
+            }
+        });
+    }
+    function DescargarPdf() {
+        window.open('@Url.Action("ManifiestoDocumento","Reporte")?MDO_ID=' + $("#CodBuscarManifiesto").val(), '_blank');
+    }
+</script>
+<div id="01tabs">    
+    <ul>		    
+        <li><a href="#01tabs-1">Datos Manifiesto</a></li>		    
+    </ul>        
+    <div id="01tabs-1">  
+        @Html.HiddenFor(m => m.RutCliente)
+        <table border="0" cellpadding="4" cellspacing="0">
+            <tr>
+                <td>@Html.LabelFor(m=>m.CodManifiesto)</td>
+                <td>@Html.LabelFor(m=>m.Estado)</td>
+                <td>@Html.LabelFor(m=>m.Fecha)</td>
+                <td>@Html.LabelFor(m => m.Cliente)</td>        
+                <td></td>            
+            </tr>
+            <tr>
+                <td><div style="min-width:120px;" class="textfield_effect">@Model.CodBuscarManifiesto</div></td>
+                <td><div style="min-width:120px;" class="textfield_effect">@Model.Estado</div></td>
+                <td><div style="min-width:120px;" class="textfield_effect">@Model.Fecha.ToShortDateString()</div></td>
+                <td><div style="min-width:120px;" class="textfield_effect">@Model.Cliente</div></td>                                
+                <td>
+                @if(Model.Estado=="Abierto")
+                {    
+                    <a href="#"><img alt="Buscar Cliente" title="Buscar Cliente" id="imgBuscarCliente" style="width:22px;height:22px" border="0"  src="@Url.Content("~/images/kghostview.png")"/></a>
+                }    
+                </td>                                  
+            </tr>
+        </table>
+        @if(Model.Estado=="Abierto")
+        {
+        <hr />
+        <div style="float:right">
+            <table>    
+                <tr>        
+                    <td>
+                        <button id="btnCerrarManifiesto">
+                            <div style="float:left;width:210;">       
+                                <div style="float:left;"><img src="@Url.Content("~/Images/document_letter_forward.png")" /></div>                 
+                                <div style="float:left;">&nbsp;Cerrar Manifiesto</div>                        
+                            </div>                       
+                        </button>                                                   
+                    </td>                        
+                </tr>
+            </table>
+        </div>
+        <table>
+            <tr><td>@Html.LabelFor(m=>m.NumeroDocumento)</td><td>@Html.TextBoxFor(m => m.NumeroDocumento)</td></tr>
+        </table>  
+        }    
+        else
+        {
+            <button id="downloadManifiesto">
+                    <div style="float:left;width:210;">       
+                        <div style="float:left;"><img src="@Url.Content("~/Images/doc_pdf.png")" /></div>                 
+                        <div style="float:left;">&nbsp;Descargar Manifiesto</div>                        
+                    </div>                       
+                </button> 
+        }
+        @{        
+            var grid = new WebGrid(Model.ListaDOA, rowsPerPage: 10, ajaxUpdateContainerId: "gridDocumentos");    
+        } 
+        <div id="gridDocumentos">                
+            @grid.GetHtml(
+            fillEmptyRows: true,
+            alternatingRowStyle: "fila-alternativa",
+            headerStyle: "encabezado-grid",
+            tableStyle: "mGrid",
+            footerStyle: "pie-grid",
+            mode: WebGridPagerModes.All,
+            firstText: "<< Primera",
+            previousText: "< Anterior",
+            nextText: "Siguiente >",
+            lastText: "Última >>",
+            columns: new[]
+            {      
+                grid.Column("FL_PAR_TDO_NOMBRE","Tipo"),
+                grid.Column("PK_FOL_DOA_NUMERO","N°"),
+                grid.Column("FL_FOL_DOA_FECHA","Fecha"),
+                grid.Column("FL_FOL_DOA_FECHA","Opciones",@<text>
+                     @if(Model.Estado=="Abierto")
+                     {           
+                         <a href='#' onclick="javascript:EliminarItem(@item.PK_FOL_DOA_NUMERO,@item.PK_PAR_TDO_ID,@item.PK_FOL_MDO_ID)"><img alt="Eliminar" src='@Url.Content("~/images/cross.png")' title="Eliminar" border="0" /></a>
+                     }
+                </text>),
+            })
+    </div>
+</div>
+</div>
+<div id="dialog-error" title="Error"></div>
+<div id="dialog-consulta-man" title="Consulta"></div>
+@*Inicio Control Busqueda Rut*@
+<div id="CargaBusquedaGenerico"></div>
+<script type="text/javascript">
+    $(function () {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $("#CargaBusquedaGenerico").load('@Url.Action("BuscarCliente", "Generico")?r=' + randomnumber + '&TextoFiltro=',
+        function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert("No fue posible actualizar la información");
+            }
+        });
+        $("#NumeroDocumento").focus();
+        $('input#NumeroDocumento').keypress(function (e) {
+            if (e.keyCode == '13') {
+                if ($(this).val().trim() != "") {
+                    e.preventDefault();
+                    ValidaDocumento($(this).val());
+                }
+                else {
+                    $("#dialog-error").html("<p>Debe ingresar un valor</p>");
+                    $("#dialog-error").dialog("open");
+                }
+            }
+        });
+    })   
+</script>
+@*Fin Control Busqueda Rut*@

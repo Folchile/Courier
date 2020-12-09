@@ -1,0 +1,9 @@
+﻿@model Courier.Models.BusquedaModels
+@if (Model.ListaLocalidad != null)
+{
+    @Html.DropDownListFor(m => m.LocalidadDestino, Model.ListaLocalidad, "-- Seleccione Localidad (Opcional) --")
+}
+else
+{
+    @Html.DropDownListFor(m => m.LocalidadDestino, Model.ListaBlancoLocalidad)
+}

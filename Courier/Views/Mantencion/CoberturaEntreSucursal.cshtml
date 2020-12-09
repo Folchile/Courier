@@ -1,0 +1,36 @@
+﻿@model Courier.Models.EntreSucursalesModels
+@{
+    ViewBag.Title = "Cobertura Entre Sucursales";
+    
+}
+
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script type="text/jscript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+    
+</script>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">@Session["SucName"]</a></li>
+        <li><a href="#tabs-2">Todas</a></li>
+	</ul>
+	<div id="tabs-1">                
+        @{        
+            var oModel = new Courier.Models.ListaCoberturaModels();
+            oModel.ListaCobertura = Model.ListaCobertura;
+            oModel.ContainerId = "grid1";
+        }
+        @Html.Partial("_ListaEntreSucursal",oModel)                        
+    </div>
+    <div id="tabs-2">
+        @{                    
+            oModel.ListaCobertura = Model.ListaCoberturaGeneral;
+            oModel.ContainerId = "grid2";
+        }
+        @Html.Partial("_ListaEntreSucursal",oModel)   
+    </div>
+    <img alt="Con Cobertura" title="Con Cobertura" style="border:0;" src="@Url.Content("~/Images/tick.png")" /> Con Cobertura 
+    <img alt="Sin Cobertura" title="Sin Cobertura" style="border:0;" src="@Url.Content("~/Images/cross.png")" /> Sin Cobertura
+</div>

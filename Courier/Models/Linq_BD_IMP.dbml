@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BD_IMPORT" Class="Linq_BD_IMPDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=BD_IMPORT;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BD_IMPORTConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.IMPORT_MOVISTAR" Member="IMPORT_MOVISTAR">
+    <Type Name="IMPORT_MOVISTAR">
+      <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="RUT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DV" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="CORREO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CLAVE" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

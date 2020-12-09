@@ -1,0 +1,158 @@
+﻿@model Courier.Models.RestriccionesModels
+@{
+    ViewBag.Title = "_FormularioRestricciones";
+}
+<script type="text/javascript">
+    $(document).ready(function(){
+        CargaListaRestricciones();
+    })
+    function CargaListaRestricciones() {
+        var randomnumber = Math.floor(Math.random() * 1111111);        
+        $("#Restabs-1").html("<div style='text-align:center;'><img src='@Url.Content("~/Images/8.gif")'></div>");                      
+        $.ajax({
+            url: '@Url.Action("_ListaRestricciones", "Administracion")',
+            data: {
+                _r: randomnumber,
+                USU_RUT: '@Model.USU_RUT'
+            }
+        })
+        .done(function (data) {
+            $("#Restabs-1").html(data);            
+        })
+        .error(function () {
+            $("#dialogm-gral").html("<p>No fue posible cargar la lista de restricciones</p>");
+            $("#dialogm-gral").dialog("open");
+            $("#Restabs-1").html("");
+        })
+        .complete(function () {           
+            borrar_contenido();
+        });
+    }
+    function AgregaNuevaRestriccion() {
+        var randomnumber = Math.floor(Math.random() * 1111111);        
+        waitingDialog({ title: "Guardando", message: "Guardando restricción...<br/>" });
+        $.ajax({
+            url: '@Url.Action("_GuardaRestriccion", "Administracion")',
+            data: {
+                _r: randomnumber,
+                USU_RUT: '@Model.USU_RUT',
+                resServicio: $("#resServicio").val()
+            }
+        })
+        .done(function (data) {
+            if (data.Ok==true)
+            {                
+                CargaListaRestricciones();
+            }
+            else
+            {
+                $("#dialogm-gral").html("<p>Error al guardar la información</p>" + data.Mensaje);
+                $("#dialogm-gral").dialog("open");
+            }
+            
+        })
+        .error(function () {
+            $("#dialogm-gral").html("<p>No fue posible realizar la acción</p>");
+            $("#dialogm-gral").dialog("open");
+            $("#Restabs-1").html("");
+        })
+        .complete(function () {    
+            closeWaitingDialog();       
+            borrar_contenido();
+        });
+    }
+    function ProcesaEliminaRestriccion() {
+        var randomnumber = Math.floor(Math.random() * 1111111);        
+        waitingDialog({ title: "Guardando", message: "Guardando restricción...<br/>" });
+        $.ajax({
+            url: '@Url.Action("_EliminaRestriccion", "Administracion")',
+            data: {
+                _r: randomnumber,
+                USU_RUT: '@Model.USU_RUT',
+                resServicio: $("#TmpEliminaRes").val()
+            }
+        })
+        .done(function (data) {
+            if (data.Ok==true)
+            {                
+                CargaListaRestricciones();
+            }
+            else
+            {
+                $("#dialogm-gral").html("<p>Error al eliminar la información</p>" + data.Mensaje);
+                $("#dialogm-gral").dialog("open");
+            }
+            
+        })
+        .error(function () {
+            $("#dialogm-gral").html("<p>No fue posible realizar la acción</p>");
+            $("#dialogm-gral").dialog("open");
+            $("#Restabs-1").html("");
+        })
+        .complete(function () {    
+            closeWaitingDialog();       
+            borrar_contenido();
+        });
+    }
+    function ResCargaListaServicio(Empresa) {
+        waitingDialog({ title: "Buscando", message: "Buscando Lista Servicios...<br/>" });
+        $("#resServicio").load('@Url.Action("DropDownServicio","Administracion")?CLI_RUT=' + Empresa + ' #Servicio option', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+        });
+    }
+    $(function () {
+        $("#ResbtnAgregarServicio").button();
+        $("#Restabs").tabs();
+        $("#dialog-consultaeliminarestriccion").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Consulta', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    ProcesaEliminaRestriccion();
+                    $(this).dialog("close");
+                }
+                , Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+    function ValidaAgregaRestriccion()
+    {
+        if ($("#resServicio").val()=="")
+        {
+             $("#dialogm-gral").html("<p>Error: Debe seleccionar un servicio</p>");
+             $("#dialogm-gral").dialog("open");
+        }else{
+            AgregaNuevaRestriccion();
+        }
+    }
+    function EliminaRestriccion(Servicio)
+    {
+        $("#TmpEliminaRes").val(Servicio);
+        $("#dialog-consultaeliminarestriccion").html("<p>¿Está seguro(a) que desea eliminar el servicio de la lista?</p>");
+        $("#dialog-consultaeliminarestriccion").dialog("open");
+    }
+</script>
+<div id="dialog-consultaeliminarestriccion"></div>
+<table>
+    <tr>
+        <td valign="top">@Html.DropDownListFor(m => m.resCliente, @Model.ListaEmpresas, "-- Seleccione Empresa --", new { @onchange = "javascript:ResCargaListaServicio(this.value);",@style="height:25px;" })</td>
+        <td valign="top">@Html.DropDownListFor(m => m.resServicio, @Model.ListaServicios, "-- Seleccione Servicio --", new { @style = "height:25px;" })</td>
+        <td valign="top">
+            <input type="button" value="Agregar" onclick="javascript:ValidaAgregaRestriccion();" id="ResbtnAgregarServicio"/>
+        </td>
+    </tr>
+</table>
+<input type="hidden" id="TmpEliminaRes" />
+<div id="Restabs" style="">
+	<ul>
+		<li><a href="#Restabs-1">Servicios Habilitados</a></li>
+	</ul>
+	<div id="Restabs-1">
+    </div>
+</div>
+<div class="info">
+Si agrega servicios al listado, el usuario tendrá solo los servicios del listado disponibles a través de fuex.cl
+</div>

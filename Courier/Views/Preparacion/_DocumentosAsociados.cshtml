@@ -1,0 +1,134 @@
+﻿@model Courier.Models.DocumentosModels
+@{
+    ViewBag.Title = "Documentos";
+}
+<script type="text/javascript">   
+    function ActualizaGridDocumentos(OTP, OTD) {
+        $("#gridDocumentos").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#gridDocumentos").load('@Url.Content("~/Preparacion/ListaDocumentos" )?OTP=' + OTP + '&OTD=' + OTD + ' #gridDocumentos');
+    }
+    $(function () {
+        $("#AgregarDocumento").button().click(function () {
+            CargaFormularioDoa(0, "");
+        });
+    })
+    
+    function ValidarFormularioDOA1() {
+        waitingDialog({ title: "Guardando", message: "Guardando Información...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $.ajax({
+            url: '@Url.Action("ValidarFormularioDOA1","Preparacion")',
+            data: {
+                r: randomnumber,
+                OTP: $("#OTP").val(),
+                OTD: $("#OTD").val(),
+                Edita: $("#Edita").val(),
+                DOA_ID: $("#DOA_ID").val(),
+                Tipo: $("#Tipo").val(),
+                Numero: $("#Numero").val(),
+                ContraPago: $("#ContraPago").val()
+            },
+            type: "POST",
+            success: function (data) {                
+                if (data.Ok == true) {
+                    $("#dialog-formulariodoa").dialog("close");
+                    ActualizaGridDocumentos($("#OTP").val(), $("#OTD").val());
+                    $("#Tipo").val("");
+                    $("#Numero").val("");
+                    $("#Tipo").focus();                    
+                }
+                else {
+                    $("#dialog-resultadoagregardoa").html('<p>' + data.Mensaje + '</p>');
+                    $("#dialog-resultadoagregardoa").dialog("open");
+                }
+                closeWaitingDialog();
+            },
+            error: function () {
+                alert("Ocurrio un error mientras se ejecutaba la consulta");
+                closeWaitingDialog();
+            }
+        });
+    }
+    $("#dialog-formulariodoa").dialog({ autoOpen: false, title: "Documentos Asociados", width: 'auto', modal: true,
+        buttons: {
+            Guardar: function () {
+                ValidarFormularioDOA1();
+            },
+            Cancelar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#dialog-resultadoagregardoa").dialog({ autoOpen: false, title: "Error", width: 'auto', modal: true,
+        buttons: {
+            Aceptar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    function CargaFormularioDoa(DOA_ID, Edita) {
+        var OTP=$("#OTP").val();
+        var OTD = $("#OTD").val();
+        waitingDialog({ title: "Cargando Formulario", message: "Cargando Datos...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11)
+        $("#dialog-formulariodoa").load('@Url.Content("~/Preparacion/FormularioAgregaEditaDOA")?DOA_ID='+ DOA_ID +'&Edita='+ Edita +'&OTP=' + OTP + '&OTD=' + OTD + '&r=' + randomnumber, function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+            else {
+                $("#dialog-formulariodoa").dialog("open");
+            }
+        });
+    }    
+</script>
+<div id="dialog-resultadoagregardoa"></div>
+<div id="dialog-formulariodoa"></div>
+@if (Model.Estado == 1 || Model.Estado==20 || Model.EsAdmin==true)
+{
+    <div style="text-align:right;width:100%;">
+        <button id="AgregarDocumento">
+            <div style="float:left;width:130;">       
+                <div style="float:left;"><img alt="agregar" title="Agregar Documento" src='@Url.Content("~/Images/add.png")' /></div>                 
+                <div style="float:left;">&nbsp;Agregar Doc.</div>                    
+            </div>                       
+        </button>
+    </div>
+}
+  
+    @if (Model.ListaDocumentos != null)
+    {
+        var grid = new WebGrid(Model.ListaDocumentos, rowsPerPage: 5, ajaxUpdateContainerId: "gridDocumentos");
+        
+            <div id="gridDocumentos">
+                @grid.GetHtml(
+                fillEmptyRows: true,
+                alternatingRowStyle: "fila-alternativa",
+                headerStyle: "encabezado-grid",
+                tableStyle: "mGrid",
+                footerStyle: "pie-grid",
+                mode: WebGridPagerModes.All,
+                firstText: "<< Primera",
+                previousText: "< Anterior",
+                nextText: "Siguiente >",
+                lastText: "Última >>",
+                columns: new[]
+                {                
+                    grid.Column("Fecha","Fecha Ingreso"), 
+                    grid.Column("Nombre","Tipo"), 
+                    grid.Column("Numero","N° Documento"),
+                    grid.Column("Contrapago","ContraPago"),
+                    grid.Column("Numero","Editar",format:@<text>
+                    @if (Model.Estado == 1 || Model.Estado == 20 || Model.EsAdmin == true)
+                    {
+                        <a href='#' onclick='Javascript:CargaFormularioDoa(@item.DOA_ID,"Editar")'><img alt="Editar" border="0" title="Editar" src='@Url.Content("~/Images/pencil_edit.png")' /></a>
+                    }
+                    </text>)
+                })
+            </div>        
+    }
+    else
+    {
+        <p>No existen documentos asociados.</p>
+    } 
+    

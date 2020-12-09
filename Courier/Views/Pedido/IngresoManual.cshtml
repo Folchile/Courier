@@ -1,0 +1,205 @@
+﻿@model Courier.Models.IngresoMasivoModel
+@{HtmlHelper.UnobtrusiveJavaScriptEnabled = true;}     
+           
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    
+    
+    function borrar_contenido()
+    {        
+        $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');       
+    }
+    $(function () {                
+        $("#dialog:ui-dialog").dialog("destroy");           
+        $("#dialog-sumario").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                },               
+            }
+        });
+        $("#CargarFormulario")
+            .button()
+            .click(function (event) {
+                $("#idFormulario").html("");
+                event.preventDefault();
+                borrar_contenido();
+                $(".validation-summary-errors").show();
+                if ($("#frmEnviar").valid() == true) {                         
+                    $("#frmEnviar").submit();                                 
+                }                
+            });
+
+        
+            
+    });
+    function ChangeRutCliente(Rut) {
+    $("#divservicio").hide();
+    $("#imgCargandoServicio").show();
+    var randomnumber = Math.floor(Math.random() * 11111111);
+    $("#Servicio").load('@Url.Action("GetListaServicios", "Generico")?r=' + randomnumber + '&RutEmpresa=' + Rut + ' #Servicio option',
+                function (response, status, xhr) {
+                    $("#imgCargandoServicio").hide();
+                    $("#divservicio").show();
+                    if (status == 'error') {
+                        alert("No fue posible obtener los servicios del cliente");
+                    }
+                });
+}
+    function CargarUltimoMovimientoUsuario() {
+        //waitingDialog({ title: "Buscando", message: "Buscando último movimiento...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 111111111);        
+        $.ajax({            
+            url: '@Url.Action("UltimoMovimientoUsuario", "Validation")?r=' + randomnumber,
+            type: "POST",
+            success: function (data) {                                
+                $("#RutCliente").val(data);
+                ChangeRutCliente(data);
+                //callService(data);
+                //closeWaitingDialog();
+            },
+            error: function () {
+                //closeWaitingDialog();
+            }
+        });
+    }
+
+    function Inicio() {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });        
+    }
+    function Fin() {        
+        closeWaitingDialog();
+        alert("No fue posible cargar la información");
+    }  
+    function FinSuccess(data) {    
+        $(".validation-summary-errors").hide();    
+        $("#idFormulario").html(data);
+        closeWaitingDialog();
+    }   
+    
+</script>
+
+
+@if (Model.opt=="1")        
+{
+    ViewBag.Title = "Ingreso Manual";   
+}
+else
+{
+    ViewBag.Title = "Ingreso Retiro Programado";   
+}
+
+@if (Session["SucName"] == null || Session["Menu"] == null || Session["Menu"].ToString() == "" || Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+{
+    var oVC = new Courier.Controllers.ValidationController();
+    var oResult=oVC.Sucursal(User.Identity.Name.ToString());
+    Session["SucName"] = oResult.Nombre;
+    Session["SucId"] = oResult.id;        
+    Session["RutEmpresa"] = "";
+    Session["SucName2"] = oResult.Nombre;
+    if (oResult.Tipo == 2)
+    {
+        Session["SucName"] = oResult.NombreEmpresa;
+        Session["RutEmpresa"] = oResult.idEmpresa + "-" + oResult.DvEmpresa;     
+    }    
+} 
+
+@using (Ajax.BeginForm("CargaFormularioIngresoManual", "Pedido", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmEnviar" }))
+{
+    <table border="0">
+
+        <tr>
+            <td rowspan="2">            
+                @*Inicio Control Busqueda Rut*@                             
+                @if (Session["RutEmpresa"] != string.Empty && Session["RutEmpresa"]!=null)
+                {
+                    @Html.HiddenFor(m => m.RutCliente)
+                }
+                <table cellspacing="1">
+                    <tr>  
+      
+                        @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+                        {
+                        <td>@Html.LabelFor(m => m.RutCliente)</td>
+        
+                        <td></td>
+                        }        
+                        <td>@Html.LabelFor(m => m.Servicio)</td>        
+                    </tr>
+                    <tr>       
+                         @if (Session["RutEmpresa"] == string.Empty || Session["RutEmpresa"] == null)
+                         {     
+                            <td>@Html.TextBoxFor(m => m.RutCliente, new { size = 10, maxlength = 10, onchange = "javascript:ChangeRutCliente(this.value);" })</td>                
+                            <td><a href="#"><img alt="Buscar Cliente" title="Buscar Cliente" id="imgBuscarCliente" style="width:22px;height:22px" border="0"  src="@Url.Content("~/images/kghostview.png")"/></a></td>                 
+                         }
+                        <td>            
+                            <div id="divservicio">
+                                @Html.DropDownListFor(m => m.Servicio, Model.oListaServicios, new { @title="Servicio" })
+                            </div>           
+                                <div id="imgCargandoServicio">
+                                <img alt="Cargando" src="@Url.Content("~/Images/38.gif")" border="0" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                @*Fin Control Busqueda Rut*@
+                @*@Html.Partial("_ControlClienteServicio", Model)*@
+            </td>
+            <td>
+            &nbsp;
+            </td>
+         </tr>
+         <tr>
+             <td>
+                <button id="CargarFormulario">
+                    <div style="float:left;width:80px;">       
+                        <div style="float:left;"><img alt="Next" src='@Url.Content("~/Images/gnome_go_next.png")' /></div>                 
+                        <div style="float:left;">&nbsp;Procesar</div>                        
+                    </div>                       
+                </button>      
+             </td>
+         </tr>         
+    </table>
+    @Html.ValidationSummary()    
+    @Html.HiddenFor(m=>m.opt)
+  }
+<div id="idFormulario">
+</div>
+
+@*Inicio Control Busqueda Rut*@
+<div id="CargaBusquedaGenerico"></div>
+<script type="text/javascript">
+    $(function () {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        $("#CargaBusquedaGenerico").load('@Url.Action("BuscarCliente", "Generico")?r=' + randomnumber + '&TextoFiltro=',
+        function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert("No fue posible actualizar la información");
+            }
+            else {
+                CargarUltimoMovimientoUsuario();
+                $("#imgCargandoServicio").hide();
+            }
+        });
+
+        $("#Servicio").change(function () {
+            $("#idFormulario").html("");
+        });        
+    })
+</script>
+@*Fin Control Busqueda Rut*@

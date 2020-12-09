@@ -1,0 +1,229 @@
+﻿@model Courier.Models.SucursalModels
+<script type="text/javascript">
+    $(function () {
+        $("#tabs2").tabs();
+    });    
+</script>
+
+<script type="text/jscript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+
+
+<div id="tabs2">
+	<ul>
+		<li><a href="#tabs-1">Con Cobertura</a></li>
+        <li><a href="#tabs-2">Sin Cobertura</a></li>
+	</ul>
+	<div id="tabs-1">        
+        <div id="grid1">
+        @{
+            var grid = new WebGrid(Model.oCobertura, rowsPerPage: 11, ajaxUpdateContainerId: "grid1");    
+        } 
+
+                    @grid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {      
+                        grid.Column("NombreRegion","Región"), 
+                        grid.Column("NombreComuna","Comuna"), 
+                        grid.Column("Lunes","Lunes",format:
+                        @<text>
+                            
+                            @if (item.Lunes==true){
+                                <img alt="Lunes" title="Lunes" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Lunes" title="Lunes"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        grid.Column("Martes","Martes",format:
+                        @<text>
+                            
+                            @if (item.Martes==true){
+                                <img alt="Martes" title="Martes"  style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Martes" title="Martes"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        grid.Column("Miercoles","Miércoles",format:
+                        @<text>
+                            
+                            @if (item.Miercoles==true){
+                                <img alt="Miércoles" title="Miércoles"  style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Miércoles" title="Miércoles"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        grid.Column("Jueves","Jueves",format:
+                        @<text>
+                            
+                            @if (item.Jueves==true){
+                                <img alt="Jueves" title="Jueves" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Jueves" title="Jueves" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        grid.Column("Viernes","Viernes",format:
+                        @<text>
+                            
+                            @if (item.Viernes==true){
+                                <img alt="Viernes" title="Viernes" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Viernes" title="Viernes" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        grid.Column("Sabado","Sábado",format:
+                        @<text>
+                            
+                            @if (item.Sabado==true){
+                                <img alt="Sabado" title="Sabado" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Sabado" title="Sabado" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        grid.Column("Domingo","Domingo",format:
+                        @<text>
+                            
+                            @if (item.Domingo==true){
+                                <img alt="Domingo" title="Domingo" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Domingo" title="Domingo" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>)
+                        
+                
+                    })
+        </div>        
+    </div>
+    <div id="tabs-2">    
+        <div id="grid2">
+        @{
+            var sgrid = new WebGrid(Model.oSinCobertura, rowsPerPage: 11, ajaxUpdateContainerId: "grid2");    
+        } 
+
+                    @sgrid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {      
+                        sgrid.Column("NombreRegion","Región"), 
+                        sgrid.Column("NombreComuna","Comuna"), 
+                        sgrid.Column("Lunes","Lunes",format:
+                        @<text>
+                            
+                            @if (item.Lunes==true){
+                                <img alt="Lunes" title="Lunes" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Lunes" title="Lunes"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        sgrid.Column("Martes","Martes",format:
+                        @<text>
+                            
+                            @if (item.Martes==true){
+                                <img alt="Martes" title="Martes"  style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Martes" title="Martes"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        sgrid.Column("Miercoles","Miércoles",format:
+                        @<text>
+                            
+                            @if (item.Miercoles==true){
+                                <img alt="Miércoles" title="Miércoles"  style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Miércoles" title="Miércoles"  style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        sgrid.Column("Jueves","Jueves",format:
+                        @<text>
+                            
+                            @if (item.Jueves==true){
+                                <img alt="Jueves" title="Jueves" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Jueves" title="Jueves" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        sgrid.Column("Viernes","Viernes",format:
+                        @<text>
+                            
+                            @if (item.Viernes==true){
+                                <img alt="Viernes" title="Viernes" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Viernes" title="Viernes" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        sgrid.Column("Sabado","Sábado",format:
+                        @<text>
+                            
+                            @if (item.Sabado==true){
+                                <img alt="Sabado" title="Sabado" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Sabado" title="Sabado" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>),
+                        sgrid.Column("Domingo","Domingo",format:
+                        @<text>
+                            
+                            @if (item.Domingo==true){
+                                <img alt="Domingo" title="Domingo" style="border:0;" src="@Url.Content("~/Images/tick.png")" />
+                            }
+                            else{
+                                <img alt="Domingo" title="Domingo" style="border:0;" src="@Url.Content("~/Images/cross.png")" />
+                            }
+                            
+                        </text>)
+                        
+                
+                    })
+        </div>        
+    </div>
+</div>
+
+<img alt="Con Cobertura" title="Con Cobertura" style="border:0;" src="@Url.Content("~/Images/tick.png")" /> Con Cobertura 
+<img alt="Sin Cobertura" title="Sin Cobertura" style="border:0;" src="@Url.Content("~/Images/cross.png")" /> Sin Cobertura

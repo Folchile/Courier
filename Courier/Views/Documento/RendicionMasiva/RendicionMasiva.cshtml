@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "ProcesarDocumento";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#ProcesarIngreso").button();
+
+    })
+</script>
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm("ProcesarDocumento", "Documento", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmEnviar" }))
+{    
+    <input type="file" title="Seleccione un archivo, formato XLS (Excel 2003) o XLSX (Excel 2007-2010)" name="file1" id="file1" />
+    <input type="submit" value="Procesar..." id="ProcesarIngreso"/>
+}
+
+<hr />
+<button class="form-control ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="DescargaModelo" title="* Columnas obligatorias marcadas con rojo." onclick="window.location.href = '../HelpFiles/Formato%20Carga%20Masiva%20Rendiciones.xlsx'">
+    <div style="float:left;width:160; margin:5px;">
+        <div style="float:left;"><img alt="Descargar" src='@Url.Content("~/Images/doc_excel_table.png")' /></div>
+        <div style="float:left;">&nbsp;Descargar Plantilla</div>
+    </div>
+</button>

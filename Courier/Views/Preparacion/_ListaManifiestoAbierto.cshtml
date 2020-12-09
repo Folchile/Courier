@@ -1,0 +1,157 @@
+﻿@model Courier.Models.DespachoModels          
+@{
+    var grid = new WebGrid(Model.ListaManAbierto, rowsPerPage: 15, ajaxUpdateContainerId: "myManAbierto");
+    var gridCerrado = new WebGrid(Model.ListaManCerradoHoy, rowsPerPage: 15, ajaxUpdateContainerId: "myManCerrado");
+} 
+<script type="text/javascript">
+    $(function () {
+        $("#tabsMan").tabs();
+        $(".boton").button();
+    })
+</script>
+<div id="tabsMan">
+	    <ul>
+		    <li><a href="#tabsMan-1">Manifiestos Abiertos</a></li>        
+            <li><a href="#tabsMan-2">Manifiestos Cerrados Hoy</a></li>
+	    </ul>
+	    <div id="tabsMan-1">                
+        @if (Model.ListaManAbierto != null)
+        {
+            <div  id="myManAbierto">
+                <div>
+                    @grid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {                
+                
+                        grid.Column("MAN_ID","Manifiesto"),
+                        grid.Column("TPM_NOMBRE","Tipo",@<text>
+                            @if (@item.BLT_CANTIDAD==null)
+                            {
+                                <label>En Blanco</label>
+                            }
+                            else
+                            {
+                                @item.TPM_NOMBRE
+                            }
+                        </text>),                                                
+                        grid.Column("SUC_DESTINO","Sucursal_Destino"),                                                
+                        grid.Column("DEST_COMUNAS","Comunas_Destino"),                                                
+                        grid.Column("TRA_PATENTE","Patente"),                                                
+                        grid.Column("OTD_CANTIDAD","Cantidad_OT",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @item.OTD_CANTIDAD
+                            </div>
+                        </text>),                                                
+                        grid.Column("BLT_CANTIDAD","Cantidad_Bultos",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @item.BLT_CANTIDAD
+                            </div>
+                        </text>),                                                
+                        grid.Column("BLT_PESO_TOTAL","Peso_Total(KG)",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @if (item.BLT_PESO_TOTAL!=null)
+                                {
+                                    @String.Format("{0:0.00}", item.BLT_PESO_TOTAL)
+                                }
+                            </div>
+                        </text>),
+                        grid.Column("MAN_ID","Opciones",@<text>                
+                            <div style="width:100%;text-align:center" >                        
+                                <button class="boton" onclick="javascript:CargarEditar(@item.MAN_ID)">
+                                    <div style="float:left;">       
+                                        <div style="float:left;"><img alt="Crear Manifiesto" src="@Url.Content("~/Images/pencil_edit.png")" /></div>                 
+                                        <div style="float:left;">&nbsp;Editar</div>                        
+                                    </div>                       
+                                </button>                                
+                            </div>
+                        </text>)
+            
+                    })
+                </div>        
+            </div>
+        }
+        else
+        {
+            <div>No existen manifiestos abiertos</div>
+        }
+    </div>
+    <div id="tabsMan-2">                
+        @if (Model.ListaManCerradoHoy != null)
+        {
+            <div  id="myManCerrado">                
+                    @gridCerrado.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {                
+                
+                        grid.Column("MAN_ID","Manifiesto"),
+                        grid.Column("TPM_NOMBRE","Tipo",@<text>
+                            @if (@item.BLT_CANTIDAD==null)
+                            {
+                                <label>En Blanco</label>
+                            }
+                            else
+                            {
+                                @item.TPM_NOMBRE
+                            }
+                        </text>),                                                
+                        grid.Column("SUC_DESTINO","Sucursal_Destino"),                                                
+                        grid.Column("DEST_COMUNAS","Comunas_Destino"),                                                
+                        grid.Column("TRA_PATENTE","Patente"),                                                
+                        grid.Column("OTD_CANTIDAD","Cantidad_OT",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @item.OTD_CANTIDAD
+                            </div>
+                        </text>),                                                
+                        grid.Column("BLT_CANTIDAD","Cantidad_Bultos",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @item.BLT_CANTIDAD
+                            </div>
+                        </text>),                                                
+                        grid.Column("BLT_PESO_TOTAL","Peso_Total(KG)",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @if (item.BLT_PESO_TOTAL!=null)
+                                {
+                                    @String.Format("{0:0.00}", item.BLT_PESO_TOTAL)
+                                }
+                            </div>
+                        </text>),
+                        grid.Column("MAN_ID","Opciones",@<text>                
+                            <div style="width:100%;text-align:center" >                        
+                                <button class="boton" onclick="javascript:DecargarPDF(@item.MAN_ID)">
+                                    <div style="float:left;">       
+                                        <div style="float:left;"><img alt="Crear Manifiesto" src="@Url.Content("~/Images/doc_pdf.png")" /></div>                 
+                                        <div style="float:left;">&nbsp;Descargar Manifiesto</div>                        
+                                    </div>                       
+                                </button>                                
+                            </div>
+                        </text>)
+            
+                    })                    
+            </div>
+        }
+        else
+        {
+            <div>No existen manifiestos cerrados HOY</div>
+        }
+</div>
+</div>

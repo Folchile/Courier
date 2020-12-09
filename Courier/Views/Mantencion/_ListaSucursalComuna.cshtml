@@ -1,0 +1,250 @@
+﻿@model Courier.Models.ListaCoberturaModels
+@{
+    var grid = new WebGrid(Model.ListaCobertura, rowsPerPage: 11, ajaxUpdateContainerId: "SucursalComuna");
+
+    string[] imagen = new string[2];
+    imagen[1] = "tick.png";
+    imagen[0] = "cross.png";
+   
+} 
+
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/jscript">
+
+
+    $(function () {
+        $("#asignaComuna").button()
+        .click(function () {
+            CargaComunas();
+        });
+        $("#verAgregaComuna").dialog({ autoOpen: false, title: "Ingreso Detalle", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+            buttons: {
+                Grabar: function () {
+                    borrar_contenido();
+                    if ($("#SucursalActual").val() != "") {
+                        $(this).dialog("close");
+                        CambiarSucursal($("#SucursalActual").val(), $("#SUCDESTINO").val(), $("#Sucursal").val(), $("#Comuna").val());
+                    } else {
+                        $.validator.unobtrusive.parse("#frmAsigComCob");
+                        if ($("#frmAsigComCob").valid() == true) {
+                            $("#frmAsigComCob").submit();
+                                $(this).dialog("close");
+                            }
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editarcobertura").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmUpdCobertura");
+                    if ($("#frmUpdCobertura").valid() == true) {
+                        $("#frmUpdCobertura").submit();
+                        $(this).dialog("close");
+
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-cambiasuc").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmAsigComCob");
+                    if ($("#frmAsigComCob").valid() == true) {
+                        $("#frmAsigComCob").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+
+    function CambiarSucursal(suc,sucact,idsucdest,idcom) {
+        $("#dialog-cambiasuc").dialog("open");
+        $("#sucdest").val(idsucdest);
+        $("#id_comu").val(idcom);
+        $("#dialog-cambiasuc").html("<p>¿Comuna seleccionada esta asociada a Sucursal <strong>" + suc + " </strong> desea cambiarla a Sucursal <strong> " + sucact + " </strong> ? </p>");
+    }
+
+
+
+    
+
+
+
+    $(function () {
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+    function CargaComunas() {
+        $("#verAgregaComuna").dialog("open");
+        $("#verAgregaComuna").load('@Url.Action("MostrarCobComunas","Mantencion")?Sucursal=' + $("#Sucursal").val(), function () {
+            borrar_contenido();
+        });
+    }
+
+
+
+    function EditCob(id_c) {
+        $("#id_cob").val(id_c);
+        $("#id_suc").val($("#Sucursal").val());
+        $("#dialog-resultado").html("");
+        $("#frmeditarCobertura").submit();
+        $("#dialog-editarcobertura").dialog("open");
+    }
+
+
+
+</script>
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-editarcobertura" title="Mantención"></div>
+<div id="dialog-cambiasuc" title="Asignar Comuna"></div>
+@*<div id="dialog-editarcobertura"></div>*@
+
+<div style="float:right; margin-bottom:5px;"> 
+        <button id="asignaComuna">                
+               <table border="0" cellpadding="0" cellspacing="2">
+                     <tr valign="middle"><td><img alt="Asignar Comuna" src="@Url.Content("~/Images/add.png")" /></td><td>&nbsp;Asignar Comuna</td></tr>
+               </table>                                
+        </button>
+ </div>
+
+
+
+  @using (Ajax.BeginForm("ActualizaSucAsociada", "Mantencion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmCambiaSuc" }))
+{
+    <input type="hidden" name="sucdest" id="sucdest" />
+    <input type="hidden" name="id_comu" id="id_comu" />
+}
+
+
+
+
+@using (Ajax.BeginForm("EditarCobertura", "Mantencion", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editarcobertura" }, new { id = "frmeditarCobertura" }))
+{
+    <input type="hidden" name="id_cob" id="id_cob" />  
+    <input type="hidden" name="id_suc" id="id_suc" /> 
+}
+
+ 
+ 
+ @Html.HiddenFor(m => m.IDCOM) 
+
+
+
+<div id="SucursalComuna">                
+    @grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {      
+    grid.Column("Idcom","Id"),
+    grid.Column("Destino","Comuna"), 
+    grid.Column("Via","Vía"), 
+    grid.Column("Clasificacion","Clasificación"), 
+    grid.Column("Lunes","Lunes",format: 
+        @<text><img alt="Lunes" title="Lunes"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Lunes)])" /></text>),
+    grid.Column("Lunes","Martes",format: 
+        @<text><img alt="Martes" title="Martes"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Martes)])" /></text>),
+    grid.Column("Lunes","Miercoles",format: 
+        @<text><img alt="Miercoles" title="Miercoles"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Miercoles)])" /></text>),
+    grid.Column("Lunes","Jueves",format: 
+        @<text><img alt="Jueves" title="Jueves"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Jueves)])" /></text>),
+    grid.Column("Lunes","Viernes",format: 
+        @<text><img alt="Viernes" title="Viernes"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Viernes)])" /></text>),
+    grid.Column("Lunes","Sabado",format: 
+        @<text><img alt="Sabado" title="Sabado"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Sabado)])" /></text>),
+    grid.Column("Lunes","Domingo",format: 
+        @<text><img alt="Domingo" title="Domingo"  style="border:0;" src="@Url.Content("~/Images/" + imagen[Convert.ToInt32(item.Domingo)])" /></text>),
+    grid.Column("TiempoEstimado","Tiempo Estimado   ",format:@<text>@item.TiempoEstimado <font>hrs.</font></text>), 
+    
+    grid.Column("",header:"ACCIONES",format:@<text>
+                                               <a href="#" onclick="javascript:EditCob('@item.Idcom')"><img border="0" src='@Url.Content("~/Images/pencil_edit.png")' alt="Editar Coberturas @item.Idcom" title="Editar Coberturas @item.Idcom"/></a>
+                                    </text>) 
+    
+                
+    })
+    Comunas: @Model.ListaCobertura.Count()
+   
+</div>
+
+
+
+<div id="verAgregaComuna">
+
+</div>

@@ -1,0 +1,876 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BD_PAR_PARAMETROS" Class="LinqBD_PARDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=192.168.33.4;Initial Catalog=BD_PAR_PARAMETROS;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BD_PAR_PARAMETROSConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TB_PAR_EST_ESTADO" Member="TB_PAR_EST_ESTADO">
+    <Type Name="TB_PAR_EST_ESTADO">
+      <Column Name="PK_PAR_EST_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_EST_NOMBRE" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="FL_PAR_EST_DESCRIPCION" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="TB_PAR_EST_ESTADO_TB_PAR_SIS_SISTEMA" Member="TB_PAR_SIS_SISTEMA" ThisKey="PK_PAR_EST_ID" OtherKey="PK_PAR_EST_ID" Type="TB_PAR_SIS_SISTEMA" />
+      <Association Name="TB_PAR_EST_ESTADO_TB_PAR_EMS_EMPRESA_SERVICIO" Member="TB_PAR_EMS_EMPRESA_SERVICIO" ThisKey="PK_PAR_EST_ID" OtherKey="PK_PAR_EST_ID" Type="TB_PAR_EMS_EMPRESA_SERVICIO" />
+      <Association Name="TB_PAR_EST_ESTADO_TB_PAR_CON_CONDUCTOR" Member="TB_PAR_CON_CONDUCTOR" ThisKey="PK_PAR_EST_ID" OtherKey="PK_PAR_EST_ID" Type="TB_PAR_CON_CONDUCTOR" />
+      <Association Name="TB_PAR_EST_ESTADO_TB_PAR_SER_SERVICIO" Member="TB_PAR_SER_SERVICIO" ThisKey="PK_PAR_EST_ID" OtherKey="PK_PAR_EST_ID" Type="TB_PAR_SER_SERVICIO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_SIS_SISTEMA" Member="TB_PAR_SIS_SISTEMA">
+    <Type Name="TB_PAR_SIS_SISTEMA">
+      <Column Name="PK_PAR_SIS_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_SIS_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_SIS_DESCRIPCION" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="PK_PAR_EST_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_SIS_FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FL_PAR_SIS_FECHA_TERMINO" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="TB_PAR_SIS_SISTEMA_TB_PAR_CAR_CARPETA" Member="TB_PAR_CAR_CARPETA" ThisKey="PK_PAR_SIS_ID" OtherKey="PK_PAR_SIS_ID" Type="TB_PAR_CAR_CARPETA" />
+      <Association Name="TB_PAR_SIS_SISTEMA_TB_PAR_SBC_SUB_CARPETA" Member="TB_PAR_SBC_SUB_CARPETA" ThisKey="PK_PAR_SIS_ID" OtherKey="PK_PAR_SIS_ID" Type="TB_PAR_SBC_SUB_CARPETA" />
+      <Association Name="TB_PAR_SIS_SISTEMA_TB_PAR_LST_LISTA_ITEM" Member="TB_PAR_LST_LISTA_ITEM" ThisKey="PK_PAR_SIS_ID" OtherKey="PK_PAR_SIS_ID" Type="TB_PAR_LST_LISTA_ITEM" />
+      <Association Name="TB_PAR_EST_ESTADO_TB_PAR_SIS_SISTEMA" Member="TB_PAR_EST_ESTADO" ThisKey="PK_PAR_EST_ID" OtherKey="PK_PAR_EST_ID" Type="TB_PAR_EST_ESTADO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_FUN_FUNCION" Member="TB_PAR_FUN_FUNCION">
+    <Type Name="TB_PAR_FUN_FUNCION">
+      <Column Name="PK_PAR_FUN_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_LST_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_PAR_LST_LISTA_ITEM_TB_PAR_FUN_FUNCION" Member="TB_PAR_LST_LISTA_ITEM" ThisKey="PK_PAR_LST_ID" OtherKey="PK_PAR_LST_ID" Type="TB_PAR_LST_LISTA_ITEM" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_LISTA_ITEM" Member="VI_PAR_LISTA_ITEM">
+    <Type Name="VI_PAR_LISTA_ITEM">
+      <Column Name="FL_PAR_CAR_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CAR_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_SBC_NOMBRE" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_SBC_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_NOMBRE" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_CAR_ORDEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SBC_ORDEN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_ORDEN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_CONTROLLER" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_ACTION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_LST_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_FUNCIONES" Member="VI_PAR_FUNCIONES">
+    <Type Name="VI_PAR_FUNCIONES">
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_LST_ACTION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_CONTROLLER" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_CAR_CARPETA" Member="TB_PAR_CAR_CARPETA">
+    <Type Name="TB_PAR_CAR_CARPETA">
+      <Column Name="PK_PAR_CAR_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_CAR_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CAR_ORDEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CAR_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="PK_PAR_SIS_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_PAR_CAR_CARPETA_TB_PAR_SBC_SUB_CARPETA" Member="TB_PAR_SBC_SUB_CARPETA" ThisKey="PK_PAR_CAR_ID" OtherKey="PK_PAR_CAR_ID" Type="TB_PAR_SBC_SUB_CARPETA" />
+      <Association Name="TB_PAR_CAR_CARPETA_TB_PAR_LST_LISTA_ITEM" Member="TB_PAR_LST_LISTA_ITEM" ThisKey="PK_PAR_CAR_ID" OtherKey="PK_PAR_CAR_ID" Type="TB_PAR_LST_LISTA_ITEM" />
+      <Association Name="TB_PAR_SIS_SISTEMA_TB_PAR_CAR_CARPETA" Member="TB_PAR_SIS_SISTEMA" ThisKey="PK_PAR_SIS_ID" OtherKey="PK_PAR_SIS_ID" Type="TB_PAR_SIS_SISTEMA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_SBC_SUB_CARPETA" Member="TB_PAR_SBC_SUB_CARPETA">
+    <Type Name="TB_PAR_SBC_SUB_CARPETA">
+      <Column Name="PK_PAR_SBC_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_SBC_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SBC_ORDEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_CAR_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SBC_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="PK_PAR_SIS_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_PAR_SBC_SUB_CARPETA_TB_PAR_LST_LISTA_ITEM" Member="TB_PAR_LST_LISTA_ITEM" ThisKey="PK_PAR_SBC_ID" OtherKey="PK_PAR_SBC_ID" Type="TB_PAR_LST_LISTA_ITEM" />
+      <Association Name="TB_PAR_SIS_SISTEMA_TB_PAR_SBC_SUB_CARPETA" Member="TB_PAR_SIS_SISTEMA" ThisKey="PK_PAR_SIS_ID" OtherKey="PK_PAR_SIS_ID" Type="TB_PAR_SIS_SISTEMA" IsForeignKey="true" />
+      <Association Name="TB_PAR_CAR_CARPETA_TB_PAR_SBC_SUB_CARPETA" Member="TB_PAR_CAR_CARPETA" ThisKey="PK_PAR_CAR_ID" OtherKey="PK_PAR_CAR_ID" Type="TB_PAR_CAR_CARPETA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_SUBCARPETA" Member="VI_PAR_SUBCARPETA">
+    <Type Name="VI_PAR_SUBCARPETA">
+      <Column Name="PK_PAR_SBC_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SBC_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SBC_ORDEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_CAR_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_CAR_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SBC_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_LIST_ITEM_FOR_TABLE" Member="VI_PAR_LIST_ITEM_FOR_TABLE">
+    <Type Name="VI_PAR_LIST_ITEM_FOR_TABLE">
+      <Column Name="PK_PAR_LST_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_LST_ORDEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CAR_NOMBRE" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_SBC_NOMBRE" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CAR_ORDEN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SBC_ORDEN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_EXC_EXCEL" Member="TB_PAR_EXC_EXCEL">
+    <Type Name="TB_PAR_EXC_EXCEL">
+      <Column Name="PK_PAR_EXC_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_EXC_LETRA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_COL_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_SER_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_EXC_OBLIGATORIA" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_COL_COLUMNA_TB_PAR_EXC_EXCEL" Member="TB_PAR_COL_COLUMNA" ThisKey="PK_PAR_COL_ID" OtherKey="PK_PAR_COL_ID" Type="TB_PAR_COL_COLUMNA" IsForeignKey="true" />
+      <Association Name="TB_PAR_SER_SERVICIO_TB_PAR_EXC_EXCEL" Member="TB_PAR_SER_SERVICIO" ThisKey="PK_PAR_SER_ID" OtherKey="PK_PAR_SER_ID" Type="TB_PAR_SER_SERVICIO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_PRV_PROVINCIA" Member="TB_PAR_PRV_PROVINCIA">
+    <Type Name="TB_PAR_PRV_PROVINCIA">
+      <Column Name="PK_PAR_PRV_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_PRV_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_REG_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="TB_PAR_PRV_PROVINCIA_TB_PAR_COM_COMUNA" Member="TB_PAR_COM_COMUNA" ThisKey="PK_PAR_PRV_ID" OtherKey="PK_PAR_PRV_ID" Type="TB_PAR_COM_COMUNA" />
+      <Association Name="TB_PAR_REG_REGION_TB_PAR_PRV_PROVINCIA" Member="TB_PAR_REG_REGION" ThisKey="PK_PAR_REG_ID" OtherKey="PK_PAR_REG_ID" Type="TB_PAR_REG_REGION" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_REG_REGION" Member="TB_PAR_REG_REGION">
+    <Type Name="TB_PAR_REG_REGION">
+      <Column Name="PK_PAR_REG_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_REG_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_PAI_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="TB_PAR_REG_REGION_TB_PAR_PRV_PROVINCIA" Member="TB_PAR_PRV_PROVINCIA" ThisKey="PK_PAR_REG_ID" OtherKey="PK_PAR_REG_ID" Type="TB_PAR_PRV_PROVINCIA" />
+      <Association Name="TB_PAR_PAI_PAIS_TB_PAR_REG_REGION" Member="TB_PAR_PAI_PAIS" ThisKey="PK_PAR_PAI_ID" OtherKey="PK_PAR_PAI_ID" Type="TB_PAR_PAI_PAIS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_PAI_PAIS" Member="TB_PAR_PAI_PAIS">
+    <Type Name="TB_PAR_PAI_PAIS">
+      <Column Name="PK_PAR_PAI_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_PAI_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="TB_PAR_PAI_PAIS_TB_PAR_REG_REGION" Member="TB_PAR_REG_REGION" ThisKey="PK_PAR_PAI_ID" OtherKey="PK_PAR_PAI_ID" Type="TB_PAR_REG_REGION" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_CLA_CLASIFICACION" Member="TB_PAR_CLA_CLASIFICACION">
+    <Type Name="TB_PAR_CLA_CLASIFICACION">
+      <Column Name="PK_PAR_CLA_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_CLA_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_CLA_CLASIFICACION_TB_PAR_COM_COMUNA" Member="TB_PAR_COM_COMUNA" ThisKey="PK_PAR_CLA_ID" OtherKey="PK_PAR_CLA_ID" Type="TB_PAR_COM_COMUNA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_COBERTURA" Member="VI_PAR_COBERTURA">
+    <Type Name="VI_PAR_COBERTURA">
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_NOMBRE" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_NOMBRE_FORMAT" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="PK_PAR_PRV_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_CODIGO" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="PK_PAR_CLA_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Expr1" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_PRV_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_REG_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Expr2" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_REG_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_PAI_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Expr3" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_COB_LU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_COB_MA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_COB_MI" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_COB_JU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_COB_VI" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_COB_SA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_COB_DO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Expr4" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_CLA_NOMBRE" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_COBERTURA_LOCALIDAD" Member="VI_PAR_COBERTURA_LOCALIDAD">
+    <Type Name="VI_PAR_COBERTURA_LOCALIDAD">
+      <Column Name="PK_PAR_LOC_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_LOC_NOMBRE" Type="System.String" DbType="VarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_NOMBRE" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_PRV_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_PRV_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_REG_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_REG_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_PAI_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="PK_PAR_CLA_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_CLA_NOMBRE" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_CLO_LU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_CLO_MA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_CLO_MI" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_CLO_JU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_CLO_VI" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_CLO_SA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_CLO_DO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_COM_COMUNA" Member="TB_PAR_COM_COMUNA">
+    <Type Name="TB_PAR_COM_COMUNA">
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_NOMBRE" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_NOMBRE_FORMAT" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="PK_PAR_PRV_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COM_CODIGO" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="PK_PAR_CLA_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_COM_LATITUD" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FL_PAR_COM_LONGITUD" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="TB_PAR_COM_COMUNA_TB_PAR_LOC_LOCALIDAD" Member="TB_PAR_LOC_LOCALIDAD" ThisKey="PK_PAR_COM_ID" OtherKey="PK_PAR_COM_ID" Type="TB_PAR_LOC_LOCALIDAD" />
+      <Association Name="TB_PAR_COM_COMUNA_TB_PAR_COB_COBERTURA_COMUNA" Member="TB_PAR_COB_COBERTURA_COMUNA" ThisKey="PK_PAR_COM_ID" OtherKey="PK_PAR_COM_ID" Type="TB_PAR_COB_COBERTURA_COMUNA" />
+      <Association Name="TB_PAR_COM_COMUNA_TB_PAR_SUC_SUCURSAL" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_COM_ID" OtherKey="PK_PAR_COM_ID" Type="TB_PAR_SUC_SUCURSAL" />
+      <Association Name="TB_PAR_CLA_CLASIFICACION_TB_PAR_COM_COMUNA" Member="TB_PAR_CLA_CLASIFICACION" ThisKey="PK_PAR_CLA_ID" OtherKey="PK_PAR_CLA_ID" Type="TB_PAR_CLA_CLASIFICACION" IsForeignKey="true" />
+      <Association Name="TB_PAR_PRV_PROVINCIA_TB_PAR_COM_COMUNA" Member="TB_PAR_PRV_PROVINCIA" ThisKey="PK_PAR_PRV_ID" OtherKey="PK_PAR_PRV_ID" Type="TB_PAR_PRV_PROVINCIA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_LOC_LOCALIDAD" Member="TB_PAR_LOC_LOCALIDAD">
+    <Type Name="TB_PAR_LOC_LOCALIDAD">
+      <Column Name="PK_PAR_LOC_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_LOC_NOMBRE" Type="System.String" DbType="VarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_LOC_LATITUD" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FL_PAR_LOC_LONGITUD" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FL_PAR_LOC_CODIGO" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="PK_PAR_CLA_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_LOC_NOMBRE_FORMAT" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Association Name="TB_PAR_LOC_LOCALIDAD_TB_PAR_CLO_COBERTURA_LOCALIDAD" Member="TB_PAR_CLO_COBERTURA_LOCALIDAD" ThisKey="PK_PAR_LOC_ID" OtherKey="PK_PAR_LOC_ID" Type="TB_PAR_CLO_COBERTURA_LOCALIDAD" />
+      <Association Name="TB_PAR_COM_COMUNA_TB_PAR_LOC_LOCALIDAD" Member="TB_PAR_COM_COMUNA" ThisKey="PK_PAR_COM_ID" OtherKey="PK_PAR_COM_ID" Type="TB_PAR_COM_COMUNA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_COB_COBERTURA_COMUNA" Member="TB_PAR_COB_COBERTURA_COMUNA">
+    <Type Name="TB_PAR_COB_COBERTURA_COMUNA">
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_COB_LU" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COB_MA" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COB_MI" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COB_JU" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COB_VI" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COB_SA" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COB_DO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COB_TIEMPO_ESTIMADO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="PK_PAR_VIA_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_PAR_COM_COMUNA_TB_PAR_COB_COBERTURA_COMUNA" Member="TB_PAR_COM_COMUNA" ThisKey="PK_PAR_COM_ID" OtherKey="PK_PAR_COM_ID" Type="TB_PAR_COM_COMUNA" IsForeignKey="true" />
+      <Association Name="TB_PAR_VIA_VIA_TB_PAR_COB_COBERTURA_COMUNA" Member="TB_PAR_VIA_VIA" ThisKey="PK_PAR_VIA_ID" OtherKey="PK_PAR_VIA_ID" Type="TB_PAR_VIA_VIA" IsForeignKey="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_COB_COBERTURA_COMUNA" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TRN_TRANSITO" Member="TB_PAR_TRN_TRANSITO">
+    <Type Name="TB_PAR_TRN_TRANSITO">
+      <Column Name="PK_PAR_TRN_ORIGEN" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_TRN_DESTINO" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_TRN_TIEMPO_ESTIMADO" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_VIA_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_TRN_LU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_MA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_MI" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_JU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_VI" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_SA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_DO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="TB_PAR_VIA_VIA_TB_PAR_TRN_TRANSITO" Member="TB_PAR_VIA_VIA" ThisKey="PK_PAR_VIA_ID" OtherKey="PK_PAR_VIA_ID" Type="TB_PAR_VIA_VIA" IsForeignKey="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_TRN_TRANSITO" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_TRN_ORIGEN" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_TRN_TRANSITO1" Member="TB_PAR_SUC_SUCURSAL1" ThisKey="PK_PAR_TRN_DESTINO" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TRC_TRA_CON" Member="TB_PAR_TRC_TRA_CON">
+    <Type Name="TB_PAR_TRC_TRA_CON">
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_CON_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_PAR_CON_CONDUCTOR_TB_PAR_TRC_TRA_CON" Member="TB_PAR_CON_CONDUCTOR" ThisKey="PK_PAR_CON_RUT" OtherKey="PK_PAR_CON_RUT" Type="TB_PAR_CON_CONDUCTOR" IsForeignKey="true" />
+      <Association Name="TB_PAR_TRA_TRANSPORTE_TB_PAR_TRC_TRA_CON" Member="TB_PAR_TRA_TRANSPORTE" ThisKey="PK_PAR_TRA_ID" OtherKey="PK_PAR_TRA_ID" Type="TB_PAR_TRA_TRANSPORTE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_VIA_VIA" Member="TB_PAR_VIA_VIA">
+    <Type Name="TB_PAR_VIA_VIA">
+      <Column Name="PK_PAR_VIA_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_VIA_NOMBRE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_VIA_ABREVIATURA" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_VIA_VIA_TB_PAR_COB_COBERTURA_COMUNA" Member="TB_PAR_COB_COBERTURA_COMUNA" ThisKey="PK_PAR_VIA_ID" OtherKey="PK_PAR_VIA_ID" Type="TB_PAR_COB_COBERTURA_COMUNA" />
+      <Association Name="TB_PAR_VIA_VIA_TB_PAR_TRN_TRANSITO" Member="TB_PAR_TRN_TRANSITO" ThisKey="PK_PAR_VIA_ID" OtherKey="PK_PAR_VIA_ID" Type="TB_PAR_TRN_TRANSITO" />
+      <Association Name="TB_PAR_VIA_VIA_TB_PAR_CLO_COBERTURA_LOCALIDAD" Member="TB_PAR_CLO_COBERTURA_LOCALIDAD" ThisKey="PK_PAR_VIA_ID" OtherKey="PK_PAR_VIA_ID" Type="TB_PAR_CLO_COBERTURA_LOCALIDAD" />
+      <Association Name="TB_PAR_VIA_VIA_TB_PAR_DET_DESTINO_TRANSPORTE" Member="TB_PAR_DET_DESTINO_TRANSPORTE" ThisKey="PK_PAR_VIA_ID" OtherKey="PK_PAR_VIA_ID" Type="TB_PAR_DET_DESTINO_TRANSPORTE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_RES_REFERENCIA_SERVICIO" Member="TB_PAR_RES_REFERENCIA_SERVICIO">
+    <Type Name="TB_PAR_RES_REFERENCIA_SERVICIO">
+      <Column Name="PK_PAR_SER_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_REF_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_TDO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_TDO_TIPO_DOCUMENTO_TB_PAR_RES_REFERENCIA_SERVICIO" Member="TB_PAR_TDO_TIPO_DOCUMENTO" ThisKey="PK_PAR_TDO_ID" OtherKey="PK_PAR_TDO_ID" Type="TB_PAR_TDO_TIPO_DOCUMENTO" IsForeignKey="true" />
+      <Association Name="TB_PAR_REF_REFERENCIA_TB_PAR_RES_REFERENCIA_SERVICIO" Member="TB_PAR_REF_REFERENCIA" ThisKey="PK_PAR_REF_ID" OtherKey="PK_PAR_REF_ID" Type="TB_PAR_REF_REFERENCIA" IsForeignKey="true" />
+      <Association Name="TB_PAR_SER_SERVICIO_TB_PAR_RES_REFERENCIA_SERVICIO" Member="TB_PAR_SER_SERVICIO" ThisKey="PK_PAR_SER_ID" OtherKey="PK_PAR_SER_ID" Type="TB_PAR_SER_SERVICIO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TUS_TIPO_USUARIO" Member="TB_PAR_TUS_TIPO_USUARIO">
+    <Type Name="TB_PAR_TUS_TIPO_USUARIO">
+      <Column Name="PK_PAR_TUS_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_TUS_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="TB_PAR_TUS_TIPO_USUARIO_TB_PAR_USU_USUARIO" Member="TB_PAR_USU_USUARIO" ThisKey="PK_PAR_TUS_ID" OtherKey="PK_PAR_TUS_ID" Type="TB_PAR_USU_USUARIO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_COL_COLUMNA" Member="TB_PAR_COL_COLUMNA">
+    <Type Name="TB_PAR_COL_COLUMNA">
+      <Column Name="PK_PAR_COL_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_COL_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COL_DESCRIPCION" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Association Name="TB_PAR_COL_COLUMNA_TB_PAR_EXC_EXCEL" Member="TB_PAR_EXC_EXCEL" ThisKey="PK_PAR_COL_ID" OtherKey="PK_PAR_COL_ID" Type="TB_PAR_EXC_EXCEL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_CLO_COBERTURA_LOCALIDAD" Member="TB_PAR_CLO_COBERTURA_LOCALIDAD">
+    <Type Name="TB_PAR_CLO_COBERTURA_LOCALIDAD">
+      <Column Name="PK_PAR_LOC_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_CLO_LU" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CLO_MA" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CLO_MI" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CLO_JU" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CLO_VI" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CLO_SA" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CLO_DO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CLO_TIEMPO_ESTIMADO" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="PK_PAR_VIA_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_PAR_LOC_LOCALIDAD_TB_PAR_CLO_COBERTURA_LOCALIDAD" Member="TB_PAR_LOC_LOCALIDAD" ThisKey="PK_PAR_LOC_ID" OtherKey="PK_PAR_LOC_ID" Type="TB_PAR_LOC_LOCALIDAD" IsForeignKey="true" />
+      <Association Name="TB_PAR_VIA_VIA_TB_PAR_CLO_COBERTURA_LOCALIDAD" Member="TB_PAR_VIA_VIA" ThisKey="PK_PAR_VIA_ID" OtherKey="PK_PAR_VIA_ID" Type="TB_PAR_VIA_VIA" IsForeignKey="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_CLO_COBERTURA_LOCALIDAD" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_USE_USU_SUC_EMP" Member="TB_PAR_USE_USU_SUC_EMP">
+    <Type Name="TB_PAR_USE_USU_SUC_EMP">
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_CLI_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_USU_RUT" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_PAR_USU_USUARIO_TB_PAR_USE_USU_SUC_EMP" Member="TB_PAR_USU_USUARIO" ThisKey="PK_PAR_USU_RUT" OtherKey="PK_PAR_USU_RUT" Type="TB_PAR_USU_USUARIO" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TDO_TIPO_DOCUMENTO" Member="TB_PAR_TDO_TIPO_DOCUMENTO">
+    <Type Name="TB_PAR_TDO_TIPO_DOCUMENTO">
+      <Column Name="PK_PAR_TDO_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_TDO_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_TRE_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_PAR_TDO_TIPO_DOCUMENTO_TB_PAR_RES_REFERENCIA_SERVICIO" Member="TB_PAR_RES_REFERENCIA_SERVICIO" ThisKey="PK_PAR_TDO_ID" OtherKey="PK_PAR_TDO_ID" Type="TB_PAR_RES_REFERENCIA_SERVICIO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_REF_REFERENCIA" Member="TB_PAR_REF_REFERENCIA">
+    <Type Name="TB_PAR_REF_REFERENCIA">
+      <Column Name="PK_PAR_REF_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_REF_NOMBRE" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_REF_REFERENCIA_TB_PAR_RES_REFERENCIA_SERVICIO" Member="TB_PAR_RES_REFERENCIA_SERVICIO" ThisKey="PK_PAR_REF_ID" OtherKey="PK_PAR_REF_ID" Type="TB_PAR_RES_REFERENCIA_SERVICIO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_EMS_EMPRESA_SERVICIO" Member="TB_PAR_EMS_EMPRESA_SERVICIO">
+    <Type Name="TB_PAR_EMS_EMPRESA_SERVICIO">
+      <Column Name="PK_PAR_EMS_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_EMS_FECHA_CREACION" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FL_PAR_EMS_FECHA_TERMINO" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_SER_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_EST_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_EST_ESTADO_TB_PAR_EMS_EMPRESA_SERVICIO" Member="TB_PAR_EST_ESTADO" ThisKey="PK_PAR_EST_ID" OtherKey="PK_PAR_EST_ID" Type="TB_PAR_EST_ESTADO" IsForeignKey="true" />
+      <Association Name="TB_PAR_SER_SERVICIO_TB_PAR_EMS_EMPRESA_SERVICIO" Member="TB_PAR_SER_SERVICIO" ThisKey="PK_PAR_SER_ID" OtherKey="PK_PAR_SER_ID" Type="TB_PAR_SER_SERVICIO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_CDI_CENTRO_DISTRIBUCION" Member="TB_PAR_CDI_CENTRO_DISTRIBUCION">
+    <Type Name="TB_PAR_CDI_CENTRO_DISTRIBUCION">
+      <Column Name="PK_PAR_CDI_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_CDI_CENTRO_DISTRIBUCION_TB_PAR_CDD_CDI_DES" Member="TB_PAR_CDD_CDI_DES" ThisKey="PK_PAR_CDI_ID" OtherKey="PK_PAR_CDI_ID" Type="TB_PAR_CDD_CDI_DES" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_CDI_CENTRO_DISTRIBUCION" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_DES_DESTINO" Member="TB_PAR_DES_DESTINO">
+    <Type Name="TB_PAR_DES_DESTINO">
+      <Column Name="PK_PAR_DES_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_DES_DESTINO_TB_PAR_CDD_CDI_DES" Member="TB_PAR_CDD_CDI_DES" ThisKey="PK_PAR_DES_ID" OtherKey="PK_PAR_DES_ID" Type="TB_PAR_CDD_CDI_DES" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_DES_DESTINO" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_CDD_CDI_DES" Member="TB_PAR_CDD_CDI_DES">
+    <Type Name="TB_PAR_CDD_CDI_DES">
+      <Column Name="PK_PAR_CDI_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_DES_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_VIA_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_PAR_CDI_CENTRO_DISTRIBUCION_TB_PAR_CDD_CDI_DES" Member="TB_PAR_CDI_CENTRO_DISTRIBUCION" ThisKey="PK_PAR_CDI_ID" OtherKey="PK_PAR_CDI_ID" Type="TB_PAR_CDI_CENTRO_DISTRIBUCION" IsForeignKey="true" />
+      <Association Name="TB_PAR_DES_DESTINO_TB_PAR_CDD_CDI_DES" Member="TB_PAR_DES_DESTINO" ThisKey="PK_PAR_DES_ID" OtherKey="PK_PAR_DES_ID" Type="TB_PAR_DES_DESTINO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_MALLA_COBERTURA" Member="VI_PAR_MALLA_COBERTURA">
+    <Type Name="VI_PAR_MALLA_COBERTURA">
+      <Column Name="PK_PAR_CDI_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_DES_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_VIA_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ORIGEN" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="DESTINO" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_PAR_VIA_NOMBRE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_TRN_ORIGEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_TRN_DESTINO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRN_TIEMPO_ESTIMADO" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="Expr1" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRN_LU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_MA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_MI" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_JU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_VI" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_SA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRN_DO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_DET_DESTINO_TRANSPORTE" Member="TB_PAR_DET_DESTINO_TRANSPORTE">
+    <Type Name="TB_PAR_DET_DESTINO_TRANSPORTE">
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_VIA_ID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="TB_PAR_VIA_VIA_TB_PAR_DET_DESTINO_TRANSPORTE" Member="TB_PAR_VIA_VIA" ThisKey="PK_PAR_VIA_ID" OtherKey="PK_PAR_VIA_ID" Type="TB_PAR_VIA_VIA" IsForeignKey="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_DET_DESTINO_TRANSPORTE" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+      <Association Name="TB_PAR_TRA_TRANSPORTE_TB_PAR_DET_DESTINO_TRANSPORTE" Member="TB_PAR_TRA_TRANSPORTE" ThisKey="PK_PAR_TRA_ID" OtherKey="PK_PAR_TRA_ID" Type="TB_PAR_TRA_TRANSPORTE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TMM_TIPO_OT_MANUAL" Member="TB_PAR_TMM_TIPO_OT_MANUAL">
+    <Type Name="TB_PAR_TMM_TIPO_OT_MANUAL">
+      <Column Name="PK_PAR_TMM_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_TMM_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_LST_LISTA_ITEM" Member="TB_PAR_LST_LISTA_ITEM">
+    <Type Name="TB_PAR_LST_LISTA_ITEM">
+      <Column Name="PK_PAR_LST_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_LST_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_LST_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_ORDEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_SBC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_PAR_CAR_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_TITULO_PAGINA" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_CONTROLLER" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_ACTION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_SIS_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_PAR_LST_LISTA_ITEM_TB_PAR_FUN_FUNCION" Member="TB_PAR_FUN_FUNCION" ThisKey="PK_PAR_LST_ID" OtherKey="PK_PAR_LST_ID" Type="TB_PAR_FUN_FUNCION" />
+      <Association Name="TB_PAR_SIS_SISTEMA_TB_PAR_LST_LISTA_ITEM" Member="TB_PAR_SIS_SISTEMA" ThisKey="PK_PAR_SIS_ID" OtherKey="PK_PAR_SIS_ID" Type="TB_PAR_SIS_SISTEMA" IsForeignKey="true" />
+      <Association Name="TB_PAR_CAR_CARPETA_TB_PAR_LST_LISTA_ITEM" Member="TB_PAR_CAR_CARPETA" ThisKey="PK_PAR_CAR_ID" OtherKey="PK_PAR_CAR_ID" Type="TB_PAR_CAR_CARPETA" IsForeignKey="true" />
+      <Association Name="TB_PAR_SBC_SUB_CARPETA_TB_PAR_LST_LISTA_ITEM" Member="TB_PAR_SBC_SUB_CARPETA" ThisKey="PK_PAR_SBC_ID" OtherKey="PK_PAR_SBC_ID" Type="TB_PAR_SBC_SUB_CARPETA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TSE_TIPO_SERVICIO" Member="TB_PAR_TSE_TIPO_SERVICIO">
+    <Type Name="TB_PAR_TSE_TIPO_SERVICIO">
+      <Column Name="PK_PAR_TSE_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_TSE_NOMBRE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_SER_REF_LISTA" Member="VI_PAR_SER_REF_LISTA">
+    <Type Name="VI_PAR_SER_REF_LISTA">
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_SER_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SER_NOMBRE" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SER_FACTOR_VOLUMETRICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_TRABAJA_PESO_KG" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_TRABAJA_PESO_VOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TDO_1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Referencia1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TDO_2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Referencia2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_CANTIDAD_VISITAS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_TSE_NOMBRE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_TSE_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_USU_USUARIO" Member="TB_PAR_USU_USUARIO">
+    <Type Name="TB_PAR_USU_USUARIO">
+      <Column Name="PK_PAR_USU_RUT" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_USU_NOMBRES" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_USU_APELLIDOS" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_USU_DV" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_USU_NOMBRE_IMPRESORA" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_TUS_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_USU_USUARIO_TB_PAR_USE_USU_SUC_EMP" Member="TB_PAR_USE_USU_SUC_EMP" ThisKey="PK_PAR_USU_RUT" OtherKey="PK_PAR_USU_RUT" Type="TB_PAR_USE_USU_SUC_EMP" />
+      <Association Name="TB_PAR_TUS_TIPO_USUARIO_TB_PAR_USU_USUARIO" Member="TB_PAR_TUS_TIPO_USUARIO" ThisKey="PK_PAR_TUS_ID" OtherKey="PK_PAR_TUS_ID" Type="TB_PAR_TUS_TIPO_USUARIO" IsForeignKey="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_USU_USUARIO" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_SUC_SUCURSAL" Member="TB_PAR_SUC_SUCURSAL">
+    <Type Name="TB_PAR_SUC_SUCURSAL">
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PK_PAR_COM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ENTREGA_FORZADA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PK_PAR_TUS_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_COB_COBERTURA_COMUNA" Member="TB_PAR_COB_COBERTURA_COMUNA" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_COB_COBERTURA_COMUNA" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_TRN_TRANSITO" Member="TB_PAR_TRN_TRANSITO" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_TRN_ORIGEN" Type="TB_PAR_TRN_TRANSITO" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_TRN_TRANSITO1" Member="TB_PAR_TRN_TRANSITO1" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_TRN_DESTINO" Type="TB_PAR_TRN_TRANSITO" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_CLO_COBERTURA_LOCALIDAD" Member="TB_PAR_CLO_COBERTURA_LOCALIDAD" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_CLO_COBERTURA_LOCALIDAD" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_CDI_CENTRO_DISTRIBUCION" Member="TB_PAR_CDI_CENTRO_DISTRIBUCION" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_CDI_CENTRO_DISTRIBUCION" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_DES_DESTINO" Member="TB_PAR_DES_DESTINO" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_DES_DESTINO" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_DET_DESTINO_TRANSPORTE" Member="TB_PAR_DET_DESTINO_TRANSPORTE" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_DET_DESTINO_TRANSPORTE" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_USU_USUARIO" Member="TB_PAR_USU_USUARIO" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_USU_USUARIO" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_SPR_SUCURSAL_PROVEEDOR" Member="TB_PAR_SPR_SUCURSAL_PROVEEDOR" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SPR_SUCURSAL_PROVEEDOR" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" Member="TB_PAR_SPR_SUCURSAL_PROVEEDOR1" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SPR_SUCURSAL_PROVEEDOR1" />
+      <Association Name="TB_PAR_COM_COMUNA_TB_PAR_SUC_SUCURSAL" Member="TB_PAR_COM_COMUNA" ThisKey="PK_PAR_COM_ID" OtherKey="PK_PAR_COM_ID" Type="TB_PAR_COM_COMUNA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_SUS_SUCURSAL_USUARIO" Member="TB_PAR_SUS_SUCURSAL_USUARIO">
+    <Type Name="TB_PAR_SUS_SUCURSAL_USUARIO">
+      <Column Name="PK_PAR_USU_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_CON_CONDUCTOR" Member="TB_PAR_CON_CONDUCTOR">
+    <Type Name="TB_PAR_CON_CONDUCTOR">
+      <Column Name="PK_PAR_CON_RUT" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_NOMBRE" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_EST_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_CON_CODIGO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_PAR_CON_CONDUCTOR_TB_PAR_TRC_TRA_CON" Member="TB_PAR_TRC_TRA_CON" ThisKey="PK_PAR_CON_RUT" OtherKey="PK_PAR_CON_RUT" Type="TB_PAR_TRC_TRA_CON" />
+      <Association Name="TB_PAR_EST_ESTADO_TB_PAR_CON_CONDUCTOR" Member="TB_PAR_EST_ESTADO" ThisKey="PK_PAR_EST_ID" OtherKey="PK_PAR_EST_ID" Type="TB_PAR_EST_ESTADO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_SER_SERVICIO" Member="TB_PAR_SER_SERVICIO">
+    <Type Name="TB_PAR_SER_SERVICIO">
+      <Column Name="PK_PAR_SER_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_SER_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_EST_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SER_FACTOR_VOLUMETRICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_TRABAJA_PESO_KG" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_TRABAJA_PESO_VOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PK_PAR_TSE_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_CANTIDAD_VISITAS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_PIDE_HU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_ALERTA_VALOR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_ALERTA_KILO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="TB_PAR_SER_SERVICIO_TB_PAR_EXC_EXCEL" Member="TB_PAR_EXC_EXCEL" ThisKey="PK_PAR_SER_ID" OtherKey="PK_PAR_SER_ID" Type="TB_PAR_EXC_EXCEL" />
+      <Association Name="TB_PAR_SER_SERVICIO_TB_PAR_RES_REFERENCIA_SERVICIO" Member="TB_PAR_RES_REFERENCIA_SERVICIO" ThisKey="PK_PAR_SER_ID" OtherKey="PK_PAR_SER_ID" Type="TB_PAR_RES_REFERENCIA_SERVICIO" />
+      <Association Name="TB_PAR_SER_SERVICIO_TB_PAR_EMS_EMPRESA_SERVICIO" Member="TB_PAR_EMS_EMPRESA_SERVICIO" ThisKey="PK_PAR_SER_ID" OtherKey="PK_PAR_SER_ID" Type="TB_PAR_EMS_EMPRESA_SERVICIO" />
+      <Association Name="TB_PAR_EST_ESTADO_TB_PAR_SER_SERVICIO" Member="TB_PAR_EST_ESTADO" ThisKey="PK_PAR_EST_ID" OtherKey="PK_PAR_EST_ID" Type="TB_PAR_EST_ESTADO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VI_PAR_USUARIO" Member="VI_PAR_USUARIO">
+    <Type Name="VI_PAR_USUARIO">
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TUS_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_USU_NOMBRES" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_USU_APELLIDOS" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="LastActivityDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_CLI_SUC_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_FANTASIA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PK_PAR_USU_RUT" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_CLI_SUC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_DV" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="IsLockedOut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_PRO_PROVEEDOR" Member="TB_PAR_PRO_PROVEEDOR">
+    <Type Name="TB_PAR_PRO_PROVEEDOR">
+      <Column Name="PK_PAR_PRO_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_PRO_NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_ETP_ESTADO_PRO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_RUT" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_DESCRIPCION" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR_TB_PAR_SPR_SUCURSAL_PROVEEDOR" Member="TB_PAR_SPR_SUCURSAL_PROVEEDOR" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_SPR_SUCURSAL_PROVEEDOR" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR_TB_PAR_TRA_TRANSPORTE" Member="TB_PAR_TRA_TRANSPORTE" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_TRA_TRANSPORTE" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" Member="TB_PAR_SPR_SUCURSAL_PROVEEDOR1" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_SPR_SUCURSAL_PROVEEDOR1" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" Member="TB_PAR_TPR_TRANSPORTE_PROVEEDOR" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_TPR_TRANSPORTE_PROVEEDOR" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_SPR_SUCURSAL_PROVEEDOR" Member="TB_PAR_SPR_SUCURSAL_PROVEEDOR">
+    <Type Name="TB_PAR_SPR_SUCURSAL_PROVEEDOR">
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_PRO_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR_TB_PAR_SPR_SUCURSAL_PROVEEDOR" Member="TB_PAR_PRO_PROVEEDOR" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_PRO_PROVEEDOR" IsForeignKey="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_SPR_SUCURSAL_PROVEEDOR" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR1_TB_PAR_SPR_SUCURSAL_PROVEEDOR" Member="TB_PAR_PRO_PROVEEDOR1" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_PRO_PROVEEDOR1" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TRA_TRANSPORTE" Member="TB_PAR_TRA_TRANSPORTE">
+    <Type Name="TB_PAR_TRA_TRANSPORTE">
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_MARCA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_MODELO" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_ANIO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_DESTINOCLIENTE" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_RAMPLA" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_CAPACIDAD_KGS" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="FL_PAR_TRA_CAPACIDAD_M3" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="PK_PAR_ETR_ESTADO_TRANS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_PAR_PRO_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_PAR_TIP_TRA_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TB_PAR_TRA_TRANSPORTE_TB_PAR_TRC_TRA_CON" Member="TB_PAR_TRC_TRA_CON" ThisKey="PK_PAR_TRA_ID" OtherKey="PK_PAR_TRA_ID" Type="TB_PAR_TRC_TRA_CON" />
+      <Association Name="TB_PAR_TRA_TRANSPORTE_TB_PAR_DET_DESTINO_TRANSPORTE" Member="TB_PAR_DET_DESTINO_TRANSPORTE" ThisKey="PK_PAR_TRA_ID" OtherKey="PK_PAR_TRA_ID" Type="TB_PAR_DET_DESTINO_TRANSPORTE" />
+      <Association Name="TB_PAR_TRA_TRANSPORTE_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" Member="TB_PAR_TPR_TRANSPORTE_PROVEEDOR" ThisKey="PK_PAR_TRA_ID" OtherKey="PK_PAR_TRA_ID" Type="TB_PAR_TPR_TRANSPORTE_PROVEEDOR" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR_TB_PAR_TRA_TRANSPORTE" Member="TB_PAR_PRO_PROVEEDOR" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_PRO_PROVEEDOR" IsForeignKey="true" />
+      <Association Name="TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_TRA_TRANSPORTE" Member="TB_PAR_TTR_TIPO_TRANSPORTE" ThisKey="PK_PAR_TIP_TRA_ID" OtherKey="PK_PAR_TIP_TRA_ID" Type="TB_PAR_TTR_TIPO_TRANSPORTE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TTR_TIPO_TRANSPORTE" Member="TB_PAR_TTR_TIPO_TRANSPORTE">
+    <Type Name="TB_PAR_TTR_TIPO_TRANSPORTE">
+      <Column Name="PK_PAR_TIP_TRA_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_HABILITADO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_ARRASTRE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_TRA_TRANSPORTE" Member="TB_PAR_TRA_TRANSPORTE" ThisKey="PK_PAR_TIP_TRA_ID" OtherKey="PK_PAR_TIP_TRA_ID" Type="TB_PAR_TRA_TRANSPORTE" />
+      <Association Name="TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_RTT_RELACION_TIPO_TRANS" Member="TB_PAR_RTT_RELACION_TIPO_TRANS" ThisKey="PK_PAR_TIP_TRA_ID" OtherKey="FL_PAR_TIP_PARENT" Type="TB_PAR_RTT_RELACION_TIPO_TRANS" />
+      <Association Name="TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_RTT_RELACION_TIPO_TRANS1" Member="TB_PAR_RTT_RELACION_TIPO_TRANS1" ThisKey="PK_PAR_TIP_TRA_ID" OtherKey="FL_PAR_TIP_ARRASTRE" Type="TB_PAR_RTT_RELACION_TIPO_TRANS" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_RTT_RELACION_TIPO_TRANS" Member="TB_PAR_RTT_RELACION_TIPO_TRANS">
+    <Type Name="TB_PAR_RTT_RELACION_TIPO_TRANS">
+      <Column Name="PK_PAR_REL_TIP_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FL_PAR_TIP_PARENT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TIP_ARRASTRE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_RTT_RELACION_TIPO_TRANS" Member="TB_PAR_TTR_TIPO_TRANSPORTE" ThisKey="FL_PAR_TIP_PARENT" OtherKey="PK_PAR_TIP_TRA_ID" Type="TB_PAR_TTR_TIPO_TRANSPORTE" IsForeignKey="true" />
+      <Association Name="TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_RTT_RELACION_TIPO_TRANS1" Member="TB_PAR_TTR_TIPO_TRANSPORTE1" ThisKey="FL_PAR_TIP_ARRASTRE" OtherKey="PK_PAR_TIP_TRA_ID" Type="TB_PAR_TTR_TIPO_TRANSPORTE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_PRO_PROVEEDOR" Member="TB_PAR_PRO_PROVEEDOR1">
+    <Type Name="TB_PAR_PRO_PROVEEDOR1">
+      <Column Name="PK_PAR_PRO_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FL_PAR_PRO_NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_ETP_ESTADO_PRO" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_RUT" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_DV" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_DESCRIPCION" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR1_TB_PAR_SPR_SUCURSAL_PROVEEDOR" Member="TB_PAR_SPR_SUCURSAL_PROVEEDOR" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_SPR_SUCURSAL_PROVEEDOR" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR1_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" Member="TB_PAR_SPR_SUCURSAL_PROVEEDOR1" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_SPR_SUCURSAL_PROVEEDOR1" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR1_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" Member="TB_PAR_TPR_TRANSPORTE_PROVEEDOR" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_TPR_TRANSPORTE_PROVEEDOR" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_SPR_SUCURSAL_PROVEEDOR" Member="TB_PAR_SPR_SUCURSAL_PROVEEDOR1">
+    <Type Name="TB_PAR_SPR_SUCURSAL_PROVEEDOR1">
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_PRO_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" Member="TB_PAR_PRO_PROVEEDOR" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_PRO_PROVEEDOR" IsForeignKey="true" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR1_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" Member="TB_PAR_PRO_PROVEEDOR1" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_PRO_PROVEEDOR1" IsForeignKey="true" />
+      <Association Name="TB_PAR_SUC_SUCURSAL_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" Member="TB_PAR_SUC_SUCURSAL" ThisKey="PK_PAR_SUC_ID" OtherKey="PK_PAR_SUC_ID" Type="TB_PAR_SUC_SUCURSAL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TB_PAR_TPR_TRANSPORTE_PROVEEDOR" Member="TB_PAR_TPR_TRANSPORTE_PROVEEDOR">
+    <Type Name="TB_PAR_TPR_TRANSPORTE_PROVEEDOR">
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PK_PAR_PRO_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" Member="TB_PAR_PRO_PROVEEDOR" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_PRO_PROVEEDOR" IsForeignKey="true" />
+      <Association Name="TB_PAR_PRO_PROVEEDOR1_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" Member="TB_PAR_PRO_PROVEEDOR1" ThisKey="PK_PAR_PRO_ID" OtherKey="PK_PAR_PRO_ID" Type="TB_PAR_PRO_PROVEEDOR1" IsForeignKey="true" />
+      <Association Name="TB_PAR_TRA_TRANSPORTE_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" Member="TB_PAR_TRA_TRANSPORTE" ThisKey="PK_PAR_TRA_ID" OtherKey="PK_PAR_TRA_ID" Type="TB_PAR_TRA_TRANSPORTE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.PR_PAR_ELIMINAR_CARPETA" Method="PR_PAR_ELIMINAR_CARPETA">
+    <Parameter Name="carpeta_id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_ROL_LIST_ITEM" Method="PR_PAR_ROL_LIST_ITEM">
+    <Parameter Name="item" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_ROL_LIST_ITEMResult">
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="VALUE" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_LISTA_COLUMNAS_SERVICIO" Method="PR_PAR_LISTA_COLUMNAS_SERVICIO">
+    <Parameter Name="servicio_id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_LISTA_COLUMNAS_SERVICIOResult">
+      <Column Name="PK_PAR_EXC_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_EXC_LETRA" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COL_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COL_DESCRIPCION" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FL_PAR_EXC_OBLIGATORIA" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_SER_VALIDA_REFERENCIA" Method="PR_PAR_SER_VALIDA_REFERENCIA">
+    <Parameter Name="COL_ID" Parameter="cOL_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="REF_ID" Parameter="rEF_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SER_ID" Parameter="sER_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_SER_VALIDA_REFERENCIAResult">
+      <Column Name="CANTIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_CUS_CARPETA" Method="PR_PAR_CUS_CARPETA">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CAR_ID" Parameter="cAR_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CUS_CLASS" Parameter="cUS_CLASS" Type="System.String" DbType="VarChar(30)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_PERFIL_USUARIO" Method="PR_PAR_PERFIL_USUARIO">
+    <Parameter Name="Rol" Parameter="rol" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Sis" Parameter="sis" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_PERFIL_USUARIOResult">
+      <Column Name="FL_PAR_CAR_NOMBRE" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_CAR_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_SBC_NOMBRE" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_SBC_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_NOMBRE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_LST_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_CAR_ORDEN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SBC_ORDEN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_ORDEN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_LST_CONTROLLER" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_LST_ACTION" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_PAR_CAR_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PK_PAR_SBC_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_CUS_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FL_PAR_CUB_CLASS" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_CUB_SUBCARPETA" Method="PR_PAR_CUB_SUBCARPETA">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SBC_ID" Parameter="sBC_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CUS_CLASS" Parameter="cUS_CLASS" Type="System.String" DbType="VarChar(30)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_EXC_LET_SER" Method="PR_PAR_EXC_LET_SER">
+    <Parameter Name="SER_ID" Parameter="sER_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_EXC_LET_SERResult">
+      <Column Name="PK_PAR_LET_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_EXC_COL_SER" Method="PR_PAR_EXC_COL_SER">
+    <Parameter Name="SER_ID" Parameter="sER_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_EXC_COL_SERResult">
+      <Column Name="PK_PAR_COL_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_COL_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_REF_CLIENTE" Method="PR_PAR_REF_CLIENTE">
+    <Parameter Name="CLI_RUT" Parameter="cLI_RUT" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_REF_CLIENTEResult">
+      <Column Name="PK_PAR_TDO_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TDO_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_USU_LOGIN" Method="PR_PAR_USU_LOGIN">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SIS_ID" Parameter="sIS_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_USU_LOGINResult">
+      <Column Name="PK_PAR_TOK_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_USU_LOGIN_INSERT" Method="PR_PAR_USU_LOGIN_INSERT">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SIS_ID" Parameter="sIS_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_USU_LOGIN_INSERTResult">
+      <Column Name="PK_PAR_TOK_ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_USU_LOGIN_CLEAR" Method="PR_PAR_USU_LOGIN_CLEAR">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SIS_ID" Parameter="sIS_ID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_TIENE_ROL" Method="PR_PAR_TIENE_ROL">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ROL_ID" Parameter="rOL_ID" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="PR_PAR_TIENE_ROLResult">
+      <Column Name="TIENE_ROL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_DET_CONSULTA" Method="PR_PAR_DET_CONSULTA">
+    <Parameter Name="SUC_ID" Parameter="sUC_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="TRA_ID" Parameter="tRA_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_DET_CONSULTAResult">
+      <Column Name="CANTIDAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_TRA_SALIDA_SUC" Method="PR_PAR_TRA_SALIDA_SUC">
+    <Parameter Name="SUC_ID" Parameter="sUC_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_TRA_SALIDA_SUCResult">
+      <Column Name="PK_PAR_TRA_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TRA_PATENTE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_TIENE_ROL_BY_NAME" Method="PR_PAR_TIENE_ROL_BY_NAME">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NOMBRE_ROL" Parameter="nOMBRE_ROL" Type="System.String" DbType="VarChar(200)" />
+    <ElementType Name="PR_PAR_TIENE_ROL_BY_NAMEResult">
+      <Column Name="TIENE_ROL" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_SUCURSALES_USUARIO" Method="PR_PAR_SUCURSALES_USUARIO">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_SUCURSALES_USUARIOResult">
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="PK_PAR_TUS_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_TUS_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_CLI_EMP_FANTASIA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_CAMBIA_SUC_USUARIO" Method="PR_PAR_CAMBIA_SUC_USUARIO">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SUC_ID" Parameter="sUC_ID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_CLIENTES_SUCURSALES" Method="PR_PAR_CLIENTES_SUCURSALES">
+    <Parameter Name="TUS" Parameter="tUS" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_CLIENTES_SUCURSALESResult">
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_CLI_EMP_FANTASIA" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_LISTA_SUCURSALES_EMP" Method="PR_PAR_LISTA_SUCURSALES_EMP">
+    <Parameter Name="EMP" Parameter="eMP" Type="System.Int32" DbType="Int" />
+    <Parameter Name="TUS" Parameter="tUS" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_LISTA_SUCURSALES_EMPResult">
+      <Column Name="PK_PAR_SUC_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SUC_NOMBRE" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_INSERT_SUS" Method="PR_PAR_INSERT_SUS">
+    <Parameter Name="SUC" Parameter="sUC" Type="System.Int32" DbType="Int" />
+    <Parameter Name="USU" Parameter="uSU" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_SUS_ELIMINA" Method="PR_PAR_SUS_ELIMINA">
+    <Parameter Name="SUC" Parameter="sUC" Type="System.Int32" DbType="Int" />
+    <Parameter Name="USU" Parameter="uSU" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_SER_INSERT_UPD" Method="PR_PAR_SER_INSERT_UPD">
+    <Parameter Name="SER_ID" Parameter="sER_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SER_NOMBRE" Parameter="sER_NOMBRE" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="SER_TRABAJA_KG" Parameter="sER_TRABAJA_KG" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="SER_TRABAJA_VOL" Parameter="sER_TRABAJA_VOL" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="SER_FACTOR_VOL" Parameter="sER_FACTOR_VOL" Type="System.Int32" DbType="Int" />
+    <Parameter Name="REF_1" Parameter="rEF_1" Type="System.Int32" DbType="Int" />
+    <Parameter Name="REF_2" Parameter="rEF_2" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CANT_VISITAS" Parameter="cANT_VISITAS" Type="System.Int32" DbType="Int" />
+    <Parameter Name="TSE" Parameter="tSE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="HU" Parameter="hU" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ALERTABIT" Parameter="aLERTABIT" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ALERTAVALOR" Parameter="aLERTAVALOR" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_SER_LISTA_SERV" Method="PR_PAR_SER_LISTA_SERV">
+    <Parameter Name="SER_ID" Parameter="sER_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_SER_LISTA_SERVResult">
+      <Column Name="PK_CLI_EMP_RUT" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_SER_ID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SER_NOMBRE" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SER_FACTOR_VOLUMETRICO" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_TRABAJA_PESO_KG" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_TRABAJA_PESO_VOL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TDO_1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Referencia1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TDO_2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Referencia2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_CANTIDAD_VISITAS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FL_PAR_TSE_NOMBRE" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PK_PAR_TSE_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FL_PAR_SER_ALERTA_KILO" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_PIDE_HU" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FL_PAR_SER_ALERTA_VALOR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_MAN_USU_BLOQUEA" Method="PR_PAR_MAN_USU_BLOQUEA">
+    <Parameter Name="USU_RUT" Parameter="uSU_RUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="BLOQUEADO" Parameter="bLOQUEADO" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.PR_PAR_MAN_SEG_LISTA_ROLES" Method="PR_PAR_MAN_SEG_LISTA_ROLES">
+    <Parameter Name="SIS_ID" Parameter="sIS_ID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="PR_PAR_MAN_SEG_LISTA_ROLESResult">
+      <Column Name="FL_PAR_SIS_NOMBRE" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.PR_PAR_AGREGA_CONDUCTOR" Method="PR_PAR_AGREGA_CONDUCTOR">
+    <Parameter Name="RRUT" Parameter="rRUT" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DV" Parameter="dV" Type="System.String" DbType="VarChar(1)" />
+    <Parameter Name="NOMBRE" Parameter="nOMBRE" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="CODIGO" Parameter="cODIGO" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

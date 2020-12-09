@@ -1,0 +1,80 @@
+﻿@model MvcReporteViajes.Models.VehiculosModels
+@{
+    ViewBag.Title = "AgregaTransporte";
+}
+
+
+<script type="text/javascript">
+
+    function Iniciov() {
+    }
+    function Finv() {
+        closeWaitingDialog();
+    }
+    function FinSuccessv(data) {
+        if (data.Ok == true) {
+            cargaVehiculos();
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+    
+    
+    $(function () {
+        $("#PATENTE").focus();
+    });
+  
+  
+    function teclaEnterV(e, idElemento) {
+        var esIE = (document.all);
+        tecla = (esIE) ? event.keyCode : e.which;
+        if (tecla == 13) {
+            $("#" + idElemento).focus();
+        }
+    }
+
+
+</script>
+
+
+@using (Ajax.BeginForm("insertaVehiculo", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Iniciov();", OnComplete = "javascript:Finv();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccessv(data);" }, new { id = "frmAgregaTransporte" }))
+{
+    <table>
+          <tr>
+              <td><strong> @Html.LabelFor(m => m.PATENTE)</strong></td>
+              <td>@Html.TextBoxFor(m => m.PATENTE, new { @style = "width:65px;font-size: 10px", @onkeyup = "this.value=this.value.toUpperCase()", @onkeypress = "javascript:teclaEnterV(event,'MARCA');" })</td>
+              @Html.ValidationMessageFor(m => m.PATENTE)
+             
+          </tr>
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.MARCA)</strong></td>
+            <td>@Html.TextBoxFor(m => m.MARCA, new { @style = "width:200px;font-size: 10px;text-align:left", @onkeyup = "this.value=this.value.toUpperCase()", @onkeypress = "javascript:teclaEnterV(event,'MODELO');" })
+             @Html.ValidationMessageFor(m => m.MARCA)
+            </td>
+          </tr>
+          <tr>
+             <td><strong> @Html.LabelFor(m => m.MODELO)</strong></td>
+             <td>@Html.TextBoxFor(m => m.MODELO, new { @style = "width:200px;font-size: 10px;text-align:left", @onkeypress = "javascript:teclaEnterV(event,'CAPACIDADKGS');" })
+                 @Html.ValidationMessageFor(m => m.MODELO)
+             </td>
+          </tr>
+         <tr>
+             <td><strong> @Html.LabelFor(m => m.CAPACIDADKGS)</strong></td>
+             <td>@Html.TextBoxFor(m => m.CAPACIDADKGS, new { @style = "width:60px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnterV(event,'CAPACIDADM3');" })
+             </td>
+          </tr>
+          <tr>
+             <td><strong> @Html.LabelFor(m => m.CAPACIDADM3)</strong></td>
+             <td>@Html.TextBoxFor(m => m.CAPACIDADM3, new { @style = "width:60px;font-size: 10px;text-align:right"})
+            </td>
+          </tr>
+    </table>
+    
+    
+}   

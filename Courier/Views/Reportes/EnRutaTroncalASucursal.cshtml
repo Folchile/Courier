@@ -1,0 +1,85 @@
+﻿@model Courier.Models.EnRutaTroncalModels
+@{
+    ViewBag.Title = "Pendiente Recepción";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script type="text/jscript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+    function DescargaPDF(MAN_ID) {
+        var randomnumber = Math.floor(Math.random() * 11111111);
+        window.open('@Url.Action("Index","Reporte")?MAN_ID=' + MAN_ID + '&r=' + randomnumber, '_blank');
+    }
+    function DetalleOT(MAN, COM) {        
+            var randomnumber = Math.floor(Math.random() * 11111111);
+            waitingDialog({ title: "Cargando Información", message: "Cargando...<br/>" });
+            $.ajax({
+                url: '@Url.Action("PendienteRecepcionDetalle", "Reportes")',
+                data: {
+                    r: randomnumber,
+                    MAN_ID: MAN,
+                    COM_ID: COM
+                },
+                cache: false
+            })
+        .done(function (data) {
+            $("#ResultadoConsulta").html(data);
+            $("#ResultadoConsulta").dialog("open");           
+        })
+        .error(function () {
+            alert("No fue posible cargar el formulario");
+        })
+        .complete(function () {
+            closeWaitingDialog();
+        });
+    }
+    $(function () {
+        $("#ResultadoConsulta").dialog({ autoOpen: false, title: "Detalle OT", 'overflow-y': 'auto', position: 'top', modal: true, resizable: false, autoResize: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+</script>
+<div id="ResultadoConsulta"></div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Listado</a></li>        
+	</ul>
+	<div id="tabs-1">   
+        @{
+            var grid = new WebGrid(Model.oListaRecepcion, rowsPerPage: 15, ajaxUpdateContainerId: "tabs-1");    
+        } 
+        @grid.GetHtml(
+        fillEmptyRows: true,
+        alternatingRowStyle: "fila-alternativa",
+        headerStyle: "encabezado-grid",
+        tableStyle:"mGrid",
+        footerStyle: "pie-grid",
+        mode: WebGridPagerModes.All,
+        firstText: "<< Primera",
+        previousText: "< Anterior",
+        nextText: "Siguiente >",
+        lastText: "Última >>",
+        columns: new[]
+        {
+            grid.Column("FL_PAR_REG_NOMBRE","Region_Destino"),     
+            grid.Column("FL_PAR_COM_NOMBRE","Comuna_Destino"),   
+            grid.Column("FL_PAR_SUC_NOMBRE","Sucursal_Destino"),     
+            grid.Column("CANTIDAD_BULTOS","Cantidad_Bultos"),
+            grid.Column("TOTAL_PESO_KG","Total_Peso_KG.",@<text>
+                @item.TOTAL_PESO_KG.ToString("#0.00")
+            </text>),
+            grid.Column("TOTAL_PESO_VOL","Total_Peso_Vol.",@<text>
+                @item.TOTAL_PESO_VOL.ToString("#0.00")
+            </text>),     
+            grid.Column("MAN_ID","Manifiesto"),     
+            grid.Column("MAN_ID","Opciones",format:@<text>
+                <a href="#" onclick="javascript:DescargaPDF(@item.MAN_ID)">[Descargar Manifiesto]</a>            
+                <a href="#" onclick="javascript:DetalleOT(@item.MAN_ID,@item.PK_PAR_COM_ID)">[Detalle]</a>
+            </text>)
+        })
+</div></div>

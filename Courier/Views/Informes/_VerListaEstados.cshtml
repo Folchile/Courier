@@ -1,0 +1,124 @@
+﻿@model Courier.Models.InformesConsultaEstadosModels
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+        $("#btnExcel").button();
+    })
+
+</script>
+@{
+
+   var grid = new WebGrid(Model.ListaInforme, rowsPerPage: 10, ajaxUpdateContainerId: "GridInforme");
+   var gridRecepcion = new WebGrid(Model.ListaInformerRecepcion, rowsPerPage: 10, ajaxUpdateContainerId: "GridInforme");    
+}
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Informe</a></li>		    
+    </ul>  
+    
+    <div id="tabs-1">   
+        <div id="idListaInforme">
+            <div  id="GridInforme" style="min-width:600px;">
+           
+                @if (Model.Estado=="10")
+                {
+@*                    @gridRecepcion.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {                
+                        gridRecepcion.Column("PK_FOL_OTD_ID","OT",format:@<text>
+                        @string.Format("{0}-{1}",item.PK_FOL_OTP_ID,item.PK_FOL_OTD_ID)
+                        </text>), 
+                        gridRecepcion.Column("FL_FOL_OTD_REFERENCIA1","Ref.1"),        
+                        gridRecepcion.Column("FL_FOL_OTD_DESTINATARIO_NOMBRE","Nombre"),
+                        gridRecepcion.Column("FL_FOL_OTD_DESTINATARIO_RUT","Rut"),
+                        gridRecepcion.Column("FL_PAR_REG_NOMBRE","Región"),
+                        gridRecepcion.Column("FL_PAR_COM_NOMBRE","Comuna"),
+                        gridRecepcion.Column("FL_FOL_OTD_DESTINATARIO_DIRECCION","Dirección"),
+                        gridRecepcion.Column("FL_PAR_SUC_NOMBRE","Sucursal"),
+
+                        gridRecepcion.Column("FL_FOL_ENT_RUT","RUT_RECIBE"),
+                        gridRecepcion.Column("FL_FOL_ENT_RECIBE","NOMBRE_RECIBE"),
+                        gridRecepcion.Column("FL_FOL_DEN_DIRECCION","DIRECCIÓN_RECIBE"),   
+                        gridRecepcion.Column("FL_FOL_ENT_FECHA","FECHA_RECIBE"),        
+                        gridRecepcion.Column("FL_FOL_TOTAL_BULTO","BULTOS_RECIBE")   
+                    })*@ 
+                    
+                    @gridRecepcion.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {                
+                        gridRecepcion.Column("PK_FOL_OTD_ID","OT",format:@<text>
+                        @string.Format("{0}-{1}",item.PK_FOL_OTP_ID,item.PK_FOL_OTD_ID)
+                        </text>), 
+                        gridRecepcion.Column("FL_FOL_OTD_REFERENCIA1","Ref.1"),        
+                        gridRecepcion.Column("FL_FOL_OTD_DESTINATARIO_NOMBRE","Nombre"),
+                        gridRecepcion.Column("FL_FOL_OTD_DESTINATARIO_RUT","Rut"),
+                        gridRecepcion.Column("FL_PAR_REG_NOMBRE","Región"),
+                        gridRecepcion.Column("FL_PAR_COM_NOMBRE","Comuna"),
+                        gridRecepcion.Column("FL_FOL_OTD_DESTINATARIO_DIRECCION","Dirección"),
+                        gridRecepcion.Column("FL_PAR_SUC_NOMBRE","Sucursal"),
+                        gridRecepcion.Column("FL_FOL_ENT_RUT","Rut_Recibe"),
+                        gridRecepcion.Column("FL_FOL_ENT_RECIBE","Nombre_Recibe"),   
+                        gridRecepcion.Column("FL_FOL_ENT_FECHA","Fecha_Recibe"),        
+                        gridRecepcion.Column("FL_FOL_TOTAL_BULTO","Bultos_Recibe")                         
+
+                        
+                    })
+                                        
+                }
+                else
+                {
+                 
+                    @grid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: new[]
+                    {                
+                        grid.Column("PK_FOL_OTD_ID","OT",format:@<text>
+                        @string.Format("{0}-{1}",item.PK_FOL_OTP_ID,item.PK_FOL_OTD_ID)
+                        </text>), 
+                        grid.Column("FL_FOL_OTD_REFERENCIA1","Ref.1"),        
+                        grid.Column("FL_FOL_OTD_DESTINATARIO_NOMBRE","Nombre"),
+                        grid.Column("FL_FOL_OTD_DESTINATARIO_RUT","Rut"),
+                        grid.Column("FL_PAR_REG_NOMBRE","Región"),
+                        grid.Column("FL_PAR_COM_NOMBRE","Comuna"),
+                        grid.Column("FL_FOL_OTD_DESTINATARIO_DIRECCION","Dirección"),
+                        grid.Column("FL_PAR_SUC_NOMBRE","Sucursal")
+
+                        
+                    })
+
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

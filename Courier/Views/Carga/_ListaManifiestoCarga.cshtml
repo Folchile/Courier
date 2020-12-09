@@ -1,0 +1,269 @@
+﻿@model Courier.Models.CargaModels          
+@{
+    var grid = new WebGrid(Model.ListaManCarga, rowsPerPage: 15, ajaxUpdateContainerId: "myManCarga", selectionFieldName: "SelectedRow");
+    var gridCerrado = new WebGrid(Model.ListaManCargadoHoy, rowsPerPage: 15, ajaxUpdateContainerId: "myManCerrado");
+
+} 
+<script type="text/javascript">
+    $(function () {
+        $("#tabsMan").tabs();
+        $(".boton").button();
+        $("#CargarManifiestosSeleccionados").button()
+       .click(function () {
+           $.validator.unobtrusive.parse("#frmdtosentrega");
+           if ($("#frmdtosentrega").valid() == true) {
+               ConfirmaEntrega();
+           }
+       });
+        $("#toggleAllCheckBox").click(function () {
+            if ($(this).attr("checked")) {
+                $(".check-box").attr("checked", true);
+
+            } else {
+                $(".check-box").attr("checked", false);
+
+            }
+        });
+        $("#Confirmar").dialog({ autoOpen: false, width: "auto", height: "auto", title: 'Advertencia', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    $("#frmdtosentrega").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-errores").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    closeWaitingDialog();
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-conductor").dialog({ autoOpen: false, width: 'auto', modal: true , title: 'Conductor',
+            buttons: {
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+    function BeginEnviaEntregas() {
+        waitingDialog({ title: "Guardando", message: "Procesando...<br/>" });
+
+    }
+    function SuccessEntrega(data) {
+        if (data.Ok == true) {
+            CargaInicioCarga();
+            closeWaitingDialog();
+            $("#dialog-errores").html("<p>" + data.Mensaje + "</p>");
+            $("#dialog-errores").dialog("open");
+        }
+        else {
+            closeWaitingDialog();
+            $("#dialog-errores").html("<p>" + data.Mensaje + "</p>");
+            $("#dialog-errores").dialog("open");
+        }
+    }
+    function ConfirmaEntrega() {
+            $("#Confirmar").dialog("open");
+    }
+    function CompleteEntrega() {
+        closeWaitingDialog();
+    }
+    function EntregaCarga(idManifiesto) {
+ 
+        $("#ConfirmaCarga").dialog("open");
+    }
+    function Entrega(idManifiesto) {
+        var randomnumber = Math.floor(Math.random() * 111111111);
+        $.ajax({
+            url: '@Url.Action("EntregaManifiesto", "Carga")',
+            data: {
+                Manifiesto: idManifiesto
+            }
+        }).done(function (data) {
+                if (data.Ok == true) {
+                    $("#dialog-errores").html(data.Mensaje);
+                    $("#dialog-errores").dialog("open");
+                    closeWaitingDialog();
+                }
+                else {
+                    $("#dialog-errores").html(data.Mensaje);
+                    $("#dialog-errores").dialog("open");
+                }
+
+            });
+        }
+    function EditarManifiesto(idManifiesto){
+        var randomnumber = Math.floor(Math.random() * 111111111);
+        waitingDialog({ title: "Editar Conductor", message: "Buscando...<br/>" });
+        $("#dialog-conductor").load('@Url.Action("EditarPatente","Carga")?NumeroManifiesto=' + idManifiesto + '&r=' + randomnumber + '', function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar la información');
+            }
+            else {
+                $("#dialog-conductor").dialog("open");
+            }
+        });
+    }
+</script>
+<div id="Confirmar">
+    <p>
+        <strong>Seran entregados todos los manifiestos seleccionados</strong><br />
+        <br />
+        ¿Está seguro(a) que desea continuar?</p>
+</div>
+
+<div id="dialog-errores"></div>
+
+<div id="dialog-conductor"></div>
+<div id="tabsMan">
+	    <ul>
+		    <li><a href="#tabsMan-1">En espera Transporte</a></li>        
+            <li><a href="#tabsMan-2">Manifiestos Cargados Hoy</a></li>
+	    </ul>
+	    <div id="tabsMan-1">
+    
+         @if (Model.ListaManCarga != null)
+            {
+            <div>
+                <button id="CargarManifiestosSeleccionados" class="boton">
+                    <div style="float: left; width: 140px;">
+                        <div style="float: left;">
+                            <img alt="Buscar" src="@Url.Content("~/Images/lorrygreen.png")" />
+                       
+                            &nbsp;Entregar Seleccionados</div>
+                    </div>
+                </button>
+            </div> 
+            }
+            else
+            {
+                <div>No existen manifiestos abiertos</div>
+            }
+
+             @using (Ajax.BeginForm("GrabarEntregaForm", "Carga", new AjaxOptions { HttpMethod = "Post",  
+          OnBegin = "javascript:BeginEnviaEntregas()", OnSuccess = "javascript:SuccessEntrega(data);", OnComplete = "javascript:CompleteEntrega()", OnFailure = "javascript:CompleteEntrega()" }, new { @id = "frmdtosentrega" }))
+            {
+            <div  id="myManCarga">
+                <div>
+                    @grid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    selectedRowStyle: "selected",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+
+                    columns: new[]
+                    {                
+                        grid.Column(header: "Seleccionar",
+                                    style: "labelcolumn",
+                                    format:
+                                        @<text><input class="check-box" id="assignChkBx" name="assignChkBx" 
+                                        type="checkbox" value="@item.Numero_manifiesto" /></text>),
+                        grid.Column("Numero_manifiesto","Numero manifiesto"),
+                        grid.Column("Patente_vehículo","Patente vehículo"),                                             
+                        grid.Column("Nombre_conductor","Nombre conductor"),                                                
+                        grid.Column("Cantidad_de_OT","Cantidad_OT",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @item.Cantidad_de_OT
+                            </div>
+                        </text>),                                                
+                        grid.Column("Cantidad_de_Bultos","Cantidad de Bultos",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @item.Cantidad_de_Bultos
+                            </div>
+                        </text>),                                                
+                        grid.Column("Usuario_Creación","Usuario Creación"),
+                        grid.Column("Numero_manifiesto","Opciones",@<text>
+
+                                <div style="width: 100%; text-align: center">
+                                   
+                                     <a href="#" onclick="javascript:EntregarCarga(@item.Numero_manifiesto)"><img border="0" title="Entregar CARGA" alt="Carga" src="@Url.Content("~/Images/lorrygreen.png")" /></a>            
+            
+                                     <a href="#" onclick="javascript:ImprimirManifiesto(@item.Numero_manifiesto)"><img border="0" title="Descargar PDF" alt="PDF" src="@Url.Content("~/Images/doc_pdf.png")" /></a>            
+                                    
+                                     <a href="#" onclick="javascript:EditarManifiesto(@item.Numero_manifiesto)"><img border="0" title="Editar Conductor" alt="72" src="@Url.Content("~/Images/72.png")" /></a>            
+          
+                                     <a href="#" onclick="javascript:DescargarExcelMan(@item.Numero_manifiesto)"><img border="0" title="Descargar Bultos" alt="EXCEL" src="@Url.Content("~/Images/doc_excel_table.png")" /></a>            
+          
+                                </div>
+                        </text>) 
+                        
+                    
+            
+                    })
+                </div>   
+            </div>  
+            }   
+            
+    </div>
+    <div id="tabsMan-2">                
+        @if (Model.ListaManCargadoHoy != null)
+        {
+            <div  id="myManCerrado">                
+                   @gridCerrado.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    selectedRowStyle: "selected",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+
+                    columns: new[]
+                    {                
+                        grid.Column("Numero_manifiesto","Numero manifiesto"),
+                        grid.Column("Patente_vehículo","Patente vehículo"),                                             
+                        grid.Column("Nombre_conductor","Nombre conductor"),                                                
+                        grid.Column("Cantidad_de_OT","Cantidad_OT",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @item.Cantidad_de_OT
+                            </div>
+                        </text>),                                                
+                        grid.Column("Cantidad_de_Bultos","Cantidad de Bultos",@<text>                
+                            <div style="width:100%;text-align:right" >
+                                @item.Cantidad_de_Bultos
+                            </div>
+                        </text>),                                                
+                        grid.Column("Usuario_Creación","Usuario Creación"),
+                        grid.Column("Numero_manifiesto","Opciones",@<text>
+
+                                <div style="width: 100%; text-align: center">
+                                   
+                                   
+                                     <a href="#" onclick="javascript:ImprimirManifiesto(@item.Numero_manifiesto)"><img border="0" title="Descargar PDF" alt="PDF" src="@Url.Content("~/Images/doc_pdf.png")" /></a>            
+                                     <a href="#" onclick="javascript:DescargarExcelMan(@item.Numero_manifiesto)"><img border="0" title="Descargar Bultos" alt="EXCEL" src="@Url.Content("~/Images/doc_excel_table.png")" /></a>            
+          
+                                </div>
+                        </text>) 
+            
+                    })
+            </div>
+        }
+        else
+        {
+            <div>No existen manifiestos cerrados HOY</div>
+        }
+</div>
+</div>

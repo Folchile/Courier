@@ -1,0 +1,155 @@
+﻿@model Courier.Models.VerOTModel
+
+@{
+    ViewBag.Title = "Ingreso Masivo";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/TableBlue.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet"type="text/css" />
+<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.9.1.custom.css")" rel="stylesheet"type="text/css" />
+
+
+
+<h3><strong>OT Principal : @Model.OTPrincipal</strong></h3><br />
+@{
+   
+    
+    var grid = new WebGrid(Model.oListaOTDetalle, rowsPerPage: 15, ajaxUpdateContainerId: "contenedor-grid");
+    //ViewBag.Title = "_CargaIngresoMasivo";
+    //Layout = "~/Views/Shared/_Layout.cshtml"; 
+    ViewBag.isAdmin = false;
+    var gridColumns = new List<WebGridColumn>();
+
+
+
+    
+    var oCount = Model.oListaOTDetalle.Count();
+
+    var iCount = 0;
+
+
+    
+
+    if (Model.oColumnas[1] == 1)
+    { gridColumns.Add(grid.Column("Id", "N° " + Model.NombreRef1)); iCount++; }
+    if (Model.oColumnas[2] == 1)
+    { gridColumns.Add(grid.Column("Referencia", "N° " + Model.NombreRef2)); iCount++; }
+    if (Model.oColumnas[3] == 1)
+    {
+        gridColumns.Add(grid.Column("Destinatario", "Destinatario", format: @<text>@if (item.Destinatario.Length > 15)
+                                                                                   {<span title="@item.Direccion">@item.Destinatario.Substring(0, 15)...</span> }
+                                                                                   else
+                                                                                   {@item.Destinatario}</text>)); iCount++;
+    }
+    if (Model.oColumnas[4] == 1)
+    { gridColumns.Add(grid.Column("Rut", "Rut")); iCount++; }
+    if (Model.oColumnas[5] == 1)
+    { gridColumns.Add(grid.Column("ContactoEntrega", "Contacto Entrega")); iCount++; }
+    if (Model.oColumnas[6] == 1)
+    {
+        gridColumns.Add(grid.Column("Direccion", "Dirección", format: @<text>@if (item.Direccion.Length > 15)
+                                                                             {<span title="@item.Direccion">@item.Direccion.Substring(0, 15)...</span> }
+                                                                             else
+                                                                             {@item.Direccion}</text>)); iCount++;
+    }
+    if (Model.oColumnas[11] == 1)
+    { gridColumns.Add(grid.Column("DireccionNumero", "N°")); iCount++; }
+    if (Model.oColumnas[7] == 1)
+    { gridColumns.Add(grid.Column("Comuna", "Comuna")); iCount++; }
+    if (Model.oColumnas[12] == 1)
+    { gridColumns.Add(grid.Column("Localidad", "Localidad")); iCount++; }
+    if (Model.oColumnas[8] == 1)
+    {
+        gridColumns.Add(grid.Column("Bulto", "Bulto", format: @<text>
+    <div style="float:right">
+        @item.Bulto
+    </div>
+    </text>)); iCount++;
+    }
+    if (Model.oColumnas[9] == 1)
+    {
+        gridColumns.Add(grid.Column("Peso", "Peso", format: @<text>
+    <div style="float:right">
+       @String.Format("{0:0.000}", @item.Peso)       
+    </div>
+    </text>)); iCount++;
+    }
+    if (Model.oColumnas[15] == 1)
+    {
+        gridColumns.Add(grid.Column("Largo", "Largo", format: @<text>
+    <div style="float:right">
+        @String.Format("{0:0.000}", @item.Largo)
+    </div>
+    </text>)); iCount++;
+    }
+    if (Model.oColumnas[16] == 1)
+    {
+        gridColumns.Add(grid.Column("Alto", "Alto", format: @<text>
+    <div style="float:right">
+        @String.Format("{0:0.000}", @item.Alto)
+    </div>
+    </text>)); iCount++;
+    }
+    if (Model.oColumnas[17] == 1)
+    {
+        gridColumns.Add(grid.Column("Ancho", "Ancho", format: @<text>
+    <div style="float:right">
+        @String.Format("{0:0.000}", @item.Ancho)
+    </div>
+    </text>
+            )); iCount++;
+    }
+    if (Model.oColumnas[10] == 1)
+    { gridColumns.Add(grid.Column("Telefono", "Fono")); iCount++; }
+    if (Model.oColumnas[13] == 1)
+    { gridColumns.Add(grid.Column("Via", "Vía")); iCount++; }
+    if (Model.oColumnas[14] == 1)
+    { gridColumns.Add(grid.Column("CodigoPostal", "Código Postal")); iCount++; }
+
+    gridColumns.Add(grid.Column("FechaEstimada", "F. Estimada", format: @<text>
+        <div style="float:right">
+            @item.FechaEstimada.ToString("dd/MM/yyyy")
+        </div>
+        </text>));
+}
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Datos Cargados</a></li>
+	</ul>
+    <div id="tabs-1">                
+        <div id="contenedor-grid">     
+            @{                  
+                if (iCount > 0)
+                {
+                    @grid.GetHtml(
+                    fillEmptyRows: true,
+                    alternatingRowStyle: "fila-alternativa",
+                    headerStyle: "encabezado-grid",
+                    tableStyle: "mGrid",
+                    footerStyle: "pie-grid",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< Primera",
+                    previousText: "< Anterior",
+                    nextText: "Siguiente >",
+                    lastText: "Última >>",
+                    columns: grid.Columns(gridColumns.ToArray())
+                    );
+                }
+                else
+                {
+                    <p>No se ha definido un Archivo de Carga para este Servicio.</p>
+                }
+            }
+        </div>
+        @if (iCount > 0)
+        {
+            <p>Filas Cargadas: @Model.oListaOTDetalle.Count()</p>
+        }
+    </div>
+    
+</div>

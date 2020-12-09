@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://webservice.fuex.cl/webservice/wsfolcourier.asmx?wsdl" docRef="http://webservice.fuex.cl/webservice/wsfolcourier.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://webservice.fuex.cl/webservice/wsfolcourier.asmx" xmlns:q1="folweb" binding="q1:wsFolCourierSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://webservice.fuex.cl/webservice/wsfolcourier.asmx" xmlns:q2="folweb" binding="q2:wsFolCourierSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

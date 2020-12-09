@@ -1,0 +1,140 @@
+﻿@model Courier.Models.RectificacionRecepcionModels
+@{
+    ViewBag.Title = "RecepcionOkModificar";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+        $("#btnVerHistorialOT").button();
+        $(".tipofecha").datepicker({ minDate: "-@Model.DiferenciaFechas", maxDate: "0", dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"], dateFormat: "dd-mm-yy", appendText: "(dd-mm-aaaa)", dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"] });
+        $("#dialog-HistorialOT").dialog({ autoOpen: false, title: "Historial", minWidth: 800, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            },
+            position: 'top+10'
+        });
+        $("#dialog-Confirmacion").dialog({ autoOpen: false, title: "Consulta", modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                    waitingDialog({ title: "Validación", message: "Validando Datos...<br/>" });
+                    var randomnumber = Math.floor(Math.random() * 11111111)
+                    $.ajax({
+                        url: '@Url.Action("ValidarGuardar","Rectificacion")',
+                        data: {
+                            OT: $("#OT").val(),
+                            r: randomnumber,
+                            Hora: $("#Hora").val(),
+                            Minutos: $("#Minutos").val(),
+                            FechaEntrega: $("#FechaEntrega").val(),
+                            Observacion: $("#Observacion").val()
+                        },
+                        type: "POST",
+                        success: function (data) {
+                            closeWaitingDialog();
+                            if (data.Ok == true) {
+                                alert(data.Fecha);
+                            }
+                            else {
+                                closeWaitingDialog();
+                                $("#dialog-mensajeError").html('<p>' + data.Mensaje + '</p>');
+                                $("#dialog-mensajeError").dialog("open");
+                            }
+
+                        },
+                        error: function () {
+                            closeWaitingDialog();
+                        }
+                    });
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#btnGuardarRecepcion").button();
+    })
+    function CargaHistorialOT(OTP, OTD, IdBulto) {
+        var randomnumber = Math.floor(Math.random() * 11)
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load('@Url.Content("~/Preparacion/VerHistorialOT")?OTP=' + OTP + '&OTD=' + OTD + '&IdBulto=' + IdBulto + '&iOTP=0&iOTD=1&iBulto=0&r=' + randomnumber);
+    }
+    function Confirmacion0021() {
+         borrar_contenido();
+         $.validator.unobtrusive.parse("#frmRecepcionOk");
+         if ($("#frmRecepcionOk").valid() == true) {
+             $("#dialog-Confirmacion").html("<p>¿Está seguro(a) que desea dejar la OT en <strong>Recepción OK</strong>?</p>");
+             $("#dialog-Confirmacion").dialog("open");
+         }
+    }
+</script>
+<div id="dialog-Confirmacion"></div>
+<div id="dialog-HistorialOT"></div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Recepción OK Manual</a></li>
+	</ul>
+	<div id="tabs-1"> 
+        <button id="btnVerHistorialOT" onclick="javascript:CargaHistorialOT(@Model.OTP,@Model.OTD,0)">
+            <div style="float:left;width:130px;">       
+            <div style="float:left;"><img alt="" src="@Url.Content("~/Images/file_temporary.png")?" /></div>                 
+            <div style="float:left;">&nbsp;Ver Historial OT</div>                        
+            </div>                       
+        </button>
+        @using (Ajax.BeginForm("RecepcionOkGuardar", "Rectificacion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:InicioRecGuarda()", OnSuccess = "Javascript:FinAgregarRecGuarda(data)", OnFailure = "Javascript:FinErrorRecGuarda()" }, new { id = "frmRecepcionOk" }))
+        {
+            <table>
+                <tr>
+                    <td>Última Fecha Registrada</td>
+                    <td><strong>:</strong></td>
+                    <td><strong>@Model.UltimaFecha</strong></td>            
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.FechaEntrega)</td>
+                    <td><strong>:</strong></td>
+                    <td>@Html.TextBoxFor(m => m.FechaEntrega, new { @class = "tipofecha", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m=>m.FechaEntrega)
+                    </td></tr>            
+                <tr>
+                    <td>Hora Entrega</td>
+                    <td><strong>:</strong></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>@Html.DropDownListFor(m => m.Hora, Model.ListaHora)</td>
+                                <td>:@Html.DropDownListFor(m => m.Minutos, Model.ListaMinutos)</td>
+                            </tr>            
+                        </table>
+                    </td>                        
+                </tr>
+                 <tr>
+                    <td>Observación</td>
+                    <td><strong>:</strong></td>
+                    <td>
+                        @Html.DropDownListFor(m => m.Observacion, Model.ListaObservacion, "-- Seleccione una observación --")
+                        @Html.ValidationMessageFor(m => m.Observacion)
+                    </td>                        
+                </tr>
+            </table>  
+        }      
+    </div>
+    <div style="width:100%;text-align:right;">
+        <button id="btnGuardarRecepcion" onclick="javascript:Confirmacion0021()">
+            <div style="float:left;width:80px;">       
+            <div style="float:left;"><img alt="" src="@Url.Content("~/Images/45.png")" /></div>                 
+            <div style="float:left;">&nbsp;Guardar</div>                        
+            </div>                       
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        borrar_contenido();
+
+    })
+</script>
+

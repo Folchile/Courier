@@ -1,0 +1,219 @@
+﻿@model MvcReporteViajes.Models.AsistentesModels
+@{
+    var grid = new WebGrid(Model.VerAsistentesd, rowsPerPage: 17, ajaxUpdateContainerId: "gridAsistentes"); 
+}
+
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+            cargaAsistentes();
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editarasistente").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmeditaAsistente");
+                    if ($("#frmeditaAsistente").valid() == true) {
+                        $("#frmeditaAsistente").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-activarasistente").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmActivarAsistente").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-inactivarasistente").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmInactivarAsistente").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+
+    
+    function EditarAsistentes(rut_asis) {
+        $("#rut_asis").val(rut_asis);
+        $("#dialog-resultado").html("");
+        $("#frmeditasist").submit();
+        $("#dialog-editarasistente").dialog("open");
+        $("#dialog-editarasistente").html('<img src="@Url.Content("~/images/38.gif")">');
+    }
+
+
+    function ActivarAsis(id_rutact) {
+        $("#dialog-activarasistente").dialog("open");
+        $("#id_rutact").val(id_rutact);
+        $("#dialog-activarasistente").html("<p>¿Está seguro(a) que desea Activar el Asistente <strong>" + id_rutact + " </strong> ? </p>");
+    }
+
+
+    function InactivarAsis(id_rutinact) {
+        $("#dialog-inactivarasistente").dialog("open");
+        $("#id_rutinact").val(id_rutinact);
+        $("#dialog-inactivarasistente").html("<p>¿Está seguro(a) que desea Inactivar el Asistente <strong>" + id_rutinact + " </strong> ? </p>");
+    }
+
+
+
+</script>
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-editarasistente" title="Mantención"></div> 
+<div id="dialog-activarasistente" title="Activar Asistente"></div>
+<div id="dialog-inactivarasistente" title="Inactivar Asistente"></div>
+
+@using (Ajax.BeginForm("EditarDetalleAsistente", "ingresos", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editarasistente" }, new { id = "frmeditasist" }))
+{
+    <input type="hidden" name="rut_asis" id="rut_asis" />
+}
+
+
+@using (Ajax.BeginForm("ActivarAsistente", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmActivarAsistente" }))
+{
+    <input type="hidden" name="id_rutact" id="id_rutact" />
+}
+
+
+@using (Ajax.BeginForm("InactivarAsistente", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmInactivarAsistente" }))
+{
+    <input type="hidden" name="id_rutinact" id="id_rutinact" />
+}
+
+
+
+
+
+<div id="gridAsistentes">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Arut","RUT"),
+       grid.Column("Adig","DV"),
+       grid.Column("Anombres","NOMBRE"),
+       grid.Column("Aapellidos","APELLIDO"),
+       grid.Column("Acodigo","CODIGO"),
+       grid.Column("Aestado","ESTADO"),
+       grid.Column("Asucursal","SUCURSAL"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                        <a href="#" title="Editar Rut @item.Arut" onclick="EditarAsistentes('@item.Arut')">Editar</a>
+                                        
+                                        @if (item.Aestado == "INACTIVO")
+                                        {
+                                            <a href="#" title="Activar Asistente @item.Arut" onclick="ActivarAsis('@item.Arut')">Activar</a>
+                                        }
+                                        else
+                                        {
+                                            <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                        } 
+                                         @if (item.Aestado == "ACTIVO")
+                                        {
+                                            <a href="#" title="Inactivar Asistente @item.Arut" onclick="InactivarAsis('@item.Arut')">Inactivar</a>
+                                        }
+                                        else
+                                        {
+                                            <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                        } 
+
+                                    </text>)
+ })
+</div>
+
+

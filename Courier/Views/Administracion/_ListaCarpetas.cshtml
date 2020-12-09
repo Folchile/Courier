@@ -1,0 +1,26 @@
+﻿@model Courier.Models.AdministracionCarpeta
+@{
+    var grid = new WebGrid(Model.oListaCarpetas,rowsPerPage:15,ajaxUpdateContainerId:"myGrid1");        
+} 
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+tableStyle:"mGrid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("FL_PAR_CAR_ORDEN","Orden"),
+    grid.Column("FL_PAR_CAR_NOMBRE","Nombre"),             
+    grid.Column("FL_PAR_CAR_CLASS","Tipo"),     
+    grid.Column("",header:"Acciones",format:@<text>
+                                        <a href="#" title="Editar @item.FL_PAR_CAR_NOMBRE" onclick="EditarCarpeta('@item.PK_PAR_CAR_ID')">Editar</a>
+                                        <a href="#" title="Eliminar @item.FL_PAR_CAR_NOMBRE" onclick="ElimninarCarpeta('@item.PK_PAR_CAR_ID','@HttpUtility.HtmlEncode(@item.FL_PAR_CAR_NOMBRE)')">Eliminar</a>
+
+                                    </text>)
+})

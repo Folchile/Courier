@@ -1,0 +1,306 @@
+﻿@model Courier.Models.RecepcionModels
+@{
+    ViewBag.Title = "Recepción Pedido";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">    
+    function borrar_contenido() {
+
+        $('.field-validation-error')
+                .removeClass('field-validation-error')
+                .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+                .removeClass('input-validation-error')
+                .addClass('valid');
+    }
+
+    $(function () {
+        $("#tabs-opt").tabs();
+        $("#strIdBulto").focus();
+        $("#btnAgregarOT").button()
+        .click(function (event) {
+            event.preventDefault();
+            borrar_contenido();
+            $.validator.unobtrusive.parse("#frmAgregarOT");
+            var randomnumber = Math.floor(Math.random() * 11111111)
+            if ($("#frmAgregarOT").valid() == true) {
+                $.ajax({
+                    url: '@Url.Action("GuardarRecepcionOT","Recepcion")',
+                    data: {
+                        _r: randomnumber,
+                        RecOT: $("#RecOT").val()
+                    },
+                    type: "POST",
+                    success: function (data) {
+                        if (data.Ok == true) {
+                            $("#RecOT").val("");
+                            $("#RecOT").focus();
+                            $("#formContent").html('<img src="@Url.Content("~/Images/8.gif")" />');
+                            $("#formContent").load('@Url.Action("UltimaRecepcion","Recepcion")?r=' + randomnumber);
+                        }
+                        else {
+                            $("#dialog-mensajeErrorOT").html('<p>' + data.Mensaje + '</p>');
+                            $("#dialog-mensajeErrorOT").dialog("open");
+                        }
+                    },
+                    error: function () {
+                        alert("Error al buscar la información");
+                    }
+                });
+            }
+            else {
+                $("#RecOT").focus();
+            }
+        });
+        $("#btnAgregarBulto")
+            .button()
+            .click(function (event) {
+                $("#strValidationIdBulto").removeData("previousValue");
+                $("#strValidationIdBulto").val($("#strIdBulto").val());
+                event.preventDefault();
+                borrar_contenido();
+                $.validator.unobtrusive.parse("#frmAgregarBulto");
+                if ($("#frmAgregarBulto").valid() == true) {
+                    waitingDialog({ title: "Validando Recepción", message: "Validando Recepción...<br/>" });
+                    var randomnumber = Math.floor(Math.random() * 11111111)
+                    $.ajax({
+                        url: '@Url.Action("vjSonValidarIdBultoRecepcion","Validation")?strValidationIdBulto=' + $("#strIdBulto").val() + '&r=' + randomnumber,
+                        type: "POST",
+                        success: function (data) {                            
+                            closeWaitingDialog();
+                            if (data.Ok == true) {
+                                waitingDialog({ title: "Validando Recepción", message: "Validando Recepción...<br/>" });
+                                var randomnumber = Math.floor(Math.random() * 11111111)
+                                $.ajax({
+                                    url: '@Url.Action("ValidaRecpcionSucursal","Recepcion")?CodigoBulto=' + data.Bulto + '&r=' + randomnumber,
+                                    type: "POST",
+                                    success: function (data) {                                        
+                                        closeWaitingDialog();
+                                        if (data.Ok == true) {
+                                            $("#frmAgregarBulto").submit();
+                                        }
+                                        else {
+                                            $("#dialog-estaseguro").html("<p>Este bulto tiene destino la sucursal <strong>" + data.Mensaje + "</strong></p><p>¿Esta seguro(a) que desea recepcionar el bulto?</p>");
+                                            $("#dialog-estaseguro").dialog("open");
+                                        }
+
+                                    },
+                                    error: function () {
+                                        closeWaitingDialog();
+                                    }
+                                });
+                            }
+                            else {
+                                closeWaitingDialog();
+                                $("#dialog-mensajeError").html('<p>' + data.Mensaje + '</p>');
+                                $("#dialog-mensajeError").dialog("open");
+                            }
+
+                        },
+                        error: function () {
+                            closeWaitingDialog();
+                        }
+                    });
+                    //$("#frmAgregarBulto").submit();                    
+
+                }
+                setTimeout(function () { ActualizaClase(); }, 200);
+                $(".validation-summary-errors").show();
+            });
+
+        $("#dialog-HistorialOT").dialog({ autoOpen: false, title: "Historial", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog-FinPrep").dialog({ autoOpen: false, title: "Mensaje", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-mensajeError").dialog({ autoOpen: false, title: "Error", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#strValidationIdBulto").val("");
+                    $("#strIdBulto").val("");
+                    $("#strIdBulto").focus();
+                    $(this).dialog("close");
+                    borrar_contenido();
+                }
+            }
+        });
+        $("#dialog-mensajeErrorOT").dialog({ autoOpen: false, title: "Error", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#RecOT").val("");
+                    $("#RecOT").focus();
+                    $(this).dialog("close");
+                    borrar_contenido();
+                }
+            }
+        });
+
+        $("#dialog-estaseguro").dialog({ autoOpen: false, title: "Alerta", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmAgregarBulto").submit();
+                    ActualizaClase()
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    ActualizaClase()
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+    function HideValidationErrors() {
+        //Hide all validation errors
+        if (window.Page_Validators)
+            for (var vI = 0; vI < Page_Validators.length; vI++) {
+                var vValidator = Page_Validators[vI];
+                vValidator.isvalid = true;
+                ValidatorUpdateDisplay(vValidator);
+            }
+        //Hide all validaiton summaries
+        if (typeof (Page_ValidationSummaries) != "undefined") { //hide the validation summaries
+            for (sums = 0; sums < Page_ValidationSummaries.length; sums++) {
+                summary = Page_ValidationSummaries[sums];
+                summary.style.display = "none";
+            }
+        }
+    }    
+
+    function Inicio() {        
+        waitingDialog({ title: "Cargando", message: "Cargando...<br/>" });
+    }
+    function FinAgregar(data) {
+        closeWaitingDialog();        
+        if (data.Ok==true)
+        {                    
+            var randomnumber=Math.floor(Math.random()*11111111)     
+            $("#formContent").html('<img src="@Url.Content("~/Images/8.gif")" />');
+            $("#formContent").load('@Url.Action("UltimaRecepcion","Recepcion")?r=' + randomnumber );                                 
+            $("#strIdBulto").val("");
+            $("#strIdBulto").focus();    
+        }
+        else {
+            var div = document.createElement('div');
+            if (data != null)
+                div.innerHTML = data.Mensaje;
+            else
+                div.innerHTML = "<p>Error en formulario</p>";
+            $(div).dialog({title:"Mensaje",
+                buttons: {
+                    Aceptar: function () {
+                        $("#strIdBulto").focus();
+                        $(this).dialog("close");
+                    }
+                }
+            });
+            $(div).dialog("open");
+        }        
+        $(".validation-summary-errors").hide();
+    }
+    function ValidarRecepcionAbierta() {
+        waitingDialog({ title: "Buscando", message: "Buscando Recepción...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 11111111)
+        $.ajax({
+            url: '@Url.Action("ExisteRecepcion","Recepcion")?r=' + randomnumber,
+            type: "POST",
+            success: function (data) {
+                if (data == "0") {
+                    //$("#dialog-FinPrep").html("<p>Sin Recepción Abierta</p>");
+                    //$("#dialog-FinPrep").dialog("open");
+                    $("#strIdBulto").focus();
+                }
+                else {                    
+                    $("#formContent").html('<img src="@Url.Content("~/Images/8.gif")" />');
+                    $("#formContent").load('@Url.Action("RecepcionAbierta","Recepcion")?r=' + randomnumber);                    
+                    $("#strIdBulto").focus();
+                }
+                closeWaitingDialog();
+            },
+            error: function () {
+                alert("Ocurrio un error mientras se ejecutaba la consulta");
+                closeWaitingDialog();
+            }
+        });
+    }
+    function ActualizaClase() {
+        if ($("#strValidationIdBulto").attr("class") == "input-validation-error") {
+            $("#strIdBulto").attr('class', $("#strValidationIdBulto").attr("class"));
+        }
+    }  
+</script>
+<div id="dialog-mensajeErrorOT"></div>
+<div id="dialog-mensajeError"></div>
+<div id="dialog-estaseguro"></div>
+    <div id="tabs-opt">
+	    <ul>
+		    <li onclick="javascript:$('#strIdBulto').focus();borrar_contenido();"><a href="#tabs-opt-1">Código Bulto</a></li>
+            <li onclick="javascript:$('#RecOT').focus();borrar_contenido();"><a href="#tabs-opt-2">N° OT</a></li>        
+	    </ul>
+	    <div id="tabs-opt-1">
+            @using (Ajax.BeginForm("AgregarBulto", "Recepcion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:FinAgregar(data)", OnFailure = "Javascript:FinAgregar()" }, new { id = "frmAgregarBulto" }))
+            {    
+                @Html.TextBoxFor(m => m.strValidationIdBulto, new { style = "visibility:hidden;float:right" })
+                <table>                                        
+                    <tr>       
+                        <td>@Html.TextBoxFor(m => m.strIdBulto, new { size = 30 })</td>
+                        <td>
+                            <button id="btnAgregarBulto">
+                                <div style="float:left;width:80px;">       
+                                <div style="float:left;"><img alt="Agregar Bulto" src='@Url.Content("~/Images/gnome_go_next.png")' /></div>                 
+                                <div style="float:left;">&nbsp;Agregar</div>                        
+                                </div>                       
+                            </button>    
+                        </td>
+                    </tr>  
+                    <tr>
+                        <td colspan="2" style="padding-left:7px;">@Html.ValidationMessageFor(m => m.strValidationIdBulto)</td>
+                    </tr>                   
+                </table>   
+            }
+        </div>
+        <div id="tabs-opt-2">
+            @using (Ajax.BeginForm("AgregarOT", "Recepcion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:InicioAgregarOT()", OnSuccess = "Javascript:FinAgregarAgregarOT(data)", OnFailure = "Javascript:FinAgregarErrorAgregarOT()" }, new { id = "frmAgregarOT" }))
+            { 
+            <table>                                        
+                <tr>       
+                    <td>@Html.TextBoxFor(m => m.RecOT, new { size = 30 })</td>
+                    <td>
+                        <button id="btnAgregarOT">
+                            <div style="float:left;width:80px;">       
+                            <div style="float:left;"><img alt="Agregar Bulto" src='@Url.Content("~/Images/gnome_go_next.png")' /></div>                 
+                            <div style="float:left;">&nbsp;Agregar</div>                        
+                            </div>                       
+                        </button>    
+                    </td>
+                </tr>  
+                <tr>
+                    <td colspan="2" style="padding-left:7px;">@Html.ValidationMessageFor(m => m.RecOT)</td>
+                </tr>                   
+            </table>
+            }
+        </div>
+    </div>         
+
+<div id="dialog-FinPrep"></div>
+<div id="formContent"></div>
+<script type="text/javascript">
+    $(function () {
+        ValidarRecepcionAbierta();
+    });
+</script>

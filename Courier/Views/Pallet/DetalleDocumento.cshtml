@@ -1,0 +1,470 @@
+﻿@model Courier.Models.PalletModels
+@{
+    var grid = new WebGrid(Model.LstPallet, rowsPerPage: 13, ajaxUpdateContainerId: "gridDetDocto");
+}
+
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+ 
+    function Inicio() {
+    }
+
+
+    function Fin() {
+//        setTimeout(function () { $('#CuadroImpresion').html(""); }, 200);
+        closeWaitingDialog();
+    }
+
+
+    function FinError() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+            cargaCabDocto();
+//            cargadetPallet();
+        }
+        else {
+            Msjeerrores(data.Mensaje);
+        }
+
+    }
+
+
+
+    $(function () {
+        $("#agregaPallet").button()
+        .click(function () {
+            ValidaBultos();
+        });
+    })
+
+
+    $(function () {
+        $("#finalizarproc").button()
+        .click(function () {
+            FinalizaProceso();
+        });
+    })
+
+
+    function ValidaBultos() {
+//        $.validator.unobtrusive.parse("#frmvalidabultos");
+//        if ($("#frmvalidabultos").valid() == true) {
+            var randomnumber = Math.floor(Math.random() * 1111111)
+            $.ajax({
+                url: '@Url.Action("ValidaBultos", "Pallet")',
+                data: {
+                    OT: $("#OT").val(),
+                    _r: randomnumber
+                }
+            })
+            .done(function (data) {
+                var randomnumber = Math.floor(Math.random() * 11111111);
+                if (data.CantBultos == $("#Bultos").val()) {
+                    Msjebultos();
+                }
+                else {
+                     CargaAgregaPallet();
+//                     AgPallet();
+                }
+            });
+        }
+
+
+        $(function () {
+            $("#dialog-res").dialog({
+                autoOpen: false,
+                height: 'auto',
+                width: 'auto',
+                modal: true,
+
+                buttons: {
+                    Aceptar: function () {
+                        $(this).dialog("close");
+
+                    }
+
+                }
+            })
+        })
+
+
+
+        $(function () {
+            $("#dialog-resultado").dialog({
+                autoOpen: false,
+                height: 'auto',
+                width: 'auto',
+                modal: true,
+
+                buttons: {
+                    Aceptar: function () {
+                        $(this).dialog("close");
+
+                    }
+
+                }
+            })
+        })
+
+
+
+
+        function Msjebultos() {
+            $("#dialog-res").dialog("open");
+            $("#dialog-res").html("No puede ingresar mas Bultos de los Cargados");
+        }
+
+
+        function Msjeerrores(mensaje) {
+            $("#dialog-res").dialog("open");
+            $("#dialog-res").html(mensaje);
+        }
+
+//        $(function () {
+//            $("#IngresaPallet").dialog({ autoOpen: false, title: "Ingreso Detalle", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+//                buttons: {
+//                    Grabar: function () {
+//                        $.validator.unobtrusive.parse("#frmAgregaPallet");
+//                        if ($("#frmAgregaPallet").valid() == true) {
+//                            $("#frmAgregaPallet").submit();
+//                            $(this).dialog("close");
+//                        }
+//                    },
+//                    Cancelar: function () {
+//                        $(this).dialog("close");
+//                    }
+
+//                }
+
+
+//            });
+//        })
+//        function AgPallet() {
+//            $("#IngresaPallet").dialog("open");
+//        }
+
+
+        $(function () {
+            $("#dialog:ui-dialog").dialog("destroy");
+            $("#dialog-elimpallet").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        $("#frmEliminaPallet").submit();
+                        $(this).dialog("close");
+                    },
+                    Cancelar: function () {
+                        $(this).dialog("close");
+                    }
+
+                }
+            });
+        });
+
+
+        $(function () {
+            $("#dialog:ui-dialog").dialog("destroy");
+            $("#dialog-finalproc").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        $("#frmFinalizaProc").submit();
+                        $(this).dialog("close");
+                    },
+                    Cancelar: function () {
+                        $(this).dialog("close");
+                    }
+
+                }
+            });
+        });
+
+        $(function () {
+            $("#dialog:ui-dialog").dialog("destroy");
+            $("#dialog-editarpallet").dialog({
+                autoOpen: false,
+                width: "auto",
+                position: "top",
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        borrar_contenido();
+                        $.validator.unobtrusive.parse("#frmUpdatePallet");
+                        if ($("#frmUpdatePallet").valid() == true) {
+                            $("#frmUpdatePallet").submit();
+                            $(this).dialog("close");
+
+                        }
+                    },
+                    Cancelar: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        });
+
+
+        $(function () {
+            $("#dialog:ui-dialog").dialog("destroy");
+            $("#dialog-agrepallet").dialog({
+                autoOpen: false,
+                width: "auto",
+                position: "top",
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        borrar_contenido();
+                        $.validator.unobtrusive.parse("#frmAgregaPallet");
+                        if ($("#frmAgregaPallet").valid() == true) {
+                            $("#frmAgregaPallet").submit();
+                            $(this).dialog("close");
+
+                        }
+                    },
+                    Cancelar: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        });
+
+
+
+        $(function () {
+            $("#dialog:ui-dialog").dialog("destroy");
+            $("#dialog-imppallet").dialog({
+                autoOpen: false,
+                width: "auto",
+                position: "top",
+                modal: true,
+                buttons: {
+                    Aceptar: function () {
+                        borrar_contenido();
+                        $.validator.unobtrusive.parse("#frmImprPallet");
+                        if ($("#frmImprPallet").valid() == true) {
+                            $("#frmImprPallet").submit();
+                            $(this).dialog("close");
+                           
+                        }
+                    },
+                    Cancelar: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        });
+
+        function CargaAgregaPallet() {
+            $("#dialog-resultado").html("");
+            //                alert($("#IDPALLET").val());
+            $("#frmagregarPallet").submit();
+            $("#dialog-agrepallet").dialog("open");
+        }
+
+//        function CargaAgregaPallet() {
+////            var randomnumber = Math.floor(Math.random() * 11111111);
+////            $("#IngresaPallet").dialog("open");
+//            $("#IngresaPallet").load('@Url.Action("AgregPallet","Pallet")?OT=' + $("#OT").val(), function (response, status, xhr) {
+//                    borrar_contenido();
+//                });
+//            }
+
+        function borrar_contenido() {
+
+                $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+                $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+            }
+
+            function EliminarPallet(id_pal, n_pall) {
+                $("#dialog-elimpallet").dialog("open");
+                $("#id_pallet").val(id_pal);
+                $("#dialog-elimpallet").html("<p>¿Está seguro(a) que desea ELIMINAR el Pallet  <strong>" + n_pall + " </strong> ? </p>");
+            }
+
+
+            function EditPallet(id_ep) {
+                $("#id_edpall").val(id_ep);
+                $("#dialog-resultado").html("");
+                $("#IDPALLET").val(id_ep);
+                $("#frmeditarPallet").submit();
+                $("#dialog-editarpallet").dialog("open");
+            }
+
+
+            function FinalizaProceso() {
+                $("#dialog-finalproc").dialog("open");
+                $("#dialog-finalproc").html("<p>¿Está seguro(a) que desea Finalizar El proceso de OT  <strong>" + $("#OT").val() + " </strong> ? </p>");
+            }
+
+
+            function ImprimirPallet(id_imPall, cbltos) {
+                $("#Pallet").val(id_imPall);
+                $("#BultosDet").val(cbltos);
+                $("#frmImprPallet").submit();
+            }
+
+</script>
+
+
+@{
+    var Texto = "";
+    if (Model.BODEGACLIENTE!=1) 
+    {
+        Texto = "disabled='disabled'";
+    }
+    }
+
+
+
+
+<div id="dialog-finalproc" title="Finalizar Proceso"></div>
+<div id="dialog-res" title="Atención"></div>
+<div id="dialog-resultado" title="Mensaje"></div>
+<div id="dialog-validation" title="Validation"></div>
+<div id="dialog-elimpallet" title="Eliminar"></div>
+<div id="dialog-editarpallet" title="Mantención"></div>
+<div id="dialog-imppallet" title="Impresion"></div>
+<div id="dialog-agrepallet" title="Ingreso"></div>
+
+
+@using (Ajax.BeginForm("FinalizarProceso", "Pallet", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmFinalizaProc" }))
+{
+    @Html.HiddenFor(m => m.OT)
+    @*<input type="hidden" name="id_pallet" id="id_pallet" />*@
+}
+
+
+@using (Ajax.BeginForm("EliminarPallet", "Pallet", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmEliminaPallet" }))
+{
+    <input type="hidden" name="id_pallet" id="id_pallet" />
+}
+
+
+
+@using (Ajax.BeginForm("AgregPallet", "Pallet", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-agrepallet" }, new { id = "frmagregarPallet" }))
+{
+    @Html.HiddenFor(m => m.OT)
+}
+
+
+@using (Ajax.BeginForm("EditarPallet", "Pallet", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editarpallet" }, new { id = "frmeditarPallet" }))
+{
+    <input type="hidden" name="id_edpall" id="id_edpall" />
+    
+    @Html.HiddenFor(m => m.IDPALLET)  
+    @Html.HiddenFor(m => m.OT)
+   
+}
+
+
+
+@using (Ajax.BeginForm("ImpresionPallet", "Pallet", new AjaxOptions { OnBegin = "javascript:Inicio()", OnSuccess = "Javascript:Fin()", OnFailure = "Javascript:Fin()", UpdateTargetId = "CuadroImpresion" }, new { id = "frmImprPallet" }))
+{
+    <input type="hidden" name="id_imPall" id="id_imPall" /> 
+    @Html.HiddenFor(m => m.OT)
+    @Html.HiddenFor(m => m.BultosDet)
+    @Html.HiddenFor(m => m.Pallet)
+ 
+}
+
+
+<div style="float:right; margin-bottom:5px;"> 
+        <button id="finalizarproc" @Texto>                
+               <table border="0" cellpadding="0" cellspacing="2">
+                     <tr valign="middle"><td><img alt="Finalizar Proceso" src="@Url.Content("~/Images/update.png")" /></td><td>&nbsp;Finalizar Proceso</td></tr>
+               </table>                                
+        </button>
+ </div>
+
+
+
+
+<div style="float:right; margin-bottom:5px;"> 
+        <button id="agregaPallet" @Texto>                
+               <table border="0" cellpadding="0" cellspacing="2">
+                     <tr valign="middle"><td><img alt="Agrega Pallet" src="@Url.Content("~/Images/wooden_box_plus.png")" /></td><td>&nbsp;Agrega Pallet</td></tr>
+               </table>                                
+        </button>
+ </div>
+
+ 
+
+<div>
+   @Html.HiddenFor(m => m.OT)
+   @Html.HiddenFor(m => m.Bultos)
+
+   @Html.HiddenFor(m => m.IDPALLET)
+    @Html.HiddenFor(m => m.BODEGACLIENTE)
+    @Html.HiddenFor(m => m.BultosDet)
+    @Html.HiddenFor(m => m.Pallet)
+   </div>
+
+<div id="gridDetDocto">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("id","ID"),
+       grid.Column("Dpallet","Nº PALLET"),
+       grid.Column("Dbultos","BULTOS"),
+       grid.Column("Destado","ESTADO"),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                              
+                                              
+                                        @if (item.Destado == "ACTIVO")
+                                        {
+                                            <a href="#" onclick="javascript:ImprimirPallet('@item.Dpallet','@item.Dbultos')"><img border="0" src='@Url.Content("~/Images/agt_print16.png")' alt="Imprimir Pallet @item.Dpallet" title="Imprimir Pallet @item.Dpallet"/></a>
+                                            if (Model.BODEGACLIENTE==1)
+                                            {
+                                                <a href="#" onclick="javascript:EditPallet('@item.id')"><img border="0" src='@Url.Content("~/Images/wooden_box_pencil.png")' alt="Editar Pallet @item.Dpallet" title="Editar Pallet @item.Dpallet"/></a>
+                                                <a href="#" onclick="javascript:EliminarPallet('@item.id','@item.Dpallet')"><img border="0" src='@Url.Content("~/Images/deletered.png")' alt="Eliminar Pallet @item.Dpallet" title="Eliminar Pallet @item.Dpallet"/></a>
+                                            }
+                                            
+                                            @*<a href="#" title="Eliminar @item.Dpallet" onclick="EliminarPallet('@item.id','@item.Dpallet')">Eliminar</a>*@
+                                        }
+                                        else
+                                        {
+                                            <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                        } 
+                                        
+
+                                    </text>) 
+       
+        
+ })
+</div>
+
+
+<div id="IngresaPallet">
+
+</div>
+
+

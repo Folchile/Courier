@@ -1,0 +1,265 @@
+﻿@model Courier.Models.DevolucionModels
+@{
+    ViewBag.Title = "Devolución Sucursal";
+}
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/TableBlue.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnAgregaMasivo").button();
+        $("#tabs").tabs();
+        $("#vertodo").button().click(function(){
+            CargaListaDevoluciones($("#BusquedaEmpresa").val(),$("#BusquedaServicio").val(),$("#FiltroTipo").val());
+            $("#idBuscar").val("");
+        });
+        $("#btnBuscar").button().click(function(){
+            if ($("#idBuscar").val()!="")
+            {                
+                ValidarOT();
+            }
+            else
+            {
+                CargaListaDevoluciones();
+            }
+        });
+        
+        $("#dialog-ErrorOT").dialog({ autoOpen: false, title: "Error OT", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    $("#idBuscar").focus();
+                    $(this).dialog("close");
+                }                
+            }
+        });
+        $("#dialog-ErrorGenerico").dialog({ autoOpen: false, title: "Error", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {                  
+                    $(this).dialog("close");
+                }                
+            }
+        });
+        $("#dialog-FormularioIngreso").dialog({ autoOpen: false, title: "Formulario Ingreso", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function (event) {
+                    event.preventDefault();
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmGuardarDevolucion");
+                    if ($("#frmGuardarDevolucion").valid() == true) {
+                        $("#frmGuardarDevolucion").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    })
+    
+    function CargaFormularioIngreso(OTP, OTD) {
+        waitingDialog({ title: "Cargando", message: "Cargando Formulario...<br/>" });
+        var randomnumber = Math.floor(Math.random() * 111111111)
+        $("#dialog-FormularioIngreso").load('@Url.Action("FormularioIngreso","Devolucion")?OTP=' + OTP + '&OTD=' + OTD + '&EditTipo=' + $("#FiltroTipo").val() + '&EditEmpresa=' + $("#BusquedaEmpresa").val() + '&EditServicio=' + $("#BusquedaServicio").val()  +'&r=' + randomnumber, function (response, status, xhr) {
+            closeWaitingDialog();
+            if (status == 'error') {
+                alert('Error al cargar el formulario');
+            }
+            else {
+                $("#dialog-FormularioIngreso").dialog("open");
+                borrar_contenido();
+            }
+        });
+    }
+    function CargaListaDevolucionesEmpresa(empresa) {                
+        $("#idBuscar").val("");
+        CargaListaDevoluciones(empresa,"",$("#FiltroTipo").val());
+        $("#BusquedaServicio").val("");      
+    }
+    function CargaListaDevolucionesServicio(servicio) {
+        $("#idBuscar").val("");
+        CargaListaDevoluciones($("#BusquedaEmpresa").val(),servicio,$("#FiltroTipo").val());
+    }
+    function CargaListaDevoluciones(empresa,servicio,tipo,otp,otd) {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        $("#listaDevoluciones01").html("<div style='text-align:center;'><img src='@Url.Content("~/Images/8.gif")'></div>");  
+        $.ajax({
+            url: '@Url.Action("ListaDevoluciones", "Devolucion")',
+            data: {
+                _r: randomnumber,
+                BusquedaEmpresa:empresa,
+                BusquedaServicio:servicio,
+                FiltroTipo:tipo,
+                OTP:otp,
+                OTD:otd
+            }
+        })
+        .done(function (data) {
+            $("#listaDevoluciones01").html(data);
+            $("#listaDevoluciones01").dialog("open");           
+            $("#idBuscar").focus();
+        })
+        .error(function () {
+            $("#listaDevoluciones01").html("");
+            alert("No fue posible cargar el formulario");            
+        })
+        .complete(function () {
+            borrar_contenido();                        
+        });
+    }     
+    function CargaListaDevolucionesTipo(tipo)
+    {
+        $("#BusquedaEmpresa").val("");
+        $("#BusquedaServicio").val("");
+        $("#idBuscar").val("");
+        CargaEmpresa(tipo); 
+        CargaServicio("",tipo);
+        CargaListaDevoluciones(null,null,tipo);
+    }
+    function ValidarOT() {
+        var randomnumber = Math.floor(Math.random() * 1111111);
+        waitingDialog({ title: "Validando OT", message: "Procesando...<br/>" });
+        $.ajax({
+            url: '@Url.Action("ValidaOT", "Devolucion")',
+            data: {
+                _r: randomnumber,
+                OT:$("#idBuscar").val()
+            }
+        })
+        .done(function (data) {
+            if(data.OK==true)
+            {
+                //CargaListaDevolucionesFiltrada(data.OTP,data.OTD);
+                $("#BusquedaEmpresa").val("");
+                $("#BusquedaServicio").val("");
+                $("#FiltroTipo").val("");
+                CargaServicio("","");
+                CargaListaDevoluciones(null,null,null,data.OTP,data.OTD);
+            }
+            else{
+                $("#dialog-ErrorOT").html('<p>' + data.Mensaje + '</p>');
+                $("#dialog-ErrorOT").dialog("open");                
+            }
+        })
+        .error(function () {            
+            alert("No fue posible validar la OT");            
+        })
+        .complete(function () {
+            closeWaitingDialog();
+            borrar_contenido();                        
+        });
+    }    
+    function EnterOT(e) {
+        if (e.keyCode == '13') {
+            if ($("#idBuscar").val()!="")
+            {
+                e.preventDefault();
+                ValidarOT();
+            }
+            else
+            {
+                CargaListaDevoluciones();
+            }
+        }
+    }
+    function CargaEmpresa(tipo) {
+        //waitingDialog({ title: "Cargando", message: "Cargando Empresa...<br/>" });
+        $("#imgBuscarEmpresa").show();
+        $("#BusquedaEmpresa").hide();
+        var randomnumber = Math.floor(Math.random() * 111111111)
+        $("#BusquedaEmpresa").load('@Url.Action("DropDownEmpresa","Devolucion")?r=' + randomnumber + '&FiltroTipo='+ tipo +' #BusquedaEmpresa option', function (response, status, xhr) {
+            //closeWaitingDialog();
+            $("#imgBuscarEmpresa").hide();
+            $("#BusquedaEmpresa").show();
+            
+            if (status == 'error') {
+
+                alert('Error al cargar las empresas');
+            }
+        });
+    }
+    function CargaServicio(empresa,tipo) {          
+        //waitingDialog({ title: "Cargando", message: "Cargando Servicio...<br/>" });
+        $("#imgBuscarServicio").show();
+        $("#BusquedaServicio").hide();
+        var randomnumber = Math.floor(Math.random() * 111111111)
+        $("#BusquedaServicio").load('@Url.Action("DropDownServicio","Devolucion")?BusquedaEmpresa=' + empresa + '&FiltroTipo='+ tipo + '&r=' + randomnumber + ' #BusquedaServicio option', function (response, status, xhr) {
+            //closeWaitingDialog();
+            $("#imgBuscarServicio").hide();
+            $("#BusquedaServicio").show();
+            if (status == 'error') {
+                alert('Error al cargar los servicios');
+            }
+        });
+    }
+    $(document).ready(function () {
+        $("#imgBuscarEmpresa").hide();
+        $("#imgBuscarServicio").hide();
+        CargaEmpresa(2);
+        CargaListaDevoluciones("","",2);       
+        $("#idBuscar").focus();
+            
+    })
+    function AbreIngresoFechaMasivo()
+    {
+        if ($("#BusquedaEmpresa").val()=="" || $("#BusquedaEmpresa").val()==null)
+        {
+            $("#dialog-ErrorGenerico").html("<p>Debe al menos seleccionar una empresa</p>");
+            $("#dialog-ErrorGenerico").dialog("open");
+        }
+        else
+        {
+            CargaFormularioIngreso(0,0);
+            
+        }
+    }
+</script>
+<div id="dialog-ErrorGenerico"></div>
+<div id="dialog-FormularioIngreso"></div>
+<div id="dialog-ErrorOT"></div>
+
+<div id="form123" style="width:100%;">
+<fieldset>
+    <legend style="color:blue;font-weight:bold;">Búsqueda</legend>
+    <div>
+        <table>
+            <tr>
+                <td><input type="text" id="idBuscar" onkeydown="javascript:EnterOT(event);" name="idBuscar" placeholder="N° OT" /></td>
+                <td><input type="button" id="btnBuscar" value="Buscar" /></td>
+                <td><input type="button" id="vertodo" value="Ver Todos"  onclick="" /></td>
+            </tr>
+        </table>     
+    </div>
+   </fieldset>
+</div>
+<div id="form" style="width:100%;">
+<fieldset>
+    <legend style="color:blue;font-weight:bold;">Filtro</legend>
+    <div>
+        <table><tr>            
+            <td>@Html.DropDownListFor(m => m.FiltroTipo, Model.CboFiltroTipo, "-- VER TODAS --", new { @onchange = "javascript:CargaListaDevolucionesTipo(this.value)", @style = "height:24px;" })</td>
+            <td>@Html.DropDownListFor(m => m.BusquedaEmpresa, Model.CboBusquedaEmpresa, new { @onchange = "javascript:CargaServicio(this.value, $('#FiltroTipo').val());CargaListaDevolucionesEmpresa(this.value);", @style = "height:24px;" })<div id="imgBuscarEmpresa"><img title="cargando" alt="Cargando" src="@Url.Content("~/images/38.gif")" /></div></td><td></td>
+            <td>@Html.DropDownListFor(m => m.BusquedaServicio, Model.CboBusquedaServicio, "-- SELECCIONE SERVICIO --", new { @onchange = "javascript:CargaListaDevolucionesServicio(this.value);",@style="height:24px;" })<div id="imgBuscarServicio"><img title="cargando" alt="Cargando" src="@Url.Content("~/images/38.gif")" /></div></td><td></td>
+            <td><input type="button" id="btnAgregaMasivo" value="Ingreso Dirección Masivo" onclick="javascript:AbreIngresoFechaMasivo();" /></td>
+        </tr>
+        </table>        
+    </div>
+   </fieldset>
+</div>
+
+
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Lista</a></li>	         
+    </ul>        
+    
+    <div id="tabs-1">  
+        
+        <div id="listaDevoluciones01"></div>
+
+    </div>
+</div>

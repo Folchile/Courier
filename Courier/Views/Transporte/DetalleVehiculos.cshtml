@@ -1,0 +1,353 @@
+﻿@model Courier.Models.VehiculosModels         
+@{
+    var grid = new WebGrid(Model.LstVehiculos, rowsPerPage: 13, ajaxUpdateContainerId: "gridVehiculos");
+}
+
+<link href="@Url.Content("~/Content/table.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+            cargadetVehiculoAll();
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    } 
+
+
+
+
+
+ $(function () {
+     $("#agregaVehic").button()
+        .click(function () {
+            CargaVerVehi();
+        });
+         $("#verAgregaVehic").dialog({ autoOpen: false, title: "Ingreso Detalle", position: 'rigth+5% top+5%', width: 'auto', modal: true,
+            buttons: {
+                Grabar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmAgregaVehiculo");
+                    if ($("#frmAgregaVehiculo").valid() == true) {
+                        $("#frmAgregaVehiculo").submit();
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+ });
+
+
+ function CargaVerVehi() {
+        $("#verAgregaVehic").dialog("open");
+        $("#verAgregaVehic").load('@Url.Action("MostrarAgregaVehic","Transporte")', function (response, status, xhr) {
+            borrar_contenido();
+        });
+    }
+
+
+ $(function () {
+     $("#excelVehic").button()
+        .click(function () {
+        });
+ });
+
+
+  function borrar_contenido() {
+
+        $('.field-validation-error')
+            .removeClass('field-validation-error')
+            .addClass('field-validation-valid');
+
+        $('.input-validation-error')
+            .removeClass('input-validation-error')
+            .addClass('valid');
+    }
+
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-editarvehic").dialog({
+            autoOpen: false,
+            width: "auto",
+            position: "top",
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frmUpdVehiculo");
+                    if ($("#frmUpdVehiculo").valid() == true) {
+                        $("#frmUpdVehiculo").submit();
+                        $(this).dialog("close");
+
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-inactivarvehic").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmInactivarVehiculo").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("#dialog-activarvehic").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $("#frmActivarVehiculo").submit();
+                    $(this).dialog("close");
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+
+            }
+        });
+    });
+
+
+
+    $(function () {
+        $("#dialog-resultado").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true,
+
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+
+                }
+
+            }
+        })
+    })
+
+
+    function EditarVehiculo(id_v) {
+        $("#id_veh").val(id_v);
+        $("#dialog-resultado").html("");
+
+        $("#frmeditarVehiculo").submit();
+        $("#dialog-editarvehic").dialog("open");
+    }
+
+
+    function AsignarSuc(id_v) {
+        $("#id_vehi").val(id_v);
+        $("#dialog-resultado").html("");
+
+        $("#frmAsignarSuc").submit();
+        $("#dialog-asigSuc").dialog("open");
+    }
+
+
+    function AsignarSuc2(id_v,pat) {
+        $("#IDVEH").val(id_v);
+        $("#PATENTE").val(pat);
+//       alert($("#PATENTE").val())
+        $("#dialog-asigSuc").dialog("open");
+        $("#dialog-asigSuc").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#dialog-asigSuc").load('@Url.Action("CargDetSucursales","Transporte")?IDVEH=' + $("#IDVEH").val() + '&PATENTE=' + $("#PATENTE").val());
+    }
+
+
+    function AsignarSuc(id_v) {
+        $("#IDVEH").val(id_v);
+        $("#dialog-asigSuc").dialog("open");
+        $("#dialog-asigSuc").html('<img src="@Url.Content("~/images/38.gif")">');
+        $("#dialog-asigSuc").load('@Url.Action("CargDetSucursales","Transporte")?IDVEH=' + $("#IDVEH").val(), function (response, status, xhr) {
+            borrar_contenido();
+        });
+
+    }
+
+
+
+    $("#dialog-asigSuc").dialog({ autoOpen: false, title: "Sucursales Asignadas", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+        buttons: {
+            Aceptar: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $(function () {
+        $("#excelVehic").button()
+       .click(function () {
+           window.open('@Url.Action("GeneraExcelVehiculos","Transporte")');
+       })
+    })
+
+    function InactivarVehi(id_veh, ptte) {
+        $("#dialog-inactivarvehic").dialog("open");
+        $("#inac_veh").val(id_veh);
+        $("#dialog-inactivarvehic").html("<p>¿Está seguro(a) que desea Inactivar el Vehiculo <strong>" + ptte + " </strong> ? </p>");
+    }
+
+    function ActivarVehi(id_veh, ptte) {
+        $("#dialog-activarvehic").dialog("open");
+        $("#act_veh").val(id_veh);
+        $("#dialog-activarvehic").html("<p>¿Está seguro(a) que desea Activar el Vehiculo <strong>" + ptte + " </strong> ? </p>");
+    }
+
+
+</script>
+
+<div id="dialog-resultado" title="Resultado"></div>
+<div id="dialog-editarvehic" title="Mantención"></div>
+<div id="dialog-asigSuc"></div> 
+<div id="dialog-inactivarvehic" title="Inactivar Vehiculo"></div> 
+<div id="dialog-activarvehic" title="Activar Vehiculo"></div>
+
+@using (Ajax.BeginForm("EditarVehiculo", "Transporte", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-editarvehic" }, new { id = "frmeditarVehiculo" }))
+ {
+    <input type="hidden" name="id_veh" id="id_veh" />   
+ }
+
+ @using (Ajax.BeginForm("CargDetSucursales", "Transporte", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "dialog-asigSuc" }, new { id = "frmAsignarSuc" }))
+ {
+    <input type="hidden" name="id_vehi" id="id_vehi" />   
+ }
+
+
+ @using (Ajax.BeginForm("InactivarVehiculo", "Transporte", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmInactivarVehiculo" }))
+{
+    <input type="hidden" name="inac_veh" id="inac_veh" />
+}
+
+ @using (Ajax.BeginForm("ActivarVehiculo", "Transporte", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio()", OnComplete = "javascript:Fin();", OnSuccess = "Javascript:FinSuccess(data)", OnFailure = "Javascript:FinError()" }, new { @id = "frmActivarVehiculo" }))
+{
+    <input type="hidden" name="act_veh" id="act_veh" />
+}
+
+
+@Html.HiddenFor(m => m.IDVEH)
+@Html.HiddenFor(m => m.PATENTE)
+
+<div style="float:right; margin-bottom:5px;"> 
+        <button id="agregaVehic">                
+               <table border="0" cellpadding="0" cellspacing="2">
+                     <tr valign="middle"><td><img alt="Agrega Vehiculo" src="@Url.Content("~/Images/add.png")" /></td><td>&nbsp;Agrega Vehiculo</td></tr>
+               </table>                                
+        </button>
+ </div>
+
+
+<div style="float:right; margin-bottom:5px;"> 
+        <button id="excelVehic">                
+               <table border="0" cellpadding="0" cellspacing="2">
+                     <tr valign="middle"><td><img alt="Generar Excel" src="@Url.Content("~/Images/page_white_excel.png")" /></td><td>&nbsp;Generar Excel</td></tr>
+               </table>                                
+        </button>
+ </div>
+
+
+
+<div id="gridVehiculos">
+@grid.GetHtml(
+    fillEmptyRows: true,
+    alternatingRowStyle: "fila-alternativa",
+    headerStyle: "encabezado-grid",
+    tableStyle: "mGrid",
+    footerStyle: "pie-grid",
+    mode: WebGridPagerModes.All,
+    firstText: "<< Primera",
+    previousText: "< Anterior",
+    nextText: "Siguiente >",
+    lastText: "Última >>",
+    columns: new[]
+    {
+       grid.Column("Did","ID"),
+       grid.Column("Dpatente","PATENTE"),
+       grid.Column("Dmarca","MARCA"),
+       grid.Column("Dmodelo","MODELO"),
+       grid.Column("Dano","AÑO"),
+       grid.Column("Dcapkgs","KGS"),
+       grid.Column("Dcapm3","M3"),
+       grid.Column("Destado","ESTADO",@<text>
+       @if (item.Destado == 1)
+        {
+            <span>Activo</span>
+        }
+        else
+        {
+            <span>Inactivo</span>   
+        }
+    
+      </text>),
+       grid.Column("",header:"ACCIONES",format:@<text>
+                                              <a href="#" onclick="javascript:EditarVehiculo('@item.Did')"><img border="0" src='@Url.Content("~/Images/pencil_edit.png")' alt="Editar @item.Did" title="Editar @item.Did"/></a>
+                                             
+                                              <a href="#" onclick="javascript:AsignarSuc('@item.Did')"><img border="0" src='@Url.Content("~/Images/store_plus.png")' alt="Asociar Sucursal @item.Dpatente" title="Asociar Sucursal @item.Dpatente"/></a>
+                                               @if (item.Destado == 2)
+                                        {
+                                            <a href="#" title="Activar @item.Dpatente" onclick="ActivarVehi('@item.Did','@item.Dpatente')">Activar</a>
+                                        }
+                                        else
+                                        {
+                                            <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                        } 
+                                         @if (item.Destado == 1)
+                                        {
+                                            <a href="#" title="Inactivar @item.Dpatente" onclick="InactivarVehi('@item.Did','@item.Dpatente')">Inactivar</a>
+                                        }
+                                         else
+                                         {
+                                            <img src='@Url.Content("~/Images/transparent.png")' alt="" width="16"/>
+                                         } 
+                                    </text>) 
+       
+        
+ })
+</div>
+
+
+<div id="verAgregaVehic">
+
+</div>
+

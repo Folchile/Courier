@@ -1,0 +1,79 @@
+﻿@model MvcReporteViajes.Models.ConductoresModels
+@{
+    ViewBag.Title = "AgregarConductor";
+}
+
+<link href="@Url.Content("~/Content/Formatos.css")" rel="stylesheet" type="text/css" />  
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript")></script>
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript">
+
+    function Inicio() {
+    }
+    function Fin() {
+        closeWaitingDialog();
+    }
+    function FinSuccess(data) {
+        if (data.Ok == true) {
+            cargaConductores();
+            $("#dialog-resultado").html(data.Mensaje);
+            $("#dialog-resultado").dialog("open");
+
+        }
+        else {
+            alert(data.Mensaje);
+
+        }
+
+    }
+
+
+
+    function teclaEnter(e, idElemento) {
+        var esIE = (document.all);
+        tecla = (esIE) ? event.keyCode : e.which;
+        if (tecla == 13) {
+            $("#" + idElemento).focus();
+        }
+    }
+
+    $("#Rut").focus();
+
+</script>
+
+
+
+@using (Ajax.BeginForm("insertConductor", "Ingresos", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:Inicio();", OnComplete = "javascript:Fin();", OnFailure = "javascript:Fin();", OnSuccess = "javascript:FinSuccess(data);" }, new { id = "frmAgregaConductor" }))
+{
+    <table>
+          <tr>
+              <td><strong> @Html.LabelFor(m => m.Rut)</strong></td>
+              <td>@Html.TextBoxFor(m => m.Rut, new { @style = "width:65px;font-size: 10px", @onkeypress = "javascript:teclaEnter(event,'NOMBRECONDUCTOR');" })</td>
+              @Html.ValidationMessageFor(m => m.Rut)
+             
+          </tr>
+          <tr>
+            <td><strong> @Html.LabelFor(m => m.NOMBRECONDUCTOR)</strong></td>
+            <td>@Html.TextBoxFor(m => m.NOMBRECONDUCTOR, new { @style = "width:200px;font-size: 10px;text-align:left", @onkeyup = "this.value=this.value.toUpperCase()", @onkeypress = "javascript:teclaEnter(event,'CODIGO');" })
+             @Html.ValidationMessageFor(m => m.NOMBRECONDUCTOR)
+            </td>
+          </tr>
+          <tr>
+             <td><strong> @Html.LabelFor(m => m.CODIGO)</strong></td>
+             <td>@Html.TextBoxFor(m => m.CODIGO, new { @style = "width:60px;font-size: 10px;text-align:right", @onkeypress = "javascript:teclaEnter(event,'SUCCONDUCTOR');" })
+                 @Html.ValidationMessageFor(m => m.CODIGO)
+             </td>
+          </tr>
+          @*<tr>
+             <td><strong> @Html.LabelFor(m => m.SUCCONDUCTOR)</strong></td>
+             <td>@Html.DropDownListFor(m => m.SUCCONDUCTOR, Model.ListaSucCond, "--Seleccione Sucursal--", new { @style = "width:150px;font-size: 10px" })
+              @Html.ValidationMessageFor(m => m.SUCCONDUCTOR)
+           </td>
+          </tr>*@
+    </table>
+    
+    
+}   

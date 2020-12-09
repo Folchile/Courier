@@ -1,0 +1,134 @@
+﻿@model Courier.Models.RecepcionModels
+<script type="text/javascript">
+    function CargaHistorialOT(OTP, OTD, IdBulto) {        
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load("@Url.Content("~/Preparacion/VerHistorialOT")?OTP=" + OTP + "&OTD=" + OTD + "&IdBulto=" + IdBulto + "&iOTP=0&iOTD=1&iBulto=0");
+    }
+    function CargaHistorialBulto(OTP, OTD, IdBulto) {
+        $("#dialog-HistorialOT").dialog("open");
+        $("#dialog-HistorialOT").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-HistorialOT").load("@Url.Content("~/Preparacion/VerHistorialOT")?OTP=" + OTP + "&OTD=" + OTD + "&IdBulto=" + IdBulto + "&iOTP=0&iOTD=1&iBulto=1");
+    }
+    function VerDocumentosAsociados(OTP, OTD) {
+        $("#dialog-documentos").dialog("open");
+        $("#dialog-documentos").html('<img src="@Url.Content("~/Images/8.gif")" />');
+        $("#dialog-documentos").load("@Url.Content("~/Preparacion/ListaDocumentos")?OTP=" + OTP + "&OTD=" + OTD);
+    }
+    $(function () {
+        $("#btnVerDocumentosAsociados").button()
+        .click(function () {
+            VerDocumentosAsociados($("#OTP").val(), $("#OTD").val());
+        });
+
+        $("#btnVerHistorialOT").button()
+        .click(function () {
+            CargaHistorialOT($("#OTP").val(), $("#OTD").val(), 0);
+        });
+
+        $("#dialog-HistorialOT").dialog({ autoOpen: false, title: "Historial", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $("#dialog-documentos").dialog({ autoOpen: false, title: "Documentos Asociados", width: 'auto', minWidth: 400, minHeight: 300, modal: true,
+            buttons: {
+                Aceptar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#tabs").tabs();
+    })   
+</script>
+<div id="dialog-documentos"></div>
+<div id="dialog-HistorialOT" style="min-height:300px;min-width:500px;"></div>
+@if (@Model.VerTotalOT != null)
+{
+    <input type="hidden" id="OTP" value="@Model.VerTotalOT.PK_FOL_OTP_ID"/>
+    <input type="hidden" id="OTD" value="@Model.VerTotalOT.PK_FOL_OTD_ID"/>
+    <fieldset style="margin: 10px 0; padding: 10px; border: #DDD 1px solid;">
+        <legend style="color: #999; font-style: normal;">Datos OT último bulto recepcionado</legend>                
+        <table>
+            <tr>
+                <td>OT</td>
+                <td>Total Bultos</td>
+                <td>Total Peso(KG)</td>
+                <td>Total Peso Vol.</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="textfield_effect">                        
+                        <strong>@Model.VerTotalOT.PK_FOL_OTP_ID-@Model.VerTotalOT.PK_FOL_OTD_ID</strong>
+                        &nbsp;
+                        &nbsp;
+                    </div>
+                </td>                            
+                <td>
+                    <div class="textfield_effect" style="width:100px;">
+                        <div style="float:right;">
+                            &nbsp;@Model.VerTotalOT.TOTAL_BULTOS&nbsp;                       
+                        </div>               
+                    </div>
+                
+                </td>
+                <td>
+                    <div class="textfield_effect" style="width:100px;">
+                        <div style="float:right;">
+                        @if (@Model.VerTotalOT.TOTAL_PESO_KG != null)
+                        {
+                        @String.Format("{0:0.000}", @Model.VerTotalOT.TOTAL_PESO_KG)
+                        }                         
+                        </div>               
+                    </div>
+                </td>
+                <td>
+                    <div class="textfield_effect" style="width:100px;">
+                        <div style="float:right;">
+                        @if (@Model.VerTotalOT.TOTAL_PESO_VOL != null)
+                        {
+                        @String.Format("{0:0.000}", @Model.VerTotalOT.TOTAL_PESO_VOL)
+                        }                         
+                        </div>               
+                    </div>
+                </td>
+                <td>
+                    <button id="btnVerHistorialOT">
+                        <div style="float:left;width:130px;">       
+                        <div style="float:left;"><img src="@Url.Content("~/Images/file_temporary.png")?" /></div>                 
+                        <div style="float:left;">&nbsp;Ver Historial OT</div>                        
+                        </div>                       
+                    </button>
+                </td>
+                <td>
+                    <button id="btnVerDocumentosAsociados">
+                        <div style="float:left;width:130px;">       
+                        <div style="float:left;"><img alt="Ver Documentos" src="@Url.Content("~/Images/folder_explore.png")" /></div>                 
+                        <div style="float:left;">&nbsp;Doc. Asociados</div>                        
+                        </div>                       
+                    </button>
+                </td>
+            </tr>
+        </table>         
+        @if (Model.Devolucion == true)
+        {
+        <div class="warning">
+            DEVOLUCIÓN   
+        </div>
+        }    
+    </fieldset>   
+}
+
+<div id="tabs">
+    <ul>		    
+        <li><a href="#tabs-1">Recepción de bultos</a></li>		    
+    </ul>        
+    <div id="tabs-1">   
+        <div id="ListaRecepcion">
+            @Html.Partial("_ListaRecepcion",Model)
+        </div>
+    </div>
+</div>

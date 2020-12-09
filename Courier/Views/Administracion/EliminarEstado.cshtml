@@ -1,0 +1,96 @@
+﻿@model Courier.Models.EliminarEstadoModels
+@{
+    ViewBag.Title = "Eliminar Estado";
+}
+
+<link href="@Url.Content("~/Content/Mensajes.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery.validate.1.9.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/CustomFunction.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnAceptarEliminarEstado").button()
+        .click(function (event) {
+            event.preventDefault();
+            borrar_contenido();
+            $.validator.unobtrusive.parse("#frm04");
+            if ($("#frm04").valid() == true) {
+                $("#F04Consulta").html("<p>¿Esta seguro(a) que desea regresar al estado En Ruta Cliente?</p>");
+                $("#F04Consulta").dialog("open");
+            }
+
+        });
+        $("#F04ResultOK").dialog({ autoOpen: false, title: "Resultado", width: 'auto', modal: true, buttons: { Aceptar: function () { $(this).dialog("close"); } } });
+        $("#F04Consulta").dialog({ autoOpen: false, title: "Consulta", width: 'auto', modal: true,
+            buttons: {
+                Aceptar: function () {
+                    borrar_contenido();
+                    $.validator.unobtrusive.parse("#frm04");
+                    if ($("#frm04").valid() == true) {
+                        $("#frm04").submit();
+                        $(this).dialog("close");
+                    }
+                    else {
+                        $(this).dialog("close");
+                    }
+                },
+                Cancelar: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+    })
+    function F04Inicio() {
+        waitingDialog({ title: "Cambiar Estado", message: "Aplicando cambios...<br/>" });
+    }
+    function F04Success(data) {
+        closeWaitingDialog();
+        if (data.Ok == true) {
+            $("#F04ResultOK").html("<p>Información actualizada exitosamente</p>")
+            $("#F04ResultOK").dialog("open");
+        }
+        else {
+            ("#F04ResultOK").html(data.Mensaje)
+            $("#F04ResultOK").dialog("open");
+        }
+        $("#OT").val("");
+        $("#OT").focus();
+    }
+    function F04Error() {
+        alert("No fue posible procesar la información, Error de conexión");
+        closeWaitingDialog();
+    }
+</script>
+
+<div class="warning">        
+    <p>Esta opción permite regresar a <strong>En Ruta Cliente</strong>, OT's que se encuentren en los siguientes estados:.</p> 
+    <p>- Recepcionado OK</p>
+    <p>- Rechazo Total</p>
+    <p>&nbsp;</p>
+    <p>Debe estar seguro(a) de los cambios, ya que no los podrá reversar.</p>
+</div>
+@using (Ajax.BeginForm("ReversarEstado", "Administracion", new AjaxOptions { HttpMethod = "Post", OnBegin = "javascript:F04Inicio()", OnSuccess = "Javascript:F04Success(data)", OnFailure = "Javascript:F04Error()" }, new { id = "frm04" }))
+{ 
+    <table>
+        <tr>
+            <td>Ingrese el N° de OT:</td>
+            <td>@Html.TextBoxFor(m => m.OT)</td>    
+            <td>
+                <button id="btnAceptarEliminarEstado">
+                    <div style="float:left;width:90px;">       
+                    <div style="float:left;"><img alt="" src="@Url.Content("~/Images/forward.png")?" /></div>                   
+                    <div style="float:left;">&nbsp;Procesar</div>                        
+                    </div>                       
+                </button>    
+            </td>
+        </tr>
+        <tr><td></td><td colspan="2">@Html.ValidationMessageFor(m => m.OT)</td></tr>
+    </table>
+}
+<div id="F04ResultOK"></div>
+<div id="F04Consulta"></div>
+<script type="text/javascript">
+    $("#OT").focus();
+</script>

@@ -1,0 +1,23 @@
+﻿@model Courier.Models.AdministracionUsuario
+@{
+    var grid = new WebGrid(Model.oListaRolesFiltro,rowsPerPage:15,ajaxUpdateContainerId:"GrillaRoles");    
+} 
+<div id="GrillaRoles">
+@grid.GetHtml(
+fillEmptyRows: true,
+alternatingRowStyle: "fila-alternativa",
+headerStyle: "encabezado-grid",
+tableStyle:"mGrid",
+footerStyle: "pie-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primera",
+previousText: "< Anterior",
+nextText: "Siguiente >",
+lastText: "Última >>",
+columns: new[]
+{
+    grid.Column("FL_PAR_SIS_NOMBRE","Sistema"),     
+    grid.Column("RoleId","Id"),     
+    grid.Column("RoleName","Nombre Rol")
+})
+</div>

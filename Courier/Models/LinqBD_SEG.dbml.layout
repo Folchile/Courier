@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="LinqBD_SEG">
+  <DataContextMoniker Name="/LinqBD_SEGDataContext" />
+  <nestedChildShapes>
+    <classShape Id="3af33133-e4f4-446b-ad58-75e62960cd2d" absoluteBounds="4.625, 1.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/LinqBD_SEGDataContext/aspnet_Roles" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1722cb3a-1ef1-4770-9c57-601fa68a69e6" absoluteBounds="4.64, 2.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="05846f03-f507-4e79-945c-2c3e67828250" absoluteBounds="1.75, 1.5, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/LinqBD_SEGDataContext/aspnet_Users" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0cab4724-78a1-47d8-a0ea-7c75263a3b09" absoluteBounds="1.7649999999999997, 1.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d2ae8033-10ba-450c-a6a4-5ef5bdf4095c" absoluteBounds="4, 4.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_SEGDataContext/aspnet_UsersInRoles" />
+      <nestedChildShapes>
+        <elementListCompartment Id="da14cbe7-128a-4a7d-a2aa-0eb6c0a96b77" absoluteBounds="4.015, 4.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.3125 : 3.52089680989583); (5.3125 : 4.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_SEGDataContext/aspnet_Roles/aspnet_Roles_aspnet_UsersInRoles" />
+      <nodes>
+        <classShapeMoniker Id="3af33133-e4f4-446b-ad58-75e62960cd2d" />
+        <classShapeMoniker Id="d2ae8033-10ba-450c-a6a4-5ef5bdf4095c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.75 : 3.65549967447917); (4 : 4.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_SEGDataContext/aspnet_Users/aspnet_Users_aspnet_UsersInRoles" />
+      <nodes>
+        <classShapeMoniker Id="05846f03-f507-4e79-945c-2c3e67828250" />
+        <classShapeMoniker Id="d2ae8033-10ba-450c-a6a4-5ef5bdf4095c" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

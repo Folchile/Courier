@@ -1,0 +1,723 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 26, 22.875" name="LinqBD_PAR">
+  <DataContextMoniker Name="/LinqBD_PARDataContext" />
+  <nestedChildShapes>
+    <classShape Id="5413ace1-0b47-4629-a7c7-fcb70e81a1fd" isExpanded="false" absoluteBounds="3, 2.375, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_EST_ESTADO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b78a0101-9b22-4680-8400-ab6f09f7887d" absoluteBounds="3.0149999999999997, 2.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d97949d5-34f4-4644-bc03-5a391b844e0d" absoluteBounds="11.5, 4.625, 2, 1.9631982421874996">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_SIS_SISTEMA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0ff1aca0-7d10-40f6-b319-7590b03f99f7" absoluteBounds="11.515, 5.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5 : 2.6); (5.3125 : 2.6); (5.3125 : 2.7625); (7.6875 : 2.7625); (7.6875 : 4.0737939453125); (11.8541666666667 : 4.0737939453125 : JumpStart); (12.0208333333333 : 4.0737939453125 : JumpEnd); (12.5 : 4.0737939453125); (12.5 : 4.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_EST_ESTADO/TB_PAR_EST_ESTADO_TB_PAR_SIS_SISTEMA" />
+      <nodes>
+        <classShapeMoniker Id="5413ace1-0b47-4629-a7c7-fcb70e81a1fd" />
+        <classShapeMoniker Id="d97949d5-34f4-4644-bc03-5a391b844e0d" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="06fdc1d8-8c7c-4f3d-b319-4b69ac7205b1" isExpanded="false" absoluteBounds="10.125, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_FUN_FUNCION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f61c5a2e-55ad-4397-93d9-6f4083bb8872" absoluteBounds="10.14, 0.96000000000000085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6a07ba7e-68e3-4581-ba2f-745f50fc7b44" isExpanded="false" absoluteBounds="0.625, 5.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_LISTA_ITEM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6f2f8ef7-9019-44c7-87b6-1a1294fb707e" absoluteBounds="0.64000000000000012, 6.0850000000000009, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bc474b57-b1eb-4fcb-a666-fb0b641833db" isExpanded="false" absoluteBounds="0.625, 6.25, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_FUNCIONES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1ff037de-03c1-40cd-9cb9-39445302910d" absoluteBounds="0.64000000000000057, 6.7100000000000009, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="71c75186-e585-4c9f-876e-af7f4088b8c6" isExpanded="false" absoluteBounds="11.375, 2.25, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_CAR_CARPETA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="93c1442e-13bb-44e3-a05f-ad883fda263d" absoluteBounds="11.39, 2.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.90625 : 4.625); (12.90625 : 2.7)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SIS_SISTEMA/TB_PAR_SIS_SISTEMA_TB_PAR_CAR_CARPETA" />
+      <nodes>
+        <classShapeMoniker Id="d97949d5-34f4-4644-bc03-5a391b844e0d" />
+        <classShapeMoniker Id="71c75186-e585-4c9f-876e-af7f4088b8c6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="173d43f9-57db-4811-9821-8f689402a6d7" isExpanded="false" absoluteBounds="10.375, 3.125, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_SBC_SUB_CARPETA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b8bf9019-236b-4ff0-990b-0c1db0edbd62" absoluteBounds="10.39, 3.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11.9375 : 4.625); (11.9375 : 3.575)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SIS_SISTEMA/TB_PAR_SIS_SISTEMA_TB_PAR_SBC_SUB_CARPETA" />
+      <nodes>
+        <classShapeMoniker Id="d97949d5-34f4-4644-bc03-5a391b844e0d" />
+        <classShapeMoniker Id="173d43f9-57db-4811-9821-8f689402a6d7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.875 : 2.7); (11.875 : 3.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_CAR_CARPETA/TB_PAR_CAR_CARPETA_TB_PAR_SBC_SUB_CARPETA" />
+      <nodes>
+        <classShapeMoniker Id="71c75186-e585-4c9f-876e-af7f4088b8c6" />
+        <classShapeMoniker Id="173d43f9-57db-4811-9821-8f689402a6d7" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="6c4f1699-2dc0-4453-a17a-fcab976a47e3" isExpanded="false" absoluteBounds="0.5, 2, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_SUBCARPETA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eb0ff98c-2c94-4a62-ae05-3c2c9820543d" absoluteBounds="0.51499999999999968, 2.4600000000000009, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0039cc6d-5978-4d2c-9e4b-4679fcb48319" isExpanded="false" absoluteBounds="0.5, 1, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_LIST_ITEM_FOR_TABLE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5466c6b2-b99c-49b3-80b6-baa207c32e63" absoluteBounds="0.51499999999999968, 1.4600000000000009, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c1e6f2c1-eca0-42b7-87b9-b9ed04288dd8" isExpanded="false" absoluteBounds="5.25, 2.875, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_EXC_EXCEL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ebd30d2b-7617-4edc-ba02-1ef666d77a56" absoluteBounds="5.265, 3.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8360defc-263e-4477-8c11-4289b45565fc" isExpanded="false" absoluteBounds="3.75, 7.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRV_PROVINCIA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="95341335-8a39-445c-a074-1cbc216036ae" absoluteBounds="3.7649999999999997, 8.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6369781b-3048-4346-937e-693cf54e92b0" isExpanded="false" absoluteBounds="3.75, 8.375, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_REG_REGION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f071c868-dfb1-4da4-afbe-3ebdf3112ace" absoluteBounds="3.7649999999999997, 8.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 8.375); (4.75 : 8.075)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_REG_REGION/TB_PAR_REG_REGION_TB_PAR_PRV_PROVINCIA" />
+      <nodes>
+        <classShapeMoniker Id="6369781b-3048-4346-937e-693cf54e92b0" />
+        <classShapeMoniker Id="8360defc-263e-4477-8c11-4289b45565fc" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="05f016e1-5213-4926-9fda-dd45c6bd8877" isExpanded="false" absoluteBounds="3.75, 9.125, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_PAI_PAIS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="88c101de-66ff-45e9-ad6e-e8852a14a5bf" absoluteBounds="3.7649999999999997, 9.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.75 : 9.125); (4.75 : 8.825)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PAI_PAIS/TB_PAR_PAI_PAIS_TB_PAR_REG_REGION" />
+      <nodes>
+        <classShapeMoniker Id="05f016e1-5213-4926-9fda-dd45c6bd8877" />
+        <classShapeMoniker Id="6369781b-3048-4346-937e-693cf54e92b0" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c87fbf65-2012-4d75-a69f-ba287106aa7f" absoluteBounds="3.5, 10.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_CLA_CLASIFICACION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9721772f-b487-4a02-b824-8c689107e52f" absoluteBounds="3.5150000000000006, 10.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0018c690-9add-4e3e-8802-973a48ca4478" isExpanded="false" absoluteBounds="0.625, 6.875, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_COBERTURA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a4325446-6110-45b5-bb61-5bbbf757764f" absoluteBounds="0.63999999999999968, 7.335, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e6914b4e-2e5d-4fe5-bdf7-ad414796ae29" isExpanded="false" absoluteBounds="0.625, 7.5, 2.25, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_COBERTURA_LOCALIDAD" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5ff08cf9-9ef5-4453-aeb7-a9e47184e212" absoluteBounds="0.63999999999999968, 7.96, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7a272a82-cf16-4701-8bcf-45590786c6fb" absoluteBounds="6.5, 6.125, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_COM_COMUNA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ebe9a7ac-9e75-423d-b1a6-520da565be40" absoluteBounds="6.515, 6.5850000000000009, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 10.28125); (8.46875 : 10.28125); (8.46875 : 8.47280110677083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_CLA_CLASIFICACION/TB_PAR_CLA_CLASIFICACION_TB_PAR_COM_COMUNA" />
+      <nodes>
+        <classShapeMoniker Id="c87fbf65-2012-4d75-a69f-ba287106aa7f" />
+        <classShapeMoniker Id="7a272a82-cf16-4701-8bcf-45590786c6fb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 7.85); (6.5 : 7.85)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRV_PROVINCIA/TB_PAR_PRV_PROVINCIA_TB_PAR_COM_COMUNA" />
+      <nodes>
+        <classShapeMoniker Id="8360defc-263e-4477-8c11-4289b45565fc" />
+        <classShapeMoniker Id="7a272a82-cf16-4701-8bcf-45590786c6fb" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="e9c2c02d-bab7-4e79-9366-95c355ef363d" absoluteBounds="6.375, 10.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_LOC_LOCALIDAD" />
+      <nestedChildShapes>
+        <elementListCompartment Id="099e9733-0057-4769-8bf9-c225311030ca" absoluteBounds="6.39, 10.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.4375 : 8.47280110677083); (7.4375 : 10.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_COM_COMUNA/TB_PAR_COM_COMUNA_TB_PAR_LOC_LOCALIDAD" />
+      <nodes>
+        <classShapeMoniker Id="7a272a82-cf16-4701-8bcf-45590786c6fb" />
+        <classShapeMoniker Id="e9c2c02d-bab7-4e79-9366-95c355ef363d" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="594b7083-4d11-4d3e-9ceb-ce27dd4ba096" absoluteBounds="9.25, 8.75, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_COB_COBERTURA_COMUNA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="86336b29-8b99-4f37-bd2b-2ec5e631fda7" absoluteBounds="9.265, 9.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.5 : 7.29890055338542); (9.10416666666667 : 7.29890055338542 : JumpStart); (9.27083333333333 : 7.29890055338542 : JumpEnd); (10.25 : 7.29890055338542); (10.25 : 8.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_COM_COMUNA/TB_PAR_COM_COMUNA_TB_PAR_COB_COBERTURA_COMUNA" />
+      <nodes>
+        <classShapeMoniker Id="7a272a82-cf16-4701-8bcf-45590786c6fb" />
+        <classShapeMoniker Id="594b7083-4d11-4d3e-9ceb-ce27dd4ba096" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c12dbb16-0ab1-498a-bb73-6bf9564bff26" absoluteBounds="15, 11.25, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TRN_TRANSITO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bd583a9f-a1a1-4580-903e-e9ad46d85327" absoluteBounds="15.015, 11.71, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0218b0c6-954b-4015-a05c-701480d237e6" absoluteBounds="20.625, 9.5, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TRC_TRA_CON" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bbe48316-cd78-48ff-a5d5-716dc68e9022" absoluteBounds="20.64, 9.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8ed0586e-c684-4ac9-af4f-2ab034de8241" absoluteBounds="11.5, 15.25, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_VIA_VIA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7a74011a-e938-4c4a-9965-f61b5290f912" absoluteBounds="11.515, 15.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.5156225 : 15.25); (12.5156225 : 13.1747054036458); (12.125 : 13.1747054036458); (12.125 : 13); (11.75 : 13); (11.75 : 10.7123522018229); (11.25 : 10.7123522018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_VIA_VIA/TB_PAR_VIA_VIA_TB_PAR_COB_COBERTURA_COMUNA" />
+      <nodes>
+        <classShapeMoniker Id="8ed0586e-c684-4ac9-af4f-2ab034de8241" />
+        <classShapeMoniker Id="594b7083-4d11-4d3e-9ceb-ce27dd4ba096" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.5 : 16.5713932291667); (14.2447939166667 : 16.5713932291667 : JumpStart); (14.4114605833333 : 16.5713932291667 : JumpEnd); (14.4166666666667 : 16.5713932291667 : JumpStart); (14.5833333333333 : 16.5713932291667 : JumpEnd); (16.90625 : 16.5713932291667); (16.90625 : 14.1747054036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_VIA_VIA/TB_PAR_VIA_VIA_TB_PAR_TRN_TRANSITO" />
+      <nodes>
+        <classShapeMoniker Id="8ed0586e-c684-4ac9-af4f-2ab034de8241" />
+        <classShapeMoniker Id="c12dbb16-0ab1-498a-bb73-6bf9564bff26" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="7d00bc1f-3cb4-428e-9e6b-2e9586ba11db" absoluteBounds="8, 17.375, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_RES_REFERENCIA_SERVICIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d1936b01-4629-4a5f-b74e-5f25878eb5d9" absoluteBounds="8.015, 17.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ead7479e-124c-49f0-b119-bc543ec8b047" isExpanded="false" absoluteBounds="0.5, 3.25, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TUS_TIPO_USUARIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c7865355-edf8-410b-923f-712169b561ba" absoluteBounds="0.51500000000000012, 3.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1d2baae9-180d-4136-a26a-c99e5fe76db7" absoluteBounds="9.875, 13.25, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_COL_COLUMNA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cfe2d4ce-80b3-465b-b42c-8fa558ccbf3c" absoluteBounds="9.89, 13.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.8125005 : 13.25); (10.8125005 : 11.7372054036458); (9.1875 : 11.7372054036458); (9.1875 : 4.0737939453125); (7.625 : 4.0737939453125); (7.625 : 3.1); (7.25 : 3.1)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_COL_COLUMNA/TB_PAR_COL_COLUMNA_TB_PAR_EXC_EXCEL" />
+      <nodes>
+        <classShapeMoniker Id="1d2baae9-180d-4136-a26a-c99e5fe76db7" />
+        <classShapeMoniker Id="c1e6f2c1-eca0-42b7-87b9-b9ed04288dd8" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c52bf169-fab3-4869-a816-2f6d199dbd66" absoluteBounds="12, 10, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_CLO_COBERTURA_LOCALIDAD" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0d11d08c-2a20-440e-8d80-4bd06e5d826e" absoluteBounds="12.015, 10.46, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.375 : 12.1498527018229); (11.6666666666667 : 12.1498527018229 : JumpStart); (11.8333333333333 : 12.1498527018229 : JumpEnd); (12 : 12.1498527018229)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_LOC_LOCALIDAD/TB_PAR_LOC_LOCALIDAD_TB_PAR_CLO_COBERTURA_LOCALIDAD" />
+      <nodes>
+        <classShapeMoniker Id="e9c2c02d-bab7-4e79-9366-95c355ef363d" />
+        <classShapeMoniker Id="c52bf169-fab3-4869-a816-2f6d199dbd66" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.15625 : 15.25); (13.15625 : 12.9247054036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_VIA_VIA/TB_PAR_VIA_VIA_TB_PAR_CLO_COBERTURA_LOCALIDAD" />
+      <nodes>
+        <classShapeMoniker Id="8ed0586e-c684-4ac9-af4f-2ab034de8241" />
+        <classShapeMoniker Id="c52bf169-fab3-4869-a816-2f6d199dbd66" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="56bff731-c276-4db3-941e-fad4724c71d5" absoluteBounds="5.5, 4, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_USE_USU_SUC_EMP" />
+      <nestedChildShapes>
+        <elementListCompartment Id="35354635-e50c-4008-ae7d-9413fe1b0a4c" absoluteBounds="5.515, 4.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b86f209d-da66-4ded-ad49-8092cd8df6ec" absoluteBounds="8, 15.375, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TDO_TIPO_DOCUMENTO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b6ffccd0-b880-4234-b41a-82d07b9fdde9" absoluteBounds="8.015, 15.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(9 : 16.7612939453125); (9 : 17.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_TDO_TIPO_DOCUMENTO/TB_PAR_TDO_TIPO_DOCUMENTO_TB_PAR_RES_REFERENCIA_SERVICIO" />
+      <nodes>
+        <classShapeMoniker Id="b86f209d-da66-4ded-ad49-8092cd8df6ec" />
+        <classShapeMoniker Id="7d00bc1f-3cb4-428e-9e6b-2e9586ba11db" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="0e765dc6-c94d-477c-8fd4-049c5f482dcb" absoluteBounds="5.125, 16.25, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_REF_REFERENCIA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="54f39433-a193-4e7d-b420-cac40aa0bb8b" absoluteBounds="5.14, 16.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.125 : 17.4439925130208); (6.125 : 17.7576908710938); (8 : 17.7576908710938)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_REF_REFERENCIA/TB_PAR_REF_REFERENCIA_TB_PAR_RES_REFERENCIA_SERVICIO" />
+      <nodes>
+        <classShapeMoniker Id="0e765dc6-c94d-477c-8fd4-049c5f482dcb" />
+        <classShapeMoniker Id="7d00bc1f-3cb4-428e-9e6b-2e9586ba11db" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5c041e4f-62b5-491e-bcce-939d1c4add1c" isExpanded="false" absoluteBounds="3.75, 0.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_EMS_EMPRESA_SERVICIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d0dfa03b-1bf0-4343-a921-54581d84b706" absoluteBounds="3.7649999999999997, 1.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.90625 : 2.375); (4.90625 : 1.075)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_EST_ESTADO/TB_PAR_EST_ESTADO_TB_PAR_EMS_EMPRESA_SERVICIO" />
+      <nodes>
+        <classShapeMoniker Id="5413ace1-0b47-4629-a7c7-fcb70e81a1fd" />
+        <classShapeMoniker Id="5c041e4f-62b5-491e-bcce-939d1c4add1c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="e0f837db-ab2b-4c79-a6b5-678a96832a30" absoluteBounds="14.75, 8.25, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_CDI_CENTRO_DISTRIBUCION" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c2f01cd1-9a8a-40be-966a-00b3b5e7aad2" absoluteBounds="14.765, 8.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="db188089-155b-489b-aedc-a7a09c67a1b2" absoluteBounds="14.75, 15.25, 2, 1.1939925130208327">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_DES_DESTINO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a2318e76-6845-4efc-b9d1-7ff9e91af6de" absoluteBounds="14.765, 15.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="55e8a27a-164b-4cce-b810-7d30f1eebb15" absoluteBounds="17.875, 9.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_CDD_CDI_DES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="af8949f6-3258-41a5-b4e0-31c613a2d99d" absoluteBounds="17.89, 9.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(15.65625 : 9.44399251302083); (15.65625 : 10.01849609375); (17.875 : 10.01849609375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_CDI_CENTRO_DISTRIBUCION/TB_PAR_CDI_CENTRO_DISTRIBUCION_TB_PAR_CDD_CDI_DES" />
+      <nodes>
+        <classShapeMoniker Id="e0f837db-ab2b-4c79-a6b5-678a96832a30" />
+        <classShapeMoniker Id="55e8a27a-164b-4cce-b810-7d30f1eebb15" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(16.75 : 15.8469962565104); (18.59375 : 15.8469962565104); (18.59375 : 10.5112939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_DES_DESTINO/TB_PAR_DES_DESTINO_TB_PAR_CDD_CDI_DES" />
+      <nodes>
+        <classShapeMoniker Id="db188089-155b-489b-aedc-a7a09c67a1b2" />
+        <classShapeMoniker Id="55e8a27a-164b-4cce-b810-7d30f1eebb15" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="fe7b2330-1437-4a8d-ab03-0fd1dd6912c3" isExpanded="false" absoluteBounds="7.875, 0.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_MALLA_COBERTURA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2a77d9cb-dfce-41bc-9c53-6bec03ed8567" absoluteBounds="7.89, 1.085, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ee674bab-d110-4f2b-9cb9-fdea5f03ecbb" absoluteBounds="7.75, 2.625, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_DET_DESTINO_TRANSPORTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a616f199-6cf5-4979-a050-bad330a32b2f" absoluteBounds="7.765, 3.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11.5 : 15.9431469726562); (10.25 : 15.9431469726562); (10.25 : 15.125); (8.875 : 15.125); (8.875 : 4.0112939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_VIA_VIA/TB_PAR_VIA_VIA_TB_PAR_DET_DESTINO_TRANSPORTE" />
+      <nodes>
+        <classShapeMoniker Id="8ed0586e-c684-4ac9-af4f-2ab034de8241" />
+        <classShapeMoniker Id="ee674bab-d110-4f2b-9cb9-fdea5f03ecbb" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="689738a2-5eff-4f22-b988-8d4eb42bb291" isExpanded="false" absoluteBounds="2.75, 1.625, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TMM_TIPO_OT_MANUAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e63552d4-1fa1-4366-98a0-e9da3eb624ac" absoluteBounds="2.765, 2.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f7c39749-aaaa-466f-9480-c0941972f920" isExpanded="false" absoluteBounds="5.375, 2.25, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_LST_LISTA_ITEM" />
+      <nestedChildShapes>
+        <elementListCompartment Id="45279604-f414-4557-9cab-9d3e65160b75" absoluteBounds="5.3900000000000006, 2.71, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.375 : 2.351561875); (10.7499995 : 2.351561875); (10.7499995 : 0.95)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_LST_LISTA_ITEM/TB_PAR_LST_LISTA_ITEM_TB_PAR_FUN_FUNCION" />
+      <nodes>
+        <classShapeMoniker Id="f7c39749-aaaa-466f-9480-c0941972f920" />
+        <classShapeMoniker Id="06fdc1d8-8c7c-4f3d-b319-4b69ac7205b1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12.5 : 4.625); (12.5 : 4.2); (12.0208333333333 : 4.2 : JumpStart); (11.8541666666667 : 4.2 : JumpEnd); (10 : 4.2); (10 : 2.51562775); (7.375 : 2.51562775)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SIS_SISTEMA/TB_PAR_SIS_SISTEMA_TB_PAR_LST_LISTA_ITEM" />
+      <nodes>
+        <classShapeMoniker Id="d97949d5-34f4-4644-bc03-5a391b844e0d" />
+        <classShapeMoniker Id="f7c39749-aaaa-466f-9480-c0941972f920" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12.375 : 2.25); (12.375 : 2); (7.75 : 2); (7.75 : 2.40957692307692); (7.375 : 2.40957692307692)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_CAR_CARPETA/TB_PAR_CAR_CARPETA_TB_PAR_LST_LISTA_ITEM" />
+      <nodes>
+        <classShapeMoniker Id="71c75186-e585-4c9f-876e-af7f4088b8c6" />
+        <classShapeMoniker Id="f7c39749-aaaa-466f-9480-c0941972f920" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.375 : 3.125); (11.375 : 2.95); (10.125 : 2.95); (10.125 : 2.48437525); (7.375 : 2.48437525)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SBC_SUB_CARPETA/TB_PAR_SBC_SUB_CARPETA_TB_PAR_LST_LISTA_ITEM" />
+      <nodes>
+        <classShapeMoniker Id="173d43f9-57db-4811-9821-8f689402a6d7" />
+        <classShapeMoniker Id="f7c39749-aaaa-466f-9480-c0941972f920" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="7a6f0901-a7bc-436e-9cf6-e15f3161b7ed" absoluteBounds="4.375, 15, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TSE_TIPO_SERVICIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="61f07fe5-bb6d-4263-bb2a-c658f377981b" absoluteBounds="4.39, 15.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f2fc41c7-d58a-4216-a61b-a4e9304a574a" isExpanded="false" absoluteBounds="0.5, 0.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_SER_REF_LISTA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8ee4fbc7-7a6e-4fde-9528-0f0afee14177" absoluteBounds="0.51499999999999968, 0.96, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e6ca42e1-12d3-4be3-a17c-dca56740e4e9" absoluteBounds="14.75, 4.5, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_USU_USUARIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8d4cc836-140b-4360-858d-4b179365d644" absoluteBounds="14.765, 4.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(14.75 : 4.53125); (12.0208333333333 : 4.53125 : JumpStart); (11.8541666666667 : 4.53125 : JumpEnd); (7.5 : 4.53125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_USU_USUARIO/TB_PAR_USU_USUARIO_TB_PAR_USE_USU_SUC_EMP" />
+      <nodes>
+        <classShapeMoniker Id="e6ca42e1-12d3-4be3-a17c-dca56740e4e9" />
+        <classShapeMoniker Id="56bff731-c276-4db3-941e-fad4724c71d5" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.5 : 3.7); (1.5 : 5.375); (3.06510166666667 : 5.375 : JumpStart); (3.23176833333333 : 5.375 : JumpEnd); (3.24088666666667 : 5.375 : JumpStart); (3.50520833333333 : 5.375 : JumpEnd); (5.25 : 5.375); (5.25 : 5.6362939453125); (8.79166666666667 : 5.6362939453125 : JumpStart); (8.95833333333333 : 5.6362939453125 : JumpEnd); (9.10416666666667 : 5.6362939453125 : JumpStart); (9.27083333333333 : 5.6362939453125 : JumpEnd); (11.25 : 5.6362939453125); (11.25 : 4.375); (11.8541666666667 : 4.375 : JumpStart); (12.0208333333333 : 4.375 : JumpEnd); (12.4166666666667 : 4.375 : JumpStart); (12.5833333333333 : 4.375 : JumpEnd); (12.8229166666667 : 4.375 : JumpStart); (12.9895833333333 : 4.375 : JumpEnd); (13.8854166666667 : 4.375 : JumpStart); (14.0520833333333 : 4.375 : JumpEnd); (14.375 : 4.375); (14.375 : 5.57774983723958); (14.75 : 5.57774983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_TUS_TIPO_USUARIO/TB_PAR_TUS_TIPO_USUARIO_TB_PAR_USU_USUARIO" />
+      <nodes>
+        <classShapeMoniker Id="ead7479e-124c-49f0-b119-bc543ec8b047" />
+        <classShapeMoniker Id="e6ca42e1-12d3-4be3-a17c-dca56740e4e9" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" absoluteBounds="12.375, 7.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b41f7645-c5fd-402c-8444-97e7e976717d" absoluteBounds="12.39, 7.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.375 : 9.10659912109375); (11.25 : 9.10659912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_COB_COBERTURA_COMUNA" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="594b7083-4d11-4d3e-9ceb-ce27dd4ba096" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.2187495 : 9.4631982421875); (14.2187495 : 13.6747054036458); (14.2447939166667 : 13.6747054036458 : JumpStart); (14.4114605833333 : 13.6747054036458 : JumpEnd); (14.4166666666667 : 13.6747054036458 : JumpStart); (14.7083333333333 : 13.6747054036458 : JumpEnd); (15 : 13.6747054036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_TRN_TRANSITO" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="c12dbb16-0ab1-498a-bb73-6bf9564bff26" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.2187495 : 9.4631982421875); (14.2187495 : 13.3934529036458); (14.2447939166667 : 13.3934529036458 : JumpStart); (14.4114605833333 : 13.3934529036458 : JumpEnd); (14.4166666666667 : 13.3934529036458 : JumpStart); (14.7083333333333 : 13.3934529036458 : JumpEnd); (15 : 13.3934529036458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_TRN_TRANSITO1" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="c12dbb16-0ab1-498a-bb73-6bf9564bff26" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.1875 : 9.4631982421875); (13.1875 : 10)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_CLO_COBERTURA_LOCALIDAD" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="c52bf169-fab3-4869-a816-2f6d199dbd66" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.375 : 8.84699625651042); (14.75 : 8.84699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_CDI_CENTRO_DISTRIBUCION" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="e0f837db-ab2b-4c79-a6b5-678a96832a30" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.375 : 9.4631982421875); (13.375 : 9.875); (14.1354161666667 : 9.875 : JumpStart); (14.4114605833333 : 9.875 : JumpEnd); (14.4166666666667 : 9.875 : JumpStart); (14.5833333333333 : 9.875 : JumpEnd); (14.625 : 9.875); (14.625 : 15.8469962565104); (14.75 : 15.8469962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_DES_DESTINO" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="db188089-155b-489b-aedc-a7a09c67a1b2" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.96875 : 7.5); (13.96875 : 3.82439697265625); (12.9895833333333 : 3.82439697265625 : JumpStart); (12.8229166666667 : 3.82439697265625 : JumpEnd); (12.0208333333333 : 3.82439697265625 : JumpStart); (11.8541666666667 : 3.82439697265625 : JumpEnd); (9.75 : 3.82439697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_DET_DESTINO_TRANSPORTE" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="ee674bab-d110-4f2b-9cb9-fdea5f03ecbb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.2031275 : 7.5); (14.2031275 : 5.57774983723958); (14.75 : 5.57774983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_USU_USUARIO" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="e6ca42e1-12d3-4be3-a17c-dca56740e4e9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 7.98640055338542); (12.375 : 7.98640055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_COM_COMUNA/TB_PAR_COM_COMUNA_TB_PAR_SUC_SUCURSAL" />
+      <nodes>
+        <classShapeMoniker Id="7a272a82-cf16-4701-8bcf-45590786c6fb" />
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="735c5894-b03c-48cb-9f22-da625ddcecb7" absoluteBounds="6.125, 0.5, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUS_SUCURSAL_USUARIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="af972757-9c45-4a43-80e7-949fafde6d29" absoluteBounds="6.14, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a85cef3d-dbec-457c-a114-6a3b09cc1553" absoluteBounds="18, 6.375, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_CON_CONDUCTOR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b292bdbe-d451-4d00-981c-5744856b7f04" absoluteBounds="18.015, 6.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(19.96875 : 8.14589680989583); (19.96875 : 10.6338932291667); (20.2604166666667 : 10.6338932291667 : JumpStart); (20.4270833333333 : 10.6338932291667 : JumpEnd); (20.625 : 10.6338932291667)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_CON_CONDUCTOR/TB_PAR_CON_CONDUCTOR_TB_PAR_TRC_TRA_CON" />
+      <nodes>
+        <classShapeMoniker Id="a85cef3d-dbec-457c-a114-6a3b09cc1553" />
+        <classShapeMoniker Id="0218b0c6-954b-4015-a05c-701480d237e6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5 : 2.456248); (5.3125 : 2.456248); (5.3125 : 2.7625); (7.71875 : 2.7625); (7.71875 : 4.0737939453125); (9.91666666666667 : 4.0737939453125 : JumpStart); (10.0833333333333 : 4.0737939453125 : JumpEnd); (11.8541666666667 : 4.0737939453125 : JumpStart); (12.0208333333333 : 4.0737939453125 : JumpEnd); (12.8229166666667 : 4.0737939453125 : JumpStart); (12.9895833333333 : 4.0737939453125 : JumpEnd); (13.8854166666667 : 4.0737939453125 : JumpStart); (14.0520833333333 : 4.0737939453125 : JumpEnd); (19 : 4.0737939453125); (19 : 6.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_EST_ESTADO/TB_PAR_EST_ESTADO_TB_PAR_CON_CONDUCTOR" />
+      <nodes>
+        <classShapeMoniker Id="5413ace1-0b47-4629-a7c7-fcb70e81a1fd" />
+        <classShapeMoniker Id="a85cef3d-dbec-457c-a114-6a3b09cc1553" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="052b26ca-ad7d-41b1-bbfc-d13ebf2e1bae" absoluteBounds="2, 14.25, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_SER_SERVICIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e62bf1b7-8905-416f-bf8c-2f8650324d3e" absoluteBounds="2.015, 14.71, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.148435 : 14.25); (3.148435 : 3.03125); (3.24088666666667 : 3.03125 : JumpStart); (3.50520833333333 : 3.03125 : JumpEnd); (5.25 : 3.03125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SER_SERVICIO/TB_PAR_SER_SERVICIO_TB_PAR_EXC_EXCEL" />
+      <nodes>
+        <classShapeMoniker Id="052b26ca-ad7d-41b1-bbfc-d13ebf2e1bae" />
+        <classShapeMoniker Id="c1e6f2c1-eca0-42b7-87b9-b9ed04288dd8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.4375 : 17.1747054036458); (3.4375 : 18.4463932291667); (4.04166666666667 : 18.4463932291667 : JumpStart); (4.20833333333333 : 18.4463932291667 : JumpEnd); (8 : 18.4463932291667)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SER_SERVICIO/TB_PAR_SER_SERVICIO_TB_PAR_RES_REFERENCIA_SERVICIO" />
+      <nodes>
+        <classShapeMoniker Id="052b26ca-ad7d-41b1-bbfc-d13ebf2e1bae" />
+        <classShapeMoniker Id="7d00bc1f-3cb4-428e-9e6b-2e9586ba11db" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.32422 : 14.25); (3.32422 : 2.8875); (2.6875 : 2.8875); (2.6875 : 0.85); (3.75 : 0.85)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SER_SERVICIO/TB_PAR_SER_SERVICIO_TB_PAR_EMS_EMPRESA_SERVICIO" />
+      <nodes>
+        <classShapeMoniker Id="052b26ca-ad7d-41b1-bbfc-d13ebf2e1bae" />
+        <classShapeMoniker Id="5c041e4f-62b5-491e-bcce-939d1c4add1c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.421875 : 2.825); (3.421875 : 14.25)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_EST_ESTADO/TB_PAR_EST_ESTADO_TB_PAR_SER_SERVICIO" />
+      <nodes>
+        <classShapeMoniker Id="5413ace1-0b47-4629-a7c7-fcb70e81a1fd" />
+        <classShapeMoniker Id="052b26ca-ad7d-41b1-bbfc-d13ebf2e1bae" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="fab72c61-3933-4494-8620-3ffffa887b10" isExpanded="false" absoluteBounds="0.5, 1.5, 2, 0.45">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/VI_PAR_USUARIO" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f5473044-ef38-4c45-a306-253c63afce5f" absoluteBounds="0.51499999999999968, 1.96, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4aba64c4-1032-49e0-8e38-c9dcdeb786c5" absoluteBounds="22.375, 11.75, 3, 1.9631982421875">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e6da1d79-94cf-4b79-818f-d4a6fa067710" absoluteBounds="22.39, 12.21, 2.9699999999999998, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ca2c9f7b-5f89-4a12-9213-78ef89929907" absoluteBounds="23.125, 14.625, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_SPR_SUCURSAL_PROVEEDOR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3f8aa9c4-f992-49d6-b22d-6d45bbd3dd55" absoluteBounds="23.14, 15.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(24.125 : 13.7131982421875); (24.125 : 14.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR/TB_PAR_PRO_PROVEEDOR_TB_PAR_SPR_SUCURSAL_PROVEEDOR" />
+      <nodes>
+        <classShapeMoniker Id="4aba64c4-1032-49e0-8e38-c9dcdeb786c5" />
+        <classShapeMoniker Id="ca2c9f7b-5f89-4a12-9213-78ef89929907" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(12.843748 : 9.4631982421875); (12.843748 : 9.75); (13.1041666666667 : 9.75 : JumpStart); (13.2708333333333 : 9.75 : JumpEnd); (13.2916666666667 : 9.75 : JumpStart); (13.4583333333333 : 9.75 : JumpEnd); (14.1354161666667 : 9.75 : JumpStart); (14.4114605833333 : 9.75 : JumpEnd); (14.5 : 9.75); (14.5 : 16.8670068359375); (20.5104146666667 : 16.8670068359375 : JumpStart); (20.6770813333333 : 16.8670068359375 : JumpEnd); (21.0416666666667 : 16.8670068359375 : JumpStart); (21.2083333333333 : 16.8670068359375 : JumpEnd); (22.5416666666667 : 16.8670068359375 : JumpStart); (22.7083333333333 : 16.8670068359375 : JumpEnd); (22.75 : 16.8670068359375); (22.75 : 15.2219962565104); (22.8229166666667 : 15.2219962565104 : JumpStart); (22.9895833333333 : 15.2219962565104 : JumpEnd); (23.125 : 15.2219962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_SPR_SUCURSAL_PROVEEDOR" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="ca2c9f7b-5f89-4a12-9213-78ef89929907" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="b671df25-0b0f-40ca-b1f6-af0d4e814f18" absoluteBounds="20.125, 13.5, 2, 3.1170068359375">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TRA_TRANSPORTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c0eb90dd-4908-417e-9f34-717c27b5f0d5" absoluteBounds="20.14, 13.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(21.375 : 13.5); (21.375 : 10.6939925130208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_TRA_TRANSPORTE/TB_PAR_TRA_TRANSPORTE_TB_PAR_TRC_TRA_CON" />
+      <nodes>
+        <classShapeMoniker Id="b671df25-0b0f-40ca-b1f6-af0d4e814f18" />
+        <classShapeMoniker Id="0218b0c6-954b-4015-a05c-701480d237e6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(20.34375 : 13.5); (20.34375 : 2.85625); (11.9583333333333 : 2.85625 : JumpStart); (11.7916666666667 : 2.85625 : JumpEnd); (9.75 : 2.85625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_TRA_TRANSPORTE/TB_PAR_TRA_TRANSPORTE_TB_PAR_DET_DESTINO_TRANSPORTE" />
+      <nodes>
+        <classShapeMoniker Id="b671df25-0b0f-40ca-b1f6-af0d4e814f18" />
+        <classShapeMoniker Id="ee674bab-d110-4f2b-9cb9-fdea5f03ecbb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(22.375 : 12.7315991210937); (21.4583333333333 : 12.7315991210937 : JumpStart); (21.2916666666667 : 12.7315991210937 : JumpEnd); (20.859375 : 12.7315991210937); (20.859375 : 13.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR/TB_PAR_PRO_PROVEEDOR_TB_PAR_TRA_TRANSPORTE" />
+      <nodes>
+        <classShapeMoniker Id="4aba64c4-1032-49e0-8e38-c9dcdeb786c5" />
+        <classShapeMoniker Id="b671df25-0b0f-40ca-b1f6-af0d4e814f18" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="06cb482c-464a-4ba2-8ea5-aaacfb703fa9" absoluteBounds="23.75, 17.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TTR_TIPO_TRANSPORTE" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e6bbda75-bbab-47a4-9ecd-4754611e0904" absoluteBounds="23.765, 17.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(23.75 : 17.34375); (23.4895833333333 : 17.34375 : JumpStart); (23.3229166666667 : 17.34375 : JumpEnd); (22.9895833333333 : 17.34375 : JumpStart); (22.8229166666667 : 17.34375 : JumpEnd); (22.7083333333333 : 17.34375 : JumpStart); (22.5416666666667 : 17.34375 : JumpEnd); (21.125 : 17.34375); (21.125 : 16.6170068359375)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_TTR_TIPO_TRANSPORTE/TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_TRA_TRANSPORTE" />
+      <nodes>
+        <classShapeMoniker Id="06cb482c-464a-4ba2-8ea5-aaacfb703fa9" />
+        <classShapeMoniker Id="b671df25-0b0f-40ca-b1f6-af0d4e814f18" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="72e24f1b-cc0e-45e2-9061-b325b1e1da9c" absoluteBounds="20.5, 17.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_RTT_RELACION_TIPO_TRANS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e1fa6c92-62b7-41a3-892e-ccbe36b0a666" absoluteBounds="20.515, 17.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(23.75 : 18.1642976888021); (23.4895833333333 : 18.1642976888021 : JumpStart); (23.3229166666667 : 18.1642976888021 : JumpEnd); (22.9895833333333 : 18.1642976888021 : JumpStart); (22.8229166666667 : 18.1642976888021 : JumpEnd); (22.7083333333333 : 18.1642976888021 : JumpStart); (22.5416666666667 : 18.1642976888021 : JumpEnd); (22.5 : 18.1642976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_TTR_TIPO_TRANSPORTE/TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_RTT_RELACION_TIPO_TRANS" />
+      <nodes>
+        <classShapeMoniker Id="06cb482c-464a-4ba2-8ea5-aaacfb703fa9" />
+        <classShapeMoniker Id="72e24f1b-cc0e-45e2-9061-b325b1e1da9c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(23.75 : 17.769648844401); (23.4895833333333 : 17.769648844401 : JumpStart); (23.3229166666667 : 17.769648844401 : JumpEnd); (22.9895833333333 : 17.769648844401 : JumpStart); (22.8229166666667 : 17.769648844401 : JumpEnd); (22.7083333333333 : 17.769648844401 : JumpStart); (22.5416666666667 : 17.769648844401 : JumpEnd); (22.5 : 17.769648844401)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_TTR_TIPO_TRANSPORTE/TB_PAR_TTR_TIPO_TRANSPORTE_TB_PAR_RTT_RELACION_TIPO_TRANS1" />
+      <nodes>
+        <classShapeMoniker Id="06cb482c-464a-4ba2-8ea5-aaacfb703fa9" />
+        <classShapeMoniker Id="72e24f1b-cc0e-45e2-9061-b325b1e1da9c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="bd92b87e-ad24-4841-b756-1cdda32a862a" absoluteBounds="0.625, 20.625, 2, 1.9631982421875">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a304f50c-b0c7-4661-a9a8-60bc371dd14f" absoluteBounds="0.64, 21.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.625 : 21.6065991210938); (23.40625 : 21.6065991210938); (23.40625 : 15.8189925130208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR1/TB_PAR_PRO_PROVEEDOR1_TB_PAR_SPR_SUCURSAL_PROVEEDOR" />
+      <nodes>
+        <classShapeMoniker Id="bd92b87e-ad24-4841-b756-1cdda32a862a" />
+        <classShapeMoniker Id="ca2c9f7b-5f89-4a12-9213-78ef89929907" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="e878e178-1b66-43f1-8ca8-c1e793b0646c" absoluteBounds="1.875, 19.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_SPR_SUCURSAL_PROVEEDOR1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="97dd7906-d7a4-446c-8f69-d3c3fafa9957" absoluteBounds="1.8900000000000001, 19.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(22.90625 : 13.7131982421875); (22.90625 : 19.7219962565104); (3.875 : 19.7219962565104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR/TB_PAR_PRO_PROVEEDOR_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" />
+      <nodes>
+        <classShapeMoniker Id="4aba64c4-1032-49e0-8e38-c9dcdeb786c5" />
+        <classShapeMoniker Id="e878e178-1b66-43f1-8ca8-c1e793b0646c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.25 : 20.625); (2.25 : 20.3189925130208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR1/TB_PAR_PRO_PROVEEDOR1_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" />
+      <nodes>
+        <classShapeMoniker Id="bd92b87e-ad24-4841-b756-1cdda32a862a" />
+        <classShapeMoniker Id="e878e178-1b66-43f1-8ca8-c1e793b0646c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.32812725 : 9.4631982421875); (14.32812725 : 19.3922456282552); (3.875 : 19.3922456282552)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_SUC_SUCURSAL/TB_PAR_SUC_SUCURSAL_TB_PAR_SPR_SUCURSAL_PROVEEDOR1" />
+      <nodes>
+        <classShapeMoniker Id="a040eded-8fdf-4e0d-9764-4e1fd4e1049e" />
+        <classShapeMoniker Id="e878e178-1b66-43f1-8ca8-c1e793b0646c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a144de8e-221f-4346-baa6-9a7bdb49f6b4" absoluteBounds="0.5, 17.75, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/LinqBD_PARDataContext/TB_PAR_TPR_TRANSPORTE_PROVEEDOR" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aacc4dd6-e67b-49eb-89f1-b0d0a722c31b" absoluteBounds="0.515, 18.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(24.171877 : 13.7131982421875); (24.171877 : 14.375); (22.9895833333333 : 14.375 : JumpStart); (22.8229166666667 : 14.375 : JumpEnd); (22.625 : 14.375); (22.625 : 19.1362939453125); (14.4114605833333 : 19.1362939453125 : JumpStart); (14.2447939166667 : 19.1362939453125 : JumpEnd); (4.125 : 19.1362939453125); (4.125 : 18.0981971145833); (3.52083333333333 : 18.0981971145833 : JumpStart); (3.35416666666667 : 18.0981971145833 : JumpEnd); (2.5 : 18.0981971145833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR/TB_PAR_PRO_PROVEEDOR_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" />
+      <nodes>
+        <classShapeMoniker Id="4aba64c4-1032-49e0-8e38-c9dcdeb786c5" />
+        <classShapeMoniker Id="a144de8e-221f-4346-baa6-9a7bdb49f6b4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.21875 : 20.625); (1.21875 : 18.9439925130208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_PRO_PROVEEDOR1/TB_PAR_PRO_PROVEEDOR1_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" />
+      <nodes>
+        <classShapeMoniker Id="bd92b87e-ad24-4841-b756-1cdda32a862a" />
+        <classShapeMoniker Id="a144de8e-221f-4346-baa6-9a7bdb49f6b4" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(20.593748 : 16.6170068359375); (20.593748 : 17.25); (14.4114605833333 : 17.25 : JumpStart); (14.2447939166667 : 17.25 : JumpEnd); (10.25 : 17.25); (10.25 : 19.0112939453125); (4.375 : 19.0112939453125); (4.375 : 18.6951923710937); (4.20833333333333 : 18.6951923710937 : JumpStart); (4.04166666666667 : 18.6951923710937 : JumpEnd); (2.5 : 18.6951923710937)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqBD_PARDataContext/TB_PAR_TRA_TRANSPORTE/TB_PAR_TRA_TRANSPORTE_TB_PAR_TPR_TRANSPORTE_PROVEEDOR" />
+      <nodes>
+        <classShapeMoniker Id="b671df25-0b0f-40ca-b1f6-af0d4e814f18" />
+        <classShapeMoniker Id="a144de8e-221f-4346-baa6-9a7bdb49f6b4" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

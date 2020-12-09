@@ -1,0 +1,37 @@
+﻿@model Courier.Models.CoberturaModels
+           @{
+               ViewBag.title = "Cobertura";
+               }
+
+<link href="@Url.Content("~/Content/GridView.css")" rel="stylesheet" type="text/css" />
+<script type="text/jscript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+    
+</script>
+<div id="dialog-eliminaritem" title="Eliminar"></div>
+<input type="hidden" value="0" id="eliminarlst" />
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Comunas</a></li>
+        <li><a href="#tabs-2">Localidades</a></li>
+	</ul>
+	<div id="tabs-1">        
+        Filtro:
+        @Html.DropDownListFor(m=>m.Region,Model.ListaRegiones)
+        
+        @Html.Partial("_ListaCoberturaComuna",Model)
+        
+    </div>
+    <div id="tabs-2">
+        Hola
+    </div>
+    <img alt="Con Cobertura" title="Con Cobertura" style="border:0;" src="@Url.Content("~/Images/tick.png")" /> Con Cobertura 
+    <img alt="Sin Cobertura" title="Sin Cobertura" style="border:0;" src="@Url.Content("~/Images/cross.png")" /> Sin Cobertura
+</div>
+<script type="text/jscript">
+    $("#Region").change(function () {        
+        $("#grid").load("@Url.Action("ListaCoberturaComuna", "Mantencion")?idRegion=" + $("#Region").val());
+    });
+</script>

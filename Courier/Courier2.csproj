@@ -1,0 +1,1543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{78796DBE-494E-412A-A5F3-50AAE05753A6}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Courier</RootNamespace>
+    <AssemblyName>Courier</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <SilverlightApplicationList>
+    </SilverlightApplicationList>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BarcodeLib">
+      <HintPath>..\..\..\..\..\..\Users\FRANCISCO ROJAS\Desktop\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.66.1.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Users\FRANCISCO ROJAS\Desktop\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.CodeParser.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Dashboard.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Dashboard.v17.1.Web, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Dashboard.v17.1.Web.Mvc, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.DataAccess.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Chart.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Map.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Sparkline.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.SpellChecker.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Spreadsheet.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.TreeMap.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxHtmlEditor.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxRichEdit.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxScheduler.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxSpellChecker.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxSpreadsheet.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxThemes.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxTreeList.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.Mvc.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <HintPath>bin\DevExpress.Web.Mvc.v17.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.Resources.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v17.1.Web, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v17.1.Web, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\..\..\..\..\Users\frojas\Downloads\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Excel">
+      <HintPath>..\..\..\..\..\Users\frojas\Desktop\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.DataTable.Net.Wrapper, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Users\fcoro\Downloads\Google-Pie-Chart\Google.DataTable.Net.Wrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\..\..\Users\frojas\Desktop\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\..\..\..\Users\frojas\Downloads\NPOI 1.2.5 binary and examples\bin\.net 4.0\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\Dashboard1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="App_Start\Dashboard1.Designer.cs">
+      <DependentUpon>Dashboard1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Clases\General.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdministracionController.cs" />
+    <Compile Include="Controllers\BarcodeController.cs" />
+    <Compile Include="Controllers\BusquedaController.cs" />
+    <Compile Include="Controllers\CargaController.cs" />
+    <Compile Include="Controllers\clase.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DevolucionController.cs" />
+    <Compile Include="Controllers\DocumentoController.cs" />
+    <Compile Include="Controllers\FolBIController.cs" />
+    <Compile Include="Controllers\FoltrackController.cs" />
+    <Compile Include="Controllers\GenericoController.cs" />
+    <Compile Include="Controllers\GraficosController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\ImpresionController.cs" />
+    <Compile Include="Controllers\InformesController.cs" />
+    <Compile Include="Controllers\IngresosController.cs" />
+    <Compile Include="Controllers\ManifiestoController.cs" />
+    <Compile Include="Controllers\MantencionController.cs" />
+    <Compile Include="Controllers\MapOTController.cs" />
+    <Compile Include="Controllers\PalletController.cs" />
+    <Compile Include="Controllers\PedidoController.cs" />
+    <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Controllers\PreparacionController.cs" />
+    <Compile Include="Controllers\RecepcionController.cs" />
+    <Compile Include="Controllers\RectificacionController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
+    <Compile Include="Controllers\TransporteController.cs" />
+    <Compile Include="Controllers\ValidationController.cs" />
+    <Compile Include="DataSet1.cs">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Graficos\GraficoSamsung.aspx.cs">
+      <DependentUpon>GraficoSamsung.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Graficos\GraficoSamsung.aspx.designer.cs">
+      <DependentUpon>GraficoSamsung.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Funciones.cs" />
+    <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AdministracionModels.cs" />
+    <Compile Include="Models\BusquedaModels.cs" />
+    <Compile Include="Models\CargaModels.cs" />
+    <Compile Include="Models\MapOtModels.cs" />
+    <Compile Include="Models\DashBoardModels.cs" />
+    <Compile Include="Models\DevolucionModels.cs" />
+    <Compile Include="Models\DocumentoModels.cs" />
+    <Compile Include="Models\FolBIModels.cs" />
+    <Compile Include="Models\FolTrackModels.cs" />
+    <Compile Include="Models\GenericoModels.cs" />
+    <Compile Include="Models\GraficosModels.cs" />
+    <Compile Include="Models\HomeModels.cs" />
+    <Compile Include="Models\InformesModels.cs" />
+    <Compile Include="Models\IngresosModels.cs" />
+    <Compile Include="Models\LinqBD_FOL.cs">
+      <DependentUpon>LinqBD_FOL.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LinqBD_FOL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqBD_FOL.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LinqBD_PAR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqBD_PAR.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LinqBD_REP_REPORTE_VIAJES.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqBD_REP_REPORTE_VIAJES.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LinqBD_SEG.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqBD_SEG.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LinqCLI.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqCLI.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LinqSQLParametros.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqSQLParametros.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Linq_BD_IMP.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Linq_BD_IMP.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Linq_SP.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Linq_SP.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ManifiestoModels.cs" />
+    <Compile Include="Models\MantencionModels.cs" />
+    <Compile Include="Models\MarkerRepository.cs" />
+    <Compile Include="Models\PalletModels.cs" />
+    <Compile Include="Models\PedidoModels.cs" />
+    <Compile Include="Models\PreparacionModels.cs" />
+    <Compile Include="Models\RecepcionModels.cs" />
+    <Compile Include="Models\RectificacionModels.cs" />
+    <Compile Include="Models\ReportesModels.cs" />
+    <Compile Include="Models\RetornosModels.cs" />
+    <Compile Include="Models\TransporteModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="BarcodeLib.dll" />
+    <Content Include="ClosedXML.dll" />
+    <Content Include="Content\Formatos.css" />
+    <Content Include="Content\LogOn.css" />
+    <Content Include="Content\themes\redmond\jquery-ui-1.9.1.custom.css" />
+    <Content Include="Content\themes\redmond\jquery-ui-1.9.1.custom.min.css" />
+    <Content Include="DocumentFormat.OpenXml.dll" />
+    <Content Include="EntityFramework.dll" />
+    <Content Include="Excel.dll" />
+    <Content Include="Google.DataTable.Net.Wrapper.dll" />
+    <Content Include="Graficos\GraficoSamsung.aspx" />
+    <Content Include="ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Images\001_44.png" />
+    <Content Include="Images\agt_print16.png" />
+    <Content Include="Images\airplane.png" />
+    <Content Include="Images\alert16.png" />
+    <Content Include="Images\arrow_undo.png" />
+    <Content Include="Images\Attention.png" />
+    <Content Include="Images\attention16.png" />
+    <Content Include="Images\back.png" />
+    <Content Include="Images\banner.jpg" />
+    <Content Include="Images\business_finance_plaza.png" />
+    <Content Include="Images\calendar.png" />
+    <Content Include="Images\car_add.png" />
+    <Content Include="Images\car_minus.png" />
+    <Content Include="Images\car_plus.png" />
+    <Content Include="Images\check48.png" />
+    <Content Include="Images\check_box.png" />
+    <Content Include="Images\circle_blue.png" />
+    <Content Include="Images\circle_green.png" />
+    <Content Include="Images\circle_green_16_ns.png" />
+    <Content Include="Images\circle_grey.png" />
+    <Content Include="Images\circle_orange.png" />
+    <Content Include="Images\circle_red.png" />
+    <Content Include="Images\circle_red_16_ns.png" />
+    <Content Include="Images\circle_yellow_16_ns.png" />
+    <Content Include="Images\control_start.png" />
+    <Content Include="Images\detalle.png" />
+    <Content Include="Images\dialog_apply.png" />
+    <Content Include="Images\dialog_warning.png" />
+    <Content Include="Images\document.png" />
+    <Content Include="Images\document_letter_forward.png" />
+    <Content Include="Images\doc_excel_table.png" />
+    <Content Include="Images\doc_pdf.png" />
+    <Content Include="Images\edit_address_24.png" />
+    <Content Include="Images\eraser.png" />
+    <Content Include="Images\error2.png" />
+    <Content Include="Images\excel.png" />
+    <Content Include="Images\eye.png" />
+    <Content Include="Images\file_temporary.png" />
+    <Content Include="Images\findclient_16.png" />
+    <Content Include="Images\flag_green.png" />
+    <Content Include="Images\flag_red.png" />
+    <Content Include="Images\flag_yellow.png" />
+    <Content Include="Images\folder_home.png" />
+    <Content Include="Images\folder_saved_search.png" />
+    <Content Include="Images\fondos11.jpg" />
+    <Content Include="Images\Fuex.PNG" />
+    <Content Include="Images\get_info.png" />
+    <Content Include="Images\gnome_document_new.png" />
+    <Content Include="Images\gnome_folder_saved_search.png" />
+    <Content Include="Images\gnome_sticky_notes_applet.png" />
+    <Content Include="Images\gohome.png" />
+    <Content Include="Images\history_clear.png" />
+    <Content Include="Images\home2.png" />
+    <Content Include="Images\home3.png" />
+    <Content Include="Images\icon-username.png" />
+    <Content Include="Images\information.png" />
+    <Content Include="Images\kfind.png" />
+    <Content Include="Images\kghostview.png" />
+    <Content Include="Images\KnobCancel.png" />
+    <Content Include="Images\left.png" />
+    <Content Include="Images\left_green.png" />
+    <Content Include="Images\list_delete2.png" />
+    <Content Include="Images\list_information.png" />
+    <Content Include="Images\list_information1.png" />
+    <Content Include="Images\loader.gif" />
+    <Content Include="Images\localizacion_24.png" />
+    <Content Include="Images\localizacion_s24.png" />
+    <Content Include="Images\login-whisp.png" />
+    <Content Include="Images\log_in.png" />
+    <Content Include="Images\mail-send-receive.png" />
+    <Content Include="Images\menu.png" />
+    <Content Include="Images\Message.png" />
+    <Content Include="Images\pencil_edit.png" />
+    <Content Include="Images\pharmacy.png" />
+    <Content Include="Images\plane_v1.png" />
+    <Content Include="Images\refresh.png" />
+    <Content Include="Images\right.png" />
+    <Content Include="Images\right_green.png" />
+    <Content Include="Images\snowy_house_dark.png" />
+    <Content Include="Images\software_update.png" />
+    <Content Include="Images\spinner.gif" />
+    <Content Include="Images\stock_check_filled.png" />
+    <Content Include="Images\stock_mail_hide_read.png" />
+    <Content Include="Images\stop.png" />
+    <Content Include="Images\store_plus.png" />
+    <Content Include="Images\system_log_out.png" />
+    <Content Include="Images\text_document.png" />
+    <Content Include="Images\tick128.png" />
+    <Content Include="Images\time_machine_alt.png" />
+    <Content Include="Images\toolbar_bg_3.png" />
+    <Content Include="Images\tractorunitblack.png" />
+    <Content Include="Images\truck-pencil-icon-icon.png" />
+    <Content Include="Images\truck-plus-icon-icon.png" />
+    <Content Include="Images\two_storied_house_sh.png" />
+    <Content Include="Images\undo_blue.png" />
+    <Content Include="Images\update.png" />
+    <Content Include="Images\user_male_go.png" />
+    <Content Include="Images\wooden_box.png" />
+    <Content Include="Images\wooden_box_pencil.png" />
+    <Content Include="Images\wooden_box_plus.png" />
+    <Content Include="Newtonsoft.Json.dll" />
+    <Content Include="NPOI.dll" />
+    <Content Include="NPOI.xml" />
+    <Content Include="Reports\WebGraficoSamsung.aspx" />
+    <Content Include="RestSharp.dll" />
+    <Content Include="Scripts\ace.js" />
+    <Content Include="Scripts\cldr.event.js" />
+    <Content Include="Scripts\cldr.js" />
+    <Content Include="Scripts\cldr.supplemental.js" />
+    <Content Include="Scripts\cldr.unresolved.js" />
+    <Content Include="Scripts\ControlCliente_Servicio.js" />
+    <Content Include="Scripts\ControlCliente_BuscarEn.js" />
+    <Content Include="Scripts\CustomFunction.js" />
+    <Content Include="Scripts\Donut3D.js" />
+    <Content Include="Scripts\ext-language_tools.js" />
+    <Content Include="Scripts\globalize.currency.js" />
+    <Content Include="Scripts\globalize.date.js" />
+    <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\globalize.message.js" />
+    <Content Include="Scripts\globalize.number.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery-1.8.1.js" />
+    <Content Include="Scripts\jquery-1.8.1.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\WebGraficoSamsung.aspx.cs">
+      <DependentUpon>WebGraficoSamsung.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\WebGraficoSamsung.aspx.designer.cs">
+      <DependentUpon>WebGraficoSamsung.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\wsFolcourier\Reference.cs" />
+    <Compile Include="Service References\wsFolVega\Reference.cs" />
+    <Compile Include="SilverlightFaultBehavior.cs" />
+    <Compile Include="Views\Generico\SilverlightFaultBehavior.cs" />
+    <Compile Include="Web References\RE2005\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\RS2005\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="WebService\ReportesRS.aspx.cs">
+      <DependentUpon>ReportesRS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebService\ReportesRS.aspx.designer.cs">
+      <DependentUpon>ReportesRS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebService\ServicioSilverlight.svc.cs">
+      <DependentUpon>ServicioSilverlight.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebService\SilverlightFaultBehavior.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\SilverlightApp.xap" />
+    <Content Include="Content\accordeon.css" />
+    <Content Include="Content\Cliente.css" />
+    <Content Include="Content\excel-2007-header-bg.gif" />
+    <Content Include="Content\excel-2007-header-left.gif" />
+    <Content Include="Content\excel-2007.css" />
+    <Content Include="Content\GridView.css" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_flat_15_cd0a0a_40x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_50_3baae3_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_80_d7ebf9_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-soft_100_deedf7_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_2694e8_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_3d80b3_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_72a7cf_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\cupertino\jquery-ui-1.8.23.custom.css" />
+    <Content Include="Content\themes\flirk\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\flirk\images\ui-bg_flat_0_eeeeee_40x100.png" />
+    <Content Include="Content\themes\flirk\images\ui-bg_flat_55_ffffff_40x100.png" />
+    <Content Include="Content\themes\flirk\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\flirk\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\flirk\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" />
+    <Content Include="Content\themes\flirk\images\ui-bg_highlight-soft_25_0073ea_1x100.png" />
+    <Content Include="Content\themes\flirk\images\ui-bg_highlight-soft_50_dddddd_1x100.png" />
+    <Content Include="Content\themes\flirk\images\ui-icons_0073ea_256x240.png" />
+    <Content Include="Content\themes\flirk\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\flirk\images\ui-icons_666666_256x240.png" />
+    <Content Include="Content\themes\flirk\images\ui-icons_ff0084_256x240.png" />
+    <Content Include="Content\themes\flirk\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\flirk\jquery-ui-1.8.23.custom.css" />
+    <Content Include="Content\jquery.treeview.css" />
+    <Content Include="Content\Mensajes.css" />
+    <Content Include="Content\menuvertical.css" />
+    <Content Include="Content\TableBlue.css" />
+    <Content Include="Content\themes\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\themes\redmond\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\themes\redmond\jquery-ui-1.8.21.custom.css" />
+    <Content Include="Content\table.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\14.png" />
+    <Content Include="Images\16.gif" />
+    <Content Include="Images\21.png" />
+    <Content Include="Images\24.png" />
+    <Content Include="Images\28.png" />
+    <Content Include="Images\31.png" />
+    <Content Include="Images\35.gif" />
+    <Content Include="Images\38.gif" />
+    <Content Include="Images\40.png" />
+    <Content Include="Images\41.png" />
+    <Content Include="Images\45.png" />
+    <Content Include="Images\48.png" />
+    <Content Include="Images\51.png" />
+    <Content Include="Images\54.png" />
+    <Content Include="Images\61.png" />
+    <Content Include="Images\72.png" />
+    <Content Include="Images\8.gif" />
+    <Content Include="Images\accesdenied.png" />
+    <Content Include="Images\add.png" />
+    <Content Include="Images\add_user.png" />
+    <Content Include="Images\agt_print.png" />
+    <Content Include="Images\agt_print24.png" />
+    <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\ark.png" />
+    <Content Include="Images\arrow.gif" />
+    <Content Include="Images\backward.png" />
+    <Content Include="Images\BarChart.png" />
+    <Content Include="Images\bg.gif" />
+    <Content Include="Images\btn-dn.gif" />
+    <Content Include="Images\btn-up.gif" />
+    <Content Include="Images\cancel.png" />
+    <Content Include="Images\check.png" />
+    <Content Include="Images\cross.png" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\delete16.png" />
+    <Content Include="Images\delete24.png" />
+    <Content Include="Images\deletered.png" />
+    <Content Include="Images\direction_pencil.png" />
+    <Content Include="Images\down.png" />
+    <Content Include="Images\edit_add.png" />
+    <Content Include="Images\Email.png" />
+    <Content Include="Images\exit.png" />
+    <Content Include="Images\file.gif" />
+    <Content Include="Images\fileview_column.png" />
+    <Content Include="Images\find.png" />
+    <Content Include="Images\find2.png" />
+    <Content Include="Images\findClient.png" />
+    <Content Include="Images\flag-export.png" />
+    <Content Include="Images\folder-closed.gif" />
+    <Content Include="Images\folder.gif" />
+    <Content Include="Images\folder_explore.png" />
+    <Content Include="Images\forward.png" />
+    <Content Include="Images\gear_blue.png" />
+    <Content Include="Images\gnome_go_next.png" />
+    <Content Include="Images\gnome_zoom_in.png" />
+    <Content Include="Images\go_jump.png" />
+    <Content Include="Images\home.png" />
+    <Content Include="Images\idisk_globe.png" />
+    <Content Include="Images\kaddressbook.png" />
+    <Content Include="Images\key2.png" />
+    <Content Include="Images\key_pencil.png" />
+    <Content Include="Images\layer_transparent.png" />
+    <Content Include="Images\live_journal.png" />
+    <Content Include="Images\logout.png" />
+    <Content Include="Images\lorrygreen.png" />
+    <Content Include="Images\lorrygreen2.png" />
+    <Content Include="Images\magnifier.png" />
+    <Content Include="Images\magnifier_zoom.png" />
+    <Content Include="Images\map.png" />
+    <Content Include="Images\map_magnify.png" />
+    <Content Include="Images\menu8.gif" />
+    <Content Include="Images\messagebox_warning.png" />
+    <Content Include="Images\minus.gif" />
+    <Content Include="Images\Modify.png" />
+    <Content Include="Images\nav_link.png" />
+    <Content Include="Images\nav_link_hover.png" />
+    <Content Include="Images\nav_separator.png" />
+    <Content Include="Images\network_service.png" />
+    <Content Include="Images\network_service_client.png" />
+    <Content Include="Images\Outlook.png" />
+    <Content Include="Images\page_bg.png" />
+    <Content Include="Images\page_white_excel.png" />
+    <Content Include="Images\plus.gif" />
+    <Content Include="Images\preferences_system_time.png" />
+    <Content Include="Images\properties.png" />
+    <Content Include="Images\right.gif" />
+    <Content Include="Images\save.png" />
+    <Content Include="Images\search.png" />
+    <Content Include="Images\shipping_box_tokyo.png" />
+    <Content Include="Images\subheader_bg.png" />
+    <Content Include="Images\system_search.png" />
+    <Content Include="Images\tick.png" />
+    <Content Include="Images\toolbar_bg.png" />
+    <Content Include="Images\toolbar_left.png" />
+    <Content Include="Images\toolbar_right.png" />
+    <Content Include="Images\transparent.png" />
+    <Content Include="Images\treeview-black-line.gif" />
+    <Content Include="Images\treeview-black.gif" />
+    <Content Include="Images\treeview-default-line.gif" />
+    <Content Include="Images\treeview-default.gif" />
+    <Content Include="Images\treeview-famfamfam-line.gif" />
+    <Content Include="Images\treeview-famfamfam.gif" />
+    <Content Include="Images\treeview-gray-line.gif" />
+    <Content Include="Images\treeview-gray.gif" />
+    <Content Include="Images\treeview-red-line.gif" />
+    <Content Include="Images\treeview-red.gif" />
+    <Content Include="Images\under_construction.png" />
+    <Content Include="Images\undo.png" />
+    <Content Include="Images\up.png" />
+    <Content Include="Images\user.png" />
+    <Content Include="Images\user_blue_add2.png" />
+    <Content Include="Images\user_blue_delete.png" />
+    <Content Include="Images\user_blue_edit.png" />
+    <Content Include="Images\user_male_delete.png" />
+    <Content Include="Images\watch.png" />
+    <Content Include="Images\you-are-here-2.png" />
+    <Content Include="Images\_vti_cnf\14.png" />
+    <Content Include="Images\_vti_cnf\21.png" />
+    <Content Include="Images\_vti_cnf\24.png" />
+    <Content Include="Images\_vti_cnf\28.png" />
+    <Content Include="Images\_vti_cnf\31.png" />
+    <Content Include="Images\_vti_cnf\40.png" />
+    <Content Include="Images\_vti_cnf\41.png" />
+    <Content Include="Images\_vti_cnf\45.png" />
+    <Content Include="Images\_vti_cnf\54.png" />
+    <Content Include="Images\_vti_cnf\61.png" />
+    <Content Include="Images\_vti_cnf\72.png" />
+    <Content Include="Images\_vti_cnf\BarChart.png" />
+    <Content Include="Images\_vti_cnf\Email.png" />
+    <Content Include="Images\_vti_cnf\menu_left.png" />
+    <Content Include="Images\_vti_cnf\Modify.png" />
+    <Content Include="Images\_vti_cnf\nav_link.png" />
+    <Content Include="Images\_vti_cnf\nav_link_hover.png" />
+    <Content Include="Images\_vti_cnf\nav_separator.png" />
+    <Content Include="Images\_vti_cnf\page_bg.png" />
+    <Content Include="Images\_vti_cnf\simley.png" />
+    <Content Include="Images\_vti_cnf\subheader_bg.png" />
+    <Content Include="Images\_vti_cnf\toolbar_bg.png" />
+    <Content Include="Images\_vti_cnf\toolbar_left.png" />
+    <Content Include="Images\_vti_cnf\toolbar_right.png" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-asyncUpload-0.1.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.21.custom.min.js" />
+    <Content Include="Scripts\Courier.js" />
+    <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.5.1.js" />
+    <Content Include="Scripts\jquery-1.5.1.min.js" />
+    <Content Include="Scripts\jquery-1.7.2.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\jquery-ui-1.9.0.custom.js" />
+    <Content Include="Scripts\jquery-ui-1.9.0.custom.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.treeview.async.js" />
+    <Content Include="Scripts\jquery.treeview.edit.js" />
+    <Content Include="Scripts\jquery.treeview.js" />
+    <Content Include="Scripts\jquery.treeview.sortable.js" />
+    <Content Include="Scripts\jquery.ui.accordion.js" />
+    <Content Include="Scripts\jquery.ui.core.js" />
+    <Content Include="Scripts\jquery.ui.widget.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.1.9.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\knockout-3.3.0.debug.js" />
+    <Content Include="Scripts\knockout-3.3.0.js" />
+    <Content Include="Scripts\modernizr-1.7.js" />
+    <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\swfupload.cookies.js" />
+    <None Include="Images\cargando.webp" />
+    <None Include="Service References\wsFolcourier\configuration.svcinfo" />
+    <None Include="Service References\wsFolcourier\configuration91.svcinfo" />
+    <None Include="Service References\wsFolcourier\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference1.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\wsFolcourier\wsfolcourier.disco" />
+    <None Include="Service References\wsFolVega\configuration.svcinfo" />
+    <None Include="Service References\wsFolVega\configuration91.svcinfo" />
+    <None Include="Service References\wsFolVega\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference1.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\wsFolVega\wsfolcourier.disco" />
+    <Content Include="Silverlight.js" />
+    <Content Include="SilverlightAppTestPage.aspx" />
+    <Content Include="SilverlightAppTestPage.html" />
+    <Content Include="Views\Dashboard\StyleSheet1.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="WebService\ReportesRS.aspx" />
+    <Content Include="WebService\ServicioSilverlight.svc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Pedido\IngresoManual.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet2.xsc">
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet2.xss">
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="HelpFiles\XLSX.xlsx" />
+    <Content Include="Views\Pedido\IngresoMasivo.cshtml" />
+    <Content Include="Views\Pedido\AnularPedido.cshtml" />
+    <Content Include="Views\Pedido\GuardarIngresoManual.cshtml" />
+    <Content Include="Views\Shared\_Mantencion.cshtml" />
+    <Content Include="Views\Mantencion\index.cshtml" />
+    <Content Include="Views\Mantencion\AgregarCliente.cshtml" />
+    <Content Include="Views\Mantencion\BuscarCliente.cshtml" />
+    <Content Include="Views\Mantencion\_ListadoClientes.cshtml" />
+    <None Include="Models\LinqBD_FOL.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>LinqBD_FOL.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\LinqBD_PAR.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>LinqBD_PAR.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Mantencion\IngresoCliente.cshtml" />
+    <Content Include="Views\Pedido\Completado.cshtml" />
+    <Content Include="Views\Pedido\_CargaIngresoMasivo.cshtml" />
+    <Content Include="Views\Pedido\_ListadoClientes.cshtml" />
+    <Content Include="Views\Mantencion\BuscarServicio.cshtml" />
+    <Content Include="Views\Mantencion\_ListadoServicio.cshtml" />
+    <Content Include="Views\Pedido\IngresoMasivoCarga.cshtml" />
+    <Content Include="Views\Mantencion\ClienteServicio.cshtml" />
+    <Content Include="Views\Home\UnderConstruction.cshtml" />
+    <Content Include="Views\Administracion\Usuario.cshtml" />
+    <Content Include="Views\Administracion\Carpeta.cshtml" />
+    <Content Include="Views\Administracion\SubCarpeta.cshtml" />
+    <None Include="Models\LinqBD_REP_REPORTE_VIAJES.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>LinqBD_REP_REPORTE_VIAJES.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\LinqBD_SEG.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>LinqBD_SEG.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Administracion\_ListaCarpetas.cshtml" />
+    <Content Include="Views\Administracion\_ListaSubCarpetas.cshtml" />
+    <Content Include="Views\Administracion\_ListaItems.cshtml" />
+    <Content Include="Views\Administracion\_ListaUsuarios.cshtml" />
+    <Content Include="Views\Administracion\_ListaRoles.cshtml" />
+    <Content Include="Views\Administracion\Paginas.cshtml" />
+    <Content Include="Views\Administracion\_ListaFunciones.cshtml" />
+    <Content Include="Views\Account\_RegistroCompletoOk.cshtml" />
+    <Content Include="Views\Pedido\IngresoMasivoError.cshtml" />
+    <Content Include="Views\Pedido\_CargaIngresoErrores.cshtml" />
+    <Content Include="Views\Home\Ayuda.cshtml" />
+    <Content Include="Views\Pedido\_ControlClienteServicio.cshtml" />
+    <Content Include="Views\Administracion\formularios.cshtml" />
+    <Content Include="Views\Administracion\_CargaControl.cshtml" />
+    <Content Include="Views\Administracion\ListaColumnas.cshtml" />
+    <Content Include="Views\Administracion\DefinicionArchivoCarga.cshtml" />
+    <Content Include="Views\Administracion\_CargaListaColumnasExcel.cshtml" />
+    <Content Include="Views\Pedido\vucServicio.cshtml" />
+    <Content Include="Views\Home\Distancia.cshtml" />
+    <Content Include="Views\Administracion\vucLoading.cshtml" />
+    <Content Include="Views\Pedido\vucLoading.cshtml" />
+    <Content Include="Views\Pedido\VerIngresoMasivo.cshtml" />
+    <Content Include="Views\Pedido\vucGoogleMaps.cshtml" />
+    <Content Include="Views\Administracion\Comuna.cshtml" />
+    <Content Include="Views\Mantencion\Clasificacion.cshtml" />
+    <Content Include="Views\Mantencion\Sucursal.cshtml" />
+    <Content Include="Views\Mantencion\vucLoading.cshtml" />
+    <Content Include="Views\Mantencion\Cobertura.cshtml" />
+    <Content Include="Views\Mantencion\_CoberturaSucursal.cshtml" />
+    <Content Include="Views\Administracion\Localidad.cshtml" />
+    <Content Include="Views\Administracion\_ListaLocalidades.cshtml" />
+    <Content Include="Views\Administracion\_FormularioUsuario.cshtml" />
+    <Content Include="Views\Administracion\_FormularioEditarUsuario.cshtml" />
+    <Content Include="Views\Account\_FormularioCambioPassword.cshtml" />
+    <Content Include="Views\Administracion\_EditarRolFuncion.cshtml" />
+    <Content Include="Views\Mantencion\_ListaCoberturaComuna.cshtml" />
+    <Content Include="Views\Mantencion\_ListaCoberturaLocalidad.cshtml" />
+    <Content Include="Views\Mantencion\CoberturaEntreSucursal.cshtml" />
+    <Content Include="Views\Mantencion\_ListaEntreSucursal.cshtml" />
+    <Content Include="Views\Mantencion\CoberturaConComuna.cshtml" />
+    <Content Include="Views\Mantencion\_ListaSucursalComuna.cshtml" />
+    <Content Include="Views\Mantencion\_ListaSucursalLocalidad.cshtml" />
+    <Content Include="Views\Busqueda\TiempoEstimadoEntrega.cshtml" />
+    <Content Include="Views\Busqueda\vucLoading.cshtml" />
+    <Content Include="Views\Busqueda\ProcesarBusqueda.cshtml" />
+    <Content Include="Views\Busqueda\Error.cshtml" />
+    <Content Include="Views\Busqueda\TiempoEstimadoDestino.cshtml" />
+    <Content Include="Views\Pedido\_DropDownComuna.cshtml" />
+    <Content Include="Views\Pedido\_DropDownLocalidad.cshtml" />
+    <Content Include="Views\Busqueda\_DropDownLocalidad.cshtml" />
+    <Content Include="Views\Busqueda\_DropDownComuna.cshtml" />
+    <Content Include="Views\Pedido\_FormularioIngresoManual.cshtml" />
+    <Content Include="Views\Administracion\_GuardarIngresoManualSave.cshtml" />
+    <Content Include="Views\Preparacion\PreparacionPedido.cshtml" />
+    <Content Include="Views\Preparacion\_VerOTDetalle.cshtml" />
+    <Content Include="Views\Preparacion\vucLoading.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\Imagen.cshtml" />
+    <Content Include="Views\Dashboard\pngimage.cshtml" />
+    <Content Include="Views\Dashboard\somepage.cshtml" />
+    <Content Include="Views\Preparacion\_VerListaBultos.cshtml" />
+    <Content Include="Views\Preparacion\_ImprimirEtiquetaM1.cshtml" />
+    <Content Include="Views\Preparacion\Despacho.cshtml" />
+    <Content Include="Views\Preparacion\EditarManifiesto.cshtml" />
+    <Content Include="Views\Preparacion\_ListaDespacho.cshtml" />
+    <Content Include="Views\Preparacion\_HistorialOT.cshtml" />
+    <Content Include="Views\Preparacion\_TotalBultos.cshtml" />
+    <Content Include="Views\Preparacion\_ImpresionEtiqueta.cshtml" />
+    <Content Include="Views\Preparacion\_FormularioIngresoBulto.cshtml" />
+    <Content Include="Views\Preparacion\_ImpresionEtiquetaGuia.cshtml" />
+    <Content Include="Views\Preparacion\_ImpresionEtiquetaBulto.cshtml" />
+    <Content Include="Views\Preparacion\_OTFinalizada.cshtml" />
+    <Content Include="Views\Preparacion\_DropDownConductor.cshtml" />
+    <Content Include="Views\Preparacion\_FormularioPesoBulto.cshtml" />
+    <Content Include="Views\Preparacion\_ListaOTDBulto.cshtml" />
+    <Content Include="Views\Preparacion\_OTPNOTD1Bulto.cshtml" />
+    <Content Include="Views\Preparacion\_OTModificada.cshtml" />
+    <Content Include="Views\Preparacion\_ImpresionEtiquetaMasivo.cshtml" />
+    <Content Include="Views\Preparacion\_ListaResumen.cshtml" />
+    <Content Include="Views\Preparacion\_DesasociarOT.cshtml" />
+    <Content Include="Views\Preparacion\_ListaDespachoPorOT.cshtml" />
+    <Content Include="Views\Preparacion\_DocumentosAsociados.cshtml" />
+    <Content Include="Views\Recepcion\Index.cshtml" />
+    <Content Include="Views\Recepcion\vucLoading.cshtml" />
+    <Content Include="Views\Preparacion\_NoExiste.cshtml" />
+    <Content Include="Views\Recepcion\_VerBulto.cshtml" />
+    <Content Include="Views\Recepcion\_ListaRecepcion.cshtml" />
+    <Content Include="Views\Informes\ConsultaEstado.cshtml" />
+    <Content Include="Views\Informes\_VerListaEstados.cshtml" />
+    <Content Include="Views\Informes\vucLoading.cshtml" />
+    <Content Include="Views\Pedido\_CargaDatosAnular.cshtml" />
+    <Content Include="Views\Pedido\_DropDownComunaRetiro.cshtml" />
+    <Content Include="Views\Pedido\_DropDownLocalidadRetiro.cshtml" />
+    <Content Include="Views\Documento\Recepcion.cshtml" />
+    <Content Include="Views\Documento\Salida.cshtml" />
+    <Content Include="Views\Documento\vucLoading.cshtml" />
+    <Content Include="Views\Documento\_ListaRecepcionHoy.cshtml" />
+    <Content Include="Views\Administracion\CambiaEstadoBulto.cshtml" />
+    <Content Include="Views\Administracion\_CargaDatosBulto.cshtml" />
+    <Content Include="Views\Administracion\_CambiaEstadoBulto.cshtml" />
+    <Content Include="Views\Administracion\_CambiaEstadoRollBack.cshtml" />
+    <Content Include="Views\Pedido\GeneraExcelMasivo.cshtml" />
+    <Content Include="Views\Documento\_FormRecepcionDocumento.cshtml" />
+    <Content Include="Views\Documento\RecepcionGuardar.cshtml" />
+    <Content Include="Views\Documento\Rendicion.cshtml" />
+    <Content Include="Views\Documento\BuscarDocumento.cshtml" />
+    <Content Include="Views\Documento\_ListaBuscar.cshtml" />
+    <Content Include="Views\Documento\_ListaBuscarHistoria.cshtml" />
+    <Content Include="Views\Reporte\Index.cshtml" />
+    <None Include="Models\LinqCLI.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>LinqCLI.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\LinqSQLParametros.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>LinqSQLParametros.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\Linq_BD_IMP.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Linq_BD_IMP.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\Linq_SP.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Linq_SP.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Administracion\_DropDownListaSucursalEmpresa.cshtml" />
+    <Content Include="Views\Busqueda\BuscarOT.cshtml" />
+    <Content Include="Views\Busqueda\_CargaDatosBulto.cshtml" />
+    <Content Include="Views\Generico\BuscarCliente.cshtml" />
+    <Content Include="Views\Generico\_ListaServicioGenerico.cshtml" />
+    <Content Include="Views\Generico\DatosOTD.cshtml" />
+    <Content Include="Views\Devolucion\Index.cshtml" />
+    <Content Include="Views\Devolucion\_FormularioIngresoDireccion.cshtml" />
+    <Content Include="Views\Devolucion\vucLoading.cshtml" />
+    <Content Include="Views\Devolucion\_DropDownComuna.cshtml" />
+    <Content Include="Views\Busqueda\BuscarManifiesto.cshtml" />
+    <Content Include="Views\Busqueda\Manifiesto.cshtml" />
+    <Content Include="Views\Busqueda\_ListaManifiestos.cshtml" />
+    <Content Include="Views\Administracion\_DropDownServicio.cshtml" />
+    <Content Include="Views\Administracion\_CargaLetraServicio.cshtml" />
+    <Content Include="Views\Administracion\_CargaColumnaServicio.cshtml" />
+    <Content Include="Views\Home\Version.cshtml" />
+    <Content Include="Views\Preparacion\_DropDownBuscarEn.cshtml" />
+    <Content Include="Views\Mantencion\_FormularioEditarServicio.cshtml" />
+    <Content Include="Views\Mantencion\_ListaDocumentos.cshtml" />
+    <Content Include="Views\Generico\_ListaManHis.cshtml" />
+    <Content Include="Views\Preparacion\_FormularioDatosPreviosMan.cshtml" />
+    <Content Include="Views\Preparacion\_DropDownSucursal.cshtml" />
+    <Content Include="Views\Administracion\ReenviarPedido.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogOn.cshtml" />
+    <Content Include="Views\Generico\_Observaciones.cshtml" />
+    <Content Include="Views\Generico\_FormularioObservaciones.cshtml" />
+    <Content Include="Views\Administracion\CrearOT.cshtml" />
+    <Content Include="Views\Pedido\IngresoManualPapel.cshtml" />
+    <Content Include="Views\Preparacion\_ImpresionEtiquetaPorOTP.cshtml" />
+    <Content Include="Views\Administracion\EliminarEstado.cshtml" />
+    <Content Include="Views\Documento\Manifiesto.cshtml" />
+    <Content Include="Views\Documento\CuerpoManifiesto.cshtml" />
+    <Content Include="Views\Administracion\RP001_ActualizaLista.cshtml" />
+    <Content Include="Views\Reportes\ConsultaReportes.cshtml" />
+    <Content Include="Views\Reportes\FiltrosReportes.cshtml" />
+    <Content Include="Views\Reportes\vucLoading.cshtml" />
+    <Content Include="Views\Preparacion\ListaDestino.cshtml" />
+    <Content Include="Views\Reportes\EnRutaTroncalASucursal.cshtml" />
+    <Content Include="Views\Preparacion\_ImpresionCustomEtiqueta.cshtml" />
+    <Content Include="Views\Preparacion\_FormularioAgregaEditaDOA.cshtml" />
+    <Content Include="Views\Busqueda\_OTFinalizada.cshtml" />
+    <Content Include="Views\Manifiesto\Index.cshtml" />
+    <Content Include="Views\Manifiesto\_ListaDestino.cshtml" />
+    <Content Include="Views\Manifiesto\vucLoading.cshtml" />
+    <Content Include="Views\Manifiesto\BuscarManifiesto.cshtml" />
+    <Content Include="Views\Reporte\Map.cshtml" />
+    <Content Include="Views\Recepcion\Manifiesto.cshtml" />
+    <Content Include="Views\Recepcion\BuscarManifiesto.cshtml" />
+    <Content Include="Views\Impresion\ImpresionEtiquetaGrande.cshtml" />
+    <Content Include="Views\Mantencion\Transporte.cshtml" />
+    <Content Include="Views\Rectificacion\RecepcionOk.cshtml" />
+    <Content Include="Views\Rectificacion\RecepcionOkModificar.cshtml" />
+    <Content Include="Views\Rectificacion\vucLoading.cshtml" />
+    <Content Include="Views\Preparacion\_ListaManifiestoAbierto.cshtml" />
+    <Content Include="Views\Devolucion\_DropDownLocalidad.cshtml" />
+    <Content Include="Views\Administracion\CambiaDireccion.cshtml" />
+    <Content Include="Views\Home\vucLoading.cshtml" />
+    <Content Include="Views\Administracion\SucursalesUsuario.cshtml" />
+    <Content Include="Views\Administracion\_UpdListaCliente.cshtml" />
+    <Content Include="Views\Administracion\_UpdListaServicios.cshtml" />
+    <Content Include="Views\Administracion\BuscarOTCambioDireccion.cshtml" />
+    <Content Include="Views\Administracion\OpcionesCambioDireccion.cshtml" />
+    <Content Include="Views\Administracion\_FormularioIngresoDireccion.cshtml" />
+    <Content Include="Views\Administracion\FormularioRecepcionOK.cshtml" />
+    <Content Include="Views\Administracion\FormularioRecepcionOKError.cshtml" />
+    <Content Include="Views\Administracion\_ActualizaListaObservacion.cshtml" />
+    <Content Include="Views\Administracion\_ListaBultos.cshtml" />
+    <Content Include="Views\Administracion\_FormularioCorreo.cshtml" />
+    <Content Include="Views\Ingresos\CabeceraFolios.cshtml" />
+    <Content Include="Views\Ingresos\CabeceraVehiculo.cshtml" />
+    <Content Include="Views\Ingresos\ControlCombustible.cshtml" />
+    <Content Include="Views\Ingresos\ControlGastos.cshtml" />
+    <Content Include="Views\Ingresos\ControlRutas.cshtml" />
+    <Content Include="Views\Ingresos\DetalleCombustibles.cshtml" />
+    <Content Include="Views\Ingresos\DetalleGastos.cshtml" />
+    <Content Include="Views\Ingresos\DetalleIngresoFolios.cshtml" />
+    <Content Include="Views\Ingresos\DetalleRuta.cshtml" />
+    <Content Include="Views\Ingresos\DetalleRutas.cshtml" />
+    <Content Include="Views\Ingresos\Fondos.cshtml" />
+    <Content Include="Views\Ingresos\IngresoFolios.cshtml" />
+    <Content Include="Views\Ingresos\IngresoReportes.cshtml" />
+    <Content Include="Views\Ingresos\vucLoading.cshtml" />
+    <Content Include="Views\Ingresos\_DropDownComunas.cshtml" />
+    <Content Include="Views\Ingresos\_DropDownComunasDestino.cshtml" />
+    <Content Include="Views\Ingresos\_editardetalleCombustible.cshtml" />
+    <Content Include="Views\Ingresos\_editardetalleGastos.cshtml" />
+    <Content Include="Views\Ingresos\_editardetalleRutas.cshtml" />
+    <Content Include="Views\Ingresos\_totalizaGastos.cshtml" />
+    <Content Include="Views\Ingresos\AsignaAsistentes.cshtml" />
+    <Content Include="Views\Ingresos\_otrosAsistentes.cshtml" />
+    <Content Include="Views\Ingresos\ConsultaInformes.cshtml" />
+    <Content Include="Views\Ingresos\FiltroInformes.cshtml" />
+    <Content Include="Views\Administracion\_FormularioCS.cshtml" />
+    <Content Include="Views\Ingresos\CargaFoliosActivosSucursal.cshtml" />
+    <Content Include="Views\Ingresos\CargaRangoPatentes.cshtml" />
+    <Content Include="Views\Ingresos\CerrarFolios.cshtml" />
+    <Content Include="Views\Ingresos\DetalleFolioCambioEstado.cshtml" />
+    <Content Include="Views\Ingresos\DetalleFolioReasignacion.cshtml" />
+    <Content Include="Views\Ingresos\DetalleRangos.cshtml" />
+    <Content Include="Views\Ingresos\_DropDownZonas.cshtml" />
+    <Content Include="Views\Ingresos\_listaPatentesReasignacion.cshtml" />
+    <Content Include="Views\Ingresos\ReasignarFolios.cshtml" />
+    <Content Include="Views\Preparacion\_FormularioHU.cshtml" />
+    <Content Include="Views\Ingresos\AgregaAsistente.cshtml" />
+    <Content Include="Views\Ingresos\AgregaDespachador.cshtml" />
+    <Content Include="Views\Ingresos\MantenedorAsistentes.cshtml" />
+    <Content Include="Views\Ingresos\MantenedorConductores.cshtml" />
+    <Content Include="Views\Ingresos\MantenedorDespachadores.cshtml" />
+    <Content Include="Views\Ingresos\MantenedorVehiculos.cshtml" />
+    <Content Include="Views\Ingresos\MostrarAsistentes.cshtml" />
+    <Content Include="Views\Ingresos\MostrarConductores.cshtml" />
+    <Content Include="Views\Ingresos\MostrarDespachadores.cshtml" />
+    <Content Include="Views\Ingresos\MostrarVehiculos.cshtml" />
+    <Content Include="Views\Ingresos\_editarAsistentes.cshtml" />
+    <Content Include="Views\Ingresos\_editarConductor.cshtml" />
+    <Content Include="Views\Ingresos\_editarDespachador.cshtml" />
+    <Content Include="Views\Ingresos\_editarVehiculo.cshtml" />
+    <Content Include="Views\Administracion\_FormularioOBS.cshtml" />
+    <Content Include="Views\Mantencion\_AsignaCobComuna.cshtml" />
+    <Content Include="Views\Mantencion\_AsignaCobLocalidad.cshtml" />
+    <Content Include="Views\Mantencion\_DropDownLocalidades.cshtml" />
+    <Content Include="Views\Mantencion\_EditaDiasCobertura.cshtml" />
+    <Content Include="Views\Mantencion\_EditaDiasCoberturaLoc.cshtml" />
+    <Content Include="Views\Transporte\AgregarSucursal.cshtml" />
+    <Content Include="Views\Transporte\AgregaVehiculo.cshtml" />
+    <Content Include="Views\Transporte\DetalleSucursales.cshtml" />
+    <Content Include="Views\Transporte\DetalleVehiculos.cshtml" />
+    <Content Include="Views\Transporte\Transporte.cshtml" />
+    <Content Include="Views\Transporte\_editarVehiculo.cshtml" />
+    <Content Include="Views\Administracion\_FormularioPesoBulto.cshtml" />
+    <Content Include="Views\Documento\RendicionMasiva\RendicionMasiva.cshtml" />
+    <Content Include="Views\Documento\RendicionMasiva\ProcesarDocumento.cshtml" />
+    <Content Include="Views\Pallet\AgregaPallet.cshtml" />
+    <Content Include="Views\Pallet\CabeceraDocto.cshtml" />
+    <Content Include="Views\Pallet\DetalleDocumento.cshtml" />
+    <Content Include="Views\Pallet\DocumentosAsociados.cshtml" />
+    <Content Include="Views\Pallet\Pallet.cshtml" />
+    <Content Include="Views\Pallet\_editarPallet.cshtml" />
+    <Content Include="Views\Pallet\_errorIngDocto.cshtml" />
+    <Content Include="Views\Pallet\_ImpresionEtiquetaPallet.cshtml" />
+    <Content Include="Views\Mantencion\IngresoClientes.cshtml" />
+    <Content Include="Views\Mantencion\AgregaSucursal.cshtml" />
+    <Content Include="Views\Mantencion\VerSucursales.cshtml" />
+    <Content Include="Views\Ingresos\AgregarConductor.cshtml" />
+    <Content Include="Views\Ingresos\VerVehiculosAsignados.cshtml" />
+    <Content Include="Views\Ingresos\AsignarTransporte.cshtml" />
+    <Content Include="Views\Ingresos\CabAsignaTransporte.cshtml" />
+    <Content Include="Views\Generico\BuscarConductor.cshtml" />
+    <Content Include="Views\Generico\BuscarPatente.cshtml" />
+    <Content Include="Views\Reportes\InformeCelsouth.cshtml" />
+    <Content Include="Views\Devolucion\_ListaDevoluciones.cshtml" />
+    <Content Include="Views\Devolucion\_DropDownServicio.cshtml" />
+    <Content Include="Views\Devolucion\_DropDownEmpresa.cshtml" />
+    <Content Include="Views\Administracion\Restriccion\_FormularioRestricciones.cshtml" />
+    <Content Include="Views\Administracion\Restriccion\_ListaRestricciones.cshtml" />
+    <Content Include="Views\Reportes\_PendienteRecepcionDetalle.cshtml" />
+    <Content Include="Views\Graficos\Index.cshtml" />
+    <Content Include="Views\Graficos\_ListaOT.cshtml" />
+    <Content Include="Views\Graficos\PanelGraficos.cshtml" />
+    <Content Include="Views\Graficos\Contenedor.cshtml" />
+    <Content Include="Views\Graficos\Grafico.cshtml" />
+    <Content Include="Views\Graficos\_ContenedorListaOT.cshtml" />
+    <Content Include="Views\Ingresos\_LstTransportesAsociados.cshtml" />
+    <Content Include="Views\Ingresos\IndexTransportes.cshtml" />
+    <Content Include="Views\Ingresos\_ListaTransportesPorSuc.cshtml" />
+    <Content Include="Views\Ingresos\AgregaTransporte.cshtml" />
+    <Content Include="Views\Ingresos\IndexSucursales.cshtml" />
+    <Content Include="Views\Ingresos\_LstSucursalesAsignadas.cshtml" />
+    <Content Include="Views\Ingresos\_LstSucNoAsignadas.cshtml" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.clsRetorno.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.fecha.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.PR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.RetornoConexion.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.RetornoFOL_EST.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.RetornoFOL_OES.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.RetornoGuardar.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.RetornoLogin.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.RetornoLoginEA.datasource" />
+    <Content Include="Service References\wsFolcourier\Courier.wsFolcourier.TB_FOL_ESE_ESTADO_ENTREGA.datasource" />
+    <None Include="Service References\wsFolcourier\wsfolcourier.wsdl" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.clsRetorno.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.fecha.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.PR_FOL_MRC_MANIFIESTO_RUTA_CLIENTE_MOVILResult.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.RetornoConexion.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.RetornoFOL_EST.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.RetornoFOL_OES.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.RetornoGuardar.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.RetornoLogin.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.RetornoLoginEA.datasource" />
+    <Content Include="Service References\wsFolVega\Courier.wsFolVega.TB_FOL_ESE_ESTADO_ENTREGA.datasource" />
+    <None Include="Service References\wsFolVega\wsfolcourier.wsdl" />
+    <Content Include="Views\Manifiesto\EnviaManifiesto.cshtml" />
+    <Content Include="Views\Proveedor\Despacho.cshtml" />
+    <Content Include="Views\Proveedor\PreparacionPedido.cshtml" />
+    <Content Include="Views\Proveedor\EditarManifiesto.cshtml" />
+    <Content Include="Views\Proveedor\ListaDestino.cshtml" />
+    <Content Include="Views\Proveedor\vucLoading.cshtml" />
+    <Content Include="Views\Proveedor\_ListaManifiestoAbierto.cshtml" />
+    <Content Include="Views\Proveedor\_ListaDespacho.cshtml" />
+    <Content Include="Views\Proveedor\_ListaDespachoPorOT.cshtml" />
+    <Content Include="Views\Proveedor\_DropDownConductor.cshtml" />
+    <Content Include="Views\Proveedor\_DropDownPatente.cshtml" />
+    <Content Include="Views\Proveedor\_DesasociarOT.cshtml" />
+    <Content Include="Views\Carga\EntregaTransporte.cshtml" />
+    <Content Include="Views\Carga\_ListaManifiestoCarga.cshtml" />
+    <Content Include="Views\Carga\_EditarPatente.cshtml" />
+    <Content Include="Views\Carga\_DropDownConductor.cshtml" />
+    <Content Include="Views\Carga\_DropDownPatente.cshtml" />
+    <Content Include="Views\FolTrack\_ChartPartial.cshtml" />
+    <Content Include="Views\FolTrack\Index.cshtml" />
+    <Content Include="Views\FolTrack\MonitorConductores.cshtml" />
+    <Content Include="Views\FolBI\Index.cshtml" />
+    <Content Include="Views\FolBI\Despachos.cshtml" />
+    <Content Include="Views\FolBI\_DonutGlobalPartial.cshtml" />
+    <Content Include="Views\FolBI\_BarMensualPartial.cshtml" />
+    <Content Include="Views\FolBI\_BarDespachosPartial.cshtml" />
+    <Content Include="Views\FolBI\_BarDespachosHoraDíaPartial.cshtml" />
+    <Content Include="Views\FolBI\_BarDespachosDiaSemanaPartial.cshtml" />
+    <Content Include="Views\FolBI\_BarDespachosConductores.cshtml" />
+    <Content Include="Views\FolBI\_CallBackPartial.cshtml" />
+    <Content Include="Views\FolBI\_ListaDetalles.cshtml" />
+    <Content Include="Views\FolBI\Detalles.cshtml" />
+    <Content Include="Views\MapOt\Index.cshtml" />
+    <Content Include="Views\MapOt\_ListaOt.cshtml" />
+    <Content Include="Views\MapOt\DatosMapa.cshtml" />
+    <Content Include="Views\MapOt\_DropDownEstados.cshtml" />
+    <Content Include="Views\MapOt\_EditaDireccion.cshtml" />
+    <Content Include="Views\MapOt\_MapLocation.cshtml" />
+    <Content Include="Views\FolTrack\_CalendarPartial.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\FolTrack\_CallBackPartial.cshtml" />
+    <None Include="Web References\RE2005\DocumentMapNode.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RE2005\ExecutionInfo.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RE2005\ExecutionInfo2.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RE2005\Extension.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RE2005\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RE2005\reportexecution2005.wsdl" />
+    <None Include="Web References\RE2005\Warning.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ActiveState.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\CatalogItem.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataRetrievalPlan.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataSetDefinition.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataSource.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataSourceDefinition.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataSourcePrompt.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Event.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ExecutionSettingEnum.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ExpirationDefinition.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Extension.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ExtensionParameter.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ExtensionSettings.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ItemTypeEnum.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Job.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ModelCatalogItem.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ModelDrillthroughReport.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ModelItem.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ParameterValue.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ParameterValueOrFieldReference.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Policy.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Property.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RS2005\ReportHistorySnapshot.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ReportParameter.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\reportservice2005.wsdl" />
+    <None Include="Web References\RS2005\Role.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Schedule.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ScheduleDefinitionOrReference.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Subscription.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Task.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Warning.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Manuales\" />
+    <Folder Include="Reportes\" />
+    <Folder Include="UploadFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\LinqBD_PAR.dbml.layout">
+      <DependentUpon>LinqBD_PAR.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\LinqBD_FOL.dbml.layout">
+      <DependentUpon>LinqBD_FOL.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\LinqBD_SEG.dbml.layout">
+      <DependentUpon>LinqBD_SEG.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://localhost:81/reportserver/reportexecution2005.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RE2005\</RelPath>
+      <UpdateFromURL>http://localhost:81/reportserver/reportexecution2005.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Courier_RE2005_ReportExecutionService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost:81/reportserver/reportservice2005.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RS2005\</RelPath>
+      <UpdateFromURL>http://localhost:81/reportserver/reportservice2005.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Courier_RS2005_ReportingService2005</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\LinqCLI.dbml.layout">
+      <DependentUpon>LinqCLI.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\LinqSQLParametros.dbml.layout">
+      <DependentUpon>LinqSQLParametros.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\Linq_BD_IMP.dbml.layout">
+      <DependentUpon>Linq_BD_IMP.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\LinqBD_REP_REPORTE_VIAJES.dbml.layout">
+      <DependentUpon>LinqBD_REP_REPORTE_VIAJES.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\Linq_SP.dbml.layout">
+      <DependentUpon>Linq_SP.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53786</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
